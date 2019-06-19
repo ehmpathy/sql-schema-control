@@ -1,7 +1,22 @@
 # Schema Control
 
 # Scope
-Schema Control intends to simplify and automate, as much as possible, database schema management.
+Schema Control intends to simplify, automate, and clarify, as much as possible, database schema management.
+
+This includes:
+- DDL and DCL management
+  - including migrations
+- Database Resource Syncing
+  - e.g., tables, sprocs, etc
+- Provisioning Data and Non-Standard Resources
+  - e.g., initial data
+  - e.g., resource definitions that are not yet fully supported
+
+And Enables:
+- Eliminating manual DDL and DCL queries and manual data provisioning
+- Database management in CICD
+- Automatically provisioning databases for integration testing
+- Guarantees that all database resources are checked into code
 
 This project takes inspiration from Liquibase and Terraform.
 
@@ -38,11 +53,11 @@ This project takes inspiration from Liquibase and Terraform.
 4. Define a config yml
   ```yml
     # e.g., ./schema/control.yml
-    language: mysql5.7
+    language: mysql
+    dialect: 5.7
     connection: ./control.connection.js
-    changes:
+    definitions:
       - ./changes.yml
-    resources:
       - ./resources.yml
   ```
 
@@ -78,19 +93,19 @@ SchemaControl compares the resources defined by your `resources.yml` file agains
 
 
 ###### possible *change* states
-- *NOT_APPLIED*: a checked in change set has not been applied to db yet
+- *NOT_APPLIED*: a checked in change has not been applied to db yet
   - explanation:
-    - i.e., you checked in a new change set and have not applied it
+    - i.e., you checked in a new change and have not applied it
   - resolution:
     - `npx schema-control apply`
-- *UP_TO_DATE*: a checked in change set has been applied to db and has the same contents as what was applied
+- *UP_TO_DATE*: a checked in change has been applied to db and has the same contents as what was applied
   - explanation:
-    - i.e., the change set has not been altered since the last time it was applied
+    - i.e., the change has not been altered since the last time it was applied
   - resolution:
     - `echo 'all done'`: nothing to do - this is what we want!
-- *OUT_OF_DATE*: a checked in change set has been applied but the contents of this change set and the one that was applied are different
+- *OUT_OF_DATE*: a checked in change has been applied but the contents of this change and the one that was applied are different
   - explanation:
-    - i.e., the change set definition was modified since it was last applied
+    - i.e., the change definition was modified since it was last applied
   - resolution:
     - `npm run schema-control apply --and-update`
 
@@ -136,23 +151,41 @@ By default, SchemaControl separates each type of resource into their own directo
 
 
 ## Apply Changes and Resources
-Apply *NOT_APPLIED* and, if specified, *OUT_OF_DATE* change set and *OUT_OF_SYNC* resource definitions. In other words, run the resource definition sql if the resource is in one of the above states.
+Apply *NOT_APPLIED* and, if specified, *OUT_OF_DATE* change and *OUT_OF_SYNC* resource definitions. In other words, run the resource definition sql if the resource is in one of the above states.
 
 To apply only *NOT_APPLIED* resource definitions:
 ```
 npx schema-control apply
 ```
 
-To apply both *NOT_APPLIED*, reapplyOnUpdate-able *OUT_OF_DATE* command set definitinos, as well as replaceable *OUT_OF_SYNC* resource definitions:
+To apply both *NOT_APPLIED*, reappliable *OUT_OF_DATE* command definitions, as well as replaceable *OUT_OF_SYNC* resource definitions:
 ```
 npx schema-control apply --and-update
 ```
 
-Applying *NOT_APPLIED* resource definitions is simple: we're creating new resources or have change sets that were not applied and just need to run the sql.
+Applying *NOT_APPLIED* resource definitions is simple: we're creating new resources or have changes that were not applied and just need to run the sql.
 
-Applying *OUT_OF_DATE* resource definitions is possible only when the user explicitly defines that we can reapplyOnUpdate.
-- If a change set can not be reapplied on update, then the user must manually make the change and ask schema-control to update the applied hash manually: `npx schema-control record --applied --change-set-id '__CHANGE_SET_ID__'`
+Applying *OUT_OF_DATE* resource definitions is possible only when the user explicitly defines that we can reappliable.
+- If a change can not be reapplied on update, then the user must manually make the change and ask schema-control to update the applied hash manually: `npx schema-control record --applied --change-id '__CHANGE_SET_ID__'`
 
 Applying *OUT_OF_SYNC* resource definitions can be more complicated depending on the resource type.
 - For stored procedures, functions, views, and other resources that can be drop and replaced, applying the resource definitions again to get the database in sync with the checked-in definition is sufficient (as long as `CREATE OR REPLACE` or the analog is included in the resource definition).
 - For tables and other resources that can not simply be dropped and recreated, a migration must be conducted to sync the states. SchemaControl does not currently support applying migrations, so these must be conducted manually. SchemaControl will, however, define what is out of sync between your checked-in resource definition and the definition live in the database.
+
+
+# Contribution
+
+Team work makes the dream work! Please create a ticket for any features you think are missing and, if willing and able, draft a PR for the feature :)
+
+## Patterns
+
+Below are a few of the patterns that this project uses and the rational behind them.
+
+- TypedObjects: every logical entity that is worked with in this project is represented by a typed object in order to formally define a ubiquitous language and enforce its usage throughout the code
+- Contract - Domain - Data: this module formally distinguishes the contract layer, the domain layer, and the data layer:
+  - The contract layer defines what we expose to users and under what requirements. This is where any input validation or output normalization occurs. This is where we think about minimizing the amount of things we expose - as each contract is something more to maintain.
+  - The domain layer defines the domain / business logic that this module abstracts. This is where the heart of the module is and is where the magic happens. This layer is used by the contract layer to fulfill its promises and utilizes the data layer to persist data.
+  - The data layer is a layer of abstraction that enables easy interaction with data sources and data stores (e.g., clients and databases). This module only uses the database.
+- Utils -vs- Abstracting Complexity: abstracting complexity is important for maintainability and also for well scoped unit tests. We distinguish, in this project, two types of abstractions:
+  - _utils are for modules that are completely domain independent and could easily be their own node module.
+  - Otherwise, the module/function that you are abstracting into its own function should be a sibling module to the main module, under a directory with the name of the main module.

@@ -1,0 +1,11 @@
+  # e.g., ./schema/control.yml
+  language: mysql
+  dialect: 5.7
+  connection: connection.config.js
+  definitions:
+    - type: change
+      id: first_change
+      path: path/to/some/sql.sql
+    - definitions/changes.yml
+    - definitions/resources.yml
+    - empty_file.yml # e.g., placeholder files

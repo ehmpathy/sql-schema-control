@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`readConfig should be able to read the example config provisioned in _test_utils 1`] = `
+Object {
+  "connection": ConnectionConfig {
+    "host": "__HOST__",
+    "password": "__PASSWORD__",
+    "port": 3306,
+    "schema": "__SCHEMA__",
+    "username": "__USERNAME__",
+  },
+  "definitions": Array [
+    ChangeDefinition {
+      "id": "first_change",
+      "path": "path/to/some/sql.sql",
+      "reappliable": undefined,
+      "type": "change",
+    },
+    ChangeDefinition {
+      "id": "init_20190619_1",
+      "path": "init/service_user.sql",
+      "reappliable": false,
+      "type": "change",
+    },
+    ChangeDefinition {
+      "id": "data_20190619_1",
+      "path": "data/data_sources.sql",
+      "reappliable": false,
+      "type": "change",
+    },
+    ChangeDefinition {
+      "id": "procedures_20190619_1",
+      "path": "procedures/awesome_sproc.sql",
+      "reappliable": true,
+      "type": "change",
+    },
+  ],
+  "dialect": 5.7,
+  "language": "mysql",
+}
+`;
