@@ -1,3 +1,4 @@
+import { ControlConfig } from '../../../../types';
 import { readConfig } from './readConfig';
 import { readYmlFile } from './_utils/readYmlFile';
 import { getConnectionConfig } from './getConnectionConfig';
@@ -110,6 +111,7 @@ describe('readConfig', () => {
     getConnectionConfigMock.mockResolvedValueOnce('__CONNECTION_CONFIG__');
     flattenDefinitionsRecursiveMock.mockResolvedValueOnce('__FLATTENED_DEFINITIONS__');
     const config = await readConfig({ filePath: '__CONFIG_DIR__/control.yml' });
+    expect(config.constructor).toEqual(ControlConfig);
     expect(config).toEqual({
       language: '__LANGUGAGE__',
       dialect: '__DIALECT__',

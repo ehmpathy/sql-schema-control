@@ -177,14 +177,43 @@ Applying *OUT_OF_SYNC* resource definitions can be more complicated depending on
 
 Team work makes the dream work! Please create a ticket for any features you think are missing and, if willing and able, draft a PR for the feature :)
 
+## Testing
+1. start the integration test db
+  - *note: you will need docker and docker-compose installed for this to work*
+  - `npm run integration-test-provision-db`
+2. run the tests
+  - `npm run test`
+
+## Test Coverage
+Test coverage is essential for maintainability, readability, and ensuring everything works! Anything not covered in tests is not guarenteed to work.
+
+Test coverage:
+- proves things work
+- immensely simplifies refactoring (i.e., maintainability)
+- encourages smaller, well scoped, more reusable, and simpler to understand modules (unit tests especially)
+- encourages better coding patterns
+- is living documentation for code, guaranteed to be up to date
+
+#### Unit Tests
+Unit tests should mock out all dependencies, so that we are only testing the logic in the immediate test. If we are not mocking out any of the imported functions, we are 1. testing that imported function (which should have its own unit tests, so this is redundant) and 2. burdening ourselfs with the considerations of that imported function - which slows down our testing as we now have to meet those constraints as well.
+
+Note: Unit test coverage ensures that each function does exactly what you expect it to do (i.e., guarentees the contract). Compile time type checking (i.e., typescript) checks that we are using our dependencies correctly. When combined together, we guarentee that the contract we addition + compile time type checking guarentee that not only are we using our dependencies correctly but that our dependencies will do what we expect. This is a thorough combination.
+
+`jest`
+
+#### Integration Tests
+Integration tests should mock _nothing_ - they should test the full lifecycle of the request and check that we get the expected response for an expected input. These are great to use at higher levels of abstraction - as well at the interface between an api (e.g., db connection or client).
+
+`jest -c jest.integration.config.js`
+
 ## Patterns
 
 Below are a few of the patterns that this project uses and the rational behind them.
 
 - TypedObjects: every logical entity that is worked with in this project is represented by a typed object in order to formally define a ubiquitous language and enforce its usage throughout the code
-- Contract - Domain - Data: this module formally distinguishes the contract layer, the domain layer, and the data layer:
+- Contract - Logic - Data: this module formally distinguishes the contract layer, the logic layer, and the data layer:
   - The contract layer defines what we expose to users and under what requirements. This is where any input validation or output normalization occurs. This is where we think about minimizing the amount of things we expose - as each contract is something more to maintain.
-  - The domain layer defines the domain / business logic that this module abstracts. This is where the heart of the module is and is where the magic happens. This layer is used by the contract layer to fulfill its promises and utilizes the data layer to persist data.
+  - The logic layer defines the domain logic / business logic that this module abstracts. This is where the heart of the module is and is where the magic happens. This layer is used by the contract layer to fulfill its promises and utilizes the data layer to persist data.
   - The data layer is a layer of abstraction that enables easy interaction with data sources and data stores (e.g., clients and databases). This module only uses the database.
 - Utils -vs- Abstracting Complexity: abstracting complexity is important for maintainability and also for well scoped unit tests. We distinguish, in this project, two types of abstractions:
   - _utils are for modules that are completely domain independent and could easily be their own node module.

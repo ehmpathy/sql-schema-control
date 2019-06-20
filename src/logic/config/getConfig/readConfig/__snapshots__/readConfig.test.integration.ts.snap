@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`readConfig should be able to read the example config provisioned in _test_utils 1`] = `
-Object {
+ControlConfig {
   "connection": ConnectionConfig {
     "host": "__HOST__",
     "password": "__PASSWORD__",
@@ -35,7 +35,7 @@ Object {
       "type": "change",
     },
   ],
-  "dialect": 5.7,
+  "dialect": "5.7",
   "language": "mysql",
 }
 `;

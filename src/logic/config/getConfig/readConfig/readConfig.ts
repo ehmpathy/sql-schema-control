@@ -1,3 +1,4 @@
+import { ControlConfig } from '../../../../types';
 import { readYmlFile } from './_utils/readYmlFile';
 import { validateAndHydrateDefinitionsYmlContents } from './validateAndHydrateDefinitionsYmlContents';
 import { flattenDefinitionsRecursive } from './flattenDefinitionsRecursive';
@@ -19,7 +20,7 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
   const language = contents.language;
 
   if (!contents.dialect) throw new Error('dialect must be defined');
-  const dialect = contents.dialect;
+  const dialect = `${contents.dialect}`; // ensure that we read it as a string, as it could be a number
 
   // get the connection config
   if (!contents.connection) throw new Error('connection must be defined');
@@ -33,10 +34,10 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
   const definitions = await flattenDefinitionsRecursive({ readRoot: configDir, definitions: nestedDefinitions });
 
   // return the results
-  return {
+  return new ControlConfig({
     language,
     dialect,
     connection,
     definitions,
-  };
+  });
 };
