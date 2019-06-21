@@ -30,7 +30,7 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
   // get the resource and change definitions
   if (!contents.definitions) throw new Error('definitions must be defined');
   const definitionContents = contents.definitions;
-  const nestedDefinitions = await validateAndHydrateDefinitionsYmlContents({ contents: definitionContents });
+  const nestedDefinitions = await validateAndHydrateDefinitionsYmlContents({ readRoot: configDir, contents: definitionContents });
   const definitions = await flattenDefinitionsRecursive({ readRoot: configDir, definitions: nestedDefinitions });
 
   // return the results

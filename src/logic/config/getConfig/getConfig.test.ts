@@ -9,6 +9,7 @@ jest.mock('./validateConfig');
 const validateConfigMock = validateConfig as jest.Mock;
 
 describe('getConfig', () => {
+  beforeEach(() => jest.clearAllMocks());
   it('reads the config from a filepath', async () => {
     await getConfig({ configPath: '__CONFIG_PATH__' });
     expect(readConfigMock.mock.calls.length).toEqual(1);

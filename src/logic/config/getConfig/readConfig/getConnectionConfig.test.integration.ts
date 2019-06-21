@@ -5,12 +5,12 @@ import { getConnectionConfig } from './getConnectionConfig';
 
 describe('getConnectionConfig', () => {
   it('should be able to read db connection from a predefined ts module', async () => {
-    const modulePath = `${__dirname}/_test_utils/connection.config.ts`;
+    const modulePath = `${__dirname}/_test_assets/connection.config.ts`;
     const config = await getConnectionConfig({ modulePath });
     expect(config.constructor).toEqual(ConnectionConfig);
   });
   it('should be able to read db connection from a predefined js module', async () => {
-    const modulePath = `${__dirname}/_test_utils/connection.config.js`;
+    const modulePath = `${__dirname}/_test_assets/connection.config.js`;
     const config = await getConnectionConfig({ modulePath });
     expect(config.constructor).toEqual(ConnectionConfig);
   });

@@ -2,8 +2,8 @@ import { ControlConfig } from '../../../../types';
 import { readConfig } from './readConfig';
 
 describe('readConfig', () => {
-  it('should be able to read the example config provisioned in _test_utils', async () => {
-    const config = await readConfig({ filePath: `${__dirname}/_test_utils/control.yml` });
+  it('should be able to read the example config provisioned in _test_assets', async () => {
+    const config = await readConfig({ filePath: `${__dirname}/_test_assets/control.yml` });
     expect(config.constructor).toEqual(ControlConfig);
     expect(config.language).toEqual('mysql');
     expect(config.dialect).toEqual('5.7');

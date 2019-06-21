@@ -1,17 +1,20 @@
 import { DefinitionType } from '../constants';
 import { ChangeDefinition } from './ChangeDefinition';
+import sha256 from 'simple-sha256';
 
 describe('ChangeDefinition', () => {
   it('should initialize for valid inputs', () => {
     const changeDefinition = new ChangeDefinition({
       type: DefinitionType.CHANGE,
       id: 'cool_change_20190619_1',
-      path: './relative/path.sql',
+      sql: '__SQL__',
+      hash: sha256.sync('__SQL__'),
     });
     expect(changeDefinition).toMatchObject({
       type: DefinitionType.CHANGE,
       id: 'cool_change_20190619_1',
-      path: './relative/path.sql',
+      sql: '__SQL__',
+      hash: sha256.sync('__SQL__'),
     });
   });
   it('should throw error on invalid input', () => {

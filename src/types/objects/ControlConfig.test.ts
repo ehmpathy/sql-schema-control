@@ -1,3 +1,4 @@
+import sha256 from 'simple-sha256';
 import { DatabaseLanguage, DefinitionType } from '../constants';
 import { ConnectionConfig } from './ConnectionConfig';
 import { ChangeDefinition } from './ChangeDefinition';
@@ -14,7 +15,8 @@ describe('ConnectionConfig', () => {
   const changeDefinition = new ChangeDefinition({
     type: DefinitionType.CHANGE,
     id: 'cool_change_20190619_1',
-    path: './relative/path.sql',
+    sql: '__SQL__',
+    hash: sha256.sync('__SQL__'),
   });
   it('should initialize for valid inputs', () => {
     const config = new ControlConfig({

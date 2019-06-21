@@ -1,5 +1,5 @@
 import { DatabaseConnection } from '../../../types';
-import { readFileAsync } from '../../_utils/readFileAsync';
+import { readFileAsync } from '../_utils/readFileAsync';
 
 export const provisionChangeLogTable = async ({ connection }: { connection: DatabaseConnection }) => {
   // create the table if not exists (sql consideres its existance for us)

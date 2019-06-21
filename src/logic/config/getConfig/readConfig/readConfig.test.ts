@@ -1,4 +1,4 @@
-import { ControlConfig } from '../../../../types';
+import { ControlConfig, ChangeDefinition, DefinitionType, ConnectionConfig, DatabaseLanguage } from '../../../../types';
 import { readConfig } from './readConfig';
 import { readYmlFile } from './_utils/readYmlFile';
 import { getConnectionConfig } from './getConnectionConfig';
@@ -8,7 +8,7 @@ import { validateAndHydrateDefinitionsYmlContents } from './validateAndHydrateDe
 jest.mock('./_utils/readYmlFile');
 const readYmlFileMock = readYmlFile as jest.Mock;
 readYmlFileMock.mockResolvedValue({
-  language: '__LANGUGAGE__',
+  language: DatabaseLanguage.MYSQL,
   dialect: '__DIALECT__',
   connection: '__CONNECTION_PATH__',
   definitions: [
@@ -19,9 +19,23 @@ readYmlFileMock.mockResolvedValue({
 
 jest.mock('./getConnectionConfig');
 const getConnectionConfigMock = getConnectionConfig as jest.Mock;
+const exampleConnectionConfig = new ConnectionConfig({
+  host: '__HOST__',
+  port: 3306,
+  schema: '__SCHEMA__',
+  username: '__USERNAME__',
+  password: '__PASSWORD__',
+});
+getConnectionConfigMock.mockResolvedValue(exampleConnectionConfig);
 
 jest.mock('./flattenDefinitionsRecursive');
 const flattenDefinitionsRecursiveMock = flattenDefinitionsRecursive as jest.Mock;
+const exampleDefinitions = [
+  new ChangeDefinition({ id: 'some id', sql: '__SOME_SQL__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
+  new ChangeDefinition({ id: 'some other id', sql: '__SOME_SQL__', hash: '5783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
+  new ChangeDefinition({ id: 'another id', sql: '__SOME_SQL__', hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
+];
+flattenDefinitionsRecursiveMock.mockResolvedValue(exampleDefinitions);
 
 jest.mock('./validateAndHydrateDefinitionsYmlContents');
 const validateAndHydrateDefinitionsYmlContentsMock = validateAndHydrateDefinitionsYmlContents as jest.Mock;
@@ -50,7 +64,7 @@ describe('readConfig', () => {
   });
   it('throws an error if dialect is not defined', async () => {
     readYmlFileMock.mockResolvedValueOnce({
-      language: '__LANGUGAGE__',
+      language: DatabaseLanguage.MYSQL,
       connection: '__CONNECTION_PATH__',
       definitions: [
         '__DEF_1__',
@@ -65,7 +79,7 @@ describe('readConfig', () => {
   });
   it('throws an error if connection is not defined', async () => {
     readYmlFileMock.mockResolvedValueOnce({
-      language: '__LANGUGAGE__',
+      language: DatabaseLanguage.MYSQL,
       dialect: '__DIALECT__',
       definitions: [
         '__DEF_1__',
@@ -108,15 +122,13 @@ describe('readConfig', () => {
     });
   });
   it('should return the full config', async () => {
-    getConnectionConfigMock.mockResolvedValueOnce('__CONNECTION_CONFIG__');
-    flattenDefinitionsRecursiveMock.mockResolvedValueOnce('__FLATTENED_DEFINITIONS__');
     const config = await readConfig({ filePath: '__CONFIG_DIR__/control.yml' });
     expect(config.constructor).toEqual(ControlConfig);
     expect(config).toEqual({
-      language: '__LANGUGAGE__',
+      language: DatabaseLanguage.MYSQL,
       dialect: '__DIALECT__',
-      connection: '__CONNECTION_CONFIG__',
-      definitions: '__FLATTENED_DEFINITIONS__',
+      connection: exampleConnectionConfig,
+      definitions: exampleDefinitions,
     });
   });
 });

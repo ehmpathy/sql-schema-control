@@ -1,6 +1,7 @@
 import { readYmlFile } from './_utils/readYmlFile';
 import { validateAndHydrateDefinitionsYmlContents } from './validateAndHydrateDefinitionsYmlContents';
 import { ChangeDefinition } from '../../../../types';
+import { getReadFilePath } from './_utils/getReadFilePath';
 
 /*
   recursivly parse, validate, and read schema control definitions:
@@ -16,9 +17,11 @@ export const flattenDefinitionsRecursive = async ({ definitions, readRoot }: { d
     if (definition.constructor === ChangeDefinition) return [definition as ChangeDefinition]; // array since, although its the only definition we're getting from the list entry, it still needs to be "flatten"-able
 
     // since we now know it is not a ChangeDefinition, it must be a string.
-    const ymlContents = await readYmlFile({ filePath: `${readRoot}/${definition}` });
-    const subDefinitions = await validateAndHydrateDefinitionsYmlContents({ contents: ymlContents });
-    const subFlattenedDefinitions = await flattenDefinitionsRecursive({ readRoot, definitions: subDefinitions });
+    const filePath = getReadFilePath({ readRoot, relativePath: definition as string });
+    const ymlContents = await readYmlFile({ filePath });
+    const subRoot = filePath.split('/').slice(0, -1).join('/'); // drop the file name from filepath
+    const subDefinitions = await validateAndHydrateDefinitionsYmlContents({ readRoot: subRoot, contents: ymlContents });
+    const subFlattenedDefinitions = await flattenDefinitionsRecursive({ readRoot: subRoot, definitions: subDefinitions });
     return subFlattenedDefinitions;
   }));
   const flattenedDefinitions = ([] as ChangeDefinition[]).concat(...arraysOfDefinitions);

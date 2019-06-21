@@ -1,0 +1,5 @@
+/*
+  get statuses of changes
+
+  get statuses of resources
+*/

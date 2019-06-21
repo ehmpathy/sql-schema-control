@@ -41,6 +41,7 @@
     "joi": "^14.3.1",
     "mysql2": "^1.6.5",
     "schematic-joi-model": "^1.2.2",
+    "simple-sha256": "^1.0.0",
     "yaml": "^1.6.0"
   }
 }
