@@ -16,6 +16,7 @@ ControlConfig {
       "reappliable": false,
       "sql": "wassup!
 ",
+      "status": undefined,
       "type": "change",
     },
     ChangeDefinition {
@@ -25,6 +26,7 @@ ControlConfig {
       "sql": "CREATE USER ...
 GRANT ...
 ",
+      "status": undefined,
       "type": "change",
     },
     ChangeDefinition {
@@ -34,6 +36,7 @@ GRANT ...
       "sql": "-- sometimes users want to provision their databases with some initial values or ensure something exists in the database
 INSERT INTO ...
 ",
+      "status": undefined,
       "type": "change",
     },
     ChangeDefinition {
@@ -43,6 +46,7 @@ INSERT INTO ...
       "sql": "DROP IF EXISTS PROCEDURE ...
 CREATE PROCEDURE ...
 ",
+      "status": undefined,
       "type": "change",
     },
   ],

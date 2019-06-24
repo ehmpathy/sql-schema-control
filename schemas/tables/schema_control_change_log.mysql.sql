@@ -10,5 +10,5 @@ CREATE TABLE IF NOT EXISTS schema_control_change_log ( -- TODO: make this a vers
   change_content        TEXT, -- record the content that was applied
 
   -- meta meta
-  UNIQUE invitation_ux1 (change_id, change_hash)
+  UNIQUE invitation_ux1 (change_id) -- should be max one row per change_id
 ) ENGINE = InnoDB;
