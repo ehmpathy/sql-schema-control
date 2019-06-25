@@ -1,4 +1,4 @@
-import { ControlContext, ChangeDefinition, ChangeDefinitionStatus } from '../../../../types';
+import { DatabaseConnection, ChangeDefinition, ChangeDefinitionStatus } from '../../../../types';
 
 /*
 for each definition:
@@ -9,9 +9,9 @@ for each definition:
   - if not in the database:
     - NOT_APPLIED
 */
-export const getChangeStatus = async ({ context, change }: { context: ControlContext, change: ChangeDefinition }) => {
+export const getChangeStatus = async ({ connection, change }: { connection: DatabaseConnection, change: ChangeDefinition }) => {
   // 1. get state of change in db
-  const [[result]] = await context.connection.query({
+  const [[result]] = await connection.query({
     sql: `select * from schema_control_change_log where change_id = '${change.id}'`, // NOTE: we are not concerned with sql injection.
   });
 

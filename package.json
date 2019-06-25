@@ -2,8 +2,32 @@
   "name": "schema-control",
   "version": "0.0.0",
   "description": "Database schema management and control. Provision, sync, update, and migrate your database from version controlled resource configs.",
-  "main": "dist/index.js",
+  "author": "UladKasach @uladkasach",
+  "license": "MIT",
+  "repository": "uladkasach/schema-control",
+  "homepage": "https://github.com/uladkasach/schema-control",
+  "bugs": "https://github.com/uladkasach/schema-control/issues",
+  "main": "dist/contract/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "schema-control": "./bin/run"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/lib",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
+  ],
+  "oclif": {
+    "commands": "./dist/contract/commands",
+    "bin": "schema-control",
+    "plugins": [
+      "@oclif/plugin-help"
+    ]
+  },
   "scripts": {
     "clean": "rm -rf ./dist",
     "build-ts": "tsc -p ./tsconfig.build.json",
@@ -14,16 +38,16 @@
     "check-types": "tsc --noEmit",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
     "unit-test": "jest --forceExit --coverage --verbose",
-    "integration-test": "jest -c jest.integration.config.js --coverage --verbose",
+    "integration-test": "jest -c jest.integration.config.js --coverage --verbose --runInBand",
     "test": "npm run check-types && npm run tslint && npm run unit-test && npm run integration-test",
     "prepush": "npm run preversion",
     "preversion": "npm run test && npm run build",
     "postversion": "git push origin master --tags --no-verify",
     "prepublish": "npm run build"
   },
-  "author": "UladKasach",
-  "license": "ISC",
   "devDependencies": {
+    "@oclif/dev-cli": "^1.22.0",
+    "@types/diff": "^4.0.2",
     "@types/dotenv": "^6.1.1",
     "@types/jest": "^23.3.14",
     "@types/joi": "^14.3.2",
@@ -40,8 +64,15 @@
     "uuid": "^3.3.2"
   },
   "dependencies": {
+    "@oclif/command": "^1.5.15",
+    "@oclif/config": "^1.13.0",
+    "@oclif/plugin-help": "^2.2.0",
+    "chalk": "^2.4.2",
+    "diff": "^4.0.1",
+    "indent-string": "^4.0.0",
     "joi": "^14.3.1",
     "mysql2": "^1.6.5",
+    "oclif": "^1.13.4",
     "schematic-joi-model": "^1.2.2",
     "simple-sha256": "^1.0.0",
     "yaml": "^1.6.0"

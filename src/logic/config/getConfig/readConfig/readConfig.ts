@@ -1,5 +1,6 @@
 import { ControlConfig } from '../../../../types';
 import { readYmlFile } from './_utils/readYmlFile';
+import { getReadFilePath } from './_utils/getReadFilePath';
 import { validateAndHydrateDefinitionsYmlContents } from './validateAndHydrateDefinitionsYmlContents';
 import { flattenDefinitionsRecursive } from './flattenDefinitionsRecursive';
 import { getConnectionConfig } from './getConnectionConfig';
@@ -25,7 +26,7 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
   // get the connection config
   if (!contents.connection) throw new Error('connection must be defined');
   const connectionPath = contents.connection;
-  const connection = await getConnectionConfig({ modulePath: `${configDir}/${connectionPath}` }); // NOTE: we expect connection path to be relative to the config path
+  const connection = await getConnectionConfig({ modulePath: getReadFilePath({ readRoot: configDir, relativePath: connectionPath }) }); // NOTE: we expect connection path to be relative to the config path
 
   // get the resource and change definitions
   if (!contents.definitions) throw new Error('definitions must be defined');

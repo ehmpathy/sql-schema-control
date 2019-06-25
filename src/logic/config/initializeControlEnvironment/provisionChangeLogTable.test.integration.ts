@@ -1,4 +1,4 @@
-import { promiseConfig } from '../../../_test_assets/connection.config';
+import { promiseConfig } from './_test_assets/connection.config';
 import { DatabaseConnection, ControlConfig, DatabaseLanguage } from '../../../types';
 import { connectToDatabase } from './connectToDatabase';
 import { provisionChangeLogTable } from './provisionChangeLogTable';

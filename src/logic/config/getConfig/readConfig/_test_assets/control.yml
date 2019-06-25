@@ -1,6 +1,6 @@
 language: mysql
 dialect: 5.7
-connection: connection.config.js
+connection: ./connection.config.js
 definitions:
   - type: change
     id: first_change

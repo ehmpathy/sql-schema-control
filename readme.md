@@ -1,33 +1,31 @@
-# Schema Control
+schema-control
+==============
 
-# Scope
-Schema Control intends to simplify, automate, and clarify, as much as possible, database schema management.
+Database schema management and control. Provision, sync, update, and migrate your database from version controlled resource configs.
 
-This includes:
-- DDL and DCL management
-  - including migrations
-- Database Resource Syncing
-  - e.g., tables, sprocs, etc
-- Provisioning Data and Non-Standard Resources
-  - e.g., initial data
-  - e.g., resource definitions that are not yet fully supported
+[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
+[![Version](https://img.shields.io/npm/v/schema-control.svg)](https://npmjs.org/package/schema-control)
+[![Codecov](https://codecov.io/gh/uladkasach/schema-control/branch/master/graph/badge.svg)](https://codecov.io/gh/uladkasach/schema-control)
+[![Downloads/week](https://img.shields.io/npm/dw/schema-control.svg)](https://npmjs.org/package/schema-control)
+[![License](https://img.shields.io/npm/l/schema-control.svg)](https://github.com/uladkasach/schema-control/blob/master/package.json)
 
-And Enables:
-- Eliminating manual DDL and DCL queries and manual data provisioning
-- Database management in CICD
-- Automatically provisioning databases for integration testing
-- Guarantees that all database resources are checked into code
+# Table of Contents
+<!-- toc -->
+* [Usage](#usage)
+* [Commands](#commands)
+* [Scope](#scope)
+* [Contribution](#contribution)
+<!-- tocstop -->
 
-This project takes inspiration from Liquibase and Terraform.
 
-# Installation
+# Usage
 
 1. Save the package as a dev dependency
   ```sh
   npm install --save-dev schema-control
   ```
 
-2. Define the connection that schema-control can use
+2. Define the database connection that schema-control can use
   ```ts
   // e.g., ./schema/control.connection.js
 
@@ -61,18 +59,72 @@ This project takes inspiration from Liquibase and Terraform.
       - ./resources.yml
   ```
 
-3. add a shortcut for running the node executable in your package.json
-  ```js
-  // ...
-  "scripts": {
-    // ...
-    "schema-control": "npx schema-control -c ./schema/control.yml",
-    // ...
-  },
-  // ...
-  ```
+# Commands
+<!-- commands -->
+* [`schema-control hello [FILE]`](#schema-control-hello-file)
+* [`schema-control help [COMMAND]`](#schema-control-help-command)
 
-# Usage
+## `schema-control hello [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ schema-control hello [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+
+EXAMPLE
+  $ schema-control hello
+  hello world from ./src/hello.ts!
+```
+
+_See code: [src/commands/hello.ts](https://github.com/uladkasach/schema-control/blob/v0.0.0/src/commands/hello.ts)_
+
+## `schema-control help [COMMAND]`
+
+display help for schema-control
+
+```
+USAGE
+  $ schema-control help [COMMAND]
+
+ARGUMENTS
+  COMMAND  command to show help for
+
+OPTIONS
+  --all  see all commands in CLI
+```
+
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.0/src/commands/help.ts)_
+<!-- commandsstop -->
+
+
+# Scope
+Schema Control intends to simplify, automate, and clarify, as much as possible, database schema management.
+
+This includes:
+- DDL and DCL management
+  - including migrations
+- Database Resource Syncing
+  - e.g., tables, sprocs, etc
+- Provisioning Data and Non-Standard Resources
+  - e.g., initial data
+  - e.g., resource definitions that are not yet fully supported
+
+And Enables:
+- Eliminating manual DDL and DCL queries and manual data provisioning
+- Database management in CICD
+- Automatically provisioning databases for integration testing
+- Guarantees that all database resources are checked into code
+
+This project takes inspiration from Liquibase and Terraform.
+
+
+# Old-Usage
 
 Schema Control operates on two schema management classes: changes and resources.
 

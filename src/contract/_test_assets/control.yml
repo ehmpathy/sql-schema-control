@@ -1,0 +1,7 @@
+language: mysql
+dialect: 5.7
+connection: ./connection.config.js
+definitions:
+  - type: change
+    id: create_table_example_1
+    path: ./definitions/create_table.sql

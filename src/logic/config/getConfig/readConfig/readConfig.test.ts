@@ -10,7 +10,7 @@ const readYmlFileMock = readYmlFile as jest.Mock;
 readYmlFileMock.mockResolvedValue({
   language: DatabaseLanguage.MYSQL,
   dialect: '__DIALECT__',
-  connection: '__CONNECTION_PATH__',
+  connection: './__CONNECTION_PATH__',
   definitions: [
     '__DEF_1__',
     '__DEF_2__',

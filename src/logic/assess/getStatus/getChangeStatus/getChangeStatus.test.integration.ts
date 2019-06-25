@@ -7,7 +7,7 @@ import { getChangeStatus } from './getChangeStatus';
 describe('getChangeStatus', () => {
   let context: ControlContext;
   beforeAll(async () => {
-    context = await getControlContextFromConfig({ configPath: `${__dirname}/../../../../_test_assets/control.yml` });
+    context = await getControlContextFromConfig({ configPath: `${__dirname}/_test_assets/control.yml` });
   });
   afterAll(async () => {
     await context.connection.end();
@@ -19,7 +19,7 @@ describe('getChangeStatus', () => {
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
     });
-    const result = await getChangeStatus({ context, change: definition });
+    const result = await getChangeStatus({ connection: context.connection, change: definition });
     expect(result.constructor).toEqual(ChangeDefinition);
     expect(result.status).toEqual(ChangeDefinitionStatus.NOT_APPLIED);
   });
@@ -40,7 +40,7 @@ describe('getChangeStatus', () => {
     ` });
 
     // get the status
-    const result = await getChangeStatus({ context, change: definition });
+    const result = await getChangeStatus({ connection: context.connection, change: definition });
     expect(result.constructor).toEqual(ChangeDefinition);
     expect(result.status).toEqual(ChangeDefinitionStatus.UP_TO_DATE);
   });
@@ -67,7 +67,7 @@ describe('getChangeStatus', () => {
     });
 
     // get the status
-    const result = await getChangeStatus({ context, change: updatedDefinition });
+    const result = await getChangeStatus({ connection: context.connection, change: updatedDefinition });
     expect(result.constructor).toEqual(ChangeDefinition);
     expect(result.status).toEqual(ChangeDefinitionStatus.OUT_OF_DATE);
   });
