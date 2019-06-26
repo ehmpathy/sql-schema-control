@@ -1,6 +1,6 @@
 {
   "name": "schema-control",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Database schema management and control. Provision, sync, update, and migrate your database from version controlled resource configs.",
   "author": "UladKasach @uladkasach",
   "license": "MIT",
