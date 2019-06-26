@@ -19,6 +19,7 @@
   ],
   "exclude": [
     "src/**/*.test.ts",
+    "src/**/*.test.integration.ts",
   ],
   "atom": {
     "rewriteTsconfig": false
