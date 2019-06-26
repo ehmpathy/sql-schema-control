@@ -39,13 +39,15 @@ Resources are DDL created entities that we can track and "sync" with your checke
   ```
 
 2. Define the database connection that schema-control can use
-  ```ts
+  ```js
   // e.g., ./schema/control.connection.js
-
-  const { promiseConfig } = './config';
+  const Config = require('config-with-paramstore').default;
+  const configInstance = new Config();
+  const promiseConfig = async () => configInstance.get();
 
   const promiseSchemaControlConfig = async () => {
     const config = await promiseConfig();
+    console.log(config);
     const dbConfig = config.database.admin; // NOTE: schema control must have DDL privileges
     const schemaControlConfig = {
       host: dbConfig.host,
@@ -54,10 +56,11 @@ Resources are DDL created entities that we can track and "sync" with your checke
       username: dbConfig.user,
       password: dbConfig.pass,
     };
+    return schemaControlConfig;
   };
 
-  export {
-    promiseSchemaControlConfig as promiseConfig, // NOTE: schema-control will look for an export named `promiseConfig`
+  module.exports = {
+    promiseConfig: promiseSchemaControlConfig,
   }
   ```
 

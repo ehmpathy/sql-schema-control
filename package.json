@@ -1,6 +1,6 @@
 {
   "name": "schema-control",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "description": "Database schema management and control. Provision, sync, update, and migrate your database from version controlled resource configs.",
   "author": "UladKasach @uladkasach",
   "license": "MIT",
@@ -17,9 +17,8 @@
   },
   "files": [
     "/bin",
-    "/lib",
-    "/npm-shrinkwrap.json",
-    "/oclif.manifest.json"
+    "/dist",
+    "/schema"
   ],
   "oclif": {
     "commands": "./dist/contract/commands",
