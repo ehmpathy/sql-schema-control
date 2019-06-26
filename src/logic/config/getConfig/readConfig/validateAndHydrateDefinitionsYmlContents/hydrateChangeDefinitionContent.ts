@@ -16,6 +16,7 @@ export const hydrateChangeDefinitionContent = async ({ readRoot, content }: { re
   return new ChangeDefinition({
     sql,
     hash,
+    path: content.path,
     type: content.type,
     id: content.id,
     reappliable: content.reappliable,

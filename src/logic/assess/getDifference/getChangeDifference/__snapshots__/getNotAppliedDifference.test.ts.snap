@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`getNotAppliedDifference should return the full sql colored green as the diff 1`] = `"[32m__SQL__[39m"`;
+exports[`getNotAppliedDifference should return the full sql colored green as the diff 1`] = `"[90m__SQL__[39m"`;

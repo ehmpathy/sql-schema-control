@@ -11,14 +11,27 @@ Database schema management and control. Provision, sync, update, and migrate you
 
 # Table of Contents
 <!-- toc -->
+* [Table of Contents](#table-of-contents)
+* [Background](#background)
+* [Installation](#installation)
 * [Usage](#usage)
 * [Commands](#commands)
+* [TODO](#todo)
 * [Scope](#scope)
 * [Contribution](#contribution)
 <!-- tocstop -->
 
 
-# Usage
+# Background
+
+Schema Control operates on two schema management classes: changes and resources.
+
+Changes are simply sets of sql statements that you wish to apply to the database. Everything can be done with changes - and schema-control simply tracks whether each change has been applied and whether it is still up to date (i.e., comparing the hash).    
+
+Resources are DDL created entities that we can track and "sync" with your checked in code. SchemaControl is able to detect resources in your live database that are not checked into your code, resources that have not been added to your database, and resources that are out of sync between the definition in your code and what lives in your database - as well as specifying how exactly they are out of sync.
+
+
+# Installation
 
 1. Save the package as a dev dependency
   ```sh
@@ -55,34 +68,34 @@ Database schema management and control. Provision, sync, update, and migrate you
     dialect: 5.7
     connection: ./control.connection.js
     definitions:
-      - ./changes.yml
+      - type: change
+        path: './init/service_user.sql'
+        id: 'init_20190619_1'
+        reappliable: false
+      - ./more_changes.yml
       - ./resources.yml
   ```
 
+5. Test it out!
+```
+  $ npx schema-control version
+  $ npx schema-control plan
+```
+
+# Usage
+
+The typical use case consists of planning and applying:
+```sh
+  $ npx schema-control plan # to see what actions need to be done to sync your db
+  $ npx schema-control apply # to sync your db with your checked in schema
+```
+
+These commands will operate on all resource and change definitions that are defined in your config (i.e., `control.yml`).
+
 # Commands
 <!-- commands -->
-* [`schema-control hello [FILE]`](#schema-control-hello-file)
 * [`schema-control help [COMMAND]`](#schema-control-help-command)
-
-## `schema-control hello [FILE]`
-
-describe the command here
-
-```
-USAGE
-  $ schema-control hello [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
-
-EXAMPLE
-  $ schema-control hello
-  hello world from ./src/hello.ts!
-```
-
-_See code: [src/commands/hello.ts](https://github.com/uladkasach/schema-control/blob/v0.0.0/src/commands/hello.ts)_
+* [`schema-control plan`](#schema-control-plan)
 
 ## `schema-control help [COMMAND]`
 
@@ -100,92 +113,26 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.0/src/commands/help.ts)_
+
+## `schema-control plan`
+
+generate and show an execution plan
+
+```
+USAGE
+  $ schema-control plan
+
+OPTIONS
+  -c, --config=config  [default: schema/control.yml] path to config file
+  -h, --help           show CLI help
+```
+
+_See code: [dist/contract/commands/plan.ts](https://github.com/uladkasach/schema-control/blob/v0.0.0/dist/contract/commands/plan.ts)_
 <!-- commandsstop -->
 
 
-# Scope
-Schema Control intends to simplify, automate, and clarify, as much as possible, database schema management.
 
-This includes:
-- DDL and DCL management
-  - including migrations
-- Database Resource Syncing
-  - e.g., tables, sprocs, etc
-- Provisioning Data and Non-Standard Resources
-  - e.g., initial data
-  - e.g., resource definitions that are not yet fully supported
-
-And Enables:
-- Eliminating manual DDL and DCL queries and manual data provisioning
-- Database management in CICD
-- Automatically provisioning databases for integration testing
-- Guarantees that all database resources are checked into code
-
-This project takes inspiration from Liquibase and Terraform.
-
-
-# Old-Usage
-
-Schema Control operates on two schema management classes: changes and resources.
-
-Changes are simply sets of sql statements that you wish to apply to the database. Everything can be done with changes - and schema-control simply tracks whether each change has been applied and whether it is still up to date (i.e., comparing the hash).    
-
-Resources are DDL created entities that we can track and "sync" with your checked in code. SchemaControl is able to detect resources in your live database that are not checked into your code, resources that have not been added to your database, and resources that are out of sync between the definition in your code and what lives in your database - as well as specifying how exactly they are out of sync.
-
-*NOTE: by default schema-control assumes that your `config.yml` lives in `./schema/control.yml`. Specify alternative with the `-c` argument*
-
-## Plan Changes and Resources
-See the status of the changes and resources defined in control config, as well as any resources live in the database but not checked into resource definitions.
-
-```
-npx schema-control plan
-```
-
-SchemaControl compares the resources defined by your `resources.yml` file against the state of the database. Using DDL-to-JSON conversion, we compare the contents of the database (e.g., `SHOW CREATE ...` for each table, function, etc) against the resources defined.
-
-
-###### possible *change* states
-- *NOT_APPLIED*: a checked in change has not been applied to db yet
-  - explanation:
-    - i.e., you checked in a new change and have not applied it
-  - resolution:
-    - `npx schema-control apply`
-- *UP_TO_DATE*: a checked in change has been applied to db and has the same contents as what was applied
-  - explanation:
-    - i.e., the change has not been altered since the last time it was applied
-  - resolution:
-    - `echo 'all done'`: nothing to do - this is what we want!
-- *OUT_OF_DATE*: a checked in change has been applied but the contents of this change and the one that was applied are different
-  - explanation:
-    - i.e., the change definition was modified since it was last applied
-  - resolution:
-    - `npm run schema-control apply --and-update`
-
-###### possible *resource* states
-- *NOT_APPLIED*: a checked-in resource does not exist in the database
-  - explanation:
-    - i.e., you checked in a new resource and have not applied it
-  - resolution:
-    - `npx schema-control apply`
-- *SYNCED*: a checked-in resource exists in the database and the state is in sync with the resource definition
-  - explanation:
-    - i.e., the resource has not been altered since the last time it was checked-in
-  - resolution:
-    - `echo 'all done'`: nothing to do - this is what we want!
-- *OUT_OF_SYNC*: a checked-in resource exists in the database and the state is not in sync with the resource definition
-  - explanation:
-    - e.g., you updated the definition of a resource
-    - e.g., you manually applied a change to the resource in the database but did not check the change in
-  - resolution:
-    - `npx schema-control apply --and-update` if you updated the resource definition
-    - `npx schema-control pull` if you manually applied a change and want to check it in
-- *NOT_CHECKED_IN*: a resource exists in the database but is not checked in
-  - explanation
-    - e.g., a manual change was applied to the database
-  - resolution:
-    - `npx schema-control pull`
-
-As you can see, the results of `schema-control plan` are based on comparing the checked in resource definitions with the resource definitions live in the database. A resource is guaranteed to be in one of these states.
+# TODO
 
 ## Pull Resources
 Retrieve the definition of a resource from the database so you can save it into your checked-in resources.
@@ -224,6 +171,25 @@ Applying *OUT_OF_SYNC* resource definitions can be more complicated depending on
 - For stored procedures, functions, views, and other resources that can be drop and replaced, applying the resource definitions again to get the database in sync with the checked-in definition is sufficient (as long as `CREATE OR REPLACE` or the analog is included in the resource definition).
 - For tables and other resources that can not simply be dropped and recreated, a migration must be conducted to sync the states. SchemaControl does not currently support applying migrations, so these must be conducted manually. SchemaControl will, however, define what is out of sync between your checked-in resource definition and the definition live in the database.
 
+# Scope
+Schema Control intends to simplify, automate, and make database schema management transparent, as much as possible.
+
+This includes:
+- DDL and DCL management
+  - including migrations
+- Database Resource Syncing
+  - e.g., tables, sprocs, etc
+- Provisioning Data and Non-Standard Resources
+  - e.g., initial data
+  - e.g., resource definitions that are not yet fully supported
+
+And Enables:
+- Eliminating manual DDL and DCL queries and manual data provisioning
+- Database management in CICD
+- Automatically provisioning databases for integration testing
+- Maximally committing database resources, changes, and configurations into version control
+
+This project takes inspiration from Liquibase and Terraform.
 
 # Contribution
 

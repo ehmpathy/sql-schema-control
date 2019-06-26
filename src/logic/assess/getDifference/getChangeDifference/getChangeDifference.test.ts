@@ -18,6 +18,7 @@ describe('getChangeDifference', () => {
   it('should throw an error if there is no status on the ChangeDefinition', async () => {
     const definition = new ChangeDefinition({
       id: uuid(),
+      path: '__PATH__',
       type: DefinitionType.CHANGE,
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
@@ -32,6 +33,7 @@ describe('getChangeDifference', () => {
   it('should return null if change.status = UP_TO_DATE', async () => {
     const definition = new ChangeDefinition({
       id: uuid(),
+      path: '__PATH__',
       type: DefinitionType.CHANGE,
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
@@ -43,6 +45,7 @@ describe('getChangeDifference', () => {
   it('should return the result of getOutOfDateDifference for change.status = OUT_OF_DATE', async () => {
     const definition = new ChangeDefinition({
       id: uuid(),
+      path: '__PATH__',
       type: DefinitionType.CHANGE,
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
@@ -59,6 +62,7 @@ describe('getChangeDifference', () => {
   it('should return the result of getNotAppliedDifference for change.status = NOT_APPLIED', async () => {
     const definition = new ChangeDefinition({
       id: uuid(),
+      path: '__PATH__',
       type: DefinitionType.CHANGE,
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),

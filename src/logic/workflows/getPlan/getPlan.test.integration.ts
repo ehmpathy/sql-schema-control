@@ -1,5 +1,5 @@
 import { promiseConfig } from './_test_assets/connection.config';
-import { DatabaseConnection, ControlConfig, DatabaseLanguage } from '../../../types';
+import { DatabaseConnection, ControlConfig, DatabaseLanguage, DefinitionPlan } from '../../../types';
 import { getPlan } from './getPlan';
 import { initializeControlEnvironment } from '../../config/initializeControlEnvironment';
 
@@ -19,8 +19,8 @@ describe('getStatus', () => {
   });
   it('should find that we get a plan successfuly', async () => {
     await connection.query({ sql: 'delete from schema_control_change_log' }); // ensure clean env
-    const status = await getPlan({ configPath: `${__dirname}/_test_assets/control.yml` }); // try to get the results
-    console.log(status);
-    console.log(status[0].difference);
+    const plan = await getPlan({ configPath: `${__dirname}/_test_assets/control.yml` }); // try to get the results
+    expect(plan.length).not.toEqual(0);
+    expect(plan[0].constructor).toEqual(DefinitionPlan);
   });
 });

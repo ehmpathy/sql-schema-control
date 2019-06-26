@@ -16,6 +16,7 @@ describe('getOutOfDateDifference', () => {
     const definition = new ChangeDefinition({
       id: uuid(),
       type: DefinitionType.CHANGE,
+      path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
       status: ChangeDefinitionStatus.NOT_APPLIED,
@@ -32,6 +33,7 @@ describe('getOutOfDateDifference', () => {
     const definition = new ChangeDefinition({
       id: uuid(),
       type: DefinitionType.CHANGE,
+      path: '__PATH__',
       sql: `
 CREATE TABLE IF NOT EXISTS some_table (
   id              INT(11) PRIMARY KEY AUTO_INCREMENT,

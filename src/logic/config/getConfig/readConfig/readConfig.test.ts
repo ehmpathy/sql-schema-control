@@ -31,9 +31,9 @@ getConnectionConfigMock.mockResolvedValue(exampleConnectionConfig);
 jest.mock('./flattenDefinitionsRecursive');
 const flattenDefinitionsRecursiveMock = flattenDefinitionsRecursive as jest.Mock;
 const exampleDefinitions = [
-  new ChangeDefinition({ id: 'some id', sql: '__SOME_SQL__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
-  new ChangeDefinition({ id: 'some other id', sql: '__SOME_SQL__', hash: '5783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
-  new ChangeDefinition({ id: 'another id', sql: '__SOME_SQL__', hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
+  new ChangeDefinition({ id: 'some id', path: '__PATH__', sql: '__SOME_SQL__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
+  new ChangeDefinition({ id: 'some other id', path: '__PATH__', sql: '__SOME_SQL__', hash: '5783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
+  new ChangeDefinition({ id: 'another id', path: '__PATH__', sql: '__SOME_SQL__', hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
 ];
 flattenDefinitionsRecursiveMock.mockResolvedValue(exampleDefinitions);
 

@@ -16,6 +16,7 @@ describe('getChangeStatus', () => {
     const definition = new ChangeDefinition({
       id: uuid(),
       type: DefinitionType.CHANGE,
+      path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
     });
@@ -27,6 +28,7 @@ describe('getChangeStatus', () => {
     const definition = new ChangeDefinition({
       id: uuid(),
       type: DefinitionType.CHANGE,
+      path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
     });
@@ -49,6 +51,7 @@ describe('getChangeStatus', () => {
     const definition = new ChangeDefinition({
       id: uuid(),
       type: DefinitionType.CHANGE,
+      path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
     });

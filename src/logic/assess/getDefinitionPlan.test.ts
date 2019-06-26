@@ -19,6 +19,7 @@ describe('getDefinitionPlan', () => {
     const definition = new ChangeDefinition({
       id: uuid(),
       type: DefinitionType.CHANGE,
+      path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
       status: ChangeDefinitionStatus.UP_TO_DATE,
@@ -33,6 +34,7 @@ describe('getDefinitionPlan', () => {
     const definition = new ChangeDefinition({
       id: uuid(),
       type: DefinitionType.CHANGE,
+      path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
       status: ChangeDefinitionStatus.UP_TO_DATE,
@@ -48,6 +50,7 @@ describe('getDefinitionPlan', () => {
     const definition = new ChangeDefinition({
       id: uuid(),
       type: DefinitionType.CHANGE,
+      path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
       status: ChangeDefinitionStatus.UP_TO_DATE,

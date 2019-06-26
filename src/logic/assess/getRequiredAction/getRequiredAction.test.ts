@@ -7,6 +7,7 @@ describe('getRequiredAction', () => {
     const definition = new ChangeDefinition({
       type: DefinitionType.CHANGE,
       id: '__ID__',
+      path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
       status: ChangeDefinitionStatus.UP_TO_DATE,
@@ -18,6 +19,7 @@ describe('getRequiredAction', () => {
     const definition = new ChangeDefinition({
       type: DefinitionType.CHANGE,
       id: '__ID__',
+      path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
       status: ChangeDefinitionStatus.NOT_APPLIED,
@@ -29,6 +31,7 @@ describe('getRequiredAction', () => {
     const definition = new ChangeDefinition({
       type: DefinitionType.CHANGE,
       id: '__ID__',
+      path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
       status: ChangeDefinitionStatus.OUT_OF_DATE,
@@ -41,6 +44,7 @@ describe('getRequiredAction', () => {
     const definition = new ChangeDefinition({
       type: DefinitionType.CHANGE,
       id: '__ID__',
+      path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
       status: ChangeDefinitionStatus.OUT_OF_DATE,

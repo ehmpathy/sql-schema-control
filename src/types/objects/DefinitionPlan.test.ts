@@ -7,6 +7,7 @@ describe('DefinitionPlan', () => {
   const changeDefinition = new ChangeDefinition({
     type: DefinitionType.CHANGE,
     id: 'cool_change_20190619_1',
+    path: '__PATH__',
     sql: '__SQL__',
     hash: sha256.sync('__SQL__'),
   });

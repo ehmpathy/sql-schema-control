@@ -2,15 +2,20 @@ import chalk from 'chalk';
 import indentString from 'indent-string';
 import { Command, flags } from '@oclif/command';
 import { getPlan } from '../../logic/workflows/getPlan';
+import { RequiredAction } from '../../types';
 
 export default class Plan extends Command {
   public static description = 'generate and show an execution plan';
 
-//   public static examples = [
-//     `$ schema-control plan
-// hello world from ./src/hello.ts!
-// `,
-//   ];
+  public static examples = [
+    `$ schema-control plan
+
+ * [APPLY] ./init/service_user.sql (id: init_20190619_1)
+
+    CREATE USER 'user_name'@'%';
+    GRANT ALL PRIVILEGES ON awesomedb.* To 'user_name'@'%' IDENTIFIED BY '__CHANGE_M3__'; -- change password in real db
+    `,
+  ];
 
   public static flags = {
     help: flags.help({ char: 'h' }),
@@ -22,16 +27,35 @@ export default class Plan extends Command {
     const config = flags.config!;
 
     // get plans
-    const plans = await getPlan({ configPath: `${process.cwd()}/${config}` });
+    const configPath = (config.slice(0, 1) === '/') ? config : `${process.cwd()}/${config}`; // if starts with /, consider it as an absolute path
+    const plans = await getPlan({ configPath });
 
-    // display plans
-    // console.log(plans);
+    // define plans output
+    const output: string[] = [];
     plans.forEach((plan) => {
-      // TODO: display relative path to file instead of id (this will be generic across change and resources as well as being more helpful)
-      // TODO: make the "apply" a general header, and group by required action
-      // TODO: add a description of what this means
-      console.log(chalk.bold(chalk.green(`[${plan.action}] ${plan.definition.id}`)));
-      if (plan.difference) console.log(indentString(plan.difference, 4));
+      // define action string
+      const actionChalk = {
+        [RequiredAction.APPLY]: chalk.green,
+        [RequiredAction.NO_CHANGE]: chalk.gray,
+        [RequiredAction.REAPPLY]: chalk.yellow,
+        [RequiredAction.MANUAL_REAPPLY]: chalk.red,
+      }[plan.action];
+      const actionString = actionChalk(`[${plan.action}]`);
+
+      // define extra details
+      const extraDetails = chalk.gray(`(id: ${plan.definition.id})`);
+
+      // define the header
+      const header = chalk.bold((`\n * ${actionString} ${plan.definition.path} ${extraDetails} \n`));
+
+      // define the diff
+      const diff = (plan.difference) ? `\n${indentString(plan.difference, 4)}` : '';
+
+      // append to output
+      output.push(header + diff);
     });
+
+    // display the output
+    console.log(output.join('\n'));
   }
 }

@@ -13,6 +13,7 @@ ControlConfig {
     ChangeDefinition {
       "hash": "1c94e8540709dc58f76d528d843add1ca2ed56bddb40afddb550473bfc379054",
       "id": "first_change",
+      "path": "./first_change.sql",
       "reappliable": false,
       "sql": "wassup!
 ",
@@ -22,6 +23,7 @@ ControlConfig {
     ChangeDefinition {
       "hash": "60675ff6ce6168cc979c4c24cd9d943938f3e66b585c855158c93fa6b0c18b4a",
       "id": "init_20190619_1",
+      "path": "./init/service_user.sql",
       "reappliable": false,
       "sql": "CREATE USER ...
 GRANT ...
@@ -32,6 +34,7 @@ GRANT ...
     ChangeDefinition {
       "hash": "57ccb893536b1a5708a6ffc105980eda3b3182ea57fc88e3f8362b3537d2a4d4",
       "id": "data_20190619_1",
+      "path": "./init/data_sources.sql",
       "reappliable": false,
       "sql": "-- sometimes users want to provision their databases with some initial values or ensure something exists in the database
 INSERT INTO ...
@@ -42,6 +45,7 @@ INSERT INTO ...
     ChangeDefinition {
       "hash": "c61a11e61b3fd7fdd827734dda8fbaec17cc1bbcf7d9784874e4d26348f79828",
       "id": "procedures_20190619_1",
+      "path": "./procedures/awesome_sproc.sql",
       "reappliable": true,
       "sql": "DROP IF EXISTS PROCEDURE ...
 CREATE PROCEDURE ...
