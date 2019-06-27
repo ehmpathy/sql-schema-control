@@ -10,6 +10,7 @@ const connectionAdapters = {
       database: connectionConfig.schema,
       user: connectionConfig.username,
       password: connectionConfig.password,
+      multipleStatements: true,
     });
     return {
       query: async ({ sql, values }: { sql: string, values?: any[] }) => {

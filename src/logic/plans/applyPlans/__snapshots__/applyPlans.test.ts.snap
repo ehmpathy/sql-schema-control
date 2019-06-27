@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`applyPlans should display an expected listr output for the plans 1`] = `
+"  [33m⠙[39m [1m[32m[APPLY][39m[22m __PATH__
+    [1m[33m[REAPPLY][39m[22m __PATH__
+[2K[1A[2K[1A[2K[G  [33m⠹[39m [1m[32m[APPLY][39m[22m __PATH__
+    [1m[33m[REAPPLY][39m[22m __PATH__
+[2K[1A[2K[1A[2K[G  [33m⠸[39m [1m[32m[APPLY][39m[22m __PATH__
+    [1m[33m[REAPPLY][39m[22m __PATH__
+[2K[1A[2K[1A[2K[G  [33m⠼[39m [1m[32m[APPLY][39m[22m __PATH__
+    [1m[33m[REAPPLY][39m[22m __PATH__
+[2K[1A[2K[1A[2K[G  [32m✔[39m [1m[32m[APPLY][39m[22m __PATH__
+  [33m⠙[39m [1m[33m[REAPPLY][39m[22m __PATH__
+[2K[1A[2K[1A[2K[G  [32m✔[39m [1m[32m[APPLY][39m[22m __PATH__
+  [33m⠹[39m [1m[33m[REAPPLY][39m[22m __PATH__
+[2K[1A[2K[1A[2K[G  [32m✔[39m [1m[32m[APPLY][39m[22m __PATH__
+  [33m⠸[39m [1m[33m[REAPPLY][39m[22m __PATH__
+[2K[1A[2K[1A[2K[G  [32m✔[39m [1m[32m[APPLY][39m[22m __PATH__
+  [33m⠼[39m [1m[33m[REAPPLY][39m[22m __PATH__
+[2K[1A[2K[1A[2K[G  [32m✔[39m [1m[32m[APPLY][39m[22m __PATH__
+  [33m⠴[39m [1m[33m[REAPPLY][39m[22m __PATH__
+[2K[1A[2K[1A[2K[G  [32m✔[39m [1m[32m[APPLY][39m[22m __PATH__
+  [32m✔[39m [1m[33m[REAPPLY][39m[22m __PATH__
+"
+`;

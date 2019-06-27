@@ -1,1 +1,0 @@
-export { getPlan } from './getPlan';
