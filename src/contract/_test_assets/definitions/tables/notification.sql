@@ -13,12 +13,11 @@ CREATE TABLE notification (
 
   -- meta meta
   PRIMARY KEY (`id`),
-  UNIQUE INDEX notifications_ux1 (`user_uuid`, `method`, `address`, `message_id`, `wait_until`),
-  CONSTRAINT notification_fk1 FOREIGN KEY (`message_id`) REFERENCES message(id)
+  UNIQUE INDEX notifications_ux1 (`user_uuid`, `method`, `address`, `message_id`, `wait_until`)
+  -- CONSTRAINT notification_fk1 FOREIGN KEY (`message_id`) REFERENCES message(id)
 ) ENGINE = InnoDB;
 CREATE TABLE notification_version (
   -- meta
-  `id` BIGINT NOT NULL AUTO_INCREMENT, -- pk
   `notification_id` BIGINT NOT NULL, -- fk pointing to static entity
   `effective_at` DATETIME(6) NOT NULL, -- the user should define the effective_at timestamp
 

@@ -2,28 +2,28 @@
 
 exports[`plan should have an expected appearance when all changes need to be applied 1`] = `
 "    [1m[22m
-    [1m * [32m[APPLY][39m ./init/service_user.sql [90m(id: init_20190619_1)[39m [22m
+    [1m * [1m[32m[APPLY][39m[1m ./init/service_user.sql [90m(id: init_20190619_1)[39m [22m
     [1m[22m
         [90mCREATE USER 'user_name'@'%';[39m
         [90mGRANT ALL PRIVILEGES ON awesomedb.* To 'user_name'@'%' IDENTIFIED BY '__CHANGE_M3__'; -- change password in real db[39m
         [90m[39m
     [1m[22m
-    [1m * [32m[APPLY][39m ./tables/data_source.sql [90m(id: table_20190626_1)[39m [22m
+    [1m * [1m[32m[APPLY][39m[1m ./tables/data_source.sql [90m(id: table_20190626_1)[39m [22m
     [1m[22m
         [90mCREATE TABLE IF NOT EXISTS data_source ([39m
         [90m  -- meta[39m
         [90m  id              BIGINT PRIMARY KEY AUTO_INCREMENT,[39m
-        [90m  created_at      DATETIME DEFAULT CURRENT_TIMESTAMP[39m
+        [90m  created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,[39m
         [90m[39m
         [90m  -- static[39m
-        [90m  name            VARCHAR(128) NOT NULL[39m
+        [90m  name            VARCHAR(128) NOT NULL,[39m
         [90m[39m
         [90m  -- meta meta[39m
         [90m  CONSTRAINT data_source_ux1 UNIQUE (name)[39m
         [90m) ENGINE = InnoDB;[39m
         [90m[39m
     [1m[22m
-    [1m * [32m[APPLY][39m ./tables/notification.sql [90m(id: table_20190626_2)[39m [22m
+    [1m * [1m[32m[APPLY][39m[1m ./tables/notification.sql [90m(id: table_20190626_2)[39m [22m
     [1m[22m
         [90mCREATE TABLE notification ([39m
         [90m  -- meta[39m
@@ -40,12 +40,11 @@ exports[`plan should have an expected appearance when all changes need to be app
         [90m[39m
         [90m  -- meta meta[39m
         [90m  PRIMARY KEY (\`id\`),[39m
-        [90m  UNIQUE INDEX notifications_ux1 (\`user_uuid\`, \`method\`, \`address\`, \`message_id\`, \`wait_until\`),[39m
-        [90m  CONSTRAINT notification_fk1 FOREIGN KEY (\`message_id\`) REFERENCES message(id)[39m
+        [90m  UNIQUE INDEX notifications_ux1 (\`user_uuid\`, \`method\`, \`address\`, \`message_id\`, \`wait_until\`)[39m
+        [90m  -- CONSTRAINT notification_fk1 FOREIGN KEY (\`message_id\`) REFERENCES message(id)[39m
         [90m) ENGINE = InnoDB;[39m
         [90mCREATE TABLE notification_version ([39m
         [90m  -- meta[39m
-        [90m  \`id\` BIGINT NOT NULL AUTO_INCREMENT, -- pk[39m
         [90m  \`notification_id\` BIGINT NOT NULL, -- fk pointing to static entity[39m
         [90m  \`effective_at\` DATETIME(6) NOT NULL, -- the user should define the effective_at timestamp[39m
         [90m[39m
@@ -59,14 +58,14 @@ exports[`plan should have an expected appearance when all changes need to be app
         [90m) ENGINE = InnoDB;[39m
         [90m[39m
     [1m[22m
-    [1m * [32m[APPLY][39m ./init/data_sources.sql [90m(id: data_20190619_1)[39m [22m
+    [1m * [1m[32m[APPLY][39m[1m ./init/data_sources.sql [90m(id: data_20190619_1)[39m [22m
     [1m[22m
         [90m-- sometimes users want to provision their databases with some initial values or ensure something exists in the database[39m
         [90mINSERT INTO data_source (name) VALUES ('FOOGLE') ON DUPLICATE KEY UPDATE name=name; -- on duplicate do nothing -> upsert the static entity[39m
         [90mINSERT INTO data_source (name) VALUES ('MAPCREST') ON DUPLICATE KEY UPDATE name=name; -- on duplicate do nothing -> upsert the static entity[39m
         [90m[39m
     [1m[22m
-    [1m * [32m[APPLY][39m ./procedures/find_message_hash_by_text.sql [90m(id: procedures_20190626_1)[39m [22m
+    [1m * [1m[32m[APPLY][39m[1m ./procedures/find_message_hash_by_text.sql [90m(id: procedures_20190626_1)[39m [22m
     [1m[22m
         [90mDROP FUNCTION IF EXISTS find_message_hash_by_text;[39m
         [90mCREATE FUNCTION find_message_hash_by_text([39m
@@ -78,7 +77,7 @@ exports[`plan should have an expected appearance when all changes need to be app
         [90mEND;[39m
         [90m[39m
     [1m[22m
-    [1m * [32m[APPLY][39m ./procedures/upsert_message.sql [90m(id: procedures_20190626_2)[39m [22m
+    [1m * [1m[32m[APPLY][39m[1m ./procedures/upsert_message.sql [90m(id: procedures_20190626_2)[39m [22m
     [1m[22m
         [90mDROP PROCEDURE IF EXISTS upsert_message;[39m
         [90mCREATE PROCEDURE upsert_message([39m
