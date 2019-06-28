@@ -16,7 +16,6 @@ Database schema management and control. Provision, sync, update, and migrate you
 * [Installation](#installation)
 * [Usage](#usage)
 * [Commands](#commands)
-* [TODO](#todo)
 * [Scope](#scope)
 * [Contribution](#contribution)
 <!-- tocstop -->
@@ -97,8 +96,36 @@ These commands will operate on all resource and change definitions that are defi
 
 # Commands
 <!-- commands -->
+* [`schema-control apply`](#schema-control-apply)
 * [`schema-control help [COMMAND]`](#schema-control-help-command)
 * [`schema-control plan`](#schema-control-plan)
+
+## `schema-control apply`
+
+apply an execution plan
+
+```
+USAGE
+  $ schema-control apply
+
+OPTIONS
+  -c, --config=config  [default: schema/control.yml] path to config file
+  -h, --help           show CLI help
+
+EXAMPLE
+  $ schema-control apply -c src/contract/_test_assets/control.yml
+       [APPLY] ./tables/data_source.sql
+       [APPLY] ./tables/notification.sql
+       [APPLY] ./init/data_sources.sql
+       [APPLY] ./procedures/find_message_hash_by_text.sql
+       [APPLY] ./procedures/upsert_message.sql
+     ✖ [APPLY] ./init/service_user.sql
+       → Could not apply ./init/service_user.sql: Operation CREATE USER failed for
+  …
+  Could not apply ./init/service_user.sql: Operation CREATE USER failed for 'user_name'@'%'
+```
+
+_See code: [dist/contract/commands/apply.ts](https://github.com/uladkasach/schema-control/blob/v0.2.0/dist/contract/commands/apply.ts)_
 
 ## `schema-control help [COMMAND]`
 
@@ -128,51 +155,20 @@ USAGE
 OPTIONS
   -c, --config=config  [default: schema/control.yml] path to config file
   -h, --help           show CLI help
+
+EXAMPLE
+  $ schema-control plan
+
+    * [APPLY] ./init/service_user.sql (id: init_20190619_1)
+
+       CREATE USER 'user_name'@'%';
+       GRANT ALL PRIVILEGES ON awesomedb.* To 'user_name'@'%' IDENTIFIED BY '__CHANGE_M3__'; -- change password in real
+  db
 ```
 
-_See code: [dist/contract/commands/plan.ts](https://github.com/uladkasach/schema-control/blob/v0.0.0/dist/contract/commands/plan.ts)_
+_See code: [dist/contract/commands/plan.ts](https://github.com/uladkasach/schema-control/blob/v0.2.0/dist/contract/commands/plan.ts)_
 <!-- commandsstop -->
 
-
-
-# TODO
-
-## Pull Resources
-Retrieve the definition of a resource from the database so you can save it into your checked-in resources.
-
-```
-npx schema-control pull -d ./schema/.tmp/pull_results
-```
-
-SchemaControl simply retrieves the create definition for the resource and saves it into a file. The directory to save that file to must be specified with the `into-directory` argument.
-
-By default, SchemaControl separates each type of resource into their own directories. This also means that if you are following the resource directory definition laid out by SchemaControl, you may simply pull changes directly into your source resource definitions directory. In fact, this is a good way of migrating to SchemaControl - as you can initialize your resource definitions directory in this way (e.g., `npx schema-control pull -d ./schema`)
-
-###### arguments
-- `-d` or `--into-directory`: specify the directory into which to pull the resource definitions
-
-
-## Apply Changes and Resources
-Apply *NOT_APPLIED* and, if specified, *OUT_OF_DATE* change and *OUT_OF_SYNC* resource definitions. In other words, run the resource definition sql if the resource is in one of the above states.
-
-To apply only *NOT_APPLIED* resource definitions:
-```
-npx schema-control apply
-```
-
-To apply both *NOT_APPLIED*, reappliable *OUT_OF_DATE* command definitions, as well as replaceable *OUT_OF_SYNC* resource definitions:
-```
-npx schema-control apply --and-update
-```
-
-Applying *NOT_APPLIED* resource definitions is simple: we're creating new resources or have changes that were not applied and just need to run the sql.
-
-Applying *OUT_OF_DATE* resource definitions is possible only when the user explicitly defines that we can reappliable.
-- If a change can not be reapplied on update, then the user must manually make the change and ask schema-control to update the applied hash manually: `npx schema-control record --applied --change-id '__CHANGE_SET_ID__'`
-
-Applying *OUT_OF_SYNC* resource definitions can be more complicated depending on the resource type.
-- For stored procedures, functions, views, and other resources that can be drop and replaced, applying the resource definitions again to get the database in sync with the checked-in definition is sufficient (as long as `CREATE OR REPLACE` or the analog is included in the resource definition).
-- For tables and other resources that can not simply be dropped and recreated, a migration must be conducted to sync the states. SchemaControl does not currently support applying migrations, so these must be conducted manually. SchemaControl will, however, define what is out of sync between your checked-in resource definition and the definition live in the database.
 
 # Scope
 Schema Control intends to simplify, automate, and make database schema management transparent, as much as possible.
