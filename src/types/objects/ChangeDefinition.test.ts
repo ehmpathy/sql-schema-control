@@ -5,7 +5,6 @@ import sha256 from 'simple-sha256';
 describe('ChangeDefinition', () => {
   it('should initialize for valid inputs', () => {
     const changeDefinition = new ChangeDefinition({
-      type: DefinitionType.CHANGE,
       id: 'cool_change_20190619_1',
       path: '__PATH__',
       sql: '__SQL__',
