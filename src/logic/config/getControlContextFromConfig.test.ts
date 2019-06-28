@@ -3,7 +3,7 @@ import { DatabaseLanguage, ControlContext, ChangeDefinition, DefinitionType } fr
 import { getControlContextFromConfig } from './getControlContextFromConfig';
 import { getConfig } from './getConfig';
 import { initializeControlEnvironment } from './initializeControlEnvironment';
-import { getStatus } from '../assess/getStatus';
+import { getStatus } from '../definitions/getStatus';
 
 jest.mock('./getConfig');
 const getConfigMock = getConfig as jest.Mock;
@@ -35,7 +35,7 @@ const initializeControlEnvironmentMock = initializeControlEnvironment as jest.Mo
 const exampleConnection = { query: () => {}, end: () => {} };
 initializeControlEnvironmentMock.mockResolvedValue({ connection: exampleConnection }); // since typechecked by Context object
 
-jest.mock('../assess/getStatus');
+jest.mock('../definitions/getStatus');
 const getStatusMock = getStatus as jest.Mock;
 getStatusMock.mockImplementation(({ definition }) => definition); // pass back what was given
 

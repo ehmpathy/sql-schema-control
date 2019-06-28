@@ -1,7 +1,7 @@
 import { ControlContext } from '../../types';
 import { getConfig } from './getConfig';
 import { initializeControlEnvironment } from './initializeControlEnvironment';
-import { getStatus } from '../assess/getStatus';
+import { getStatus } from '../definitions/getStatus';
 
 /*
   1. get the config (validated and hydrated)

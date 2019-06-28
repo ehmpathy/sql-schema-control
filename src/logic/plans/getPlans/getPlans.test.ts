@@ -1,7 +1,7 @@
 import { getPlans } from './getPlans';
-import { getDefinitionPlan } from '../../assess/getDefinitionPlan';
+import { getDefinitionPlan } from '../../definitions/getDefinitionPlan';
 
-jest.mock('../../assess/getDefinitionPlan');
+jest.mock('../../definitions/getDefinitionPlan');
 const getDefinitionPlanMock = getDefinitionPlan as jest.Mock;
 getDefinitionPlanMock.mockResolvedValue('__PLAN__');
 

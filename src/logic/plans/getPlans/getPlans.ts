@@ -1,5 +1,5 @@
 import { ControlContext } from '../../../types';
-import { getDefinitionPlan } from '../../assess/getDefinitionPlan';
+import { getDefinitionPlan } from '../../definitions/getDefinitionPlan';
 
 /*
   1. get the control context from the config
