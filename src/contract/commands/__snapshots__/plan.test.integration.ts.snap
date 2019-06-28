@@ -1,103 +1,91 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`plan should have an expected appearance when all changes need to be applied 1`] = `
-"    [1m[22m
-    [1m * [1m[32m[APPLY][39m[1m ./init/service_user.sql [90m(id: init_20190619_1)[39m [22m
-    [1m[22m
-        [90mCREATE USER 'user_name'@'%';[39m
-        [90mGRANT ALL PRIVILEGES ON awesomedb.* To 'user_name'@'%' IDENTIFIED BY '__CHANGE_M3__'; -- change password in real db[39m
-        [90m[39m
-    [1m[22m
-    [1m * [1m[32m[APPLY][39m[1m ./tables/data_source.sql [90m(id: table_20190626_1)[39m [22m
-    [1m[22m
-        [90mCREATE TABLE IF NOT EXISTS data_source ([39m
-        [90m  -- meta[39m
-        [90m  id              BIGINT PRIMARY KEY AUTO_INCREMENT,[39m
-        [90m  created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,[39m
-        [90m[39m
-        [90m  -- static[39m
-        [90m  name            VARCHAR(128) NOT NULL,[39m
-        [90m[39m
-        [90m  -- meta meta[39m
-        [90m  CONSTRAINT data_source_ux1 UNIQUE (name)[39m
-        [90m) ENGINE = InnoDB;[39m
-        [90m[39m
-    [1m[22m
-    [1m * [1m[32m[APPLY][39m[1m ./tables/notification.sql [90m(id: table_20190626_2)[39m [22m
-    [1m[22m
-        [90mCREATE TABLE notification ([39m
-        [90m  -- meta[39m
-        [90m  \`id\` BIGINT NOT NULL AUTO_INCREMENT, -- pk[39m
-        [90m  \`uuid\` CHAR(36) NOT NULL, -- uuid[39m
-        [90m  \`created_at\` DATETIME DEFAULT CURRENT_TIMESTAMP,[39m
-        [90m[39m
-        [90m  -- static data[39m
-        [90m  \`user_uuid\` CHAR(36) NOT NULL, -- uuid[39m
-        [90m  \`method\` ENUM('APP', 'SMS') NOT NULL,[39m
-        [90m  \`address\` VARCHAR(255) NOT NULL, -- e.g, a phone number[39m
-        [90m  \`message_id\` BIGINT NOT NULL, -- pointer to message to send; one:many[39m
-        [90m  \`wait_until\` DATETIME(3) NOT NULL, -- when can we send the notification[39m
-        [90m[39m
-        [90m  -- meta meta[39m
-        [90m  PRIMARY KEY (\`id\`),[39m
-        [90m  UNIQUE INDEX notifications_ux1 (\`user_uuid\`, \`method\`, \`address\`, \`message_id\`, \`wait_until\`)[39m
-        [90m  -- CONSTRAINT notification_fk1 FOREIGN KEY (\`message_id\`) REFERENCES message(id)[39m
-        [90m) ENGINE = InnoDB;[39m
-        [90mCREATE TABLE notification_version ([39m
-        [90m  -- meta[39m
-        [90m  \`notification_id\` BIGINT NOT NULL, -- fk pointing to static entity[39m
-        [90m  \`effective_at\` DATETIME(6) NOT NULL, -- the user should define the effective_at timestamp[39m
-        [90m[39m
-        [90m  -- mutatable data[39m
-        [90m  \`status\` ENUM('WAITING', 'QUEUED', 'SENT') NOT NULL,[39m
-        [90m[39m
-        [90m  -- meta meta[39m
-        [90m  PRIMARY KEY (\`notification_id\`, \`effective_at\`),[39m
-        [90m  INDEX notification_version_ix1 (\`status\`),[39m
-        [90m  CONSTRAINT notification_version_fk1 FOREIGN KEY (\`notification_id\`) REFERENCES notification(id)[39m
-        [90m) ENGINE = InnoDB;[39m
-        [90m[39m
-    [1m[22m
-    [1m * [1m[32m[APPLY][39m[1m ./init/data_sources.sql [90m(id: data_20190619_1)[39m [22m
-    [1m[22m
-        [90m-- sometimes users want to provision their databases with some initial values or ensure something exists in the database[39m
-        [90mINSERT INTO data_source (name) VALUES ('FOOGLE') ON DUPLICATE KEY UPDATE name=name; -- on duplicate do nothing -> upsert the static entity[39m
-        [90mINSERT INTO data_source (name) VALUES ('MAPCREST') ON DUPLICATE KEY UPDATE name=name; -- on duplicate do nothing -> upsert the static entity[39m
-        [90m[39m
-    [1m[22m
-    [1m * [1m[32m[APPLY][39m[1m ./procedures/find_message_hash_by_text.sql [90m(id: procedures_20190626_1)[39m [22m
-    [1m[22m
-        [90mDROP FUNCTION IF EXISTS find_message_hash_by_text;[39m
-        [90mCREATE FUNCTION find_message_hash_by_text([39m
-        [90m  in_message TEXT[39m
-        [90m)[39m
-        [90mRETURNS BINARY(32)[39m
-        [90mBEGIN[39m
-        [90m  RETURN UNHEX(SHA(in_message));[39m
-        [90mEND;[39m
-        [90m[39m
-    [1m[22m
-    [1m * [1m[32m[APPLY][39m[1m ./procedures/upsert_message.sql [90m(id: procedures_20190626_2)[39m [22m
-    [1m[22m
-        [90mDROP PROCEDURE IF EXISTS upsert_message;[39m
-        [90mCREATE PROCEDURE upsert_message([39m
-        [90m  IN in_message TEXT[39m
-        [90m)[39m
-        [90mBEGIN[39m
-        [90m  DECLARE v_message_hash BINARY(32);[39m
-        [90m  DECLARE v_message_id BIGINT;[39m
-        [90m[39m
-        [90m  -- assert the message exists[39m
-        [90m  SET v_message_id = find_message_id_by_text(in_message);[39m
-        [90m  IF (v_message_id IS null) THEN[39m
-        [90m    SET v_message_hash = find_message_hash_by_text(in_message);[39m
-        [90m    INSERT INTO messages[39m
-        [90m      (text, hash)[39m
-        [90m      VALUES[39m
-        [90m      (in_message, v_message_hash);[39m
-        [90m  END IF;[39m
-        [90mEND;[39m
-        [90m[39m
+"      * [1m[32m[APPLY][39m ./init/service_user.sql [90m(id: init_20190619_1)[39m[22m
+          [90mCREATE USER 'user_name'@'%';[39m
+          [90mGRANT ALL PRIVILEGES ON awesomedb.* To 'user_name'@'%' IDENTIFIED BY '__CHANGE_M3__'; -- change password in real db[39m
+          [90m[39m
+      * [1m[32m[APPLY][39m ./tables/data_source.sql [90m(id: table_20190626_1)[39m[22m
+          [90mCREATE TABLE IF NOT EXISTS data_source ([39m
+          [90m  -- meta[39m
+          [90m  id              BIGINT PRIMARY KEY AUTO_INCREMENT,[39m
+          [90m  created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,[39m
+          [90m[39m
+          [90m  -- static[39m
+          [90m  name            VARCHAR(128) NOT NULL,[39m
+          [90m[39m
+          [90m  -- meta meta[39m
+          [90m  CONSTRAINT data_source_ux1 UNIQUE (name)[39m
+          [90m) ENGINE = InnoDB;[39m
+          [90m[39m
+      * [1m[32m[APPLY][39m ./tables/notification.sql [90m(id: table_20190626_2)[39m[22m
+          [90mCREATE TABLE notification ([39m
+          [90m  -- meta[39m
+          [90m  \`id\` BIGINT NOT NULL AUTO_INCREMENT, -- pk[39m
+          [90m  \`uuid\` CHAR(36) NOT NULL, -- uuid[39m
+          [90m  \`created_at\` DATETIME DEFAULT CURRENT_TIMESTAMP,[39m
+          [90m[39m
+          [90m  -- static data[39m
+          [90m  \`user_uuid\` CHAR(36) NOT NULL, -- uuid[39m
+          [90m  \`method\` ENUM('APP', 'SMS') NOT NULL,[39m
+          [90m  \`address\` VARCHAR(255) NOT NULL, -- e.g, a phone number[39m
+          [90m  \`message_id\` BIGINT NOT NULL, -- pointer to message to send; one:many[39m
+          [90m  \`wait_until\` DATETIME(3) NOT NULL, -- when can we send the notification[39m
+          [90m[39m
+          [90m  -- meta meta[39m
+          [90m  PRIMARY KEY (\`id\`),[39m
+          [90m  UNIQUE INDEX notifications_ux1 (\`user_uuid\`, \`method\`, \`address\`, \`message_id\`, \`wait_until\`)[39m
+          [90m  -- CONSTRAINT notification_fk1 FOREIGN KEY (\`message_id\`) REFERENCES message(id)[39m
+          [90m) ENGINE = InnoDB;[39m
+          [90mCREATE TABLE notification_version ([39m
+          [90m  -- meta[39m
+          [90m  \`notification_id\` BIGINT NOT NULL, -- fk pointing to static entity[39m
+          [90m  \`effective_at\` DATETIME(6) NOT NULL, -- the user should define the effective_at timestamp[39m
+          [90m[39m
+          [90m  -- mutatable data[39m
+          [90m  \`status\` ENUM('WAITING', 'QUEUED', 'SENT') NOT NULL,[39m
+          [90m[39m
+          [90m  -- meta meta[39m
+          [90m  PRIMARY KEY (\`notification_id\`, \`effective_at\`),[39m
+          [90m  INDEX notification_version_ix1 (\`status\`),[39m
+          [90m  CONSTRAINT notification_version_fk1 FOREIGN KEY (\`notification_id\`) REFERENCES notification(id)[39m
+          [90m) ENGINE = InnoDB;[39m
+          [90m[39m
+      * [1m[32m[APPLY][39m ./init/data_sources.sql [90m(id: data_20190619_1)[39m[22m
+          [90m-- sometimes users want to provision their databases with some initial values or ensure something exists in the database[39m
+          [90mINSERT INTO data_source (name) VALUES ('FOOGLE') ON DUPLICATE KEY UPDATE name=name; -- on duplicate do nothing -> upsert the static entity[39m
+          [90mINSERT INTO data_source (name) VALUES ('MAPCREST') ON DUPLICATE KEY UPDATE name=name; -- on duplicate do nothing -> upsert the static entity[39m
+          [90m[39m
+      * [1m[32m[APPLY][39m ./procedures/find_message_hash_by_text.sql [90m(id: procedures_20190626_1)[39m[22m
+          [90mDROP FUNCTION IF EXISTS find_message_hash_by_text;[39m
+          [90mCREATE FUNCTION find_message_hash_by_text([39m
+          [90m  in_message TEXT[39m
+          [90m)[39m
+          [90mRETURNS BINARY(32)[39m
+          [90mBEGIN[39m
+          [90m  RETURN UNHEX(SHA(in_message));[39m
+          [90mEND;[39m
+          [90m[39m
+      * [1m[32m[APPLY][39m ./procedures/upsert_message.sql [90m(id: procedures_20190626_2)[39m[22m
+          [90mDROP PROCEDURE IF EXISTS upsert_message;[39m
+          [90mCREATE PROCEDURE upsert_message([39m
+          [90m  IN in_message TEXT[39m
+          [90m)[39m
+          [90mBEGIN[39m
+          [90m  DECLARE v_message_hash BINARY(32);[39m
+          [90m  DECLARE v_message_id BIGINT;[39m
+          [90m[39m
+          [90m  -- assert the message exists[39m
+          [90m  SET v_message_id = find_message_id_by_text(in_message);[39m
+          [90m  IF (v_message_id IS null) THEN[39m
+          [90m    SET v_message_hash = find_message_hash_by_text(in_message);[39m
+          [90m    INSERT INTO messages[39m
+          [90m      (text, hash)[39m
+          [90m      VALUES[39m
+          [90m      (in_message, v_message_hash);[39m
+          [90m  END IF;[39m
+          [90mEND;[39m
+          [90m[39m
 
 "
 `;

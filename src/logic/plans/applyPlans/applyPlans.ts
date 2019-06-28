@@ -1,7 +1,7 @@
 import Listr from 'listr';
 import { RequiredAction, DefinitionPlan, DatabaseConnection } from '../../../types';
 import { applyPlan } from './applyPlan';
-import { getColoredActionToken } from '../_utils/getColoredActionToken';
+import { getColoredPlanTitle } from '../_utils/getColoredPlanTitle';
 
 /*
   if APPLY or REAPPLY, apply
@@ -11,7 +11,7 @@ export const applyPlans = async ({ connection, plans }: { connection: DatabaseCo
   const tasks = plans
     .filter(plan => [RequiredAction.APPLY, RequiredAction.REAPPLY].includes(plan.action)) // only apply or reapply
     .map((plan): Listr.ListrTask => ({
-      title: `${getColoredActionToken({ action: plan.action })} ${plan.definition.path}`,
+      title: getColoredPlanTitle({ plan }),
       task: () => applyPlan({ connection, plan }),
     }));
   const taskSuite = new Listr(tasks);

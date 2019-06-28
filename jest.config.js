@@ -1,4 +1,5 @@
 module.exports = {
+  verbose: true, // Indicates whether each individual test should be reported during the run; also, rquired for TTY output to always be displayed
 	globals: {
 		'ts-jest': {
 			tsConfig: 'tsconfig.json'

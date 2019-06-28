@@ -34,5 +34,5 @@ module.exports = {
     '/acceptance-tests/',
   ],
 
-  verbose: true, // Indicates whether each individual test should be reported during the run
+  verbose: true, // Indicates whether each individual test should be reported during the run; also, rquired for TTY output to always be displayed
 };

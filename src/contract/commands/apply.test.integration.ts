@@ -4,7 +4,7 @@ import { DatabaseConnection, DatabaseLanguage, ControlConfig } from '../../types
 import { promiseConfig } from '../_test_assets/connection.config';
 import { initializeControlEnvironment } from '../../logic/config/initializeControlEnvironment';
 
-describe('plan', () => {
+describe('apply', () => {
   let connection: DatabaseConnection;
   beforeAll(async () => {
     const config = new ControlConfig({
@@ -27,13 +27,15 @@ describe('plan', () => {
     await connection.query({ sql: 'DELETE FROM schema_control_change_log' });
 
     // run the test
-    process.stdout.isTTY = true; // since listr acts differently if nonTTY and jest is nonTTY when more than one plans
-    stdout.stripColor = false; // dont strip color
+    process.stdout.isTTY = undefined; // since listr acts differently if nonTTY and jest is nonTTY when more than one test is run
+    stdout.stripColor = true; // dont strip color
     stdout.start();
     await Apply.run(['-c', `${__dirname}/../_test_assets/control.yml`]);
     stdout.stop();
-    const output = stdout.output.split('\n').filter(line => !line.includes('console.log')).join('\n');
-    console.log(output);
+    const output = stdout.output
+      .split('\n').filter(line => !line.includes('console.log')).join('\n') // strip the console log portion
+      .replace(/\[\d\d:\d\d:\d\d\]/g, ''); // remove all timestamps, since they change over time...
     expect(output).toMatchSnapshot();
+    process.stdout.isTTY = true;
   });
 });

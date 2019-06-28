@@ -1,17 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`plan should have an expected appearance when all changes need to be applied 1`] = `
-"  [32m✔[39m [1m[32m[APPLY][39m[22m ./init/service_user.sql
-  [32m✔[39m [1m[32m[APPLY][39m[22m ./tables/data_source.sql
-  [33m⠙[39m [1m[32m[APPLY][39m[22m ./tables/notification.sql
-    [1m[32m[APPLY][39m[22m ./init/data_sources.sql
-    [1m[32m[APPLY][39m[22m ./procedures/find_message_hash_by_text.sql
-    [1m[32m[APPLY][39m[22m ./procedures/upsert_message.sql
-[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G  [32m✔[39m [1m[32m[APPLY][39m[22m ./init/service_user.sql
-  [32m✔[39m [1m[32m[APPLY][39m[22m ./tables/data_source.sql
-  [32m✔[39m [1m[32m[APPLY][39m[22m ./tables/notification.sql
-  [32m✔[39m [1m[32m[APPLY][39m[22m ./init/data_sources.sql
-  [32m✔[39m [1m[32m[APPLY][39m[22m ./procedures/find_message_hash_by_text.sql
-  [32m✔[39m [1m[32m[APPLY][39m[22m ./procedures/upsert_message.sql
+exports[`apply should have an expected appearance when all changes need to be applied 1`] = `
+"     [APPLY] ./init/service_user.sql (id: init_20190619_1) [started]
+
+     [APPLY] ./init/service_user.sql (id: init_20190619_1) [completed]
+
+     [APPLY] ./tables/data_source.sql (id: table_20190626_1) [started]
+
+     [APPLY] ./tables/data_source.sql (id: table_20190626_1) [completed]
+
+     [APPLY] ./tables/notification.sql (id: table_20190626_2) [started]
+
+     [APPLY] ./tables/notification.sql (id: table_20190626_2) [completed]
+
+     [APPLY] ./init/data_sources.sql (id: data_20190619_1) [started]
+
+     [APPLY] ./init/data_sources.sql (id: data_20190619_1) [completed]
+
+     [APPLY] ./procedures/find_message_hash_by_text.sql (id: procedures_20190626_1) [started]
+
+     [APPLY] ./procedures/find_message_hash_by_text.sql (id: procedures_20190626_1) [completed]
+
+     [APPLY] ./procedures/upsert_message.sql (id: procedures_20190626_2) [started]
+
+     [APPLY] ./procedures/upsert_message.sql (id: procedures_20190626_2) [completed]
+
 "
 `;

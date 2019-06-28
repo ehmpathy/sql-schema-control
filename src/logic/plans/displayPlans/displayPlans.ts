@@ -1,23 +1,16 @@
-import chalk from 'chalk';
 import indentString from 'indent-string';
 import { DefinitionPlan } from '../../../types';
-import { getColoredActionToken } from '../_utils/getColoredActionToken';
+import { getColoredPlanTitle } from '../_utils/getColoredPlanTitle';
 
 export const displayPlans = async ({ plans }: { plans: DefinitionPlan[] }) => {
   // define plans output
   const output: string[] = [];
   plans.forEach((plan) => {
-    // define action string
-    const actionString = getColoredActionToken({ action: plan.action });
-
-    // define extra details
-    const extraDetails = chalk.gray(`(id: ${plan.definition.id})`);
-
-    // define the header
-    const header = chalk.bold((`\n * ${actionString} ${plan.definition.path} ${extraDetails} \n`));
+    // define plan header
+    const header = `  * ${getColoredPlanTitle({ plan })}`;
 
     // define the diff
-    const diff = (plan.difference) ? `\n${indentString(plan.difference, 4)}` : '';
+    const diff = (plan.difference) ? `\n${indentString(plan.difference, 6)}` : '';
 
     // append to output
     output.push(header + diff);

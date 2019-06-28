@@ -1,5 +1,4 @@
 import sha256 from 'simple-sha256';
-import uuid from 'uuid/v4';
 import { applyPlans } from './applyPlans';
 import { applyPlan } from './applyPlan';
 import { ChangeDefinition, DefinitionPlan, DefinitionType, RequiredAction } from '../../../types';
@@ -11,7 +10,7 @@ const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 applyPlanMock.mockImplementation(() => sleep(500));
 
 const exampleDefinition = new ChangeDefinition({
-  id: uuid(),
+  id: '__UUID__',
   type: DefinitionType.CHANGE,
   path: '__PATH__',
   sql: '__SQL__',
@@ -37,8 +36,8 @@ const manualReapplyPlan = new DefinitionPlan({
   difference: '__MANUAL_REAPPLY_DIFFERENCE__',
   action: RequiredAction.MANUAL_REAPPLY,
 });
-process.stdout.isTTY = true; // since listr acts differently if nonTTY and jest is nonTTY when more than one plans
 
+process.stdout.isTTY = true;
 describe('applyPlans', () => {
   beforeEach(() => jest.clearAllMocks());
   it('should attempt to apply each plan', async () => {
@@ -53,11 +52,14 @@ describe('applyPlans', () => {
     expect(applyPlanMock.mock.calls.length).toEqual(2);
   });
   it('should display an expected listr output for the plans', async () => {
-    stdout.stripColor = false; // dont strip color
+    process.stdout.isTTY = undefined; // since listr acts differently if nonTTY and jest is nonTTY when more than one test is run
+    stdout.stripColor = false;
     stdout.start();
     await applyPlans({ connection: {} as any, plans: [plan, reapplyPlan] });
     stdout.stop();
-    const output = stdout.output.split('\n').filter(line => !line.includes('console.log')).join('\n'); // strip the console log portion
+    const output = stdout.output.split('\n').filter(line => !line.includes('console.log')).join('\n') // strip the console log portion
+      .replace(/\[\d\d:\d\d:\d\d\]/g, ''); // remove all timestamps, since they change over time...
     expect(output).toMatchSnapshot();
+    process.stdout.isTTY = true;
   });
 });
