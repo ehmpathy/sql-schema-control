@@ -11,7 +11,7 @@ import { getUncontrolledResources } from '../definitions/getUncontrolledResource
     - initialize the control environment
   3. return the control context
 */
-export const getControlContextFromConfig = async ({ configPath }: { configPath: string }) => {
+export const getControlContextFromConfig = async ({ configPath, strict = false }: { configPath: string, strict?: boolean }) => {
   // 1. get the config
   const config = await getConfig({ configPath });
 
@@ -22,7 +22,7 @@ export const getControlContextFromConfig = async ({ configPath }: { configPath: 
   const definitionsWithStatus = await Promise.all(config.definitions.map(definition => getStatus({ connection, definition })));
 
   // 4. get uncontroled resources, if strict
-  if (config.strict) {
+  if (config.strict || strict) { // NOTE: we allow programatic overwrite for workflows to get extra data
     const controlledResources = definitionsWithStatus.filter(def => def.constructor === ResourceDefinition) as ResourceDefinition[];
     const uncontrolledResources = await getUncontrolledResources({ connection, controlledResources });
     definitionsWithStatus.push(...uncontrolledResources); // append the uncontrolled resources to the definitions with status object

@@ -24,7 +24,7 @@ export const getUncontrolledResources = async ({ connection, controlledResources
   const uncontrolledResourcesWithStatus = uncontrolledResources.map(resource => new ResourceDefinition({ ...resource, status: ResourceDefinitionStatus.NOT_CONTROLED }));
 
   // 4. set a path of not controlled on each resource, for use in display
-  const uncontrolledResourcesWithStatusAndPath = uncontrolledResourcesWithStatus.map(resource => new ResourceDefinition({ ...resource, path: 'uncontrolled' }));
+  const uncontrolledResourcesWithStatusAndPath = uncontrolledResourcesWithStatus.map(resource => new ResourceDefinition({ ...resource, path: `${resource.type.toLowerCase()}:${resource.name}` }));
 
   // 5. return the uncontrolled resources with status
   return uncontrolledResourcesWithStatusAndPath;

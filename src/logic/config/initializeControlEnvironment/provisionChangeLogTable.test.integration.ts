@@ -11,6 +11,7 @@ describe('provisionChangeLogTable', () => {
       dialect: '5.7',
       connection: await promiseConfig(),
       definitions: [],
+      strict: true,
     });
     connection = await connectToDatabase({ config });
   });

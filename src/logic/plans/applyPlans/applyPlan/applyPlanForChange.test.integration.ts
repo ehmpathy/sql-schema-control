@@ -13,6 +13,7 @@ describe('applyChange', () => {
       dialect: '5.7',
       connection: await promiseConfig(),
       definitions: [],
+      strict: true,
     });
     ({ connection } = await initializeControlEnvironment({ config })); // ensure db is provisioned and get connection
   });

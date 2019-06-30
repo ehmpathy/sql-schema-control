@@ -39,7 +39,7 @@ describe('getUncontrolledResources', () => {
     const controlledResources = [new ResourceDefinition({ ...liveResource, name: '__NOT_SAME_NAME__' })];
     const uncontrolledResources = await getUncontrolledResources({ connection: '__CONNECTION__' as any, controlledResources });
     expect(uncontrolledResources.length).toEqual(1);
-    expect(uncontrolledResources[0]).toEqual({ ...liveResource, status: ResourceDefinitionStatus.NOT_CONTROLED });
+    expect(uncontrolledResources[0].name).toEqual(liveResource.name);
   });
   it('should find that a resource in pullResources that does exist in liveResource is controlled', async () => {
     const liveResource = new ResourceDefinition({
@@ -57,8 +57,15 @@ describe('getUncontrolledResources', () => {
     const uncontrolledResources = await getUncontrolledResources({ connection: '__CONNECTION__' as any, controlledResources: [] as any });
     uncontrolledResources.map(uncontrolledResource => expect(uncontrolledResource.status).toEqual(ResourceDefinitionStatus.NOT_CONTROLED));
   });
-  it('should return all uncontrolled resources with path = not controlled', async () => {
+  it('should return all uncontrolled resources with path = identifier', async () => {
+    const liveResource = new ResourceDefinition({
+      path: '__SOME_PATH__',
+      sql: '__SOME_SQL__',
+      type: ResourceType.FUNCTION,
+      name: '__EXAMPLE_RESOURCE_NAME_TWO__',
+    });
+    pullResourcesMock.mockResolvedValueOnce([liveResource]);
     const uncontrolledResources = await getUncontrolledResources({ connection: '__CONNECTION__' as any, controlledResources: [] as any });
-    uncontrolledResources.map(uncontrolledResource => expect(uncontrolledResource.path).toEqual('uncontrolled'));
+    uncontrolledResources.map(uncontrolledResource => expect(uncontrolledResource.path).toEqual(`${liveResource.type.toLowerCase()}:${liveResource.name}`));
   });
 });

@@ -10,6 +10,7 @@ describe('connectToDatabase', () => {
       dialect: '5.7',
       connection: await promiseConfig(),
       definitions: [],
+      strict: true,
     });
   });
   it('should return a database connection', async () => {
