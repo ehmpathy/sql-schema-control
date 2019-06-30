@@ -21,6 +21,10 @@ describe('plan', () => {
   it('should have an expected appearance when all changes need to be applied', async () => {
     // ensure previous runs dont break this test
     await connection.query({ sql: 'DELETE FROM schema_control_change_log' });
+    await connection.query({ sql: 'DROP TABLE IF EXISTS notification_version' });
+    await connection.query({ sql: 'DROP TABLE IF EXISTS notification' });
+    await connection.query({ sql: 'DROP PROCEDURE IF EXISTS find_message_hash_by_text' });
+    await connection.query({ sql: 'DROP PROCEDURE IF EXISTS upsert_message' });
 
     // run plan
     stdout.stripColor = false; // dont strip color
