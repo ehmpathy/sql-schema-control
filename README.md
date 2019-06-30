@@ -1,7 +1,7 @@
 schema-control
 ==============
 
-Database schema management and control. Provision, sync, update, and migrate your database from version controlled resource configs.
+Declarative database schema management. Provision, track, sync, and modify your database schema with plain, version controlled, sql.
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/schema-control.svg)](https://npmjs.org/package/schema-control)
@@ -12,6 +12,7 @@ Database schema management and control. Provision, sync, update, and migrate you
 # Table of Contents
 <!-- toc -->
 * [Table of Contents](#table-of-contents)
+* [Goals](#goals)
 * [Background](#background)
 * [Installation](#installation)
 * [Usage](#usage)
@@ -19,6 +20,25 @@ Database schema management and control. Provision, sync, update, and migrate you
 * [Scope](#scope)
 * [Contribution](#contribution)
 <!-- tocstop -->
+
+# Goals
+
+The goal of Schema Control is to make database schema definitions as version controlled, declarative, simple to maintain as possible.
+
+This includes:
+- applying and reapplying `changes` to the database
+- applying, reapplying, and detecting when migrations are needed for `resources` to the database
+- detecting when live resources in the database are out of sync with controlled in resource definitions
+- detecting uncontrolled resources live in database
+
+And Enables:
+- eliminating manual DDL and DCL queries and manual data provisioning
+- automatically provisioning databases for integration testing
+- database management in CICD
+- tracking all schema definitions in version control
+  - all definitions: from creating users and initial data to altering tables
+
+This project takes inspiration from Liquibase and Terraform.
 
 
 # Background
@@ -63,7 +83,7 @@ Resources are DDL created entities that we can track and "sync" with your checke
   }
   ```
 
-4. Define a config yml
+4. Define a root control config yml
   ```yml
     # e.g., ./schema/control.yml
     language: mysql
@@ -74,8 +94,12 @@ Resources are DDL created entities that we can track and "sync" with your checke
         path: './init/service_user.sql'
         id: 'init_20190619_1'
         reappliable: false
-      - ./more_changes.yml
-      - ./resources.yml
+      - type: resource
+        path: './definitions/procedures/upsert_notification.sql'
+      - ./definitions/tables.yml
+      - ./definitions/procedures.yml
+      - ./definitions/functions.yml
+      # ... more definitions or paths to nested definition files
   ```
 
 5. Test it out!
@@ -114,18 +138,20 @@ OPTIONS
 
 EXAMPLE
   $ schema-control apply -c src/contract/_test_assets/control.yml
-       [APPLY] ./tables/data_source.sql
-       [APPLY] ./tables/notification.sql
-       [APPLY] ./init/data_sources.sql
-       [APPLY] ./procedures/find_message_hash_by_text.sql
-       [APPLY] ./procedures/upsert_message.sql
-     ✖ [APPLY] ./init/service_user.sql
-       → Could not apply ./init/service_user.sql: Operation CREATE USER failed for
-  …
-  Could not apply ./init/service_user.sql: Operation CREATE USER failed for 'user_name'@'%'
+
+    ✔ [APPLY] ./tables/data_source.sql (change:table_20190626_1)
+    ✔ [APPLY] ./tables/notification.sql (resource:table:notification)
+    ↓ [MANUAL_MIGRATION] ./tables/notification_version.sql (resource:table:notification_version) [skipped]
+    ✔ [REAPPLY] ./functions/find_message_hash_by_text.sql (resource:function:find_message_hash_by_text)
+    ✔ [APPLY] ./procedures/upsert_message.sql (resource:procedure:upsert_message)
+    ✔ [APPLY] ./init/data_sources.sql (change:init_20190619_1)
+    ✖ [APPLY] ./init/service_user.sql (change:init_20190619_2)
+    → Could not apply ./init/service_user.sql: Operation CREATE USER failed for…
+
+    Could not apply ./init/service_user.sql: Operation CREATE USER failed for 'user_name'@'%'
 ```
 
-_See code: [dist/contract/commands/apply.ts](https://github.com/uladkasach/schema-control/blob/v0.2.0/dist/contract/commands/apply.ts)_
+_See code: [dist/contract/commands/apply.ts](https://github.com/uladkasach/schema-control/blob/v0.2.1/dist/contract/commands/apply.ts)_
 
 ## `schema-control help [COMMAND]`
 
@@ -160,35 +186,13 @@ EXAMPLE
   $ schema-control plan
 
     * [APPLY] ./init/service_user.sql (id: init_20190619_1)
-
        CREATE USER 'user_name'@'%';
-       GRANT ALL PRIVILEGES ON awesomedb.* To 'user_name'@'%' IDENTIFIED BY '__CHANGE_M3__'; -- change password in real
-  db
+       GRANT ALL PRIVILEGES ON awesomedb.* To 'user_name'@'%' IDENTIFIED BY '__CHANGE_M3__'; -- change password in real db
 ```
 
-_See code: [dist/contract/commands/plan.ts](https://github.com/uladkasach/schema-control/blob/v0.2.0/dist/contract/commands/plan.ts)_
+_See code: [dist/contract/commands/plan.ts](https://github.com/uladkasach/schema-control/blob/v0.2.1/dist/contract/commands/plan.ts)_
 <!-- commandsstop -->
 
-
-# Scope
-Schema Control intends to simplify, automate, and make database schema management transparent, as much as possible.
-
-This includes:
-- DDL and DCL management
-  - including migrations
-- Database Resource Syncing
-  - e.g., tables, sprocs, etc
-- Provisioning Data and Non-Standard Resources
-  - e.g., initial data
-  - e.g., resource definitions that are not yet fully supported
-
-And Enables:
-- Eliminating manual DDL and DCL queries and manual data provisioning
-- Database management in CICD
-- Automatically provisioning databases for integration testing
-- Maximally committing database resources, changes, and configurations into version control
-
-This project takes inspiration from Liquibase and Terraform.
 
 # Contribution
 

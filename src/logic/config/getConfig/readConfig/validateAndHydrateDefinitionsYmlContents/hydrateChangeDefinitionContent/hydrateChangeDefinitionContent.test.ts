@@ -1,9 +1,9 @@
 import { hydrateChangeDefinitionContent } from './hydrateChangeDefinitionContent';
-import { readFileAsync } from './../../../_utils/readFileAsync';
-import { InvalidDefinitionError } from './errors';
-import { ChangeDefinition, DefinitionType } from '../../../../../types';
+import { readFileAsync } from './../../../../_utils/readFileAsync';
+import { InvalidDefinitionError } from '../errors';
+import { ChangeDefinition, DefinitionType } from '../../../../../../types';
 
-jest.mock('./../../../_utils/readFileAsync');
+jest.mock('./../../../../_utils/readFileAsync');
 const readFileAsyncMock = readFileAsync as jest.Mock;
 readFileAsyncMock.mockResolvedValue('__SQL_CONTENTS__');
 

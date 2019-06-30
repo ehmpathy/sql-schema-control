@@ -1,6 +1,6 @@
 import uuid from 'uuid/v4';
 import sha256 from 'simple-sha256';
-import { ChangeDefinition, DefinitionType, ChangeDefinitionStatus, DefinitionPlan, RequiredAction } from '../../types';
+import { ChangeDefinition, ChangeDefinitionStatus, ResourceDefinition, ResourceType, DefinitionPlan, RequiredAction } from '../../types';
 import { getDefinitionPlan } from './getDefinitionPlan';
 import { getRequiredAction } from './getRequiredAction';
 import { getDifference } from './getDifference';
@@ -18,7 +18,6 @@ describe('getDefinitionPlan', () => {
   it('should get the required action', async () => {
     const definition = new ChangeDefinition({
       id: uuid(),
-      type: DefinitionType.CHANGE,
       path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
@@ -30,10 +29,9 @@ describe('getDefinitionPlan', () => {
       definition,
     });
   });
-  it('should get the change diff', async () => {
+  it('should get the diff', async () => {
     const definition = new ChangeDefinition({
       id: uuid(),
-      type: DefinitionType.CHANGE,
       path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
@@ -49,7 +47,6 @@ describe('getDefinitionPlan', () => {
   it('should return the definition plan', async () => {
     const definition = new ChangeDefinition({
       id: uuid(),
-      type: DefinitionType.CHANGE,
       path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
@@ -57,5 +54,26 @@ describe('getDefinitionPlan', () => {
     });
     const plan = await getDefinitionPlan({ connection: '__CONNECTION__' as any, definition });
     expect(plan.constructor).toEqual(DefinitionPlan);
+  });
+  it('should accurately define the plan id for a change definition', async () => {
+    const definition = new ChangeDefinition({
+      id: uuid(),
+      path: '__PATH__',
+      sql: '__SQL__',
+      hash: sha256.sync('__SQL__'),
+      status: ChangeDefinitionStatus.UP_TO_DATE,
+    });
+    const plan = await getDefinitionPlan({ connection: '__CONNECTION__' as any, definition });
+    expect(plan.id).toEqual(`change:${definition.id}`);
+  });
+  it('should accurately define the plan id for a resource definition', async () => {
+    const definition = new ResourceDefinition({
+      path: '__PATH__',
+      sql: '__SQL__',
+      type: ResourceType.PROCEDURE,
+      name: '__TABLE_NAME__',
+    });
+    const plan = await getDefinitionPlan({ connection: '__CONNECTION__' as any, definition });
+    expect(plan.id).toEqual('resource:procedure:__TABLE_NAME__');
   });
 });

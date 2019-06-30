@@ -1,5 +1,5 @@
 import sha256 from 'simple-sha256';
-import { DatabaseLanguage, ControlContext, ChangeDefinition, DefinitionType } from '../../types';
+import { DatabaseLanguage, ControlContext, ChangeDefinition } from '../../types';
 import { getControlContextFromConfig } from './getControlContextFromConfig';
 import { getConfig } from './getConfig';
 import { initializeControlEnvironment } from './initializeControlEnvironment';
@@ -13,14 +13,12 @@ const mockedConfigResponse = {
   connection: '__CONNECTION__',
   definitions: [
     new ChangeDefinition({
-      type: DefinitionType.CHANGE,
       path: '__PATH__',
       id: '__ID_ONE__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
     }),
     new ChangeDefinition({
-      type: DefinitionType.CHANGE,
       path: '__PATH__',
       id: '__ID_TWO__',
       sql: '__SQL__',

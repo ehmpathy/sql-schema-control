@@ -1,0 +1,1 @@
+export { getResourceDifference } from './getResourceDifference';

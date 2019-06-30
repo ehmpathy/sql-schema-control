@@ -9,10 +9,15 @@ import { getColoredPlanTitle } from '../_utils/getColoredPlanTitle';
 */
 export const applyPlans = async ({ connection, plans }: { connection: DatabaseConnection, plans: DefinitionPlan[] }) => {
   const tasks = plans
-    .filter(plan => [RequiredAction.APPLY, RequiredAction.REAPPLY].includes(plan.action)) // only apply or reapply
+    .filter(plan => plan.action !== RequiredAction.NO_CHANGE) // dont show no_changes as skipped
     .map((plan): Listr.ListrTask => ({
       title: getColoredPlanTitle({ plan }),
       task: () => applyPlan({ connection, plan }),
+      skip: () => { // show actions that we can not automatically apply as skipped, to remind user that they must manually conduct that action
+        const canApply = [RequiredAction.APPLY, RequiredAction.REAPPLY].includes(plan.action);
+        if (canApply) return false; // dont skip
+        return true;
+      },
     }));
   const taskSuite = new Listr(tasks);
   await taskSuite.run().catch((err) => {

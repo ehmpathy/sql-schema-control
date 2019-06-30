@@ -3,34 +3,49 @@ import sha256 from 'simple-sha256';
 import uuid from 'uuid/v4';
 import { stdout } from 'stdout-stderr';
 import { displayPlans } from './displayPlans';
-import { ChangeDefinition, DefinitionPlan, DefinitionType, RequiredAction } from '../../../types';
+import { ChangeDefinition, DefinitionPlan, RequiredAction } from '../../../types';
 
 const exampleDefinition = new ChangeDefinition({
   id: uuid(),
-  type: DefinitionType.CHANGE,
   path: '__PATH__',
   sql: '__SQL__',
   hash: sha256.sync('__SQL__'),
 });
 const applyPlan = new DefinitionPlan({
+  id: '__ID__',
   definition: exampleDefinition,
   difference: '__APPLY_DIFFERENCE__',
   action: RequiredAction.APPLY,
 });
 const noChangePlan = new DefinitionPlan({
+  id: '__ID__',
   definition: exampleDefinition,
   difference: '__NO_CHANGE_DIFFERENCE__',
   action: RequiredAction.NO_CHANGE,
 });
 const reapplyPlan = new DefinitionPlan({
+  id: '__ID__',
   definition: exampleDefinition,
   difference: '__REAPPLY_DIFFERENCE__',
   action: RequiredAction.REAPPLY,
 });
 const manualReapplyPlan = new DefinitionPlan({
+  id: '__ID__',
   definition: exampleDefinition,
   difference: '__MANUAL_REAPPLY_DIFFERENCE__',
   action: RequiredAction.MANUAL_REAPPLY,
+});
+const manualMigrationPlan = new DefinitionPlan({
+  id: '__ID__',
+  definition: exampleDefinition,
+  difference: '__MANUAL_REAPPLY_DIFFERENCE__',
+  action: RequiredAction.MANUAL_MIGRATION,
+});
+const manualPullPlan = new DefinitionPlan({
+  id: '__ID__',
+  definition: exampleDefinition,
+  difference: '__MANUAL_REAPPLY_DIFFERENCE__',
+  action: RequiredAction.MANUAL_PULL,
 });
 
 const getDisplayPlanOutput = async ({ plan }: { plan: DefinitionPlan }) => {
@@ -69,5 +84,13 @@ describe('displayPlans', () => {
   it('should color a MANUAL_REAPPLY plan red', async () => {
     const output = await getDisplayPlanOutput({ plan: manualReapplyPlan });
     expect(output).toContain(Chalk.red(`[${RequiredAction.MANUAL_REAPPLY}]`));
+  });
+  it('should color a MANUAL_MIGRATION plan red', async () => {
+    const output = await getDisplayPlanOutput({ plan: manualMigrationPlan });
+    expect(output).toContain(Chalk.red(`[${RequiredAction.MANUAL_MIGRATION}]`));
+  });
+  it('should color a MANUAL_PULL plan red', async () => {
+    const output = await getDisplayPlanOutput({ plan: manualPullPlan });
+    expect(output).toContain(Chalk.red(`[${RequiredAction.MANUAL_PULL}]`));
   });
 });

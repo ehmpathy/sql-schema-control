@@ -1,56 +1,44 @@
 import sha256 from 'simple-sha256';
-import { ChangeDefinitionStatus, ChangeDefinition, RequiredAction, DefinitionType } from '../../../types';
+import { ChangeDefinition, ResourceDefinition, ResourceType } from '../../../types';
 import { getRequiredAction } from './getRequiredAction';
+import { getRequiredActionForChange } from './getRequiredActionForChange';
+import { getRequiredActionForResource } from './getRequiredActionForResource';
+
+jest.mock('./getRequiredActionForChange');
+const getRequiredActionForChangeMock = getRequiredActionForChange as jest.Mock;
+getRequiredActionForChangeMock.mockReturnValue('__CHANGE_ACTION__');
+
+jest.mock('./getRequiredActionForResource');
+const getRequiredActionForResourceMock = getRequiredActionForResource as jest.Mock;
+getRequiredActionForResourceMock.mockReturnValue('__RESOURCE_ACTION__');
 
 describe('getRequiredAction', () => {
-  it('should find no change required for change definition with status UP_TO_DATE', () => {
-    const definition = new ChangeDefinition({
-      type: DefinitionType.CHANGE,
-      id: '__ID__',
-      path: '__PATH__',
-      sql: '__SQL__',
-      hash: sha256.sync('__SQL__'),
-      status: ChangeDefinitionStatus.UP_TO_DATE,
-    });
-    const action = getRequiredAction({ definition });
-    expect(action).toEqual(RequiredAction.NO_CHANGE);
+  const resourceDefinition = new ResourceDefinition({
+    type: ResourceType.TABLE,
+    name: '__NAME__',
+    path: '__PATH__',
+    sql: '__SQL__',
   });
-  it('should find apply required for change with status NOT_APPLIED', () => {
-    const definition = new ChangeDefinition({
-      type: DefinitionType.CHANGE,
-      id: '__ID__',
-      path: '__PATH__',
-      sql: '__SQL__',
-      hash: sha256.sync('__SQL__'),
-      status: ChangeDefinitionStatus.NOT_APPLIED,
-    });
-    const action = getRequiredAction({ definition });
-    expect(action).toEqual(RequiredAction.APPLY);
+  const changeDefinition = new ChangeDefinition({
+    id: '__ID__',
+    path: '__PATH__',
+    sql: '__SQL__',
+    hash: sha256.sync('__SQL__'),
   });
-  it('should find reapply required for change with status OUT_OF_DATE when reappliable', () => {
-    const definition = new ChangeDefinition({
-      type: DefinitionType.CHANGE,
-      id: '__ID__',
-      path: '__PATH__',
-      sql: '__SQL__',
-      hash: sha256.sync('__SQL__'),
-      status: ChangeDefinitionStatus.OUT_OF_DATE,
-      reappliable: true,
+  it('should getRequiredActionForChange if definition is a ChangeDefinition', () => {
+    const action = getRequiredAction({ definition: changeDefinition });
+    expect(getRequiredActionForChangeMock.mock.calls.length).toEqual(1);
+    expect(getRequiredActionForChangeMock.mock.calls[0][0]).toEqual({
+      definition: changeDefinition,
     });
-    const action = getRequiredAction({ definition });
-    expect(action).toEqual(RequiredAction.REAPPLY);
+    expect(action).toEqual('__CHANGE_ACTION__');
   });
-  it('should find manual_reapply required for change with status OUT_OF_DATE when not reappliable', () => {
-    const definition = new ChangeDefinition({
-      type: DefinitionType.CHANGE,
-      id: '__ID__',
-      path: '__PATH__',
-      sql: '__SQL__',
-      hash: sha256.sync('__SQL__'),
-      status: ChangeDefinitionStatus.OUT_OF_DATE,
-      reappliable: false,
+  it('should getRequiredActionForResource if definition is a ResourceDefinition', () => {
+    const action = getRequiredAction({ definition: resourceDefinition });
+    expect(getRequiredActionForResourceMock.mock.calls.length).toEqual(1);
+    expect(getRequiredActionForResourceMock.mock.calls[0][0]).toEqual({
+      definition: resourceDefinition,
     });
-    const action = getRequiredAction({ definition });
-    expect(action).toEqual(RequiredAction.MANUAL_REAPPLY);
+    expect(action).toEqual('__RESOURCE_ACTION__');
   });
 });

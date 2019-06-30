@@ -1,15 +1,15 @@
 import uuid from 'uuid/v4';
 import sha256 from 'simple-sha256';
-import { ChangeDefinition, DefinitionType, ChangeDefinitionStatus } from '../../../../types';
+import { ChangeDefinition, ChangeDefinitionStatus } from '../../../../types';
 import { getChangeDifference } from './getChangeDifference';
 import { getOutOfDateDifference } from './getOutOfDateDifference';
-import { getNotAppliedDifference } from './getNotAppliedDifference';
+import { getNotAppliedDifference } from '../_utils/getNotAppliedDifference';
 
 jest.mock('./getOutOfDateDifference');
 const getOutOfDateDifferenceMock = getOutOfDateDifference as jest.Mock;
 getOutOfDateDifferenceMock.mockResolvedValue('__OUT_OF_DATE_DIFF__');
 
-jest.mock('./getNotAppliedDifference');
+jest.mock('../_utils/getNotAppliedDifference');
 const getNotAppliedDifferenceMock = getNotAppliedDifference as jest.Mock;
 getNotAppliedDifferenceMock.mockResolvedValue('__NOT_APPLIED_DIFF__');
 
@@ -19,7 +19,6 @@ describe('getChangeDifference', () => {
     const definition = new ChangeDefinition({
       id: uuid(),
       path: '__PATH__',
-      type: DefinitionType.CHANGE,
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
     });
@@ -34,7 +33,6 @@ describe('getChangeDifference', () => {
     const definition = new ChangeDefinition({
       id: uuid(),
       path: '__PATH__',
-      type: DefinitionType.CHANGE,
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
       status: ChangeDefinitionStatus.UP_TO_DATE,
@@ -46,7 +44,6 @@ describe('getChangeDifference', () => {
     const definition = new ChangeDefinition({
       id: uuid(),
       path: '__PATH__',
-      type: DefinitionType.CHANGE,
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
       status: ChangeDefinitionStatus.OUT_OF_DATE,
@@ -63,7 +60,6 @@ describe('getChangeDifference', () => {
     const definition = new ChangeDefinition({
       id: uuid(),
       path: '__PATH__',
-      type: DefinitionType.CHANGE,
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
       status: ChangeDefinitionStatus.NOT_APPLIED,
@@ -71,7 +67,7 @@ describe('getChangeDifference', () => {
     const diff = await getChangeDifference({ connection: {} as any, change: definition });
     expect(getNotAppliedDifferenceMock.mock.calls.length).toEqual(1);
     expect(getNotAppliedDifferenceMock.mock.calls[0][0]).toEqual({
-      change: definition,
+      definition,
     });
     expect(diff).toEqual('__NOT_APPLIED_DIFF__');
   });

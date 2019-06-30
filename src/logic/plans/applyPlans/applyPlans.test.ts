@@ -1,7 +1,7 @@
 import sha256 from 'simple-sha256';
 import { applyPlans } from './applyPlans';
 import { applyPlan } from './applyPlan';
-import { ChangeDefinition, DefinitionPlan, DefinitionType, RequiredAction } from '../../../types';
+import { ChangeDefinition, DefinitionPlan, RequiredAction } from '../../../types';
 import { stdout } from 'stdout-stderr';
 
 jest.mock('./applyPlan');
@@ -11,27 +11,30 @@ applyPlanMock.mockImplementation(() => sleep(500));
 
 const exampleDefinition = new ChangeDefinition({
   id: '__UUID__',
-  type: DefinitionType.CHANGE,
   path: '__PATH__',
   sql: '__SQL__',
   hash: sha256.sync('__SQL__'),
 });
 const plan = new DefinitionPlan({
+  id: '__SOME_ID__',
   definition: exampleDefinition,
   difference: '__APPLY_DIFFERENCE__',
   action: RequiredAction.APPLY,
 });
 const noChangePlan = new DefinitionPlan({
+  id: '__SOME_ID__',
   definition: exampleDefinition,
   difference: '__NO_CHANGE_DIFFERENCE__',
   action: RequiredAction.NO_CHANGE,
 });
 const reapplyPlan = new DefinitionPlan({
+  id: '__SOME_ID__',
   definition: exampleDefinition,
   difference: '__REAPPLY_DIFFERENCE__',
   action: RequiredAction.REAPPLY,
 });
 const manualReapplyPlan = new DefinitionPlan({
+  id: '__SOME_ID__',
   definition: exampleDefinition,
   difference: '__MANUAL_REAPPLY_DIFFERENCE__',
   action: RequiredAction.MANUAL_REAPPLY,
@@ -50,6 +53,28 @@ describe('applyPlans', () => {
   it('should not attempt to apply NO_CHANGE or MANUAL_REAPPLY plans', async () => {
     await applyPlans({ connection: {} as any, plans: [plan, noChangePlan, manualReapplyPlan, reapplyPlan] });
     expect(applyPlanMock.mock.calls.length).toEqual(2);
+  });
+  it('should display MANUAL_REAPPLY as skipped', async () => {
+    process.stdout.isTTY = undefined; // since listr acts differently if nonTTY and jest is nonTTY when more than one test is run
+    stdout.stripColor = false;
+    stdout.start();
+    await applyPlans({ connection: {} as any, plans: [plan, noChangePlan, manualReapplyPlan, reapplyPlan] });
+    stdout.stop();
+    const output = stdout.output.split('\n').filter(line => !line.includes('console.log')).join('\n') // strip the console log portion
+      .replace(/\[\d\d:\d\d:\d\d\]/g, ''); // remove all timestamps, since they change over time...
+    expect(output).toContain('[MANUAL_REAPPLY]');
+    process.stdout.isTTY = true;
+  });
+  it('should not display NO_CHANGE as skipped', async () => {
+    process.stdout.isTTY = undefined; // since listr acts differently if nonTTY and jest is nonTTY when more than one test is run
+    stdout.stripColor = false;
+    stdout.start();
+    await applyPlans({ connection: {} as any, plans: [plan, noChangePlan, manualReapplyPlan, reapplyPlan] });
+    stdout.stop();
+    const output = stdout.output.split('\n').filter(line => !line.includes('console.log')).join('\n') // strip the console log portion
+      .replace(/\[\d\d:\d\d:\d\d\]/g, ''); // remove all timestamps, since they change over time...
+    expect(output).not.toContain('[NO_CHANGE]');
+    process.stdout.isTTY = true;
   });
   it('should display an expected listr output for the plans', async () => {
     process.stdout.isTTY = undefined; // since listr acts differently if nonTTY and jest is nonTTY when more than one test is run

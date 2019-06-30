@@ -1,29 +1,53 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`apply should have an expected appearance when all changes need to be applied 1`] = `
-"     [APPLY] ./init/service_user.sql (id: init_20190619_1) [started]
+"    [2m[22m [1m[32m[APPLY][39m ./tables/data_source.sql [90m(change:table_20190626_1)[39m[22m [started]
 
-     [APPLY] ./init/service_user.sql (id: init_20190619_1) [completed]
+    [2m[22m [1m[32m[APPLY][39m ./tables/data_source.sql [90m(change:table_20190626_1)[39m[22m [completed]
 
-     [APPLY] ./tables/data_source.sql (id: table_20190626_1) [started]
+    [2m[22m [1m[32m[APPLY][39m ./tables/notification.sql [90m(resource:table:notification)[39m[22m [started]
 
-     [APPLY] ./tables/data_source.sql (id: table_20190626_1) [completed]
+    [2m[22m [1m[32m[APPLY][39m ./tables/notification.sql [90m(resource:table:notification)[39m[22m [completed]
 
-     [APPLY] ./tables/notification.sql (id: table_20190626_2) [started]
+    [2m[22m [1m[32m[APPLY][39m ./tables/notification_version.sql [90m(resource:table:notification_version)[39m[22m [started]
 
-     [APPLY] ./tables/notification.sql (id: table_20190626_2) [completed]
+    [2m[22m [1m[32m[APPLY][39m ./tables/notification_version.sql [90m(resource:table:notification_version)[39m[22m [completed]
 
-     [APPLY] ./init/data_sources.sql (id: data_20190619_1) [started]
+    [2m[22m [1m[32m[APPLY][39m ./functions/find_message_hash_by_text.sql [90m(resource:function:find_message_hash_by_text)[39m[22m [started]
 
-     [APPLY] ./init/data_sources.sql (id: data_20190619_1) [completed]
+    [2m[22m [1m[32m[APPLY][39m ./functions/find_message_hash_by_text.sql [90m(resource:function:find_message_hash_by_text)[39m[22m [completed]
 
-     [APPLY] ./procedures/find_message_hash_by_text.sql (id: procedures_20190626_1) [started]
+    [2m[22m [1m[32m[APPLY][39m ./procedures/upsert_message.sql [90m(resource:procedure:upsert_message)[39m[22m [started]
 
-     [APPLY] ./procedures/find_message_hash_by_text.sql (id: procedures_20190626_1) [completed]
+    [2m[22m [1m[32m[APPLY][39m ./procedures/upsert_message.sql [90m(resource:procedure:upsert_message)[39m[22m [completed]
 
-     [APPLY] ./procedures/upsert_message.sql (id: procedures_20190626_2) [started]
+    [2m[22m [1m[32m[APPLY][39m ./init/service_user.sql [90m(change:init_20190619_1)[39m[22m [started]
 
-     [APPLY] ./procedures/upsert_message.sql (id: procedures_20190626_2) [completed]
+    [2m[22m [1m[32m[APPLY][39m ./init/service_user.sql [90m(change:init_20190619_1)[39m[22m [completed]
+
+    [2m[22m [1m[32m[APPLY][39m ./init/data_sources.sql [90m(change:data_20190619_1)[39m[22m [started]
+
+    [2m[22m [1m[32m[APPLY][39m ./init/data_sources.sql [90m(change:data_20190619_1)[39m[22m [completed]
+
+"
+`;
+
+exports[`apply should have an expected appearance when all changes need to be reapplied, if possible 1`] = `
+"    [2m[22m [1m[31m[MANUAL_MIGRATION][39m ./tables/notification.sql [90m(resource:table:notification)[39m[22m [started]
+
+    [2m[22m [1m[31m[MANUAL_MIGRATION][39m ./tables/notification.sql [90m(resource:table:notification)[39m[22m [skipped]
+
+    [2m[22m [1m[31m[MANUAL_MIGRATION][39m ./tables/notification_version.sql [90m(resource:table:notification_version)[39m[22m [started]
+
+    [2m[22m [1m[31m[MANUAL_MIGRATION][39m ./tables/notification_version.sql [90m(resource:table:notification_version)[39m[22m [skipped]
+
+    [2m[22m [1m[33m[REAPPLY][39m ./functions/find_message_hash_by_text.sql [90m(resource:function:find_message_hash_by_text)[39m[22m [started]
+
+    [2m[22m [1m[33m[REAPPLY][39m ./functions/find_message_hash_by_text.sql [90m(resource:function:find_message_hash_by_text)[39m[22m [completed]
+
+    [2m[22m [1m[33m[REAPPLY][39m ./procedures/upsert_message.sql [90m(resource:procedure:upsert_message)[39m[22m [started]
+
+    [2m[22m [1m[33m[REAPPLY][39m ./procedures/upsert_message.sql [90m(resource:procedure:upsert_message)[39m[22m [completed]
 
 "
 `;

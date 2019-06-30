@@ -8,14 +8,16 @@ export const getColoredPlanTitle = ({ plan }: { plan: DefinitionPlan }) => {
     [RequiredAction.NO_CHANGE]: chalk.gray,
     [RequiredAction.REAPPLY]: chalk.yellow,
     [RequiredAction.MANUAL_REAPPLY]: chalk.red,
+    [RequiredAction.MANUAL_MIGRATION]: chalk.red,
+    [RequiredAction.MANUAL_PULL]: chalk.red,
   }[plan.action];
   const actionString = actionChalk(`[${plan.action}]`);
 
-  // define extra details
-  const extraDetails = chalk.gray(`(id: ${plan.definition.id})`);
+  // define the identifier string
+  const identifierString = chalk.grey(`(${plan.id})`);
 
   // define the header
-  const title = chalk.bold((`${actionString} ${plan.definition.path} ${extraDetails}`));
+  const title = chalk.bold((`${actionString} ${plan.definition.path} ${identifierString}`));
 
   // return header
   return title;

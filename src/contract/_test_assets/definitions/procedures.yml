@@ -1,0 +1,2 @@
+- type: resource
+  path: './procedures/upsert_message.sql'

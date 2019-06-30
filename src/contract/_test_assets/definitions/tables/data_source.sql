@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS data_source (
+CREATE TABLE data_source (
   -- meta
   id              BIGINT PRIMARY KEY AUTO_INCREMENT,
   created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,

@@ -2,5 +2,7 @@ language: mysql
 dialect: 5.7
 connection: ./connection.config.js
 definitions:
-  - ./definitions/changes.yml
-  - ./definitions/resources.yml
+  - ./definitions/tables.yml
+  - ./definitions/functions.yml
+  - ./definitions/procedures.yml
+  - ./definitions/init.yml
