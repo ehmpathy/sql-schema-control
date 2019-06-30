@@ -17,7 +17,6 @@ Declarative database schema management. Provision, track, sync, and modify your 
 * [Installation](#installation)
 * [Usage](#usage)
 * [Commands](#commands)
-* [Scope](#scope)
 * [Contribution](#contribution)
 <!-- tocstop -->
 
@@ -47,7 +46,7 @@ Schema Control operates on two schema management classes: changes and resources.
 
 Changes are simply sets of sql statements that you wish to apply to the database. Everything can be done with changes - and schema-control simply tracks whether each change has been applied and whether it is still up to date (i.e., comparing the hash).    
 
-Resources are DDL created entities that we can track and "sync" with your checked in code. SchemaControl is able to detect resources in your live database that are not checked into your code, resources that have not been added to your database, and resources that are out of sync between the definition in your code and what lives in your database - as well as specifying how exactly they are out of sync.
+Resources are DDL created entities that we can track and "sync" with your checked in code. Schema Control is able to detect resources in your live database that are not checked into your code, resources that have not been added to your database, and resources that are out of sync between the definition in your code and what lives in your database - as well as specifying how exactly they are out of sync.
 
 
 # Installation
@@ -89,6 +88,7 @@ Resources are DDL created entities that we can track and "sync" with your checke
     language: mysql
     dialect: 5.7
     connection: ./control.connection.js
+    strict: true # true by default; false -> don't track uncontrolled resources
     definitions:
       - type: change
         path: './init/service_user.sql'
@@ -118,11 +118,17 @@ The typical use case consists of planning and applying:
 
 These commands will operate on all resource and change definitions that are defined in your config (i.e., `control.yml`).
 
+If your schema control config specified strict control, then you may also want to pull resources that are not currently defined in your version control so that you can add them as controlled resources:
+```sh
+  $ npx schema-control pull # records the create DDL for each uncontrolled resource
+```
+
 # Commands
 <!-- commands -->
 * [`schema-control apply`](#schema-control-apply)
 * [`schema-control help [COMMAND]`](#schema-control-help-command)
 * [`schema-control plan`](#schema-control-plan)
+* [`schema-control pull`](#schema-control-pull)
 
 ## `schema-control apply`
 
@@ -138,20 +144,19 @@ OPTIONS
 
 EXAMPLE
   $ schema-control apply -c src/contract/_test_assets/control.yml
+     ✔ [APPLY] ./tables/data_source.sql (change:table_20190626_1)
+     ✔ [APPLY] ./tables/notification.sql (resource:table:notification)
+     ↓ [MANUAL_MIGRATION] ./tables/notification_version.sql (resource:table:notification_version) [skipped]
+     ✔ [REAPPLY] ./functions/find_message_hash_by_text.sql (resource:function:find_message_hash_by_text)
+     ✔ [APPLY] ./procedures/upsert_message.sql (resource:procedure:upsert_message)
+     ✔ [APPLY] ./init/data_sources.sql (change:init_20190619_1)
+     ✖ [APPLY] ./init/service_user.sql (change:init_20190619_2)
+       → Could not apply ./init/service_user.sql: Operation CREATE USER failed for…
 
-    ✔ [APPLY] ./tables/data_source.sql (change:table_20190626_1)
-    ✔ [APPLY] ./tables/notification.sql (resource:table:notification)
-    ↓ [MANUAL_MIGRATION] ./tables/notification_version.sql (resource:table:notification_version) [skipped]
-    ✔ [REAPPLY] ./functions/find_message_hash_by_text.sql (resource:function:find_message_hash_by_text)
-    ✔ [APPLY] ./procedures/upsert_message.sql (resource:procedure:upsert_message)
-    ✔ [APPLY] ./init/data_sources.sql (change:init_20190619_1)
-    ✖ [APPLY] ./init/service_user.sql (change:init_20190619_2)
-    → Could not apply ./init/service_user.sql: Operation CREATE USER failed for…
-
-    Could not apply ./init/service_user.sql: Operation CREATE USER failed for 'user_name'@'%'
+  Could not apply ./init/service_user.sql: Operation CREATE USER failed for 'user_name'@'%'
 ```
 
-_See code: [dist/contract/commands/apply.ts](https://github.com/uladkasach/schema-control/blob/v0.2.1/dist/contract/commands/apply.ts)_
+_See code: [dist/contract/commands/apply.ts](https://github.com/uladkasach/schema-control/blob/v0.3.0/dist/contract/commands/apply.ts)_
 
 ## `schema-control help [COMMAND]`
 
@@ -184,13 +189,36 @@ OPTIONS
 
 EXAMPLE
   $ schema-control plan
-
-    * [APPLY] ./init/service_user.sql (id: init_20190619_1)
+    * [APPLY] ./init/service_user.sql (change:init_20190619_1)
        CREATE USER 'user_name'@'%';
-       GRANT ALL PRIVILEGES ON awesomedb.* To 'user_name'@'%' IDENTIFIED BY '__CHANGE_M3__'; -- change password in real db
+       GRANT ALL PRIVILEGES ON awesomedb.* To 'user_name'@'%' IDENTIFIED BY '__CHANGE_M3__'; -- TODO: change password
 ```
 
-_See code: [dist/contract/commands/plan.ts](https://github.com/uladkasach/schema-control/blob/v0.2.1/dist/contract/commands/plan.ts)_
+_See code: [dist/contract/commands/plan.ts](https://github.com/uladkasach/schema-control/blob/v0.3.0/dist/contract/commands/plan.ts)_
+
+## `schema-control pull`
+
+pull and record uncontrolled resources
+
+```
+USAGE
+  $ schema-control pull
+
+OPTIONS
+  -c, --config=config  [default: schema/control.yml] path to config file
+  -h, --help           show CLI help
+  -t, --target=target  [default: schema] target directory to record uncontrolled resources in
+
+EXAMPLE
+  $ schema-control pull -c src/contract/_test_assets/control.yml -t src/contract/_test_assets/uncontrolled
+  pulling uncontrolled resource definitions into .../schema-control/src/contract/commands/_test_assets/uncontrolled
+     ✓ [PULLED] resource:table:data_source
+     ✓ [PULLED] resource:table:invitation
+     ✓ [PULLED] resource:procedure:upsert_invitation
+     ✓ [PULLED] resource:function:get_id_by_name
+```
+
+_See code: [dist/contract/commands/pull.ts](https://github.com/uladkasach/schema-control/blob/v0.3.0/dist/contract/commands/pull.ts)_
 <!-- commandsstop -->
 
 

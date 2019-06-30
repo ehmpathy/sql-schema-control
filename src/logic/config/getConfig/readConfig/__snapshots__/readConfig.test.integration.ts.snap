@@ -116,5 +116,6 @@ END;
   ],
   "dialect": "5.7",
   "language": "mysql",
+  "strict": true,
 }
 `;

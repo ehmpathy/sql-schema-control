@@ -52,7 +52,7 @@
     "preversion": "npm run test && npm run build",
     "postversion": "git push origin master --tags --no-verify",
     "prepublish": "npm run build",
-    "readme-cli-sync": "oclif-dev readme"
+    "readme-cli-sync": "npm run build && oclif-dev readme"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.22.0",

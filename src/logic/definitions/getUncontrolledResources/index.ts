@@ -1,0 +1,1 @@
+export { getUncontrolledResources } from './getUncontrolledResources';
