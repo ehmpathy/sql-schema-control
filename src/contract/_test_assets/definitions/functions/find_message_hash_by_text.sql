@@ -1,4 +1,3 @@
-DROP FUNCTION IF EXISTS find_message_hash_by_text;
 CREATE FUNCTION find_message_hash_by_text(
   in_message TEXT
 )

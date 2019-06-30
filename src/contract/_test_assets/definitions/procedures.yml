@@ -1,9 +1,2 @@
 - type: resource
-  id: 'procedures_20190626_1'
-  path: './procedures/find_message_hash_by_text.sql'
-  reappliable: true
-
-- type: resource
-  id: 'procedures_20190626_2'
   path: './procedures/upsert_message.sql'
-  reappliable: true

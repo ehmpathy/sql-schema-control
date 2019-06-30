@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`applyPlans should display an expected listr output for the plans 1`] = `
-"    [2m[22m [1m[32m[APPLY][39m __PATH__ [90m(id: __UUID__)[39m[22m [started]
+"    [2m[22m [1m[32m[APPLY][39m __PATH__ [90m(__SOME_ID__)[39m[22m [started]
 
-    [2m[22m [1m[32m[APPLY][39m __PATH__ [90m(id: __UUID__)[39m[22m [completed]
+    [2m[22m [1m[32m[APPLY][39m __PATH__ [90m(__SOME_ID__)[39m[22m [completed]
 
-    [2m[22m [1m[33m[REAPPLY][39m __PATH__ [90m(id: __UUID__)[39m[22m [started]
+    [2m[22m [1m[33m[REAPPLY][39m __PATH__ [90m(__SOME_ID__)[39m[22m [started]
 
-    [2m[22m [1m[33m[REAPPLY][39m __PATH__ [90m(id: __UUID__)[39m[22m [completed]
+    [2m[22m [1m[33m[REAPPLY][39m __PATH__ [90m(__SOME_ID__)[39m[22m [completed]
 
 "
 `;

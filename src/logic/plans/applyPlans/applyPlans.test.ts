@@ -1,7 +1,7 @@
 import sha256 from 'simple-sha256';
 import { applyPlans } from './applyPlans';
 import { applyPlan } from './applyPlan';
-import { ChangeDefinition, DefinitionPlan, DefinitionType, RequiredAction } from '../../../types';
+import { ChangeDefinition, DefinitionPlan, RequiredAction } from '../../../types';
 import { stdout } from 'stdout-stderr';
 
 jest.mock('./applyPlan');
@@ -11,27 +11,30 @@ applyPlanMock.mockImplementation(() => sleep(500));
 
 const exampleDefinition = new ChangeDefinition({
   id: '__UUID__',
-  type: DefinitionType.CHANGE,
   path: '__PATH__',
   sql: '__SQL__',
   hash: sha256.sync('__SQL__'),
 });
 const plan = new DefinitionPlan({
+  id: '__SOME_ID__',
   definition: exampleDefinition,
   difference: '__APPLY_DIFFERENCE__',
   action: RequiredAction.APPLY,
 });
 const noChangePlan = new DefinitionPlan({
+  id: '__SOME_ID__',
   definition: exampleDefinition,
   difference: '__NO_CHANGE_DIFFERENCE__',
   action: RequiredAction.NO_CHANGE,
 });
 const reapplyPlan = new DefinitionPlan({
+  id: '__SOME_ID__',
   definition: exampleDefinition,
   difference: '__REAPPLY_DIFFERENCE__',
   action: RequiredAction.REAPPLY,
 });
 const manualReapplyPlan = new DefinitionPlan({
+  id: '__SOME_ID__',
   definition: exampleDefinition,
   difference: '__MANUAL_REAPPLY_DIFFERENCE__',
   action: RequiredAction.MANUAL_REAPPLY,

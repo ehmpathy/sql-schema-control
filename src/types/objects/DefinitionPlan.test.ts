@@ -19,6 +19,7 @@ describe('DefinitionPlan', () => {
   });
   it('should initialize for valid inputs - change definition', () => {
     const plan = new DefinitionPlan({
+      id: 'some id',
       definition: changeDefinition,
       difference: 'some difference',
       action: RequiredAction.APPLY,
@@ -31,6 +32,7 @@ describe('DefinitionPlan', () => {
   });
   it('should initialize for valid inputs - resource definition', () => {
     const plan = new DefinitionPlan({
+      id: 'some id',
       definition: resourceDefinition,
       difference: 'some difference',
       action: RequiredAction.APPLY,

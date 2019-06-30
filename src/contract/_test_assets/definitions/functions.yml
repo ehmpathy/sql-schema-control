@@ -1,0 +1,2 @@
+- type: resource
+  path: './functions/find_message_hash_by_text.sql'

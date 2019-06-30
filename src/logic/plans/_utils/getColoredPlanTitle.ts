@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { RequiredAction, DefinitionPlan, ResourceDefinition, ChangeDefinition } from '../../../types';
+import { RequiredAction, DefinitionPlan } from '../../../types';
 
 export const getColoredPlanTitle = ({ plan }: { plan: DefinitionPlan }) => {
   // define action string
@@ -13,15 +13,11 @@ export const getColoredPlanTitle = ({ plan }: { plan: DefinitionPlan }) => {
   }[plan.action];
   const actionString = actionChalk(`[${plan.action}]`);
 
-  // define extra details
-  const definitionType = (plan.definition.constructor === ChangeDefinition) ? 'change' : 'resource';
-  const definitionId = (plan.definition.constructor === ChangeDefinition)
-    ? (plan.definition as ChangeDefinition).id
-    : `${(plan.definition as ResourceDefinition).type.toLowerCase()}:${(plan.definition as ResourceDefinition).name}`;
-  const extraDetails = chalk.gray(`(${definitionType}:${definitionId})`);
+  // define the identifier string
+  const identifierString = chalk.grey(`(${plan.id})`);
 
   // define the header
-  const title = chalk.bold((`${actionString} ${plan.definition.path} ${extraDetails}`));
+  const title = chalk.bold((`${actionString} ${plan.definition.path} ${identifierString}`));
 
   // return header
   return title;

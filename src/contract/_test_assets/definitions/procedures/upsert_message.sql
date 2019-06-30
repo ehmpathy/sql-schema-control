@@ -1,4 +1,3 @@
-DROP PROCEDURE IF EXISTS upsert_message;
 CREATE PROCEDURE upsert_message(
   IN in_message TEXT
 )
