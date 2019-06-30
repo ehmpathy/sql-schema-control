@@ -49,21 +49,16 @@ exports[`plan should have an expected appearance when all changes need to be app
           [90m  CONSTRAINT notification_version_fk1 FOREIGN KEY (\`notification_id\`) REFERENCES notification(id)[39m
           [90m) ENGINE = InnoDB;[39m
           [90m[39m
-      * [1m[33m[REAPPLY][39m ./procedures/find_message_hash_by_text.sql [90m(resource:function:find_message_hash_by_text)[39m[22m
-          [31mCREATE DEFINER=\`root\`@\`%\` FUNCTION \`find_message_hash_by_text\`([39m
-          [31m[39m[32mDROP FUNCTION IF EXISTS find_message_hash_by_text;[39m
-          [32mCREATE FUNCTION find_message_hash_by_text([39m
-          [32m[39m[90min_message TEXT[39m
-          [90m[39m[31m) RETURNS binary(32)[39m
-          [31m[39m[32m)[39m
-          [32mRETURNS BINARY(32)[39m
-          [32m[39m[90mBEGIN[39m
-          [90mRETURN UNHEX(SHA(in_message));[39m
-          [90m[39m[31mEND[39m
-          [31m[39m[32mEND;[39m
-          [32m[39m
+      * [1m[32m[APPLY][39m ./functions/find_message_hash_by_text.sql [90m(resource:function:find_message_hash_by_text)[39m[22m
+          [90mCREATE FUNCTION find_message_hash_by_text([39m
+          [90m  in_message TEXT[39m
+          [90m)[39m
+          [90mRETURNS BINARY(32)[39m
+          [90mBEGIN[39m
+          [90m  RETURN UNHEX(SHA(in_message));[39m
+          [90mEND;[39m
+          [90m[39m
       * [1m[32m[APPLY][39m ./procedures/upsert_message.sql [90m(resource:procedure:upsert_message)[39m[22m
-          [90mDROP PROCEDURE IF EXISTS upsert_message;[39m
           [90mCREATE PROCEDURE upsert_message([39m
           [90m  IN in_message TEXT[39m
           [90m)[39m

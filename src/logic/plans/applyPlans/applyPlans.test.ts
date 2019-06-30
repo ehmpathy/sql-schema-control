@@ -54,6 +54,28 @@ describe('applyPlans', () => {
     await applyPlans({ connection: {} as any, plans: [plan, noChangePlan, manualReapplyPlan, reapplyPlan] });
     expect(applyPlanMock.mock.calls.length).toEqual(2);
   });
+  it('should display MANUAL_REAPPLY as skipped', async () => {
+    process.stdout.isTTY = undefined; // since listr acts differently if nonTTY and jest is nonTTY when more than one test is run
+    stdout.stripColor = false;
+    stdout.start();
+    await applyPlans({ connection: {} as any, plans: [plan, noChangePlan, manualReapplyPlan, reapplyPlan] });
+    stdout.stop();
+    const output = stdout.output.split('\n').filter(line => !line.includes('console.log')).join('\n') // strip the console log portion
+      .replace(/\[\d\d:\d\d:\d\d\]/g, ''); // remove all timestamps, since they change over time...
+    expect(output).toContain('[MANUAL_REAPPLY]');
+    process.stdout.isTTY = true;
+  });
+  it('should not display NO_CHANGE as skipped', async () => {
+    process.stdout.isTTY = undefined; // since listr acts differently if nonTTY and jest is nonTTY when more than one test is run
+    stdout.stripColor = false;
+    stdout.start();
+    await applyPlans({ connection: {} as any, plans: [plan, noChangePlan, manualReapplyPlan, reapplyPlan] });
+    stdout.stop();
+    const output = stdout.output.split('\n').filter(line => !line.includes('console.log')).join('\n') // strip the console log portion
+      .replace(/\[\d\d:\d\d:\d\d\]/g, ''); // remove all timestamps, since they change over time...
+    expect(output).not.toContain('[NO_CHANGE]');
+    process.stdout.isTTY = true;
+  });
   it('should display an expected listr output for the plans', async () => {
     process.stdout.isTTY = undefined; // since listr acts differently if nonTTY and jest is nonTTY when more than one test is run
     stdout.stripColor = false;
