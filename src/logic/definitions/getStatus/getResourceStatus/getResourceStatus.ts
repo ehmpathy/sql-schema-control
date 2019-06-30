@@ -14,7 +14,7 @@ export const getResourceStatus = async ({ connection, resource }: { connection: 
     const liveResource = await getResourceFromDatabase({ connection, resourceType: resource.type, resourceName: resource.name });
     return new ResourceDefinition({ // if the error said doesn't exist, then this was not applied
       ...resource,
-      status: (resource.sql === liveResource.sql) ? ResourceDefinitionStatus.SYNCED : ResourceDefinitionStatus.OUT_OF_SYNC,
+      status: (resource.sql.trim() === liveResource.sql.trim()) ? ResourceDefinitionStatus.SYNCED : ResourceDefinitionStatus.OUT_OF_SYNC,
     });
   } catch (error) {
     if (error.constructor !== ResourceDoesNotExistError) throw error;

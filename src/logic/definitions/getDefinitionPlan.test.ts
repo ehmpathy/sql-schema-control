@@ -18,7 +18,6 @@ describe('getDefinitionPlan', () => {
   it('should get the required action', async () => {
     const definition = new ChangeDefinition({
       id: uuid(),
-      type: DefinitionType.CHANGE,
       path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
@@ -30,10 +29,9 @@ describe('getDefinitionPlan', () => {
       definition,
     });
   });
-  it('should get the change diff', async () => {
+  it('should get the diff', async () => {
     const definition = new ChangeDefinition({
       id: uuid(),
-      type: DefinitionType.CHANGE,
       path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
@@ -49,7 +47,6 @@ describe('getDefinitionPlan', () => {
   it('should return the definition plan', async () => {
     const definition = new ChangeDefinition({
       id: uuid(),
-      type: DefinitionType.CHANGE,
       path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),

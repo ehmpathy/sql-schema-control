@@ -1,28 +1,34 @@
 import sha256 from 'simple-sha256';
 import uuid from 'uuid/v4';
-import { ControlContext, ChangeDefinition, ChangeDefinitionStatus, DefinitionType } from '../../../../types';
-import { getControlContextFromConfig } from '../../../config/getControlContextFromConfig';
+import { DatabaseLanguage, DatabaseConnection, ControlConfig, ChangeDefinition, ChangeDefinitionStatus } from '../../../../types';
+import { promiseConfig } from './_test_assets/connection.config';
+import { initializeControlEnvironment } from '../../../config/initializeControlEnvironment';
 import { getOutOfDateDifference } from './getOutOfDateDifference';
 
 describe('getOutOfDateDifference', () => {
-  let context: ControlContext;
+  let connection: DatabaseConnection;
   beforeAll(async () => {
-    context = await getControlContextFromConfig({ configPath: `${__dirname}/_test_assets/control.yml` });
+    const config = new ControlConfig({
+      language: DatabaseLanguage.MYSQL,
+      dialect: '5.7',
+      connection: await promiseConfig(),
+      definitions: [],
+    });
+    ({ connection } = await initializeControlEnvironment({ config })); // ensure db is provisioned and get connection
   });
   afterAll(async () => {
-    await context.connection.end();
+    await connection.end();
   });
   it('should throw an error if the ChangeDefinition.status !== OUT_OF_DATE', async () => {
     const definition = new ChangeDefinition({
       id: uuid(),
-      type: DefinitionType.CHANGE,
       path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
       status: ChangeDefinitionStatus.NOT_APPLIED,
     });
     try {
-      await getOutOfDateDifference({ connection: context.connection, change: definition });
+      await getOutOfDateDifference({ connection, change: definition });
       throw new Error('should not reach here');
     } catch (error) {
       expect(error.message).toEqual(`change.status must be ${ChangeDefinitionStatus.OUT_OF_DATE} to get diff`);
@@ -32,7 +38,6 @@ describe('getOutOfDateDifference', () => {
     // record that the definition was already applied
     const definition = new ChangeDefinition({
       id: uuid(),
-      type: DefinitionType.CHANGE,
       path: '__PATH__',
       sql: `
 CREATE TABLE IF NOT EXISTS some_table (
@@ -42,7 +47,7 @@ CREATE TABLE IF NOT EXISTS some_table (
       `,
       hash: sha256.sync(''),
     });
-    await context.connection.query({ sql: `
+    await connection.query({ sql: `
       INSERT INTO schema_control_change_log
         (change_id, change_hash, change_content)
       VALUES
@@ -63,7 +68,7 @@ created_at      DATETIME(3) DEFAULT CURRENT_TIMESTAMP
     });
 
     // get the diff
-    const result = await getOutOfDateDifference({ connection: context.connection, change: updatedDefinition });
+    const result = await getOutOfDateDifference({ connection, change: updatedDefinition });
     expect(typeof result).toEqual('string');
     expect(result).toMatchSnapshot(); // result is purely visual, so log an example of it
   });

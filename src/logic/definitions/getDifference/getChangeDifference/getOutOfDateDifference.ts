@@ -1,6 +1,5 @@
-import chalk from 'chalk';
-import * as diff from 'diff';
 import { DatabaseConnection, ChangeDefinition, ChangeDefinitionStatus } from '../../../../types';
+import { getSqlDifference } from '../_utils/getSqlDifference';
 
 /*
 for the definition:
@@ -16,30 +15,9 @@ export const getOutOfDateDifference = async ({ connection, change }: { connectio
     sql: `select * from schema_control_change_log where change_id = '${change.id}'`,
   });
 
-  // 2. diff object
-  const differences = {
-    hashDiff: {
-      database: result.change_hash,
-      definition: change.hash,
-    },
-    sqlDiff: {
-      database: result.change_content,
-      definition: change.sql,
-    },
-  };
+  // 2. cast into string
+  const sqlDiffString = getSqlDifference({ oldSql: result.change_content, newSql: change.sql });
 
-  // 3. cast into string
-  const sqlDiffParts = diff.diffTrimmedLines(differences.sqlDiff.database, differences.sqlDiff.definition);
-  const sqlDiffString = sqlDiffParts.reduce((summary, thisPart) => {
-    // pick the color
-    let chalkMethod = chalk.gray;
-    if (thisPart.added) chalkMethod = chalk.green;
-    if (thisPart.removed) chalkMethod = chalk.red;
-
-    // append the colored string
-    return summary + chalkMethod(thisPart.value);
-  }, ''); // tslint:disable-line align
-
-  // 4. return the diff string
+  // 3. return the diff string
   return sqlDiffString;
 };

@@ -1,8 +1,8 @@
-import { DatabaseConnection, ChangeDefinition, DefinitionPlan } from '../../types';
+import { DatabaseConnection, ChangeDefinition, ResourceDefinition, DefinitionPlan } from '../../types';
 import { getRequiredAction } from './getRequiredAction';
 import { getDifference } from './getDifference';
 
-export const getDefinitionPlan = async ({ connection, definition }: { connection: DatabaseConnection, definition: ChangeDefinition }) => {
+export const getDefinitionPlan = async ({ connection, definition }: { connection: DatabaseConnection, definition: ChangeDefinition | ResourceDefinition }) => {
   // 1. determine the required action
   const action = getRequiredAction({ definition });
 
