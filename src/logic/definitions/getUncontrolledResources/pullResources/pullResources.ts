@@ -1,5 +1,5 @@
-import { ResourceType, DatabaseConnection } from '../../../types';
-import { getResourceFromDatabase } from '../_utils/getResourceFromDatabase';
+import { ResourceType, DatabaseConnection } from '../../../../types';
+import { getResourceFromDatabase } from '../../_utils/getResourceFromDatabase';
 
 /*
   1. check existance of all supported resource types

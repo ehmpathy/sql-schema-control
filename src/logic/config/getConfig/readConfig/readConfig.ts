@@ -23,6 +23,10 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
   if (!contents.dialect) throw new Error('dialect must be defined');
   const dialect = `${contents.dialect}`; // ensure that we read it as a string, as it could be a number
 
+  // determine if schema control should be strict
+  const strict = (contents.strict === undefined) ? true : contents.strict;
+  if (typeof strict !== 'boolean') throw new Error('strict must be a boolean');
+
   // get the connection config
   if (!contents.connection) throw new Error('connection must be defined');
   const connectionPath = contents.connection;
@@ -38,6 +42,7 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
   return new ControlConfig({
     language,
     dialect,
+    strict,
     connection,
     definitions,
   });

@@ -77,6 +77,23 @@ describe('readConfig', () => {
       expect(error.message).toEqual('dialect must be defined');
     }
   });
+  it('throws an error if strict is not a boolean', async () => {
+    readYmlFileMock.mockResolvedValueOnce({
+      language: DatabaseLanguage.MYSQL,
+      dialect: '__DIALECT__',
+      connection: '__CONNECTION_PATH__',
+      definitions: [
+        '__DEF_1__',
+        '__DEF_2__',
+      ],
+      strict: 'true',
+    });
+    try {
+      await readConfig({ filePath: '__CONFIG_PATH__' });
+    } catch (error) {
+      expect(error.message).toEqual('strict must be a boolean');
+    }
+  });
   it('throws an error if connection is not defined', async () => {
     readYmlFileMock.mockResolvedValueOnce({
       language: DatabaseLanguage.MYSQL,
@@ -121,7 +138,7 @@ describe('readConfig', () => {
       readRoot: '__CONFIG_DIR__',
     });
   });
-  it('should return the full config', async () => {
+  it('should return the full config - default strict to true', async () => {
     const config = await readConfig({ filePath: '__CONFIG_DIR__/control.yml' });
     expect(config.constructor).toEqual(ControlConfig);
     expect(config).toEqual({
@@ -129,6 +146,28 @@ describe('readConfig', () => {
       dialect: '__DIALECT__',
       connection: exampleConnectionConfig,
       definitions: exampleDefinitions,
+      strict: true,
+    });
+  });
+  it('should return the full config - strict defined explicitly', async () => {
+    readYmlFileMock.mockResolvedValueOnce({
+      language: DatabaseLanguage.MYSQL,
+      dialect: '__DIALECT__',
+      connection: './__CONNECTION_PATH__',
+      definitions: [
+        '__DEF_1__',
+        '__DEF_2__',
+      ],
+      strict: false,
+    });
+    const config = await readConfig({ filePath: '__CONFIG_DIR__/control.yml' });
+    expect(config.constructor).toEqual(ControlConfig);
+    expect(config).toEqual({
+      language: DatabaseLanguage.MYSQL,
+      dialect: '__DIALECT__',
+      connection: exampleConnectionConfig,
+      definitions: exampleDefinitions,
+      strict: false,
     });
   });
 });

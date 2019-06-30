@@ -1,7 +1,7 @@
 import { pullResources } from './pullResources';
-import { DatabaseConnection, DatabaseLanguage, ControlConfig, ResourceDefinition } from '../../../types';
+import { DatabaseConnection, DatabaseLanguage, ControlConfig, ResourceDefinition } from '../../../../types';
 import { promiseConfig } from './_test_assets/connection.config';
-import { initializeControlEnvironment } from '../../config/initializeControlEnvironment';
+import { initializeControlEnvironment } from '../../../config/initializeControlEnvironment';
 
 describe('pullResources', () => {
   let connection: DatabaseConnection;
@@ -11,6 +11,7 @@ describe('pullResources', () => {
       dialect: '5.7',
       connection: await promiseConfig(),
       definitions: [],
+      strict: true,
     });
     ({ connection } = await initializeControlEnvironment({ config })); // ensure db is provisioned and get connection
   });

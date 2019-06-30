@@ -29,12 +29,14 @@ describe('ConnectionConfig', () => {
     const config = new ControlConfig({
       language: DatabaseLanguage.MYSQL,
       dialect: '5.7',
+      strict: true,
       connection: connectionConfig,
       definitions: [changeDefinition, resourceDefinition],
     });
     expect(config).toMatchObject({
       language: DatabaseLanguage.MYSQL,
       dialect: '5.7',
+      strict: true,
       connection: connectionConfig,
       definitions: [changeDefinition, resourceDefinition],
     });

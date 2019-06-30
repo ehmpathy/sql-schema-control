@@ -89,6 +89,7 @@ Resources are DDL created entities that we can track and "sync" with your checke
     language: mysql
     dialect: 5.7
     connection: ./control.connection.js
+    strict: true # true by default; false -> don't track uncontrolled resources
     definitions:
       - type: change
         path: './init/service_user.sql'

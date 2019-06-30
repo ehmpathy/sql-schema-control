@@ -19,6 +19,11 @@ describe('getRequiredActionForResource', () => {
     const action = getRequiredActionForResource({ definition: resource });
     expect(action).toEqual(RequiredAction.APPLY);
   });
+  it('should find manual_pull required for resource with status NOT_CONTROLED', () => {
+    const resource = new ResourceDefinition({ ...baseResource, status: ResourceDefinitionStatus.NOT_CONTROLED });
+    const action = getRequiredActionForResource({ definition: resource });
+    expect(action).toEqual(RequiredAction.MANUAL_PULL);
+  });
   it('should find reapply required for change with status OUT_OF_SYNC when resource is a procedure', () => {
     const resource = new ResourceDefinition({ ...baseResource, status: ResourceDefinitionStatus.OUT_OF_SYNC, type: ResourceType.PROCEDURE });
     const action = getRequiredActionForResource({ definition: resource });
