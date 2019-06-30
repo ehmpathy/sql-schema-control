@@ -7,8 +7,7 @@ export default class Plan extends Command {
   public static examples = [
     `$ schema-control plan
 
- * [APPLY] ./init/service_user.sql (id: init_20190619_1)
-
+ * [APPLY] ./init/service_user.sql (change:init_20190619_1)
     CREATE USER 'user_name'@'%';
     GRANT ALL PRIVILEGES ON awesomedb.* To 'user_name'@'%' IDENTIFIED BY '__CHANGE_M3__'; -- change password in real db
     `,

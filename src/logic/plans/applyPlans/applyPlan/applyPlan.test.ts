@@ -25,8 +25,8 @@ describe('applyPlan', () => {
     sql: '__SQL__',
     hash: sha256.sync('__SQL__'),
   });
-  it('should applyPlanForChange if definition is a ChangeDefinition', () => {
-    const action = applyPlan({ connection: '__CONNECTION__' as any, plan: { definition:  changeDefinition } as any });
+  it('should applyPlanForChange if definition is a ChangeDefinition', async () => {
+    const action = await applyPlan({ connection: '__CONNECTION__' as any, plan: { definition:  changeDefinition } as any });
     expect(applyPlanForChangeMock.mock.calls.length).toEqual(1);
     expect(applyPlanForChangeMock.mock.calls[0][0]).toEqual({
       connection: '__CONNECTION__',
@@ -36,8 +36,8 @@ describe('applyPlan', () => {
     });
     expect(action).toEqual('__CHANGE_ACTION__');
   });
-  it('should applyPlanForResource if definition is a ResourceDefinition', () => {
-    const action = applyPlan({ connection: '__CONNECTION__' as any, plan: { definition:  resourceDefinition } as any });
+  it('should applyPlanForResource if definition is a ResourceDefinition', async () => {
+    const action = await applyPlan({ connection: '__CONNECTION__' as any, plan: { definition:  resourceDefinition } as any });
     expect(applyPlanForResourceMock.mock.calls.length).toEqual(1);
     expect(applyPlanForResourceMock.mock.calls[0][0]).toEqual({
       connection: '__CONNECTION__',
