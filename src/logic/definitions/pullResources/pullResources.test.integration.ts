@@ -22,7 +22,7 @@ describe('pullResources', () => {
     await connection.query({ sql: 'CREATE TABLE test_table_pull ( id BIGINT )' });
     const resources = await pullResources({ connection });
     resources.forEach(resource => expect(resource.constructor).toEqual(ResourceDefinition));
-    const createdResource = resources.find(resource => resource.id === 'table:test_table_pull');
+    const createdResource = resources.find(resource => resource.name === 'test_table_pull');
     expect(createdResource).not.toEqual(undefined);
   });
   it('should be able to find an existing function', async () => {
@@ -38,7 +38,7 @@ END;
     ` });
     const resources = await pullResources({ connection });
     resources.forEach(resource => expect(resource.constructor).toEqual(ResourceDefinition));
-    const createdResource = resources.find(resource => resource.id === 'function:f_some_function_for_testing_pull');
+    const createdResource = resources.find(resource => resource.name === 'f_some_function_for_testing_pull');
     expect(createdResource).not.toEqual(undefined);
   });
   it('should be able to find an existing procedure', async () => {
@@ -53,7 +53,7 @@ END;
     ` });
     const resources = await pullResources({ connection });
     resources.forEach(resource => expect(resource.constructor).toEqual(ResourceDefinition));
-    const createdResource = resources.find(resource => resource.id === 'procedure:upsert_some_entity_for_pull');
+    const createdResource = resources.find(resource => resource.name === 'upsert_some_entity_for_pull');
     expect(createdResource).not.toEqual(undefined);
   });
 });

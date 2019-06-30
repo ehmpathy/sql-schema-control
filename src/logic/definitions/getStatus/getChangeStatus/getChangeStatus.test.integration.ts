@@ -1,6 +1,6 @@
 import sha256 from 'simple-sha256';
 import uuid from 'uuid/v4';
-import { ControlContext, ChangeDefinition, ChangeDefinitionStatus, DefinitionType } from '../../../../types';
+import { ControlContext, ChangeDefinition, ChangeDefinitionStatus } from '../../../../types';
 import { getControlContextFromConfig } from '../../../config/getControlContextFromConfig';
 import { getChangeStatus } from './getChangeStatus';
 
@@ -15,7 +15,6 @@ describe('getChangeStatus', () => {
   it('should find that an unapplied change has status of NOT_APPLIED', async () => {
     const definition = new ChangeDefinition({
       id: uuid(),
-      type: DefinitionType.CHANGE,
       path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
@@ -27,7 +26,6 @@ describe('getChangeStatus', () => {
   it('should find that an applied change has status of UP_TO_DATE', async () => {
     const definition = new ChangeDefinition({
       id: uuid(),
-      type: DefinitionType.CHANGE,
       path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
@@ -50,7 +48,6 @@ describe('getChangeStatus', () => {
     // record that the definition was already applied
     const definition = new ChangeDefinition({
       id: uuid(),
-      type: DefinitionType.CHANGE,
       path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),

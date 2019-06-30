@@ -2,6 +2,7 @@ export enum DefinitionType {
   RESOURCE = 'resource',
   CHANGE = 'change',
 }
+
 export enum ResourceType {
   TABLE = 'TABLE',
   FUNCTION = 'FUNCTION',
