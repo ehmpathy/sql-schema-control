@@ -1,7 +1,7 @@
 import sha256 from 'simple-sha256';
-import { ChangeDefinition } from '../../../../../types';
-import { InvalidDefinitionError } from './errors';
-import { readFileAsync } from './../../../_utils/readFileAsync';
+import { ChangeDefinition } from '../../../../../../types';
+import { InvalidDefinitionError } from './../errors';
+import { readFileAsync } from './../../../../_utils/readFileAsync';
 
 export const hydrateChangeDefinitionContent = async ({ readRoot, content }: { readRoot: string, content: any }) => {
   // 1. get the sql defined at the path
@@ -17,7 +17,6 @@ export const hydrateChangeDefinitionContent = async ({ readRoot, content }: { re
     sql,
     hash,
     path: content.path,
-    type: content.type,
     id: content.id,
     reappliable: content.reappliable,
   });

@@ -1,5 +1,5 @@
 import { flattenDefinitionsRecursive } from './flattenDefinitionsRecursive';
-import { ChangeDefinition, DefinitionType } from '../../../../types';
+import { ChangeDefinition, ResourceDefinition, ResourceType } from '../../../../types';
 import { readYmlFile } from './_utils/readYmlFile';
 import { validateAndHydrateDefinitionsYmlContents } from './validateAndHydrateDefinitionsYmlContents';
 
@@ -9,25 +9,26 @@ const readYmlFileMock = readYmlFile as jest.Mock;
 jest.mock('./validateAndHydrateDefinitionsYmlContents');
 const validateAndHydrateDefinitionsYmlContentsMock = validateAndHydrateDefinitionsYmlContents as jest.Mock;
 validateAndHydrateDefinitionsYmlContentsMock.mockResolvedValue([
-  new ChangeDefinition({ id: '__DEFINITION_FROM_FILE__', path: '__PATH__', sql: '__SOME_SQL__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
+  new ChangeDefinition({ id: '__DEFINITION_FROM_FILE__', path: '__PATH__', sql: '__SOME_SQL__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
 ]);
 
 describe('flattenDefinitionsRecursive', () => {
   beforeEach(() => jest.clearAllMocks());
   it('should return all definitions given to it, if all are DefinitionObjects', async () => { // i.e., the end case
     const definitions = [
-      new ChangeDefinition({ id: 'some id', path: '__PATH__', sql: '__SOME_SQL__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
-      new ChangeDefinition({ id: 'some other id', path: '__PATH__', sql: '__SOME_SQL__', hash: '5783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
-      new ChangeDefinition({ id: 'another id', path: '__PATH__', sql: '__SOME_SQL__', hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
+      new ChangeDefinition({ id: 'some id', path: '__PATH__', sql: '__SOME_SQL__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
+      new ChangeDefinition({ id: 'some other id', path: '__PATH__', sql: '__SOME_SQL__', hash: '5783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
+      new ChangeDefinition({ id: 'another id', path: '__PATH__', sql: '__SOME_SQL__', hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
+      new ResourceDefinition({ sql: '__SOME_SQL__', type: ResourceType.TABLE, name: '__SOME_NAME__' }),
     ];
     const returnedDefinitions = await flattenDefinitionsRecursive({ definitions, readRoot: '__READ_ROOT__' });
     expect(returnedDefinitions).toEqual(definitions); // we should just return them all, since theres no flattening to be done
   });
   it('should should attempt to read the contents of a each yml file, if a file path is defined as a definition', async () => {
     const definitions = [
-      new ChangeDefinition({ id: 'some id', path: '__PATH__', sql: '__SOME_SQL__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
+      new ChangeDefinition({ id: 'some id', path: '__PATH__', sql: '__SOME_SQL__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
       '../path/to/a/file.yml',
-      new ChangeDefinition({ id: 'another id', path: '__PATH__', sql: '__SOME_SQL__', hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
+      new ChangeDefinition({ id: 'another id', path: '__PATH__', sql: '__SOME_SQL__', hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
       '../path/to/a/file2.yml',
       '../path/to/a/file3.yml',
     ];
@@ -44,20 +45,20 @@ describe('flattenDefinitionsRecursive', () => {
       '__CONTENT_3__',
     ]);
     validateAndHydrateDefinitionsYmlContentsMock.mockResolvedValueOnce([
-      new ChangeDefinition({ id: '__DEFINITION_FROM_FILE__', path: '__PATH__', sql: '__SOME_SQL__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
-      new ChangeDefinition({ id: '__DEFINITION_FROM_FILE_2__', path: '__PATH__', sql: '__SOME_SQL__', hash: '5783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
+      new ChangeDefinition({ id: '__DEFINITION_FROM_FILE__', path: '__PATH__', sql: '__SOME_SQL__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
+      new ChangeDefinition({ id: '__DEFINITION_FROM_FILE_2__', path: '__PATH__', sql: '__SOME_SQL__', hash: '5783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
     ]);
     const definitions = [
-      new ChangeDefinition({ id: 'some id', sql: '__SOME_SQL__', path: '__PATH__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
+      new ChangeDefinition({ id: 'some id', sql: '__SOME_SQL__', path: '__PATH__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
       '../path/to/a/file.yml',
-      new ChangeDefinition({ id: 'another id', sql: '__SOME_SQL__', path: '__PATH__', hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
+      new ChangeDefinition({ id: 'another id', sql: '__SOME_SQL__', path: '__PATH__', hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
     ];
     const returnedDefinitions = await flattenDefinitionsRecursive({ definitions, readRoot: '__READ_ROOT__' });
     expect(returnedDefinitions).toEqual([
-      new ChangeDefinition({ id: 'some id', path: '__PATH__', sql: '__SOME_SQL__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
-      new ChangeDefinition({ id: '__DEFINITION_FROM_FILE__', path: '__PATH__', sql: '__SOME_SQL__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
-      new ChangeDefinition({ id: '__DEFINITION_FROM_FILE_2__', path: '__PATH__', sql: '__SOME_SQL__', hash: '5783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
-      new ChangeDefinition({ id: 'another id', path: '__PATH__', sql: '__SOME_SQL__', hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8', type: DefinitionType.CHANGE }),
+      new ChangeDefinition({ id: 'some id', path: '__PATH__', sql: '__SOME_SQL__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
+      new ChangeDefinition({ id: '__DEFINITION_FROM_FILE__', path: '__PATH__', sql: '__SOME_SQL__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
+      new ChangeDefinition({ id: '__DEFINITION_FROM_FILE_2__', path: '__PATH__', sql: '__SOME_SQL__', hash: '5783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
+      new ChangeDefinition({ id: 'another id', path: '__PATH__', sql: '__SOME_SQL__', hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
     ]); // note the order - the order matters
   });
   describe('paths should be relative to the file they were defined in; derive relative root from flattened configs', () => {

@@ -1,4 +1,3 @@
-import { DefinitionType } from '../constants';
 import { ChangeDefinition } from './ChangeDefinition';
 import sha256 from 'simple-sha256';
 
@@ -11,8 +10,8 @@ describe('ChangeDefinition', () => {
       hash: sha256.sync('__SQL__'),
     });
     expect(changeDefinition).toMatchObject({
-      type: DefinitionType.CHANGE,
       id: 'cool_change_20190619_1',
+      path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
     });
@@ -20,7 +19,6 @@ describe('ChangeDefinition', () => {
   it('should throw error on invalid input', () => {
     try {
       new ChangeDefinition({
-        tyzype: DefinitionType.CHANGE,
         id: 'cool_change_20190619_1',
         path: './relative/path.sql',
       } as any); // tslint:disable-line no-unused-expression

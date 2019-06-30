@@ -1,7 +1,8 @@
 import sha256 from 'simple-sha256';
-import { DatabaseLanguage, DefinitionType } from '../constants';
+import { DatabaseLanguage, ResourceType } from '../constants';
 import { ConnectionConfig } from './ConnectionConfig';
 import { ChangeDefinition } from './ChangeDefinition';
+import { ResourceDefinition } from './ResourceDefinition';
 import { ControlConfig } from './ControlConfig';
 
 describe('ConnectionConfig', () => {
@@ -13,24 +14,29 @@ describe('ConnectionConfig', () => {
     password: 'super_secure_password',
   });
   const changeDefinition = new ChangeDefinition({
-    type: DefinitionType.CHANGE,
     id: 'cool_change_20190619_1',
     path: '__PATH__',
     sql: '__SQL__',
     hash: sha256.sync('__SQL__'),
+  });
+  const resourceDefinition = new ResourceDefinition({
+    path: '__SOME_PATH__',
+    sql: '__SQL__',
+    name: '__NAME__',
+    type: ResourceType.FUNCTION,
   });
   it('should initialize for valid inputs', () => {
     const config = new ControlConfig({
       language: DatabaseLanguage.MYSQL,
       dialect: '5.7',
       connection: connectionConfig,
-      definitions: [changeDefinition],
+      definitions: [changeDefinition, resourceDefinition],
     });
     expect(config).toMatchObject({
       language: DatabaseLanguage.MYSQL,
       dialect: '5.7',
       connection: connectionConfig,
-      definitions: [changeDefinition],
+      definitions: [changeDefinition, resourceDefinition],
     });
   });
   it('should throw error on invalid input', () => {

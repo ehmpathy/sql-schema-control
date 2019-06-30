@@ -1,6 +1,6 @@
 import { readYmlFile } from './_utils/readYmlFile';
 import { validateAndHydrateDefinitionsYmlContents } from './validateAndHydrateDefinitionsYmlContents';
-import { ChangeDefinition } from '../../../../types';
+import { ChangeDefinition, ResourceDefinition } from '../../../../types';
 import { getReadFilePath } from './_utils/getReadFilePath';
 
 /*
@@ -10,11 +10,13 @@ import { getReadFilePath } from './_utils/getReadFilePath';
     - read the definitions recursively
     - extend the results initial definitions array with the additional results
 */
-type DefinitionInput = ChangeDefinition | string;
-export const flattenDefinitionsRecursive = async ({ definitions, readRoot }: { definitions: DefinitionInput[], readRoot: string }): Promise<ChangeDefinition[]> => {
-  const arraysOfDefinitions = await Promise.all(definitions.map(async (definition): Promise<ChangeDefinition[]> => {
+type DefinitionObject = ChangeDefinition | ResourceDefinition;
+type DefinitionInput =  DefinitionObject | string;
+export const flattenDefinitionsRecursive = async ({ definitions, readRoot }: { definitions: DefinitionInput[], readRoot: string }): Promise<DefinitionObject[]> => {
+  const arraysOfDefinitions = await Promise.all(definitions.map(async (definition): Promise<DefinitionObject[]> => {
     // if the element is a ChangeDefinition object, return it in an array
     if (definition.constructor === ChangeDefinition) return [definition as ChangeDefinition]; // array since, although its the only definition we're getting from the list entry, it still needs to be "flatten"-able
+    if (definition.constructor === ResourceDefinition) return [definition as ResourceDefinition];
 
     // since we now know it is not a ChangeDefinition, it must be a string.
     const filePath = getReadFilePath({ readRoot, relativePath: definition as string });
@@ -24,6 +26,6 @@ export const flattenDefinitionsRecursive = async ({ definitions, readRoot }: { d
     const subFlattenedDefinitions = await flattenDefinitionsRecursive({ readRoot: subRoot, definitions: subDefinitions });
     return subFlattenedDefinitions;
   }));
-  const flattenedDefinitions = ([] as ChangeDefinition[]).concat(...arraysOfDefinitions);
+  const flattenedDefinitions = ([] as DefinitionObject[]).concat(...arraysOfDefinitions);
   return flattenedDefinitions;
 };

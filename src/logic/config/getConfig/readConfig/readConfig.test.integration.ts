@@ -14,7 +14,7 @@ describe('readConfig', () => {
       username: '__USERNAME__',
       password: '__PASSWORD__',
     });
-    expect(config.definitions.length).toEqual(4);
+    expect(config.definitions.length).toEqual(6); // 4 changes, 2 resource
     expect(config).toMatchSnapshot(); // to log an example of the output
   });
 });

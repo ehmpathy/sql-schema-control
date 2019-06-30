@@ -1,12 +1,18 @@
 import { validateAndHydrateDefinitionsYmlContents } from './validateAndHydrateDefinitionsYmlContents';
 import { InvalidDefinitionError } from './errors';
 import { hydrateChangeDefinitionContent } from './hydrateChangeDefinitionContent';
+import { hydrateResourceDefinitionContent } from './hydrateResourceDefinitionContent';
 
 jest.mock('./hydrateChangeDefinitionContent');
 const hydrateChangeDefinitionContentMock = hydrateChangeDefinitionContent as jest.Mock;
-hydrateChangeDefinitionContentMock.mockResolvedValue('__HYDRATED_DEF_RESULT__');
+hydrateChangeDefinitionContentMock.mockResolvedValue('__HYDRATED_CHANGE_DEF_RESULT__');
+
+jest.mock('./hydrateResourceDefinitionContent');
+const hydrateResourceDefinitionContentMock = hydrateResourceDefinitionContent as jest.Mock;
+hydrateResourceDefinitionContentMock.mockResolvedValue('__HYDRATED_RESOURCE_DEF_RESULT__');
 
 describe('validateAndHydrateDefinitionsYmlContents', () => {
+  beforeEach(() => jest.clearAllMocks());
   it('should throw an error if typedef is not a string or object', async () => {
     try {
       await validateAndHydrateDefinitionsYmlContents({ readRoot: '__READ_ROOT__', contents: [5] });
@@ -46,6 +52,15 @@ describe('validateAndHydrateDefinitionsYmlContents', () => {
       readRoot: '__READ_ROOT__',
       content: { type: 'change' },
     });
-    expect(definitions[0]).toEqual('__HYDRATED_DEF_RESULT__');
+    expect(definitions[0]).toEqual('__HYDRATED_CHANGE_DEF_RESULT__');
+  });
+  it('should return the result of hydrateResourceDefinitionContent, if type === resource', async () => {
+    const definitions = await validateAndHydrateDefinitionsYmlContents({ readRoot: '__READ_ROOT__', contents: [{ type: 'resource' }] });
+    expect(hydrateResourceDefinitionContentMock.mock.calls.length).toEqual(1);
+    expect(hydrateResourceDefinitionContentMock.mock.calls[0][0]).toMatchObject({
+      readRoot: '__READ_ROOT__',
+      content: { type: 'resource' },
+    });
+    expect(definitions[0]).toEqual('__HYDRATED_RESOURCE_DEF_RESULT__');
   });
 });
