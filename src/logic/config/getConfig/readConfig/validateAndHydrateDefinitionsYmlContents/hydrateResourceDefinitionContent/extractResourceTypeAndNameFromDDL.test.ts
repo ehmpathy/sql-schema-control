@@ -58,4 +58,10 @@ describe('extractResourceTypeAndNameFromDDL', () => {
     expect(name).toEqual('super_cool_table');
     expect(type).toEqual(ResourceType.TABLE);
   });
+  it('should be able to find a resource name when DEFINER is defined', () => {
+    const ddl = 'CREATE DEFINER=`root`@`%` PROCEDURE `upsert_super_cool_thing`( ... )';
+    const { name, type } = extractResourceTypeAndNameFromDDL({ ddl });
+    expect(name).toEqual('upsert_super_cool_thing');
+    expect(type).toEqual(ResourceType.PROCEDURE);
+  });
 });
