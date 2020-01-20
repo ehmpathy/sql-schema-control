@@ -6,7 +6,9 @@ describe('getReadFilePath', () => {
       getReadFilePath({ readRoot: '__READ_ROOT__', relativePath: 'path/to/some/file.sql' });
       throw new Error('should not reach here');
     } catch (error) {
-      expect(error.message).toEqual("all paths must be relative, 'path/to/some/file.sql' is not; relative paths must start with ./ or ../");
+      expect(error.message).toEqual(
+        "all paths must be relative, 'path/to/some/file.sql' is not; relative paths must start with ./ or ../",
+      );
     }
   });
   it('merge the readRoot and the relative file path accurately when starting from root', () => {

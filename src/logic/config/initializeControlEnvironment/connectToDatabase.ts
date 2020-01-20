@@ -3,7 +3,11 @@ import { DatabaseConnection, DatabaseLanguage, ControlConfig, ConnectionConfig }
 
 // create the connection to database
 const connectionAdapters = {
-  [DatabaseLanguage.MYSQL]: async ({ connectionConfig }: { connectionConfig: ConnectionConfig }): Promise<DatabaseConnection> => {
+  [DatabaseLanguage.MYSQL]: async ({
+    connectionConfig,
+  }: {
+    connectionConfig: ConnectionConfig;
+  }): Promise<DatabaseConnection> => {
     const connection = await mysql.createConnection({
       host: connectionConfig.host,
       port: connectionConfig.port,
@@ -13,7 +17,7 @@ const connectionAdapters = {
       multipleStatements: true,
     });
     return {
-      query: async ({ sql, values }: { sql: string, values?: any[] }) => {
+      query: async ({ sql, values }: { sql: string; values?: any[] }) => {
         return connection.query(sql, values);
       },
       end: async () => connection.end(),

@@ -1,7 +1,7 @@
 import Pull from './pull';
 import { stdout } from 'stdout-stderr';
 import { DatabaseConnection, DatabaseLanguage, ControlConfig } from '../../types';
-import { promiseConfig } from '../_test_assets/connection.config';
+import { promiseConfig } from '../__test_assets__/connection.config';
 import { initializeControlEnvironment } from '../../logic/config/initializeControlEnvironment';
 
 describe('pull', () => {
@@ -31,11 +31,16 @@ describe('pull', () => {
     stdout.stripColor = false; // dont strip color
     stdout.start();
     await Pull.run([
-      '-c', `${__dirname}/../_test_assets/control.yml`, // note how the config does not need to be strict for this to work
-      '-t', `${__dirname}/../_test_assets/uncontrolled`,
+      '-c',
+      `${__dirname}/../__test_assets__/control.yml`, // note how the config does not need to be strict for this to work
+      '-t',
+      `${__dirname}/../__test_assets__/uncontrolled`,
     ]);
     stdout.stop();
-    const output = stdout.output.split('\n').filter(line => !line.includes('console.log')).join('\n');
+    const output = stdout.output
+      .split('\n')
+      .filter((line) => !line.includes('console.log'))
+      .join('\n');
     expect(output).toContain('[PULLED]'); // output should say "recorded"
   });
 });

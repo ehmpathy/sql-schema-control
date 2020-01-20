@@ -1,7 +1,7 @@
 import Apply from './apply';
 import { stdout } from 'stdout-stderr';
 import { DatabaseConnection, DatabaseLanguage, ControlConfig } from '../../types';
-import { promiseConfig } from '../_test_assets/connection.config';
+import { promiseConfig } from '../__test_assets__/connection.config';
 import { initializeControlEnvironment } from '../../logic/config/initializeControlEnvironment';
 
 describe('apply', () => {
@@ -34,10 +34,12 @@ describe('apply', () => {
     stdout.stripColor = false; // dont strip color
     // stdout.print = true;
     stdout.start();
-    await Apply.run(['-c', `${__dirname}/../_test_assets/control.yml`]);
+    await Apply.run(['-c', `${__dirname}/../__test_assets__/control.yml`]);
     stdout.stop();
     const output = stdout.output
-      .split('\n').filter(line => !line.includes('console.log')).join('\n') // strip the console log portion
+      .split('\n')
+      .filter((line) => !line.includes('console.log'))
+      .join('\n') // strip the console log portion
       .replace(/\[\d\d:\d\d:\d\d\]/g, ''); // remove all timestamps, since they change over time...
     expect(output).toMatchSnapshot();
     process.stdout.isTTY = true;
@@ -53,17 +55,19 @@ describe('apply', () => {
     await connection.query({ sql: 'DELETE FROM schema_control_change_log' });
 
     // apply the definitions the first time
-    await Apply.run(['-c', `${__dirname}/../_test_assets/control.yml`]);
+    await Apply.run(['-c', `${__dirname}/../__test_assets__/control.yml`]);
 
     // reapply the definitions
     process.stdout.isTTY = undefined; // since listr acts differently if nonTTY and jest is nonTTY when more than one test is run
     stdout.stripColor = false; // dont strip color
     // stdout.print = true;
     stdout.start();
-    await Apply.run(['-c', `${__dirname}/../_test_assets/control.yml`]);
+    await Apply.run(['-c', `${__dirname}/../__test_assets__/control.yml`]);
     stdout.stop();
     const output = stdout.output
-      .split('\n').filter(line => !line.includes('console.log')).join('\n') // strip the console log portion
+      .split('\n')
+      .filter((line) => !line.includes('console.log'))
+      .join('\n') // strip the console log portion
       .replace(/\[\d\d:\d\d:\d\d\]/g, ''); // remove all timestamps, since they change over time...
     expect(output).toMatchSnapshot();
     process.stdout.isTTY = true;

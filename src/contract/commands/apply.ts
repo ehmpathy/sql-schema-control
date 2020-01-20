@@ -1,5 +1,5 @@
 import { Command, flags } from '@oclif/command';
-import { getAndApplyPlans } from '../../logic/workflows/getAndApplyPlans';
+import { getAndApplyPlans } from '../../logic/commands/getAndApplyPlans';
 
 export default class Apply extends Command {
   public static description = 'apply an execution plan';
@@ -29,7 +29,7 @@ Could not apply ./init/service_user.sql: Operation CREATE USER failed for 'user_
     const config = flags.config!;
 
     // apply changes
-    const configPath = (config.slice(0, 1) === '/') ? config : `${process.cwd()}/${config}`; // if starts with /, consider it as an absolute path
+    const configPath = config.slice(0, 1) === '/' ? config : `${process.cwd()}/${config}`; // if starts with /, consider it as an absolute path
     await getAndApplyPlans({ configPath });
   }
 }

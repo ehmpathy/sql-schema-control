@@ -1,5 +1,5 @@
 import { Command, flags } from '@oclif/command';
-import { getAndDisplayPlans } from '../../logic/workflows/getAndDisplayPlans';
+import { getAndDisplayPlans } from '../../logic/commands/getAndDisplayPlans';
 
 export default class Plan extends Command {
   public static description = 'generate and show an execution plan';
@@ -22,7 +22,7 @@ export default class Plan extends Command {
     const config = flags.config!;
 
     // get and display the plans
-    const configPath = (config.slice(0, 1) === '/') ? config : `${process.cwd()}/${config}`; // if starts with /, consider it as an absolute path
+    const configPath = config.slice(0, 1) === '/' ? config : `${process.cwd()}/${config}`; // if starts with /, consider it as an absolute path
     await getAndDisplayPlans({ configPath });
   }
 }

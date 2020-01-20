@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getLiveResourceDefinitionFromDatabase function should be able to get sql of an existing function 1`] = `
+ResourceDefinition {
+  "name": "f_function_for_testing_getResourceCreateStatement",
+  "path": undefined,
+  "sql": "CREATE DEFINER=\`root\`@\`%\` FUNCTION \`f_function_for_testing_getResourceCreateStatement\`(
+  in_message TEXT
+) RETURNS binary(32)
+BEGIN
+RETURN UNHEX(SHA(in_message)); -- some comment
+END",
+  "status": undefined,
+  "type": "FUNCTION",
+}
+`;
+
+exports[`getLiveResourceDefinitionFromDatabase procedure should be able to get sql of an existing procedure 1`] = `
+ResourceDefinition {
+  "name": "upsert_something_for_getResourceCreateStatement",
+  "path": undefined,
+  "sql": "CREATE DEFINER=\`root\`@\`%\` PROCEDURE \`upsert_something_for_getResourceCreateStatement\`(
+  IN in_value TEXT
+)
+BEGIN
+  SELECT true;
+END",
+  "status": undefined,
+  "type": "PROCEDURE",
+}
+`;
+
+exports[`getLiveResourceDefinitionFromDatabase table should be able to get sql of an existing table 1`] = `
+ResourceDefinition {
+  "name": "test_table_getResourceCreateStatement",
+  "path": undefined,
+  "sql": "CREATE TABLE \`test_table_getResourceCreateStatement\` (
+  \`id\` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci",
+  "status": undefined,
+  "type": "TABLE",
+}
+`;

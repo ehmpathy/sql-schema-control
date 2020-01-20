@@ -1,1 +1,0 @@
-export { getChangeDifference } from './getChangeDifference';

@@ -1,1 +1,0 @@
-export { getResourceStatus } from './getResourceStatus';

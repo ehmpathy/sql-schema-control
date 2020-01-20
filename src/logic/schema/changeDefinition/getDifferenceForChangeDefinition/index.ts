@@ -1,0 +1,1 @@
+export { getDifferenceForChangeDefinition } from './getDifferenceForChangeDefinition';

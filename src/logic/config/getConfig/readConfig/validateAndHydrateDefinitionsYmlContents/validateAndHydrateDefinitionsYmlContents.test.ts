@@ -33,7 +33,10 @@ describe('validateAndHydrateDefinitionsYmlContents', () => {
   });
   it('should return the string if the string looks like a path to a yml', async () => {
     const ymlPath = 'path/to/some.yml';
-    const definitions = await validateAndHydrateDefinitionsYmlContents({ readRoot: '__READ_ROOT__', contents: [ymlPath] });
+    const definitions = await validateAndHydrateDefinitionsYmlContents({
+      readRoot: '__READ_ROOT__',
+      contents: [ymlPath],
+    });
     expect(definitions[0]).toEqual(ymlPath);
   });
   it('should throw an error if the object is not of a supported type', async () => {
@@ -46,7 +49,10 @@ describe('validateAndHydrateDefinitionsYmlContents', () => {
     }
   });
   it('should return the result of hydrateChangeDefinitionContent, if type === change', async () => {
-    const definitions = await validateAndHydrateDefinitionsYmlContents({ readRoot: '__READ_ROOT__', contents: [{ type: 'change' }] });
+    const definitions = await validateAndHydrateDefinitionsYmlContents({
+      readRoot: '__READ_ROOT__',
+      contents: [{ type: 'change' }],
+    });
     expect(hydrateChangeDefinitionContentMock.mock.calls.length).toEqual(1);
     expect(hydrateChangeDefinitionContentMock.mock.calls[0][0]).toMatchObject({
       readRoot: '__READ_ROOT__',
@@ -55,7 +61,10 @@ describe('validateAndHydrateDefinitionsYmlContents', () => {
     expect(definitions[0]).toEqual('__HYDRATED_CHANGE_DEF_RESULT__');
   });
   it('should return the result of hydrateResourceDefinitionContent, if type === resource', async () => {
-    const definitions = await validateAndHydrateDefinitionsYmlContents({ readRoot: '__READ_ROOT__', contents: [{ type: 'resource' }] });
+    const definitions = await validateAndHydrateDefinitionsYmlContents({
+      readRoot: '__READ_ROOT__',
+      contents: [{ type: 'resource' }],
+    });
     expect(hydrateResourceDefinitionContentMock.mock.calls.length).toEqual(1);
     expect(hydrateResourceDefinitionContentMock.mock.calls[0][0]).toMatchObject({
       readRoot: '__READ_ROOT__',

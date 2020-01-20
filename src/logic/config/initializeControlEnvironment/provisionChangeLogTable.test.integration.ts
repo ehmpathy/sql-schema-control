@@ -29,7 +29,10 @@ describe('provisionChangeLogTable', () => {
     // create the table and add some data, so that we can tell if it was droped
     await connection.query({ sql: 'DROP TABLE IF EXISTS schema_control_change_log' });
     await provisionChangeLogTable({ connection });
-    await connection.query({ sql: "INSERT INTO schema_control_change_log (change_id, change_hash, change_content) VALUES ('__ID__', '__HASH__', '__CONTENT__');" });
+    await connection.query({
+      sql:
+        "INSERT INTO schema_control_change_log (change_id, change_hash, change_content) VALUES ('__ID__', '__HASH__', '__CONTENT__');",
+    });
 
     // now provision it again and check that we can still find the row
     await provisionChangeLogTable({ connection });

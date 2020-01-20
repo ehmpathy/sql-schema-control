@@ -7,7 +7,9 @@ const resourceDefinitionSchema = Joi.object().keys({
   name: Joi.string().required(),
   sql: Joi.string().required(),
   path: Joi.string().optional(), // not defined for definitions taken from database
-  status: Joi.string().valid(Object.values(ResourceDefinitionStatus)).optional(),
+  status: Joi.string()
+    .valid(Object.values(ResourceDefinitionStatus))
+    .optional(),
 });
 
 interface ResourceDefinitionConstructorProps {

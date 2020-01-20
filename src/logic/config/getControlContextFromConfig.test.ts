@@ -1,10 +1,10 @@
 import sha256 from 'simple-sha256';
-import { DatabaseLanguage, ControlContext, ChangeDefinition, ResourceDefinition, ResourceType } from '../../types';
-import { getControlContextFromConfig } from './getControlContextFromConfig';
+
+import { ChangeDefinition, ControlContext, DatabaseLanguage, ResourceDefinition, ResourceType } from '../../types';
+import { getUncontrolledResources } from '../schema/resourceDefinition/getUncontrolledResources';
 import { getConfig } from './getConfig';
+import { getControlContextFromConfig } from './getControlContextFromConfig';
 import { initializeControlEnvironment } from './initializeControlEnvironment';
-import { getStatus } from '../definitions/getStatus';
-import { getUncontrolledResources } from '../definitions/getUncontrolledResources';
 
 jest.mock('./getConfig');
 const getConfigMock = getConfig as jest.Mock;
@@ -40,11 +40,7 @@ const initializeControlEnvironmentMock = initializeControlEnvironment as jest.Mo
 const exampleConnection = { query: () => {}, end: () => {} };
 initializeControlEnvironmentMock.mockResolvedValue({ connection: exampleConnection }); // since typechecked by Context object
 
-jest.mock('../definitions/getStatus');
-const getStatusMock = getStatus as jest.Mock;
-getStatusMock.mockImplementation(({ definition }) => definition); // pass back what was given
-
-jest.mock('../definitions/getUncontrolledResources');
+jest.mock('../schema/resourceDefinition/getUncontrolledResources');
 const getUncontrolledResourcesMock = getUncontrolledResources as jest.Mock;
 const exampleUncontrolledResource = new ResourceDefinition({
   path: '__PATH__',
@@ -70,12 +66,6 @@ describe('getControlContextFromConfig', () => {
       config: mockedConfigResponse,
     });
   });
-  it('should get the status of each definition', async () => {
-    await getControlContextFromConfig({ configPath: '__CONFIG_PATH__' });
-    expect(getStatusMock.mock.calls.length).toEqual(3);
-    expect(getStatusMock.mock.calls[0][0]).toEqual({ connection: exampleConnection, definition: mockedConfigResponse.definitions[0] });
-    expect(getStatusMock.mock.calls[1][0]).toEqual({ connection: exampleConnection, definition: mockedConfigResponse.definitions[1] });
-  });
   it('should find uncontrolled resources accurately if strict', async () => {
     getConfigMock.mockResolvedValue({ ...mockedConfigResponse, strict: true });
     await getControlContextFromConfig({ configPath: '__CONFIG_PATH__' });
@@ -86,7 +76,12 @@ describe('getControlContextFromConfig', () => {
     });
   });
   it('should return a control context', async () => {
-    getConfigMock.mockResolvedValueOnce({ language: DatabaseLanguage.MYSQL, dialect: '__DIALECT__', connection: '__CONNECTION__', definitions: [] }); // since typechecked by Context object
+    getConfigMock.mockResolvedValueOnce({
+      language: DatabaseLanguage.MYSQL,
+      dialect: '__DIALECT__',
+      connection: '__CONNECTION__',
+      definitions: [],
+    }); // since typechecked by Context object
     initializeControlEnvironmentMock.mockResolvedValueOnce({ query: () => {}, end: () => {} }); // since typechecked by Context object
     const result = await getControlContextFromConfig({ configPath: '__CONFIG_PATH__' });
     expect(result.constructor).toEqual(ControlContext);

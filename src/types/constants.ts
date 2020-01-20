@@ -14,7 +14,7 @@ export enum DatabaseLanguage {
 }
 
 export interface DatabaseConnection {
-  query: (args: { sql: string, values?: any[] }) => Promise<any>;
+  query: (args: { sql: string; values?: any[] }) => Promise<any>;
   end: () => Promise<void>;
 }
 
@@ -27,7 +27,7 @@ export enum ResourceDefinitionStatus {
   NOT_APPLIED = 'NOT_APPLIED',
   SYNCED = 'SYNCED',
   OUT_OF_SYNC = 'OUT_OF_SYNC',
-  NOT_CONTROLED = 'NOT_CONTROLED',
+  NOT_CONTROLLED = 'NOT_CONTROLLED',
 }
 
 export enum RequiredAction { // i.e., the the action we need to take

@@ -9,16 +9,37 @@ const readYmlFileMock = readYmlFile as jest.Mock;
 jest.mock('./validateAndHydrateDefinitionsYmlContents');
 const validateAndHydrateDefinitionsYmlContentsMock = validateAndHydrateDefinitionsYmlContents as jest.Mock;
 validateAndHydrateDefinitionsYmlContentsMock.mockResolvedValue([
-  new ChangeDefinition({ id: '__DEFINITION_FROM_FILE__', path: '__PATH__', sql: '__SOME_SQL__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
+  new ChangeDefinition({
+    id: '__DEFINITION_FROM_FILE__',
+    path: '__PATH__',
+    sql: '__SOME_SQL__',
+    hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
+  }),
 ]);
 
 describe('flattenDefinitionsRecursive', () => {
   beforeEach(() => jest.clearAllMocks());
-  it('should return all definitions given to it, if all are DefinitionObjects', async () => { // i.e., the end case
+  it('should return all definitions given to it, if all are DefinitionObjects', async () => {
+    // i.e., the end case
     const definitions = [
-      new ChangeDefinition({ id: 'some id', path: '__PATH__', sql: '__SOME_SQL__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
-      new ChangeDefinition({ id: 'some other id', path: '__PATH__', sql: '__SOME_SQL__', hash: '5783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
-      new ChangeDefinition({ id: 'another id', path: '__PATH__', sql: '__SOME_SQL__', hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
+      new ChangeDefinition({
+        id: 'some id',
+        path: '__PATH__',
+        sql: '__SOME_SQL__',
+        hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
+      }),
+      new ChangeDefinition({
+        id: 'some other id',
+        path: '__PATH__',
+        sql: '__SOME_SQL__',
+        hash: '5783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
+      }),
+      new ChangeDefinition({
+        id: 'another id',
+        path: '__PATH__',
+        sql: '__SOME_SQL__',
+        hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
+      }),
       new ResourceDefinition({ sql: '__SOME_SQL__', type: ResourceType.TABLE, name: '__SOME_NAME__' }),
     ];
     const returnedDefinitions = await flattenDefinitionsRecursive({ definitions, readRoot: '__READ_ROOT__' });
@@ -26,9 +47,19 @@ describe('flattenDefinitionsRecursive', () => {
   });
   it('should should attempt to read the contents of a each yml file, if a file path is defined as a definition', async () => {
     const definitions = [
-      new ChangeDefinition({ id: 'some id', path: '__PATH__', sql: '__SOME_SQL__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
+      new ChangeDefinition({
+        id: 'some id',
+        path: '__PATH__',
+        sql: '__SOME_SQL__',
+        hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
+      }),
       '../path/to/a/file.yml',
-      new ChangeDefinition({ id: 'another id', path: '__PATH__', sql: '__SOME_SQL__', hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
+      new ChangeDefinition({
+        id: 'another id',
+        path: '__PATH__',
+        sql: '__SOME_SQL__',
+        hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
+      }),
       '../path/to/a/file2.yml',
       '../path/to/a/file3.yml',
     ];
@@ -39,26 +70,62 @@ describe('flattenDefinitionsRecursive', () => {
     expect(readYmlFileMock.mock.calls[2][0]).toMatchObject({ filePath: `__READ_ROOT__/${definitions[4]}` }); // check accuracy
   });
   it('should parse the contents of the yml file into definitions, if a file path is returned as a definition', async () => {
-    readYmlFileMock.mockResolvedValueOnce([
-      '__CONTENT_1__',
-      '__CONTENT_2__',
-      '__CONTENT_3__',
-    ]);
+    readYmlFileMock.mockResolvedValueOnce(['__CONTENT_1__', '__CONTENT_2__', '__CONTENT_3__']);
     validateAndHydrateDefinitionsYmlContentsMock.mockResolvedValueOnce([
-      new ChangeDefinition({ id: '__DEFINITION_FROM_FILE__', path: '__PATH__', sql: '__SOME_SQL__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
-      new ChangeDefinition({ id: '__DEFINITION_FROM_FILE_2__', path: '__PATH__', sql: '__SOME_SQL__', hash: '5783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
+      new ChangeDefinition({
+        id: '__DEFINITION_FROM_FILE__',
+        path: '__PATH__',
+        sql: '__SOME_SQL__',
+        hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
+      }),
+      new ChangeDefinition({
+        id: '__DEFINITION_FROM_FILE_2__',
+        path: '__PATH__',
+        sql: '__SOME_SQL__',
+        hash: '5783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
+      }),
     ]);
     const definitions = [
-      new ChangeDefinition({ id: 'some id', sql: '__SOME_SQL__', path: '__PATH__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
+      new ChangeDefinition({
+        id: 'some id',
+        sql: '__SOME_SQL__',
+        path: '__PATH__',
+        hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
+      }),
       '../path/to/a/file.yml',
-      new ChangeDefinition({ id: 'another id', sql: '__SOME_SQL__', path: '__PATH__', hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
+      new ChangeDefinition({
+        id: 'another id',
+        sql: '__SOME_SQL__',
+        path: '__PATH__',
+        hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
+      }),
     ];
     const returnedDefinitions = await flattenDefinitionsRecursive({ definitions, readRoot: '__READ_ROOT__' });
     expect(returnedDefinitions).toEqual([
-      new ChangeDefinition({ id: 'some id', path: '__PATH__', sql: '__SOME_SQL__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
-      new ChangeDefinition({ id: '__DEFINITION_FROM_FILE__', path: '__PATH__', sql: '__SOME_SQL__', hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
-      new ChangeDefinition({ id: '__DEFINITION_FROM_FILE_2__', path: '__PATH__', sql: '__SOME_SQL__', hash: '5783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
-      new ChangeDefinition({ id: 'another id', path: '__PATH__', sql: '__SOME_SQL__', hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8' }),
+      new ChangeDefinition({
+        id: 'some id',
+        path: '__PATH__',
+        sql: '__SOME_SQL__',
+        hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
+      }),
+      new ChangeDefinition({
+        id: '__DEFINITION_FROM_FILE__',
+        path: '__PATH__',
+        sql: '__SOME_SQL__',
+        hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
+      }),
+      new ChangeDefinition({
+        id: '__DEFINITION_FROM_FILE_2__',
+        path: '__PATH__',
+        sql: '__SOME_SQL__',
+        hash: '5783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
+      }),
+      new ChangeDefinition({
+        id: 'another id',
+        path: '__PATH__',
+        sql: '__SOME_SQL__',
+        hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
+      }),
     ]); // note the order - the order matters
   });
   describe('paths should be relative to the file they were defined in; derive relative root from flattened configs', () => {
@@ -72,7 +139,8 @@ describe('flattenDefinitionsRecursive', () => {
         readRoot: '__READ_ROOT__/../path/to/a', // now we're relative to the file that we imported
       });
     });
-    it('should use new readRoot for the recursion', async () => { // note: only way to check this is to recurse twice
+    it('should use new readRoot for the recursion', async () => {
+      // note: only way to check this is to recurse twice
       const definitions = ['../path/to/a/file.yml'];
       validateAndHydrateDefinitionsYmlContentsMock.mockResolvedValueOnce(['../another/relative/path.yml']);
       await flattenDefinitionsRecursive({ definitions, readRoot: '__READ_ROOT__' });
