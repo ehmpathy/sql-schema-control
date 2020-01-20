@@ -36,7 +36,7 @@ exports[`plan should have an expected appearance when some resources need to be 
           [32m) ENGINE = InnoDB;[39m
           [32m[39m
       * [1m[33m[REAPPLY][39m ./functions/find_message_hash_by_text.sql [90m(resource:function:find_message_hash_by_text)[39m[22m
-          [31mCREATE DEFINER=\`root\`@\`%\` FUNCTION \`find_message_hash_by_text\`([39m
+          [31mCREATE FUNCTION \`find_message_hash_by_text\`([39m
           [31m[39m[32mCREATE FUNCTION find_message_hash_by_text([39m
           [32m[39m[90min_message TEXT[39m
           [90m[39m[31m) RETURNS char(64) CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci[39m

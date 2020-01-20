@@ -49,6 +49,32 @@ CREATE TABLE \`some_resource_table\` (
       const result = await getDifferenceForResourceDefinition({ connection, resource: definition });
       expect(result).toEqual(null);
     });
+    it('should find that an up to date table has no difference, even if auto increment has gone up', async () => {
+      await connection.query({ sql: 'DROP TABLE IF EXISTS some_resource_table' });
+
+      // apply the resource
+      const definition = new ResourceDefinition({
+        type: ResourceType.TABLE,
+        name: 'some_resource_table',
+        path: '__PATH__',
+        sql: `
+CREATE TABLE \`some_resource_table\` (
+  \`id\` int(11) NOT NULL AUTO_INCREMENT,
+  \`created_at\` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (\`id\`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+          `.trim(),
+        status: ResourceDefinitionStatus.OUT_OF_SYNC,
+      });
+      await connection.query({ sql: definition.sql });
+
+      // insert into the table
+      await connection.query({ sql: 'INSERT INTO some_resource_table (created_at) VALUES (now(6))' });
+
+      // get the diff
+      const result = await getDifferenceForResourceDefinition({ connection, resource: definition });
+      expect(result).toEqual(null);
+    });
     it('should find that an out of date table resource has a colored diff of changed lines', async () => {
       await connection.query({ sql: 'DROP TABLE IF EXISTS some_resource_table' });
 
@@ -87,8 +113,7 @@ CREATE TABLE \`some_resource_table\` (
     });
   });
   describe('procedure', () => {
-    it.skip('should find that an up to date procedure has no difference', async () => {
-      // TODO: unskip when we ignore "definer" in definition
+    it('should find that an up to date procedure has no difference', async () => {
       await connection.query({ sql: 'DROP PROCEDURE IF EXISTS upsert_user_description' });
 
       // apply the resource

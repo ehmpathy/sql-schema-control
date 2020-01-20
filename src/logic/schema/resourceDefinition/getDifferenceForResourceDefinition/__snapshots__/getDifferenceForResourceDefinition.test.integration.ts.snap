@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`getDifferenceForResourceDefinition procedure should find that an out of date procedure resource has a colored diff of changed lines 1`] = `
-"[31mCREATE DEFINER=\`root\`@\`%\` PROCEDURE \`upsert_user_description\`([39m
+"[31mCREATE PROCEDURE \`upsert_user_description\`([39m
 [31m[39m[32mCREATE PROCEDURE upsert_user_description([39m
 [32m[39m[90mIN in_from_user_id BIGINT[39m
 [90m)[39m
