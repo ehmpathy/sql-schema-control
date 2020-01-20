@@ -1,8 +1,9 @@
 import chalk from 'chalk';
 import { RequiredAction, DefinitionPlan } from '../../../types';
+import { getColoredActionTitle } from './getColoredActionTitle';
 
 export const getColoredPlanTitle = ({ plan }: { plan: DefinitionPlan }) => {
-  // define action string
+  // define action color
   const actionChalk = {
     [RequiredAction.APPLY]: chalk.green,
     [RequiredAction.NO_CHANGE]: chalk.gray,
@@ -11,14 +12,7 @@ export const getColoredPlanTitle = ({ plan }: { plan: DefinitionPlan }) => {
     [RequiredAction.MANUAL_MIGRATION]: chalk.red,
     [RequiredAction.MANUAL_PULL]: chalk.red,
   }[plan.action];
-  const actionString = actionChalk(`[${plan.action}]`);
 
-  // define the identifier string
-  const identifierString = chalk.grey(`(${plan.id})`);
-
-  // define the header
-  const title = chalk.bold(`${actionString} ${plan.definition.path} ${identifierString}`);
-
-  // return header
-  return title;
+  // return the action title
+  return getColoredActionTitle({ actionChalk, action: plan.action, definition: plan.definition });
 };

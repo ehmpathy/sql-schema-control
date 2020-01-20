@@ -6,8 +6,8 @@ exports[`plan should have an expected appearance when all changes need to be app
       * [1m[32m[APPLY][39m ./tables/notification_version.sql [90m(resource:table:notification_version)[39m[22m
       * [1m[32m[APPLY][39m ./functions/find_message_hash_by_text.sql [90m(resource:function:find_message_hash_by_text)[39m[22m
       * [1m[32m[APPLY][39m ./procedures/upsert_message.sql [90m(resource:procedure:upsert_message)[39m[22m
-      * [1m[32m[APPLY][39m ./init/service_user.sql [90m(change:init_20190619_1)[39m[22m
-      * [1m[32m[APPLY][39m ./init/data_sources.sql [90m(change:data_20190619_1)[39m[22m
+      * [1m[32m[APPLY][39m ./init/service_user.sql [90m(change:init_service_user)[39m[22m
+      * [1m[32m[APPLY][39m ./init/data_sources.sql [90m(change:init_data_source)[39m[22m
 
 "
 `;
@@ -49,8 +49,8 @@ exports[`plan should have an expected appearance when some resources need to be 
           [32mEND;[39m
           [32m[39m
       * [1m[32m[APPLY][39m ./procedures/upsert_message.sql [90m(resource:procedure:upsert_message)[39m[22m
-      * [1m[32m[APPLY][39m ./init/service_user.sql [90m(change:init_20190619_1)[39m[22m
-      * [1m[32m[APPLY][39m ./init/data_sources.sql [90m(change:data_20190619_1)[39m[22m
+      * [1m[32m[APPLY][39m ./init/service_user.sql [90m(change:init_service_user)[39m[22m
+      * [1m[32m[APPLY][39m ./init/data_sources.sql [90m(change:init_data_source)[39m[22m
 
 "
 `;

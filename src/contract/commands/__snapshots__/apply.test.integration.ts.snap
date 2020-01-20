@@ -21,13 +21,13 @@ exports[`apply should have an expected appearance when all changes need to be ap
 
     [2m[22m [1m[32m[APPLY][39m ./procedures/upsert_message.sql [90m(resource:procedure:upsert_message)[39m[22m [completed]
 
-    [2m[22m [1m[32m[APPLY][39m ./init/service_user.sql [90m(change:init_20190619_1)[39m[22m [started]
+    [2m[22m [1m[32m[APPLY][39m ./init/service_user.sql [90m(change:init_service_user)[39m[22m [started]
 
-    [2m[22m [1m[32m[APPLY][39m ./init/service_user.sql [90m(change:init_20190619_1)[39m[22m [completed]
+    [2m[22m [1m[32m[APPLY][39m ./init/service_user.sql [90m(change:init_service_user)[39m[22m [completed]
 
-    [2m[22m [1m[32m[APPLY][39m ./init/data_sources.sql [90m(change:data_20190619_1)[39m[22m [started]
+    [2m[22m [1m[32m[APPLY][39m ./init/data_sources.sql [90m(change:init_data_source)[39m[22m [started]
 
-    [2m[22m [1m[32m[APPLY][39m ./init/data_sources.sql [90m(change:data_20190619_1)[39m[22m [completed]
+    [2m[22m [1m[32m[APPLY][39m ./init/data_sources.sql [90m(change:init_data_source)[39m[22m [completed]
 
 "
 `;

@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getAndDisplayPlans should log that the change log was synced successfully 1`] = `
+"     [32m✔[39m [1m[32m[SYNC][39m __PATH__ [90m(change:__ID__)[39m[22m
+
+"
+`;

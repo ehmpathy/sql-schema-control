@@ -1,9 +1,9 @@
 - type: change
   path: './init/service_user.sql'
-  id: 'init_20190619_1'
+  id: 'init_service_user'
   reappliable: false
 
 - type: change
-  id: 'data_20190619_1'
+  id: 'init_data_source'
   path: './init/data_sources.sql'
   reappliable: true

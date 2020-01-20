@@ -1,5 +1,5 @@
-import { mysql as prepare } from 'yesql';
 import { DefinitionPlan, DatabaseConnection, ChangeDefinition } from '../../../types';
+import { syncChangeLogWithChangeDefinition } from '../../schema/changeDefinition/syncChangelogWithChangeDefinition/syncChangeLogWithChangeDefinition';
 
 /*
   1. run the sql
@@ -19,20 +19,7 @@ export const applyPlanForChange = async ({
     throw new Error(`Could not apply ${plan.definition.path}: ${error.message}`);
   }
 
-  // 2. upsert that we have applied this change; TODO: adapter pattern to support resources in addition to changes
-  await connection.query(
-    prepare(`
-    INSERT INTO schema_control_change_log
-      (change_id, change_hash, change_content)
-    VALUES
-      (:change_id, :change_hash, :change_content)
-    ON DUPLICATE KEY UPDATE
-      change_hash = :change_hash,
-      change_content = :change_content;
-  `)({
-      change_id: (plan.definition as ChangeDefinition).id,
-      change_hash: (plan.definition as ChangeDefinition).hash,
-      change_content: plan.definition.sql,
-    }),
-  );
+  // 2. upsert that we have applied this change
+  if (!(plan.definition instanceof ChangeDefinition)) throw new Error('this should not occur'); // just sanity check to satisfy typescript
+  await syncChangeLogWithChangeDefinition({ connection, definition: plan.definition });
 };

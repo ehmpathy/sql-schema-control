@@ -11,13 +11,17 @@ Declarative database schema management. Provision, track, sync, and modify your 
 
 # Table of Contents
 <!-- toc -->
-* [Table of Contents](#table-of-contents)
-* [Goals](#goals)
-* [Background](#background)
-* [Installation](#installation)
-* [Usage](#usage)
-* [Commands](#commands)
-* [Contribution](#contribution)
+- [Goals](#goals)
+- [Background](#background)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Commands](#commands)
+  - [`schema-control apply`](#schema-control-apply)
+  - [`schema-control help [COMMAND]`](#schema-control-help-command)
+  - [`schema-control plan`](#schema-control-plan)
+  - [`schema-control pull`](#schema-control-pull)
+  - [`schema-control sync`](#schema-control-sync)
+- [Contribution](#contribution)
 <!-- tocstop -->
 
 # Goals
@@ -44,7 +48,7 @@ This project takes inspiration from Liquibase and Terraform.
 
 Schema Control operates on two schema management classes: changes and resources.
 
-Changes are simply sets of sql statements that you wish to apply to the database. Everything can be done with changes - and schema-control simply tracks whether each change has been applied and whether it is still up to date (i.e., comparing the hash).    
+Changes are simply sets of sql statements that you wish to apply to the database. Everything can be done with changes - and schema-control simply tracks whether each change has been applied and whether it is still up to date (i.e., comparing the hash).
 
 Resources are DDL created entities that we can track and "sync" with your checked in code. Schema Control is able to detect resources in your live database that are not checked into your code, resources that have not been added to your database, and resources that are out of sync between the definition in your code and what lives in your database - as well as specifying how exactly they are out of sync.
 
@@ -129,6 +133,7 @@ If your schema control config specified strict control, then you may also want t
 * [`schema-control help [COMMAND]`](#schema-control-help-command)
 * [`schema-control plan`](#schema-control-plan)
 * [`schema-control pull`](#schema-control-pull)
+* [`schema-control sync`](#schema-control-sync)
 
 ## `schema-control apply`
 
@@ -156,7 +161,7 @@ EXAMPLE
   Could not apply ./init/service_user.sql: Operation CREATE USER failed for 'user_name'@'%'
 ```
 
-_See code: [dist/contract/commands/apply.ts](https://github.com/uladkasach/schema-control/blob/v0.3.0/dist/contract/commands/apply.ts)_
+_See code: [dist/contract/commands/apply.ts](https://github.com/uladkasach/schema-control/blob/v1.1.0/dist/contract/commands/apply.ts)_
 
 ## `schema-control help [COMMAND]`
 
@@ -194,7 +199,7 @@ EXAMPLE
        GRANT ALL PRIVILEGES ON awesomedb.* To 'user_name'@'%' IDENTIFIED BY '__CHANGE_M3__'; -- TODO: change password
 ```
 
-_See code: [dist/contract/commands/plan.ts](https://github.com/uladkasach/schema-control/blob/v0.3.0/dist/contract/commands/plan.ts)_
+_See code: [dist/contract/commands/plan.ts](https://github.com/uladkasach/schema-control/blob/v1.1.0/dist/contract/commands/plan.ts)_
 
 ## `schema-control pull`
 
@@ -218,7 +223,27 @@ EXAMPLE
      ✓ [PULLED] resource:function:get_id_by_name
 ```
 
-_See code: [dist/contract/commands/pull.ts](https://github.com/uladkasach/schema-control/blob/v0.3.0/dist/contract/commands/pull.ts)_
+_See code: [dist/contract/commands/pull.ts](https://github.com/uladkasach/schema-control/blob/v1.1.0/dist/contract/commands/pull.ts)_
+
+## `schema-control sync`
+
+sync the change log for a specific change definition without applying it, for cases where a change has been reapplied manually
+
+```
+USAGE
+  $ schema-control sync
+
+OPTIONS
+  -c, --config=config  [default: schema/control.yml] path to config file
+  -h, --help           show CLI help
+  --id=id              (required) reference id of the change definition
+
+EXAMPLE
+  $ schema-control sync -c src/contract/__test_assets__/control.yml --id change:init_service_user
+     ✔ [SYNC] ./init/service_user.sql (change:init_service_user)
+```
+
+_See code: [dist/contract/commands/sync.ts](https://github.com/uladkasach/schema-control/blob/v1.1.0/dist/contract/commands/sync.ts)_
 <!-- commandsstop -->
 
 

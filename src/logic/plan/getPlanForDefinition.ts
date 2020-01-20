@@ -2,6 +2,7 @@ import { DatabaseConnection, ChangeDefinition, ResourceDefinition, DefinitionPla
 import { getRequiredAction } from './getRequiredAction';
 import { getStatusForDefinition } from '../schema/getStatusForDefinition';
 import { getDifferenceForDefinition } from '../schema/getDifferenceForDefinition';
+import { getReferenceIdForDefinition } from '../schema/getReferenceIdForDefinition';
 
 export const getPlanForDefinition = async ({
   connection,
@@ -23,10 +24,7 @@ export const getPlanForDefinition = async ({
       : await getDifferenceForDefinition({ connection, definition });
 
   // 4. define a logical identifier for the plan
-  const definitionType = definition instanceof ChangeDefinition ? 'change' : 'resource';
-  const definitionId =
-    definition instanceof ChangeDefinition ? definition.id : `${definition.type.toLowerCase()}:${definition.name}`;
-  const planIdentifier = `${definitionType}:${definitionId}`;
+  const planIdentifier = getReferenceIdForDefinition({ definition });
 
   // 5. build and return the plan object
   return new DefinitionPlan({
