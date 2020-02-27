@@ -30,7 +30,7 @@ export const getAndSyncChangeLogForChangeDefinition = async ({
   await context.connection.end();
 
   // 5. notify the user it was successful
-  const successMessage = ` ${chalk.green('✔')} ${getColoredActionTitle({
+  const successMessage = `  ${chalk.green('✔')} ${getColoredActionTitle({
     actionChalk: chalk.green,
     action: 'SYNC',
     definition: targetDefinition,
