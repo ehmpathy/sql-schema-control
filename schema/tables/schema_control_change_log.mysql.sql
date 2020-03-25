@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS schema_control_change_log ( -- TODO: make this a vers
   updated_at      DATETIME ON UPDATE CURRENT_TIMESTAMP, -- this should _never_ occur
 
   -- data
-  change_id             VARCHAR(255) NOT NULL, -- record the human generated id of the content
+  change_id             VARCHAR(191) NOT NULL, -- record the human generated id of the content
   change_hash           CHAR(64) NOT NULL, -- record a hash of the applied content
   change_content        TEXT, -- record the content that was applied
 
