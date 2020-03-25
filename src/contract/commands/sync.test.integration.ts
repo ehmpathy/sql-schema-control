@@ -25,11 +25,10 @@ describe('sync', () => {
     await connection.query({ sql: 'DELETE FROM schema_control_change_log' });
 
     // run the test
-    process.stdout.isTTY = undefined; // since listr acts differently if nonTTY and jest is nonTTY when more than one test is run
     stdout.stripColor = false; // dont strip color
     // stdout.print = true;
     stdout.start();
-    await Sync.run(['-c', `${__dirname}/../__test_assets__/control.yml`, '--id', 'change:init_service_user']);
+    await Sync.run(['-c', `${__dirname}/../__test_assets__/control.yml`, '--id', 'init_service_user']);
     stdout.stop();
     const output = stdout.output
       .split('\n')
@@ -37,6 +36,5 @@ describe('sync', () => {
       .join('\n') // strip the console log portion
       .replace(/\[\d\d:\d\d:\d\d\]/g, ''); // remove all timestamps, since they change over time...
     expect(output).toMatchSnapshot();
-    process.stdout.isTTY = true;
   });
 });

@@ -1,7 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`plan should have an expected appearance when all changes need to be applied 1`] = `
-"      * [1m[32m[APPLY][39m ./tables/data_source.sql [90m(change:table_20190626_1)[39m[22m
+"    
+      * [1m[32m[APPLY][39m ./tables/data_source.sql [90m(change:table_20190626_1)[39m[22m
       * [1m[32m[APPLY][39m ./tables/notification.sql [90m(resource:table:notification)[39m[22m
       * [1m[32m[APPLY][39m ./tables/notification_version.sql [90m(resource:table:notification_version)[39m[22m
       * [1m[32m[APPLY][39m ./functions/find_message_hash_by_text.sql [90m(resource:function:find_message_hash_by_text)[39m[22m
@@ -13,7 +14,8 @@ exports[`plan should have an expected appearance when all changes need to be app
 `;
 
 exports[`plan should have an expected appearance when some resources need to be reapplied manually or automatically 1`] = `
-"      * [1m[32m[APPLY][39m ./tables/data_source.sql [90m(change:table_20190626_1)[39m[22m
+"    
+      * [1m[32m[APPLY][39m ./tables/data_source.sql [90m(change:table_20190626_1)[39m[22m
       * [1m[32m[APPLY][39m ./tables/notification.sql [90m(resource:table:notification)[39m[22m
       * [1m[31m[MANUAL_MIGRATION][39m ./tables/notification_version.sql [90m(resource:table:notification_version)[39m[22m
           [31mCREATE TABLE \`notification_version\` ([39m

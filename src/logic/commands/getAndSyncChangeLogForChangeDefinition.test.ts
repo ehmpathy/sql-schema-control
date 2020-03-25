@@ -30,7 +30,7 @@ const syncChangeLogWithChangeDefinitionMock = syncChangeLogWithChangeDefinition 
 describe('getAndDisplayPlans', () => {
   beforeEach(() => jest.clearAllMocks());
   it('should get the control context from config', async () => {
-    await getAndSyncChangeLogForChangeDefinition({ configPath: '__CONFIG_PATH__', changeId: 'change:__ID__' });
+    await getAndSyncChangeLogForChangeDefinition({ configPath: '__CONFIG_PATH__', changeId: '__ID__' });
     expect(getControlContextFromConfigMock.mock.calls.length).toEqual(1);
     expect(getControlContextFromConfigMock.mock.calls[0][0]).toEqual({
       configPath: '__CONFIG_PATH__',
@@ -48,7 +48,7 @@ describe('getAndDisplayPlans', () => {
     }
   });
   it('should syncChangeLogWithChangeDefinitionMock', async () => {
-    await getAndSyncChangeLogForChangeDefinition({ configPath: '__CONFIG_PATH__', changeId: 'change:__ID__' });
+    await getAndSyncChangeLogForChangeDefinition({ configPath: '__CONFIG_PATH__', changeId: '__ID__' });
     expect(syncChangeLogWithChangeDefinitionMock).toHaveBeenCalledTimes(1);
     expect(syncChangeLogWithChangeDefinitionMock).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -57,7 +57,7 @@ describe('getAndDisplayPlans', () => {
     );
   });
   it('should close the connection', async () => {
-    await getAndSyncChangeLogForChangeDefinition({ configPath: '__CONFIG_PATH__', changeId: 'change:__ID__' });
+    await getAndSyncChangeLogForChangeDefinition({ configPath: '__CONFIG_PATH__', changeId: '__ID__' });
     expect(exampleContext.connection.end.mock.calls.length).toEqual(1);
   });
   it('should log that the change log was synced successfully', async () => {
@@ -66,7 +66,7 @@ describe('getAndDisplayPlans', () => {
     stdout.start();
 
     // run it
-    await getAndSyncChangeLogForChangeDefinition({ configPath: '__CONFIG_PATH__', changeId: 'change:__ID__' });
+    await getAndSyncChangeLogForChangeDefinition({ configPath: '__CONFIG_PATH__', changeId: '__ID__' });
 
     // check that output was expected
     stdout.stop();

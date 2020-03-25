@@ -30,7 +30,6 @@ describe('apply', () => {
     await connection.query({ sql: 'DELETE FROM schema_control_change_log' });
 
     // run the test
-    process.stdout.isTTY = undefined; // since listr acts differently if nonTTY and jest is nonTTY when more than one test is run
     stdout.stripColor = false; // dont strip color
     // stdout.print = true;
     stdout.start();
@@ -42,7 +41,6 @@ describe('apply', () => {
       .join('\n') // strip the console log portion
       .replace(/\[\d\d:\d\d:\d\d\]/g, ''); // remove all timestamps, since they change over time...
     expect(output).toMatchSnapshot();
-    process.stdout.isTTY = true;
   });
   it('should have an expected appearance when all changes need to be reapplied, if possible', async () => {
     // ensure previous runs dont break this test
@@ -58,7 +56,6 @@ describe('apply', () => {
     await Apply.run(['-c', `${__dirname}/../__test_assets__/control.yml`]);
 
     // reapply the definitions
-    process.stdout.isTTY = undefined; // since listr acts differently if nonTTY and jest is nonTTY when more than one test is run
     stdout.stripColor = false; // dont strip color
     // stdout.print = true;
     stdout.start();
@@ -70,6 +67,5 @@ describe('apply', () => {
       .join('\n') // strip the console log portion
       .replace(/\[\d\d:\d\d:\d\d\]/g, ''); // remove all timestamps, since they change over time...
     expect(output).toMatchSnapshot();
-    process.stdout.isTTY = true;
   });
 });

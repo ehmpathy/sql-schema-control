@@ -17,5 +17,5 @@ export const displayPlans = async ({ plans }: { plans: DefinitionPlan[] }) => {
   });
 
   // display the output in one statement to make it easier on testing
-  console.log(output.join('\n')); // tslint:disable-line no-console
+  console.log(['', ...output].join('\n')); // tslint:disable-line no-console
 };

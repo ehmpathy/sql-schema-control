@@ -239,7 +239,7 @@ OPTIONS
   --id=id              (required) reference id of the change definition
 
 EXAMPLE
-  $ schema-control sync -c src/contract/__test_assets__/control.yml --id change:init_service_user
+  $ schema-control sync -c src/contract/__test_assets__/control.yml --id init_service_user
      ✔ [SYNC] ./init/service_user.sql (change:init_service_user)
 ```
 

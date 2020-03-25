@@ -1,7 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`sync should have an expected appearance when syncing change log for a change definition 1`] = `
-"      [32m✔[39m [1m[32m[SYNC][39m ./init/service_user.sql [90m(change:init_service_user)[39m[22m
+"    
+       [32m✔[39m [1m[32m[SYNC][39m ./init/service_user.sql [90m(change:init_service_user)[39m[22m
 
 "
 `;
