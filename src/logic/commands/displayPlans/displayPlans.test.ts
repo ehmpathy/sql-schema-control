@@ -72,13 +72,15 @@ describe('displayPlans', () => {
     const output = await getDisplayPlanOutput({ plan: manualReapplyPlan });
     expect(output).toContain(manualReapplyPlan.difference);
   });
+  it('should say nothing to do if all plans are no change', async () => {
+    const output = await getDisplayPlanOutput({ plan: noChangePlan });
+    expect(output).not.toContain(`[${RequiredAction.NO_CHANGE}]`);
+    expect(output).toContain('Everything is up to date');
+    expect(output).toContain('No actions required');
+  });
   it('should color an APPLY plan green', async () => {
     const output = await getDisplayPlanOutput({ plan: applyPlan });
     expect(output).toContain(Chalk.green(`[${RequiredAction.APPLY}]`));
-  });
-  it('should color a NO_CHANGE plan gray', async () => {
-    const output = await getDisplayPlanOutput({ plan: noChangePlan });
-    expect(output).toContain(Chalk.gray(`[${RequiredAction.NO_CHANGE}]`));
   });
   it('should color a REAPPLY plan yellow', async () => {
     const output = await getDisplayPlanOutput({ plan: reapplyPlan });

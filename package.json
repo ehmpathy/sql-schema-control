@@ -41,7 +41,7 @@
     "format": "prettier --parser typescript --write 'src/**/*.ts' --config ./prettier.config.js",
     "build:ts": "tsc -p ./tsconfig.build.json",
     "build": "rm -rf ./dist && npm run build:ts",
-    "provision:docker:up": "docker-compose -f ./provision/docker/integration_test_db/docker-compose.yml up -d --force-recreate --renew-anon-volumes",
+    "provision:docker:up": "docker-compose -f ./provision/docker/integration_test_db/docker-compose.yml up -d --force-recreate --build --renew-anon-volumes",
     "provision:docker:await": "docker-compose -f ./provision/docker/integration_test_db/docker-compose.yml exec -T mysql /root/wait-for-mysql.sh",
     "provision:integration-test-db": "npm run provision:docker:up && npm run provision:docker:await",
     "test:types": "tsc --noEmit",
