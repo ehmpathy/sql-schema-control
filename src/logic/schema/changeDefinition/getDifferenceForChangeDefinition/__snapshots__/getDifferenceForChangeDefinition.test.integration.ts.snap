@@ -3,10 +3,10 @@
 exports[`getDifferenceForChangeDefinition should find that an out of date change has a colored diff of changed lines 1`] = `
 "[90m[39m
 [90mCREATE TABLE IF NOT EXISTS some_table ([39m
-[90m[39m[31mid              INT(11) PRIMARY KEY AUTO_INCREMENT,[39m
-[31mcreated_at      DATETIME DEFAULT CURRENT_TIMESTAMP,[39m
+[90m[39m[31m  id              INT(11) PRIMARY KEY AUTO_INCREMENT,[39m
+[31m  created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,[39m
 [31m[39m[32mid              BIGINT PRIMARY KEY AUTO_INCREMENT,[39m
 [32mcreated_at      DATETIME(3) DEFAULT CURRENT_TIMESTAMP[39m
 [32m[39m[90m) ENGINE = InnoDB;[39m
-[90m[39m"
+[90m      [39m"
 `;

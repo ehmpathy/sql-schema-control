@@ -3,22 +3,25 @@
 exports[`getDifferenceForResourceDefinition procedure should find that an out of date procedure resource has a colored diff of changed lines 1`] = `
 "[31mCREATE PROCEDURE \`upsert_user_description\`([39m
 [31m[39m[32mCREATE PROCEDURE upsert_user_description([39m
-[32m[39m[90mIN in_from_user_id BIGINT[39m
+[32m[39m[90m  IN in_from_user_id BIGINT[39m
 [90m)[39m
 [90mBEGIN[39m
-[90m-- just select something, and also include a comment[39m
-[90m[39m[31mSELECT false;[39m
-[31m[39m[32mSELECT true;[39m
+[90m  -- just select something, and also include a comment[39m
+[90m[39m[31m  SELECT false;[39m
+[31m[39m[32m  SELECT true;[39m
 [32m[39m[90mEND[39m
 [90m[39m"
 `;
 
 exports[`getDifferenceForResourceDefinition table should find that an out of date table resource has a colored diff of changed lines 1`] = `
 "[90mCREATE TABLE \`some_resource_table\` ([39m
-[90m[39m[31m\`id\` int(11) NOT NULL AUTO_INCREMENT,[39m
-[31m[39m[32m\`id\` BIGINT AUTO_INCREMENT,[39m
-[32m[39m[90m\`created_at\` datetime DEFAULT CURRENT_TIMESTAMP,[39m
-[90mPRIMARY KEY (\`id\`)[39m
-[90m) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci[39m
-[90m[39m"
+[90m[39m[31m  \`id\` int(11) NOT NULL AUTO_INCREMENT,[39m
+[31m  \`created_at\` datetime DEFAULT CURRENT_TIMESTAMP,[39m
+[31m  PRIMARY KEY (\`id\`)[39m
+[31m) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci[39m
+[31m[39m[32m            \`id\` BIGINT AUTO_INCREMENT,[39m
+[32m            \`created_at\` datetime DEFAULT CURRENT_TIMESTAMP,[39m
+[32m            PRIMARY KEY (\`id\`)[39m
+[32m            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci[39m
+[32m[39m"
 `;

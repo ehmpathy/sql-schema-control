@@ -6,7 +6,7 @@ export const getSqlDifference = ({ oldSql, newSql }: { oldSql: string; newSql: s
   if (oldSql === newSql) return null; // i.e., no difference
 
   // compute the differences
-  const sqlDiffParts = diff.diffTrimmedLines(oldSql, newSql);
+  const sqlDiffParts = diff.diffLines(oldSql, newSql);
 
   // merge the differences into a string, with color
   const sqlDiffString = sqlDiffParts.reduce((summary, thisPart) => {
