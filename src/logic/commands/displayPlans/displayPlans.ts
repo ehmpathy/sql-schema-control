@@ -28,7 +28,7 @@ export const displayPlans = async ({ plans }: { plans: DefinitionPlan[] }) => {
       const header = `  * ${getColoredPlanTitle({ plan })}`;
 
       // define the diff
-      const diff = plan.difference ? `\n${indentString(plan.difference, 6)}` : '';
+      const diff = plan.difference ? `\n${indentString(plan.difference, 6)}\n` : '';
 
       // append to output
       return header + diff;
