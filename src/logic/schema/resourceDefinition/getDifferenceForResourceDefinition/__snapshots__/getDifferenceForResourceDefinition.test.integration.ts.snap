@@ -1,27 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`getDifferenceForResourceDefinition procedure should find that an out of date procedure resource has a colored diff of changed lines 1`] = `
-"[31mCREATE PROCEDURE \`upsert_user_description\`([39m
-[31m[39m[32mCREATE PROCEDURE upsert_user_description([39m
-[32m[39m[90m  IN in_from_user_id BIGINT[39m
-[90m)[39m
-[90mBEGIN[39m
-[90m  -- just select something, and also include a comment[39m
-[90m[39m[31m  SELECT false;[39m
-[31m[39m[32m  SELECT true;[39m
-[32m[39m[90mEND[39m
-[90m[39m"
+"[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- CREATE PROCEDURE [7m\`[27mupsert_user_description[7m\`[27m([39m
+[31m+ CREATE PROCEDURE upsert_user_description([39m
+[2m    IN in_from_user_id BIGINT[22m
+[2m  )[22m
+[2m  BEGIN[22m
+[2m    -- just select something, and also include a comment[22m
+[32m-   SELECT [7mfals[27me;[39m
+[31m+   SELECT [7mtru[27me;[39m
+[2m  END[22m"
 `;
 
 exports[`getDifferenceForResourceDefinition table should find that an out of date table resource has a colored diff of changed lines 1`] = `
-"[90mCREATE TABLE \`some_resource_table\` ([39m
-[90m[39m[31m  \`id\` int(11) NOT NULL AUTO_INCREMENT,[39m
-[31m  \`created_at\` datetime DEFAULT CURRENT_TIMESTAMP,[39m
-[31m  PRIMARY KEY (\`id\`)[39m
-[31m) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci[39m
-[31m[39m[32m            \`id\` BIGINT AUTO_INCREMENT,[39m
-[32m            \`created_at\` datetime DEFAULT CURRENT_TIMESTAMP,[39m
-[32m            PRIMARY KEY (\`id\`)[39m
-[32m            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci[39m
-[32m[39m"
+"[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  CREATE TABLE \`some_resource_table\` ([22m
+[32m-   [7m\`id\` int(11) NOT NULL[27m AUTO_INCREMENT,[39m
+[31m+   [7m          \`id\` BIGINT[27m AUTO_INCREMENT,[39m
+[32m-   \`created_at\` datetime DEFAULT CURRENT_TIMESTAMP,[39m
+[31m+ [7m          [27m  \`created_at\` datetime DEFAULT CURRENT_TIMESTAMP,[39m
+[32m-   PRIMARY KEY (\`id\`)[39m
+[31m+ [7m          [27m  PRIMARY KEY (\`id\`)[39m
+[32m- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci[39m
+[31m+ [7m            [27m) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci[39m"
 `;

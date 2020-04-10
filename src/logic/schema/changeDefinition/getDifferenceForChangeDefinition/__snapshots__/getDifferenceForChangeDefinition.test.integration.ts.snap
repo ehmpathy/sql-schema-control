@@ -1,12 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`getDifferenceForChangeDefinition should find that an out of date change has a colored diff of changed lines 1`] = `
-"[90m[39m
-[90mCREATE TABLE IF NOT EXISTS some_table ([39m
-[90m[39m[31m  id              INT(11) PRIMARY KEY AUTO_INCREMENT,[39m
-[31m  created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,[39m
-[31m[39m[32mid              BIGINT PRIMARY KEY AUTO_INCREMENT,[39m
-[32mcreated_at      DATETIME(3) DEFAULT CURRENT_TIMESTAMP[39m
-[32m[39m[90m) ENGINE = InnoDB;[39m
-[90m      [39m"
+"[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  CREATE TABLE IF NOT EXISTS some_table ([22m
+[32m- [7m  [27mid              INT[7m(11)[27m PRIMARY KEY AUTO_INCREMENT,[39m
+[31m+ id              [7mBIG[27mINT PRIMARY KEY AUTO_INCREMENT,[39m
+[32m- [7m  [27mcreated_at      DATETIME DEFAULT CURRENT_TIMESTAMP[7m,[27m[39m
+[31m+ created_at      DATETIME[7m(3)[27m DEFAULT CURRENT_TIMESTAMP[39m
+[2m  ) ENGINE = InnoDB;[22m"
 `;
