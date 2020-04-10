@@ -15,6 +15,7 @@ export const applyPlans = async ({
   plans: DefinitionPlan[];
 }) => {
   // add padding to output
+  console.log(chalk.bold('Applying required actions...')); // tslint:disable-line
   console.log(''); // tslint:disable-line
 
   // apply each plan

@@ -1,11 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`applyPlans should display an expected output for the plans 1`] = `
-"    
+"    [1mApplying required actions...[22m
 
-      [1m[32m✔[39m[22m [1m[32m[APPLY][39m __PATH__ [90m(change:__UUID__)[39m[22m
+    
 
-      [1m[32m✔[39m[22m [1m[33m[REAPPLY][39m __PATH__ [90m(change:__UUID__)[39m[22m
+      [1m[32m✔[39m[22m [1m[1m[32m[APPLY][39m[1m __PATH__ [90m(change:__UUID__)[39m[22m
+
+      [1m[32m✔[39m[22m [1m[1m[33m[REAPPLY][39m[1m __PATH__ [90m(change:__UUID__)[39m[22m
 
 "
 `;

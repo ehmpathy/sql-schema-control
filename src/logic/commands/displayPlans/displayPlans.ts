@@ -3,8 +3,17 @@ import indentString from 'indent-string';
 
 import { DefinitionPlan, RequiredAction } from '../../../types';
 import { getColoredPlanTitle } from '../utils/getColoredPlanTitle';
+import { getColoredActionToken } from '../utils/getColoredActionToken';
+
+type StatsForPlan = { [index in RequiredAction]: number };
+const countTimesActionRequired = ({ plans, action }: { plans: DefinitionPlan[]; action: RequiredAction }) =>
+  plans.filter((plan) => plan.action === action).length;
 
 export const displayPlans = async ({ plans }: { plans: DefinitionPlan[] }) => {
+  // add padding to output
+  console.log(chalk.bold('Planning required actions...')); // tslint:disable-line
+  console.log(''); // tslint:disable-line
+
   // filter out nochange plans
   const plansWithChange = plans.filter((plan) => plan.action !== RequiredAction.NO_CHANGE);
   if (!plansWithChange.length) {
@@ -25,6 +34,24 @@ export const displayPlans = async ({ plans }: { plans: DefinitionPlan[] }) => {
       return header + diff;
     });
 
+  // define the plans summary
+  const stats: StatsForPlan = {
+    [RequiredAction.NO_CHANGE]: countTimesActionRequired({ plans, action: RequiredAction.NO_CHANGE }),
+    [RequiredAction.APPLY]: countTimesActionRequired({ plans, action: RequiredAction.APPLY }),
+    [RequiredAction.REAPPLY]: countTimesActionRequired({ plans, action: RequiredAction.REAPPLY }),
+    [RequiredAction.MANUAL_PULL]: countTimesActionRequired({ plans, action: RequiredAction.MANUAL_PULL }),
+    [RequiredAction.MANUAL_REAPPLY]: countTimesActionRequired({ plans, action: RequiredAction.MANUAL_REAPPLY }),
+    [RequiredAction.MANUAL_MIGRATION]: countTimesActionRequired({ plans, action: RequiredAction.MANUAL_MIGRATION }),
+  };
+  const statsToSummaryRows = Object.entries(stats)
+    .filter((entry) => entry[1] > 0)
+    .map(([action, count]) => `  * ${getColoredActionToken({ action: action as RequiredAction })} ${count}`);
+  const statsOutput = `
+${chalk.bold('Summary...')}
+
+${statsToSummaryRows.join('\n')}
+  `.trim();
+
   // display the output in one statement to make it easier on testing
-  console.log(['', ...output].join('\n')); // tslint:disable-line no-console
+  console.log([...output, '', statsOutput].join('\n')); // tslint:disable-line no-console
 };

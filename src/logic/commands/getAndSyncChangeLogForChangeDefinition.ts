@@ -31,8 +31,7 @@ export const getAndSyncChangeLogForChangeDefinition = async ({
 
   // 5. notify the user it was successful
   const successMessage = `  ${chalk.green('✔')} ${getColoredActionTitle({
-    actionChalk: chalk.green,
-    action: 'SYNC',
+    actionToken: chalk.green('[SYNC]'),
     definition: targetDefinition,
   })}`;
   console.log('\n', successMessage); // tslint:disable-line no-console
