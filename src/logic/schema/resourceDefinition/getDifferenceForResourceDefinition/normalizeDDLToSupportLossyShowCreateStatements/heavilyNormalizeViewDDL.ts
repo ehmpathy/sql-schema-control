@@ -23,7 +23,7 @@ export const heavilyNormalizeViewDDL = ({ ddl }: { ddl: string }) => {
     sql: ddlWithoutBackticks,
   });
   const whereCasing = !!flattenedDdl.match(/\sWHERE\s/) ? 'WHERE' : 'where'; // determine if user is using upper case or lower case "where"
-  const ddlSplitOnWhere = ddlWithoutBackticks.split(whereCasing);
+  const ddlSplitOnWhere = flattenedDdl.split(whereCasing);
   if (ddlSplitOnWhere.length > 2) {
     throw new Error('found more than two parts of DDL after splitting on where; unexpected'); // fail fast
   }
@@ -37,16 +37,13 @@ export const heavilyNormalizeViewDDL = ({ ddl }: { ddl: string }) => {
   });
   const ddlWithoutParensInWhereConditions = rehydratedDdl;
 
-  // 4. strip out the "double parenthesis" that SHOW CREATE likes to put on the "join on" statements
-  const ddlWithoutDoubleParens = ddlWithoutParensInWhereConditions.replace(/\(\(/g, ' ').replace(/\)\)/g, ' ');
-
-  // 5. strip out the first and last paren of the "FROM" section, IF it is defined; show create likes to wrap the whole "FROM" section w/ parens...
-  const ddlHasParenOpenRightAfterFromClause = !!ddlWithoutDoubleParens.match(/\sfrom\s+\(/gi);
-  let ddlWithoutParenStartingAndEndingFromClause = ddlWithoutDoubleParens;
+  // 4. strip out the first and last paren of the "FROM" section, IF it is defined; show create likes to wrap the whole "FROM" section w/ parens...
+  const ddlHasParenOpenRightAfterFromClause = !!ddlWithoutParensInWhereConditions.match(/\sfrom\s+\(/gi);
+  let ddlWithoutParenStartingAndEndingFromClause = ddlWithoutParensInWhereConditions;
   if (ddlHasParenOpenRightAfterFromClause) {
     // flatten the ddl so that we only have one FROM clause
     const { flattenedSql: flattenedDdl, references } = flattenSqlByReferencingAndTokenizingSubqueries({
-      sql: ddlWithoutDoubleParens,
+      sql: ddlWithoutParensInWhereConditions,
     });
 
     // split DDL on the from statement, since we know it exists
@@ -70,8 +67,14 @@ export const heavilyNormalizeViewDDL = ({ ddl }: { ddl: string }) => {
     ddlWithoutParenStartingAndEndingFromClause = hydratedDdlWithoutOpenCloseParenInFromClause;
   }
 
+  // 5. strip out the "double parenthesis" that SHOW CREATE likes to put on the "join on" statements
+  const ddlWithoutDoubleParens = ddlWithoutParenStartingAndEndingFromClause.replace(
+    / on\(\((\w+\.\w+\s=\s\w+\.\w+)\)\)/g,
+    ' on $1 ',
+  );
+
   // 6. strip out the final `;` if it exists
-  const ddlWithoutFinalSemicolon = ddlWithoutParenStartingAndEndingFromClause.replace(/;/g, '');
+  const ddlWithoutFinalSemicolon = ddlWithoutDoubleParens.replace(/;/g, '');
 
   // 7. replace `,(` patterns w/ space in between, since our formatter downstream does not like that
   const ddlWithoutTouchingCommaParen = ddlWithoutFinalSemicolon.replace(/,\(/g, ', (');
