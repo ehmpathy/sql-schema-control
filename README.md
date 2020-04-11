@@ -1,13 +1,13 @@
-schema-control
+sql-schema-control
 ==============
 
 Declarative database schema management. Provision, track, sync, and modify your database schema with plain, version controlled, sql.
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/schema-control.svg)](https://npmjs.org/package/schema-control)
-[![Codecov](https://codecov.io/gh/uladkasach/schema-control/branch/master/graph/badge.svg)](https://codecov.io/gh/uladkasach/schema-control)
-[![Downloads/week](https://img.shields.io/npm/dw/schema-control.svg)](https://npmjs.org/package/schema-control)
-[![License](https://img.shields.io/npm/l/schema-control.svg)](https://github.com/uladkasach/schema-control/blob/master/package.json)
+[![Version](https://img.shields.io/npm/v/sql-schema-control.svg)](https://npmjs.org/package/sql-schema-control)
+[![Codecov](https://codecov.io/gh/uladkasach/sql-schema-control/branch/master/graph/badge.svg)](https://codecov.io/gh/uladkasach/sql-schema-control)
+[![Downloads/week](https://img.shields.io/npm/dw/sql-schema-control.svg)](https://npmjs.org/package/sql-schema-control)
+[![License](https://img.shields.io/npm/l/sql-schema-control.svg)](https://github.com/uladkasach/sql-schema-control/blob/master/package.json)
 
 # Table of Contents
 <!-- toc -->
@@ -16,17 +16,17 @@ Declarative database schema management. Provision, track, sync, and modify your 
 - [Installation](#installation)
 - [Usage](#usage)
 - [Commands](#commands)
-  - [`schema-control apply`](#schema-control-apply)
-  - [`schema-control help [COMMAND]`](#schema-control-help-command)
-  - [`schema-control plan`](#schema-control-plan)
-  - [`schema-control pull`](#schema-control-pull)
-  - [`schema-control sync`](#schema-control-sync)
+  - [`sql-schema-control apply`](#sql-schema-control-apply)
+  - [`sql-schema-control help [COMMAND]`](#sql-schema-control-help-command)
+  - [`sql-schema-control plan`](#sql-schema-control-plan)
+  - [`sql-schema-control pull`](#sql-schema-control-pull)
+  - [`sql-schema-control sync`](#sql-schema-control-sync)
 - [Contribution](#contribution)
 <!-- tocstop -->
 
 # Goals
 
-The goal of Schema Control is to make database schema definitions as version controlled, declarative, simple to maintain as possible.
+The goal of `sql-schema-control` is to make database schema definitions as version controlled, declarative, simple to maintain as possible.
 
 This includes:
 - applying and reapplying `changes` to the database
@@ -46,21 +46,21 @@ This project takes inspiration from Liquibase and Terraform.
 
 # Background
 
-Schema Control operates on two schema management classes: changes and resources.
+`sql-schema-control` operates on two schema management classes: changes and resources.
 
-Changes are simply sets of sql statements that you wish to apply to the database. Everything can be done with changes - and schema-control simply tracks whether each change has been applied and whether it is still up to date (i.e., comparing the hash).
+Changes are simply sets of sql statements that you wish to apply to the database. Everything can be done with changes - and sql-schema-control simply tracks whether each change has been applied and whether it is still up to date (i.e., by comparing the hash).
 
-Resources are DDL created entities that we can track and "sync" with your checked in code. Schema Control is able to detect resources in your live database that are not checked into your code, resources that have not been added to your database, and resources that are out of sync between the definition in your code and what lives in your database - as well as specifying how exactly they are out of sync.
+Resources are DDL created "resources" that we can track and "sync" with your checked in code. `sql-schema-control` is able to detect resources in your live database that are not checked into your code, resources that have not been added to your database, and resources that are out of sync between the definition in your code and what lives in your database - as well as specifying how exactly they are out of sync.
 
 
 # Installation
 
 1. Save the package as a dev dependency
   ```sh
-  npm install --save-dev schema-control
+  npm install --save-dev sql-schema-control
   ```
 
-2. Define the database connection that schema-control can use
+2. Define the database connection that sql-schema-control can use
   ```js
   // e.g., ./schema/control.connection.js
   const Config = require('config-with-paramstore').default;
@@ -70,7 +70,7 @@ Resources are DDL created entities that we can track and "sync" with your checke
   const promiseSchemaControlConfig = async () => {
     const config = await promiseConfig();
     console.log(config);
-    const dbConfig = config.database.admin; // NOTE: schema control must have DDL privileges
+    const dbConfig = config.database.admin; // NOTE: sql-schema-control must have DDL privileges
     const schemaControlConfig = {
       host: dbConfig.host,
       port: dbConfig.port,
@@ -108,47 +108,47 @@ Resources are DDL created entities that we can track and "sync" with your checke
 
 5. Test it out!
 ```
-  $ npx schema-control version
-  $ npx schema-control plan
+  $ npx sql-schema-control version
+  $ npx sql-schema-control plan
 ```
 
 # Usage
 
 The typical use case consists of planning and applying:
 ```sh
-  $ npx schema-control plan # to see what actions need to be done to sync your db
-  $ npx schema-control apply # to sync your db with your checked in schema
+  $ npx sql-schema-control plan # to see what actions need to be done to sync your db
+  $ npx sql-schema-control apply # to sync your db with your checked in schema
 ```
 
 These commands will operate on all resource and change definitions that are defined in your config (i.e., `control.yml`).
 
 If your schema control config specified strict control, then you may also want to pull resources that are not currently defined in your version control so that you can add them as controlled resources:
 ```sh
-  $ npx schema-control pull # records the create DDL for each uncontrolled resource
+  $ npx sql-schema-control pull # records the create DDL for each uncontrolled resource
 ```
 
 # Commands
 <!-- commands -->
-* [`schema-control apply`](#schema-control-apply)
-* [`schema-control help [COMMAND]`](#schema-control-help-command)
-* [`schema-control plan`](#schema-control-plan)
-* [`schema-control pull`](#schema-control-pull)
-* [`schema-control sync`](#schema-control-sync)
+* [`sql-schema-control apply`](#sql-schema-control-apply)
+* [`sql-schema-control help [COMMAND]`](#sql-schema-control-help-command)
+* [`sql-schema-control plan`](#sql-schema-control-plan)
+* [`sql-schema-control pull`](#sql-schema-control-pull)
+* [`sql-schema-control sync`](#sql-schema-control-sync)
 
-## `schema-control apply`
+## `sql-schema-control apply`
 
 apply an execution plan
 
 ```
 USAGE
-  $ schema-control apply
+  $ sql-schema-control apply
 
 OPTIONS
   -c, --config=config  [default: schema/control.yml] path to config file
   -h, --help           show CLI help
 
 EXAMPLE
-  $ schema-control apply -c src/contract/_test_assets/control.yml
+  $ sql-schema-control apply -c src/contract/_test_assets/control.yml
      ✔ [APPLY] ./tables/data_source.sql (change:table_20190626_1)
      ✔ [APPLY] ./tables/notification.sql (resource:table:notification)
      ↓ [MANUAL_MIGRATION] ./tables/notification_version.sql (resource:table:notification_version) [skipped]
@@ -161,15 +161,13 @@ EXAMPLE
   Could not apply ./init/service_user.sql: Operation CREATE USER failed for 'user_name'@'%'
 ```
 
-_See code: [dist/contract/commands/apply.ts](https://github.com/uladkasach/schema-control/blob/v1.1.0/dist/contract/commands/apply.ts)_
+## `sql-schema-control help [COMMAND]`
 
-## `schema-control help [COMMAND]`
-
-display help for schema-control
+display help for sql-schema-control
 
 ```
 USAGE
-  $ schema-control help [COMMAND]
+  $ sql-schema-control help [COMMAND]
 
 ARGUMENTS
   COMMAND  command to show help for
@@ -180,34 +178,32 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.0/src/commands/help.ts)_
 
-## `schema-control plan`
+## `sql-schema-control plan`
 
 generate and show an execution plan
 
 ```
 USAGE
-  $ schema-control plan
+  $ sql-schema-control plan
 
 OPTIONS
   -c, --config=config  [default: schema/control.yml] path to config file
   -h, --help           show CLI help
 
 EXAMPLE
-  $ schema-control plan
+  $ sql-schema-control plan
     * [APPLY] ./init/service_user.sql (change:init_20190619_1)
        CREATE USER 'user_name'@'%';
        GRANT ALL PRIVILEGES ON awesomedb.* To 'user_name'@'%' IDENTIFIED BY '__CHANGE_M3__'; -- TODO: change password
 ```
 
-_See code: [dist/contract/commands/plan.ts](https://github.com/uladkasach/schema-control/blob/v1.1.0/dist/contract/commands/plan.ts)_
-
-## `schema-control pull`
+## `sql-schema-control pull`
 
 pull and record uncontrolled resources
 
 ```
 USAGE
-  $ schema-control pull
+  $ sql-schema-control pull
 
 OPTIONS
   -c, --config=config  [default: schema/control.yml] path to config file
@@ -215,23 +211,21 @@ OPTIONS
   -t, --target=target  [default: schema] target directory to record uncontrolled resources in
 
 EXAMPLE
-  $ schema-control pull -c src/contract/_test_assets/control.yml -t src/contract/_test_assets/uncontrolled
-  pulling uncontrolled resource definitions into .../schema-control/src/contract/commands/_test_assets/uncontrolled
+  $ sql-schema-control pull -c src/contract/_test_assets/control.yml -t src/contract/_test_assets/uncontrolled
+  pulling uncontrolled resource definitions into .../sql-schema-control/src/contract/commands/_test_assets/uncontrolled
      ✓ [PULLED] resource:table:data_source
      ✓ [PULLED] resource:table:invitation
      ✓ [PULLED] resource:procedure:upsert_invitation
      ✓ [PULLED] resource:function:get_id_by_name
 ```
 
-_See code: [dist/contract/commands/pull.ts](https://github.com/uladkasach/schema-control/blob/v1.1.0/dist/contract/commands/pull.ts)_
-
-## `schema-control sync`
+## `sql-schema-control sync`
 
 sync the change log for a specific change definition without applying it, for cases where a change has been reapplied manually
 
 ```
 USAGE
-  $ schema-control sync
+  $ sql-schema-control sync
 
 OPTIONS
   -c, --config=config  [default: schema/control.yml] path to config file
@@ -239,11 +233,10 @@ OPTIONS
   --id=id              (required) reference id of the change definition
 
 EXAMPLE
-  $ schema-control sync -c src/contract/__test_assets__/control.yml --id init_service_user
+  $ sql-schema-control sync -c src/contract/__test_assets__/control.yml --id init_service_user
      ✔ [SYNC] ./init/service_user.sql (change:init_service_user)
 ```
 
-_See code: [dist/contract/commands/sync.ts](https://github.com/uladkasach/schema-control/blob/v1.1.0/dist/contract/commands/sync.ts)_
 <!-- commandsstop -->
 
 

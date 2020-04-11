@@ -5,7 +5,7 @@ export default class Plan extends Command {
   public static description = 'pull and record uncontrolled resources';
 
   public static examples = [
-    `$ schema-control pull -c src/contract/_test_assets/control.yml -t src/contract/_test_assets/uncontrolled
+    `$ sql-schema-control pull -c src/contract/_test_assets/control.yml -t src/contract/_test_assets/uncontrolled
 pulling uncontrolled resource definitions into .../schema-control/src/contract/commands/_test_assets/uncontrolled
   ✓ [PULLED] resource:table:data_source
   ✓ [PULLED] resource:table:invitation

@@ -7,5 +7,5 @@ export const getRequiredActionForChange = ({ definition }: { definition: ChangeD
     if (definition.reappliable) return RequiredAction.REAPPLY;
     return RequiredAction.MANUAL_REAPPLY;
   }
-  throw new Error('unexpected definition status. this is an error with schema-control'); // just warn the user that if they see this, something went wrong with our package
+  throw new Error('unexpected definition status. this is an error with sql-schema-control'); // just warn the user that if they see this, something went wrong with our package
 };

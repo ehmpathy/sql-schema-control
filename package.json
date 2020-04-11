@@ -1,11 +1,11 @@
 {
-  "name": "schema-control",
-  "version": "1.4.0",
+  "name": "sql-schema-control",
+  "version": "0.4.0",
   "description": "Declarative database schema management. Provision, track, sync, and modify your database schema with plain, version controlled, sql.",
   "author": "UladKasach @uladkasach",
   "license": "MIT",
-  "repository": "uladkasach/schema-control",
-  "homepage": "https://github.com/uladkasach/schema-control",
+  "repository": "uladkasach/sql-schema-control",
+  "homepage": "https://github.com/uladkasach/sql-schema-control",
   "keywords": [
     "database",
     "schema",
@@ -15,11 +15,11 @@
     "liquibase",
     "db-migrate"
   ],
-  "bugs": "https://github.com/uladkasach/schema-control/issues",
+  "bugs": "https://github.com/uladkasach/sql-schema-control/issues",
   "main": "dist/contract/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "schema-control": "./bin/run"
+    "sql-schema-control": "./bin/run"
   },
   "engines": {
     "node": ">=8.0.0"
@@ -31,7 +31,7 @@
   ],
   "oclif": {
     "commands": "./dist/contract/commands",
-    "bin": "schema-control",
+    "bin": "sql-schema-control",
     "plugins": [
       "@oclif/plugin-help"
     ]

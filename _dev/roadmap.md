@@ -20,7 +20,7 @@ Changes:
   2. for all OUT_OF_DATE and reapplyOnUpdate=true, apply
 
 3. record change applied
-  `npx schema-control record --applied --change-set-id '__CHANGE_SET_ID__'`
+  `npx sql-schema-control record --applied --change-set-id '__CHANGE_SET_ID__'`
 
 Resources:
 1. plan resources

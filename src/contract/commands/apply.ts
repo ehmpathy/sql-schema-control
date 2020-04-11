@@ -5,7 +5,7 @@ export default class Apply extends Command {
   public static description = 'apply an execution plan';
 
   public static examples = [
-    `$ schema-control apply -c src/contract/_test_assets/control.yml
+    `$ sql-schema-control apply -c src/contract/_test_assets/control.yml
   ✔ [APPLY] ./tables/data_source.sql (change:table_20190626_1)
   ✔ [APPLY] ./tables/notification.sql (resource:table:notification)
   ↓ [MANUAL_MIGRATION] ./tables/notification_version.sql (resource:table:notification_version) [skipped]
