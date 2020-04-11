@@ -9,7 +9,7 @@ import { getLiveResourceDefinitionFromDatabase } from '../../getLiveResourceDefi
 */
 export const pullResources = async ({ connection }: { connection: DatabaseConnection }) => {
   // 1. get table resource definitions
-  const [showTableRows] = await connection.query({ sql: 'SHOW TABLES;' });
+  const [showTableRows] = await connection.query({ sql: "SHOW FULL TABLES WHERE Table_Type != 'VIEW';" });
   const tableNames: string[] = showTableRows
     .map((result: any) => Object.values(result)[0]) // cast from form TextRow { Tables_in_superimportantdb: 'data_source' },
     .filter((tableName: string) => tableName !== 'schema_control_change_log');
@@ -19,6 +19,19 @@ export const pullResources = async ({ connection }: { connection: DatabaseConnec
         connection,
         resourceType: ResourceType.TABLE,
         resourceName: tableName,
+      }),
+    ),
+  );
+
+  // 2. get table resource definitions
+  const [showViewRows] = await connection.query({ sql: "SHOW FULL TABLES WHERE Table_Type = 'VIEW';" });
+  const viewNames: string[] = showViewRows.map((result: any) => Object.values(result)[0]); // cast from form TextRow { Tables_in_superimportantdb: 'data_source' },
+  const views = await Promise.all(
+    viewNames.map((viewName) =>
+      getLiveResourceDefinitionFromDatabase({
+        connection,
+        resourceType: ResourceType.VIEW,
+        resourceName: viewName,
       }),
     ),
   );
@@ -36,7 +49,7 @@ export const pullResources = async ({ connection }: { connection: DatabaseConnec
     ),
   );
 
-  // 3. get function definitions
+  // 3. get procedure definitions
   const [showProcedureRows] = await connection.query({ sql: 'SHOW PROCEDURE STATUS WHERE Db = DATABASE();' });
   const procedureNames: string[] = showProcedureRows.map((result: any) => result.Name);
   const procedures = await Promise.all(
@@ -50,5 +63,5 @@ export const pullResources = async ({ connection }: { connection: DatabaseConnec
   );
 
   // 3. return all merged
-  return [...tables, ...functions, ...procedures];
+  return [...tables, ...views, ...functions, ...procedures];
 };

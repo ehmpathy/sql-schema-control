@@ -20,12 +20,19 @@ exports[`getDifferenceForResourceDefinition table should find that an out of dat
 [31m+ Received[39m
 
 [2m  CREATE TABLE \`some_resource_table\` ([22m
-[32m-   [7m\`id\` int(11) NOT NULL[27m AUTO_INCREMENT,[39m
-[31m+   [7m          \`id\` BIGINT[27m AUTO_INCREMENT,[39m
-[32m-   \`created_at\` datetime DEFAULT CURRENT_TIMESTAMP,[39m
-[31m+ [7m          [27m  \`created_at\` datetime DEFAULT CURRENT_TIMESTAMP,[39m
-[32m-   PRIMARY KEY (\`id\`)[39m
-[31m+ [7m          [27m  PRIMARY KEY (\`id\`)[39m
-[32m- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci[39m
-[31m+ [7m            [27m) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci[39m"
+[32m-   \`id\` [7mint(11) NOT NULL[27m AUTO_INCREMENT,[39m
+[31m+   \`id\` [7mBIGINT[27m AUTO_INCREMENT,[39m
+[2m    \`created_at\` datetime DEFAULT CURRENT_TIMESTAMP,[22m
+[2m    PRIMARY KEY (\`id\`)[22m
+[2m  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci[22m"
+`;
+
+exports[`getDifferenceForResourceDefinition view should find that an out of date view resource has a colored diff of changed lines 1`] = `
+"[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  CREATE VIEW view_spacecraft_current AS[22m
+[2m  select[22m
+[32m-   'starship 7' as name[39m
+[31m+   'starship 7' as [7mship_[27mname[39m"
 `;

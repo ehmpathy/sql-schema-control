@@ -24,10 +24,13 @@ describe('pull', () => {
     await connection.query({ sql: 'DELETE FROM schema_control_change_log' });
     await connection.query({ sql: 'DROP TABLE IF EXISTS notification_version' });
     await connection.query({ sql: 'DROP TABLE IF EXISTS notification' });
+    await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship_cargo' });
+    await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship' });
+    await connection.query({ sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo' });
     await connection.query({ sql: 'DROP FUNCTION IF EXISTS find_message_hash_by_text' });
     await connection.query({ sql: 'DROP PROCEDURE IF EXISTS upsert_message' });
 
-    // run plan
+    // run pull
     stdout.stripColor = false; // dont strip color
     stdout.start();
     await Pull.run([

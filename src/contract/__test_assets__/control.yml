@@ -4,6 +4,7 @@ connection: ./connection.config.js
 strict: false # strict = true -> display uncontrolled resources
 definitions:
   - ./definitions/tables.yml
+  - ./definitions/views.yml
   - ./definitions/functions.yml
   - ./definitions/procedures.yml
   - ./definitions/init.yml

@@ -1,0 +1,16 @@
+{
+  "sqltools.connections": [
+    {
+      "database": "ideacurationdb",
+      "dialect": "MySQL",
+      "isActive": false,
+      "isConnected": false,
+      "name": "ideacurationdb:docker",
+      "password": "a-secure-password",
+      "port": 821,
+      "server": "localhost",
+      "username": "root"
+    }
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
+}

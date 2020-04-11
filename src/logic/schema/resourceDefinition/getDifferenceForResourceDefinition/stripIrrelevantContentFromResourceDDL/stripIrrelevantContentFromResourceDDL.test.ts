@@ -34,6 +34,16 @@ END
     expect(relevantContent).not.toContain('DEFINER');
     expect(relevantContent).toMatchSnapshot();
   });
+  it('should strip the definer, algorithm, and sql security setting from VIEWs', () => {
+    const relevantContent = stripIrrelevantContentFromResourceDDL({
+      ddl:
+        "CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `view_spacecraft_current` AS select 'starship 7' AS `name`",
+      resourceType: ResourceType.VIEW,
+    });
+    expect(relevantContent).not.toContain('ALGORITHM');
+    expect(relevantContent).not.toContain('DEFINER');
+    expect(relevantContent).not.toContain('SQL SECURITY');
+  });
   it('should strip the AUTO_INCREMENT index from TABLEs', () => {
     const relevantContent = stripIrrelevantContentFromResourceDDL({
       ddl: `

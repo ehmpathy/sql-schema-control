@@ -1,5 +1,11 @@
 import { pullResources } from './pullResources';
-import { DatabaseConnection, DatabaseLanguage, ControlConfig, ResourceDefinition } from '../../../../../types';
+import {
+  DatabaseConnection,
+  DatabaseLanguage,
+  ControlConfig,
+  ResourceDefinition,
+  ResourceType,
+} from '../../../../../types';
 import { promiseConfig } from './__test_assets__/connection.config';
 import { initializeControlEnvironment } from '../../../../config/initializeControlEnvironment';
 
@@ -25,6 +31,15 @@ describe('pullResources', () => {
     resources.forEach((resource) => expect(resource.constructor).toEqual(ResourceDefinition));
     const createdResource = resources.find((resource) => resource.name === 'test_table_pull');
     expect(createdResource).not.toEqual(undefined);
+  });
+  it('should be able to find an existing view', async () => {
+    await connection.query({ sql: 'DROP VIEW IF EXISTS test_view_pull' }); // ensure possible previous state does not affect test
+    await connection.query({ sql: "CREATE VIEW test_view_pull as SELECT 'hello' as first_words" });
+    const resources = await pullResources({ connection });
+    resources.forEach((resource) => expect(resource.constructor).toEqual(ResourceDefinition));
+    const createdResource = resources.find((resource) => resource.name === 'test_view_pull');
+    expect(createdResource).not.toEqual(undefined);
+    expect(createdResource?.type).toEqual(ResourceType.VIEW);
   });
   it('should be able to find an existing function', async () => {
     await connection.query({ sql: 'DROP FUNCTION IF EXISTS f_some_function_for_testing_pull;' }); // ensure possible previous state does not affect test

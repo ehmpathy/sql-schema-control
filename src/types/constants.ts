@@ -7,6 +7,7 @@ export enum ResourceType {
   TABLE = 'TABLE',
   FUNCTION = 'FUNCTION',
   PROCEDURE = 'PROCEDURE',
+  VIEW = 'VIEW',
 }
 
 export enum DatabaseLanguage {
@@ -33,8 +34,8 @@ export enum ResourceDefinitionStatus {
 export enum RequiredAction { // i.e., the the action we need to take
   NO_CHANGE = 'NO_CHANGE',
   APPLY = 'APPLY',
-  REAPPLY = 'REAPPLY', // e.g., display yellow because we can fix (e.g., reapply) the discrepency
-  MANUAL_REAPPLY = 'MANUAL_REAPPLY', // e.g., display red because we cant automatically fix the discrepency
-  MANUAL_MIGRATION = 'MANUAL_MIGRATION', // e.g., display red because we cant automatically fix the discrepency
-  MANUAL_PULL = 'MANUAL_PULL', // e.g., we've found an uncontroled resource and it should be pulled or deleted
+  REAPPLY = 'REAPPLY', // e.g., display yellow because we can fix (e.g., reapply) the discrepancy
+  MANUAL_REAPPLY = 'MANUAL_REAPPLY', // e.g., display red because we cant automatically fix the discrepancy
+  MANUAL_MIGRATION = 'MANUAL_MIGRATION', // e.g., display red because we cant automatically fix the discrepancy
+  MANUAL_PULL = 'MANUAL_PULL', // e.g., we've found an uncontrolled resource and it should be pulled or deleted
 }

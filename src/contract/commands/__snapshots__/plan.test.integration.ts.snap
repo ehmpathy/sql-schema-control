@@ -8,6 +8,9 @@ exports[`plan should have an expected appearance when all changes need to be app
       * [1m[1m[32m[APPLY][39m[1m ./tables/data_source.sql [90m(change:table_20190626_1)[39m[22m
       * [1m[1m[32m[APPLY][39m[1m ./tables/notification.sql [90m(resource:table:notification)[39m[22m
       * [1m[1m[32m[APPLY][39m[1m ./tables/notification_version.sql [90m(resource:table:notification_version)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m ./tables/spaceship.sql [90m(resource:table:spaceship)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m ./tables/spaceship_cargo.sql [90m(resource:table:spaceship_cargo)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m ./views/view_spaceship_with_cargo.sql [90m(resource:view:view_spaceship_with_cargo)[39m[22m
       * [1m[1m[32m[APPLY][39m[1m ./functions/find_message_hash_by_text.sql [90m(resource:function:find_message_hash_by_text)[39m[22m
       * [1m[1m[32m[APPLY][39m[1m ./procedures/upsert_message.sql [90m(resource:procedure:upsert_message)[39m[22m
       * [1m[1m[32m[APPLY][39m[1m ./init/service_user.sql [90m(change:init_service_user)[39m[22m
@@ -15,7 +18,7 @@ exports[`plan should have an expected appearance when all changes need to be app
     
     [1mSummary...[22m
     
-      * [1m[32m[APPLY][39m[22m 7
+      * [1m[32m[APPLY][39m[22m 10
 
 "
 `;
@@ -33,22 +36,21 @@ exports[`plan should have an expected appearance when some resources need to be 
     
           [32m- CREATE TABLE [7m\`[27mnotification_version[7m\`[27m ([39m
           [31m+ CREATE TABLE notification_version ([39m
-          [32m-   \`notification_id\` [7mbigint(20) NOT NULL,[27m[39m
-          [32m-   \`effective_at\` datetime(3) NOT NULL,[39m
-          [31m+   -- meta[39m
-          [31m+   \`notification_id\` [7mBIGINT NOT NULL, -- fk pointing to static entity[27m[39m
-          [31m+   \`effective_at\` DATETIME(6) NOT NULL, -- the user should define the effective_at timestamp[39m
-          [31m+[39m
-          [31m+   -- mutatable data[39m
+          [32m-   \`notification_id\` [7mbigint(20)[27m NOT NULL,[39m
+          [31m+   \`notification_id\` [7mBIGINT[27m NOT NULL,[39m
+          [32m-   \`effective_at\` [7mdatetime(3) NOT NULL,[27m[39m
+          [32m-   PRIMARY KEY (\`notification_id\`, \`effective_at\`)[39m
+          [32m- ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci[39m
+          [31m+   \`effective_at\` [7mDATETIME(6) NOT NULL,[27m[39m
           [31m+   \`status\` ENUM('WAITING', 'QUEUED', 'SENT') NOT NULL,[39m
-          [31m+[39m
-          [31m+   -- meta meta[39m
-          [32m-   PRIMARY KEY (\`notification_id\`,\`effective_at\`)[39m
-          [32m- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci[39m
-          [31m+   PRIMARY KEY (\`notification_id\`,[7m [27m\`effective_at\`)[7m,[27m[39m
+          [31m+   PRIMARY KEY (\`notification_id\`, \`effective_at\`),[39m
           [31m+   INDEX notification_version_ix1 (\`status\`),[39m
           [31m+   CONSTRAINT notification_version_fk1 FOREIGN KEY (\`notification_id\`) REFERENCES notification(id)[39m
           [31m+ ) ENGINE = InnoDB;[39m
+    
+      * [1m[1m[32m[APPLY][39m[1m ./tables/spaceship.sql [90m(resource:table:spaceship)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m ./tables/spaceship_cargo.sql [90m(resource:table:spaceship_cargo)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m ./views/view_spaceship_with_cargo.sql [90m(resource:view:view_spaceship_with_cargo)[39m[22m
       * [1m[1m[33m[REAPPLY][39m[1m ./functions/find_message_hash_by_text.sql [90m(resource:function:find_message_hash_by_text)[39m[22m
           [32m- Expected[39m
           [31m+ Received[39m
@@ -64,13 +66,14 @@ exports[`plan should have an expected appearance when some resources need to be 
           [31m+   RETURN [7mUNHEX([27mSHA(in_message[7m)[27m);[39m
           [32m- END[39m
           [31m+ END[7m;[27m[39m
+    
       * [1m[1m[32m[APPLY][39m[1m ./procedures/upsert_message.sql [90m(resource:procedure:upsert_message)[39m[22m
       * [1m[1m[32m[APPLY][39m[1m ./init/service_user.sql [90m(change:init_service_user)[39m[22m
       * [1m[1m[32m[APPLY][39m[1m ./init/data_sources.sql [90m(change:init_data_source)[39m[22m
     
     [1mSummary...[22m
     
-      * [1m[32m[APPLY][39m[22m 5
+      * [1m[32m[APPLY][39m[22m 8
       * [1m[33m[REAPPLY][39m[22m 1
       * [1m[31m[MANUAL_MIGRATION][39m[22m 1
 

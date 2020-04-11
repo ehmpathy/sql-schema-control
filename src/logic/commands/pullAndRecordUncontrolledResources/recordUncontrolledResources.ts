@@ -9,6 +9,7 @@ const standardResourceDirectoryNamePerResourceType = {
   [ResourceType.TABLE]: 'tables',
   [ResourceType.PROCEDURE]: 'procedures',
   [ResourceType.FUNCTION]: 'functions',
+  [ResourceType.VIEW]: 'views',
 };
 export const recordUncontrolledResources = async ({
   targetDir,

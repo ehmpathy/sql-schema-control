@@ -15,6 +15,7 @@ const resourceToTitleCase = {
   [ResourceType.TABLE]: 'Table',
   [ResourceType.FUNCTION]: 'Function',
   [ResourceType.PROCEDURE]: 'Procedure',
+  [ResourceType.VIEW]: 'View',
 };
 export const getLiveResourceDefinitionFromDatabase = async ({
   connection,

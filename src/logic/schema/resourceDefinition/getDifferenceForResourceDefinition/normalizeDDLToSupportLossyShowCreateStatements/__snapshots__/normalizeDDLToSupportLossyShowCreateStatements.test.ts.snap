@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`normalizeDDLToSupportLossyShowCreateStatements should strip comments and reformat table create ddl 1`] = `
+"CREATE TABLE \`some_resource_table\` (
+  \`id\` int(11) NOT NULL AUTO_INCREMENT,
+  \`created_at\` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (\`id\`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci"
+`;
+
+exports[`normalizeDDLToSupportLossyShowCreateStatements should strip comments and reformat view create ddl 1`] = `
+"CREATE VIEW view_something_for_getResourceCreateStatement AS
+SELECT
+  'hello, world!' as first_words;"
+`;

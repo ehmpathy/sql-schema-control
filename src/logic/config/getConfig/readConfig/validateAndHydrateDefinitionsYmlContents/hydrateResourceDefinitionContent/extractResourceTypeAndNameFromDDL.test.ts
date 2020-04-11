@@ -46,6 +46,18 @@ describe('extractResourceTypeAndNameFromDDL', () => {
     expect(name).toEqual('find_super_cool_stuff');
     expect(type).toEqual(ResourceType.FUNCTION);
   });
+  it('should be able to find a view resource', () => {
+    const ddl = 'create view view_super_cool_stuff as select ...';
+    const { name, type } = extractResourceTypeAndNameFromDDL({ ddl });
+    expect(name).toEqual('view_super_cool_stuff');
+    expect(type).toEqual(ResourceType.VIEW);
+  });
+  it('should be able to find a VIEW resource', () => {
+    const ddl = 'CREATE VIEW view_super_cool_stuff AS select ...';
+    const { name, type } = extractResourceTypeAndNameFromDDL({ ddl });
+    expect(name).toEqual('view_super_cool_stuff');
+    expect(type).toEqual(ResourceType.VIEW);
+  });
   it('should be able to find a resource name even if encased in backticks', () => {
     const ddl = 'CREATE TABLE `super_cool_table` ( ... )';
     const { name, type } = extractResourceTypeAndNameFromDDL({ ddl });

@@ -24,6 +24,9 @@ describe('plan', () => {
     await connection.query({ sql: 'DELETE FROM schema_control_change_log' });
     await connection.query({ sql: 'DROP TABLE IF EXISTS notification_version' });
     await connection.query({ sql: 'DROP TABLE IF EXISTS notification' });
+    await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship_cargo' });
+    await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship' });
+    await connection.query({ sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo' });
     await connection.query({ sql: 'DROP FUNCTION IF EXISTS find_message_hash_by_text' });
     await connection.query({ sql: 'DROP PROCEDURE IF EXISTS upsert_message' });
 
@@ -43,6 +46,9 @@ describe('plan', () => {
     await connection.query({ sql: 'DELETE FROM schema_control_change_log' });
     await connection.query({ sql: 'DROP TABLE IF EXISTS notification_version' });
     await connection.query({ sql: 'DROP TABLE IF EXISTS notification' });
+    await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship_cargo' });
+    await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship' });
+    await connection.query({ sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo' });
     await connection.query({ sql: 'DROP FUNCTION IF EXISTS find_message_hash_by_text' });
     await connection.query({ sql: 'DROP PROCEDURE IF EXISTS upsert_message' });
 
@@ -83,18 +89,26 @@ CREATE TABLE notification_version (
     await connection.query({ sql: 'DELETE FROM schema_control_change_log' });
     await connection.query({ sql: 'DROP TABLE IF EXISTS notification_version' });
     await connection.query({ sql: 'DROP TABLE IF EXISTS notification' });
+    await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship_cargo' });
+    await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship' });
+    await connection.query({ sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo' });
     await connection.query({ sql: 'DROP FUNCTION IF EXISTS find_message_hash_by_text' });
     await connection.query({ sql: 'DROP PROCEDURE IF EXISTS upsert_message' });
+
+    // create an uncontrolled resource
+    await connection.query({
+      sql: "CREATE OR REPLACE VIEW some_uncontrolled_resource AS select 'dont bring me down' as mantra",
+    });
 
     // run plan
     stdout.stripColor = false; // dont strip color
     stdout.start();
-    await Plan.run(['-c', `${__dirname}/../__test_assets__/strict_control.yml`]); // seperate schema since we don't want snapshot to break due to uncontrolled
+    await Plan.run(['-c', `${__dirname}/../__test_assets__/strict_control.yml`]); // separate schema since we don't want snapshot to break due to uncontrolled
     stdout.stop();
     const output = stdout.output
       .split('\n')
       .filter((line) => !line.includes('console.log'))
       .join('\n');
-    expect(output).toContain('[MANUAL_PULL]'); // we guarentee that the other tests will provision uncontrolled resources for us to find atleast one of
+    expect(output).toContain('[MANUAL_PULL]');
   });
 });

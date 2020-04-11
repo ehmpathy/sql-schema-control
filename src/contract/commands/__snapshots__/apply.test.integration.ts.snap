@@ -11,6 +11,12 @@ exports[`apply should have an expected appearance when all changes need to be ap
 
       [1m[32m✔[39m[22m [1m[1m[32m[APPLY][39m[1m ./tables/notification_version.sql [90m(resource:table:notification_version)[39m[22m
 
+      [1m[32m✔[39m[22m [1m[1m[32m[APPLY][39m[1m ./tables/spaceship.sql [90m(resource:table:spaceship)[39m[22m
+
+      [1m[32m✔[39m[22m [1m[1m[32m[APPLY][39m[1m ./tables/spaceship_cargo.sql [90m(resource:table:spaceship_cargo)[39m[22m
+
+      [1m[32m✔[39m[22m [1m[1m[32m[APPLY][39m[1m ./views/view_spaceship_with_cargo.sql [90m(resource:view:view_spaceship_with_cargo)[39m[22m
+
       [1m[32m✔[39m[22m [1m[1m[32m[APPLY][39m[1m ./functions/find_message_hash_by_text.sql [90m(resource:function:find_message_hash_by_text)[39m[22m
 
       [1m[32m✔[39m[22m [1m[1m[32m[APPLY][39m[1m ./procedures/upsert_message.sql [90m(resource:procedure:upsert_message)[39m[22m
@@ -30,6 +36,12 @@ exports[`apply should have an expected appearance when all changes need to be re
       [1m[33m↓[39m[22m [1m[1m[31m[MANUAL_MIGRATION][39m[1m ./tables/notification.sql [90m(resource:table:notification)[39m[22m
 
       [1m[33m↓[39m[22m [1m[1m[31m[MANUAL_MIGRATION][39m[1m ./tables/notification_version.sql [90m(resource:table:notification_version)[39m[22m
+
+      [1m[33m↓[39m[22m [1m[1m[31m[MANUAL_MIGRATION][39m[1m ./tables/spaceship.sql [90m(resource:table:spaceship)[39m[22m
+
+      [1m[33m↓[39m[22m [1m[1m[31m[MANUAL_MIGRATION][39m[1m ./tables/spaceship_cargo.sql [90m(resource:table:spaceship_cargo)[39m[22m
+
+      [1m[32m✔[39m[22m [1m[1m[33m[REAPPLY][39m[1m ./views/view_spaceship_with_cargo.sql [90m(resource:view:view_spaceship_with_cargo)[39m[22m
 
       [1m[32m✔[39m[22m [1m[1m[33m[REAPPLY][39m[1m ./functions/find_message_hash_by_text.sql [90m(resource:function:find_message_hash_by_text)[39m[22m
 

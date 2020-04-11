@@ -179,4 +179,59 @@ END
       expect(result).toMatchSnapshot(); // result is purely visual, so log an example of it
     });
   });
+  describe('view', () => {
+    it('should find that an up to date view has no difference', async () => {
+      await connection.query({ sql: 'DROP VIEW IF EXISTS view_spacecraft_current' });
+
+      // apply the resource
+      const definition = new ResourceDefinition({
+        type: ResourceType.VIEW,
+        name: 'view_spacecraft_current',
+        path: '__PATH__',
+        sql: `
+CREATE VIEW view_spacecraft_current AS
+SELECT
+  'starship 7' as name; -- NOTE: hard coded so we don't have to provision tables; we test this better in the 'normalizeDDLToSupportLossyShowCreateStatements'
+      `,
+        status: ResourceDefinitionStatus.OUT_OF_SYNC,
+      });
+      await connection.query({ sql: definition.sql });
+
+      // get the diff
+      const result = await getDifferenceForResourceDefinition({ connection, resource: definition });
+      expect(result).toEqual(null);
+    });
+    it('should find that an out of date view resource has a colored diff of changed lines', async () => {
+      await connection.query({ sql: 'DROP VIEW IF EXISTS view_spacecraft_current' });
+
+      // apply the resource
+      const definition = new ResourceDefinition({
+        type: ResourceType.VIEW,
+        name: 'view_spacecraft_current',
+        path: '__PATH__',
+        sql: `
+CREATE VIEW view_spacecraft_current AS
+SELECT
+  'starship 7' as name;
+      `,
+        status: ResourceDefinitionStatus.OUT_OF_SYNC,
+      });
+      await connection.query({ sql: definition.sql });
+
+      // update the original definition
+      const updatedDefinition = new ResourceDefinition({
+        ...definition,
+        sql: `
+CREATE VIEW view_spacecraft_current AS
+SELECT
+  'starship 7' as ship_name;
+      `,
+      });
+
+      // get the diff
+      const result = await getDifferenceForResourceDefinition({ connection, resource: updatedDefinition });
+      expect(typeof result).toEqual('string');
+      expect(result).toMatchSnapshot(); // result is purely visual, so log an example of it
+    });
+  });
 });

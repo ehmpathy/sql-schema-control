@@ -42,6 +42,15 @@ describe('getRequiredActionForResource', () => {
     const action = getRequiredActionForResource({ definition: resource });
     expect(action).toEqual(RequiredAction.REAPPLY);
   });
+  it('should find reapply required for change with status OUT_OF_SYNC when resource is a view', () => {
+    const resource = new ResourceDefinition({
+      ...baseResource,
+      status: ResourceDefinitionStatus.OUT_OF_SYNC,
+      type: ResourceType.VIEW,
+    });
+    const action = getRequiredActionForResource({ definition: resource });
+    expect(action).toEqual(RequiredAction.REAPPLY);
+  });
   it('should find manual_migration required for change with status OUT_OF_SYNC when resource is a table', () => {
     const resource = new ResourceDefinition({
       ...baseResource,

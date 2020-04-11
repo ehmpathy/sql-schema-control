@@ -33,7 +33,7 @@ describe('getLiveResourceDefinitionFromDatabase', () => {
       type: ResourceType.TABLE,
       sql: 'CREATE TABLE test_table_getResourceCreateStatement ( id BIGINT )',
     });
-    it('should throw an error if table is not defined', async () => {
+    it('should throw a standard error if table is not defined', async () => {
       await connection.query({ sql: 'DROP TABLE IF EXISTS test_table_getResourceCreateStatement' }); // ensure possible previous state does not affect test
       try {
         await getLiveResourceDefinitionFromDatabase({
@@ -76,7 +76,7 @@ RETURN UNHEX(SHA(in_message)); -- some comment
 END;
       `,
     });
-    it('should throw an error if function is not defined', async () => {
+    it('should throw a standard error if function is not defined', async () => {
       await connection.query({ sql: 'DROP FUNCTION IF EXISTS f_function_for_testing_getResourceCreateStatement;' }); // ensure possible previous state does not affect test
       try {
         await await getLiveResourceDefinitionFromDatabase({
@@ -118,7 +118,7 @@ BEGIN
 END;
       `,
     });
-    it('should throw an error if procedure is not defined', async () => {
+    it('should throw a standard error if procedure is not defined', async () => {
       await connection.query({ sql: 'DROP PROCEDURE IF EXISTS upsert_something_for_getResourceCreateStatement;' }); // ensure possible previous state does not affect test
       try {
         await getLiveResourceDefinitionFromDatabase({
@@ -133,6 +133,50 @@ END;
     });
     it('should be able to get sql of an existing procedure', async () => {
       await connection.query({ sql: 'DROP PROCEDURE IF EXISTS upsert_something_for_getResourceCreateStatement;' }); // ensure possible previous state does not affect test
+
+      // apply the resource
+      await connection.query({ sql: resource.sql });
+
+      // get status
+      const liveResource = await getLiveResourceDefinitionFromDatabase({
+        connection,
+        resourceName: resource.name,
+        resourceType: resource.type,
+      });
+      expect(liveResource.constructor).toEqual(ResourceDefinition);
+      expect(liveResource).toMatchSnapshot(); // log example of the sql
+    });
+  });
+  describe('view', () => {
+    const resource = new ResourceDefinition({
+      name: 'view_something_for_getResourceCreateStatement',
+      type: ResourceType.VIEW,
+      sql: `
+CREATE VIEW view_something_for_getResourceCreateStatement AS
+  SELECT -- test comments
+    'hello, world!' as first_words,
+    u.id
+  FROM test_table_getResourceCreateStatement u
+  where 1=1
+      and u.id = 5
+    ;
+      `,
+    });
+    it('should throw a standard error if view is not defined', async () => {
+      await connection.query({ sql: 'DROP VIEW IF EXISTS view_something_for_getResourceCreateStatement;' }); // ensure possible previous state does not affect test
+      try {
+        await getLiveResourceDefinitionFromDatabase({
+          connection,
+          resourceName: resource.name,
+          resourceType: resource.type,
+        });
+        throw new Error('should not reach here');
+      } catch (error) {
+        expect(error.constructor).toEqual(ResourceDoesNotExistError);
+      }
+    });
+    it('should be able to get sql of an existing view', async () => {
+      await connection.query({ sql: 'DROP VIEW IF EXISTS view_something_for_getResourceCreateStatement;' }); // ensure possible previous state does not affect test
 
       // apply the resource
       await connection.query({ sql: resource.sql });

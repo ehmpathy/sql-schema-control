@@ -9,8 +9,12 @@ export const stripIrrelevantContentFromResourceDDL = ({
 }) => {
   let relevantSql = ddl;
 
-  // if resource type is FUNCTION / PROCEDURE, strip the definer
-  if (resourceType === ResourceType.FUNCTION || resourceType === ResourceType.PROCEDURE) {
+  // if resource type is FUNCTION / PROCEDURE / VIEW, strip the definer and all else between the "CREATE" and "${RESOURCE_NAME}"
+  if (
+    resourceType === ResourceType.FUNCTION ||
+    resourceType === ResourceType.PROCEDURE ||
+    resourceType === ResourceType.VIEW
+  ) {
     // e.g., "CREATE DEFINER=`root`@`%` PROCEDURE `upsert_user_description`(" -> "CREATE PROCEDURE `upsert_user_description`("
     const regex = new RegExp(`(?<=CREATE )(.*)(?=${resourceType})`);
     relevantSql = relevantSql.replace(regex, '');
