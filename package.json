@@ -1,6 +1,6 @@
 {
   "name": "sql-schema-control",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Declarative database schema management. Provision, track, sync, and modify your database schema with plain, version controlled, sql.",
   "author": "UladKasach @uladkasach",
   "license": "MIT",
