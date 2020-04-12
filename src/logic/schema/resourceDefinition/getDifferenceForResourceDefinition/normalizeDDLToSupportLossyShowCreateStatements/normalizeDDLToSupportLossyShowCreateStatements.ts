@@ -1,7 +1,8 @@
-import { ResourceType } from '../../../../../types';
-import strip from 'sql-strip-comments';
 import sqlFormatter from 'sql-formatter';
-import { heavilyNormalizeViewDDL } from './heavilyNormalizeViewDDL';
+import strip from 'sql-strip-comments';
+
+import { ResourceType } from '../../../../../types';
+import { recursivelyHeavilyNormalizeViewDdl } from './recursivelyHeavilyNormalizeViewDdl/recursivelyHeavilyNormalizeViewDdl';
 
 const RESOURCES_WITH_LOSSY_SHOW_CREATE_STATEMENTS = [ResourceType.TABLE, ResourceType.VIEW];
 
@@ -28,7 +29,7 @@ export const normalizeDDLToSupportLossyShowCreateStatements = ({
   // if view, fix a few fun "features" that the SHOW CREATE statement adds
   const extraNormalizedDDL =
     resourceType === ResourceType.VIEW
-      ? heavilyNormalizeViewDDL({ ddl: strippedDDL }) // SHOW CREATE for view has a lot of fun features, so extra normalization is needed
+      ? recursivelyHeavilyNormalizeViewDdl({ ddl: strippedDDL }) // SHOW CREATE for view has a lot of fun features, so extra normalization is needed
       : strippedDDL;
 
   // apply formatting, since views have bad formatting

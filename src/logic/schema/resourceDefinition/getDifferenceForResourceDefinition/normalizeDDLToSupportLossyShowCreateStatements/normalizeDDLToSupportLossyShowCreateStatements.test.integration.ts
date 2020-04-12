@@ -137,4 +137,81 @@ CREATE VIEW view_spaceship_with_cargo AS
     });
     expect(normalizedShowCreateDefSql).toEqual(normalizedUserSqlDef);
   });
+  it('should find no change on this real world example where recursive support for views is required', async () => {
+    // define the view sql
+    const userDefSql = `
+    CREATE VIEW \`view_contractor_current\` AS
+    SELECT
+      s.id,
+      s.uuid,
+      s.name,
+      (
+        SELECT GROUP_CONCAT(contractor_version_to_contractor_license.contractor_license_id ORDER BY contractor_version_to_contractor_license.array_order_index asc separator ',')
+        FROM contractor_version_to_contractor_license WHERE contractor_version_to_contractor_license.contractor_version_id = v.id
+      ) as license_ids,
+      (
+        SELECT GROUP_CONCAT(contractor_version_to_contact_method.contact_method_id ORDER BY contractor_version_to_contact_method.array_order_index asc separator ',')
+        FROM contractor_version_to_contact_method WHERE contractor_version_to_contact_method.contractor_version_id = v.id
+      ) as proposed_suggestion_change_ids,
+      s.created_at,
+      v.effective_at,
+      v.created_at as updated_at
+    FROM contractor s
+    JOIN contractor_cvp cvp ON s.id = cvp.contractor_id
+    JOIN contractor_version v ON v.id = cvp.contractor_version_id;
+;
+    `;
+
+    // apply the tables needed to apply the view
+    await connection.query({ sql: 'DROP TABLE IF EXISTS contractor' });
+    await connection.query({
+      sql: 'CREATE TABLE contractor ( id BIGINT, uuid VARCHAR(255), name VARCHAR(255), created_at DATETIME )',
+    });
+    await connection.query({ sql: 'DROP TABLE IF EXISTS contractor_version' });
+    await connection.query({
+      sql:
+        'CREATE TABLE contractor_version ( id BIGINT, contractor_id BIGINT, created_at DATETIME, effective_at DATETIME)',
+    });
+
+    await connection.query({ sql: 'DROP TABLE IF EXISTS contractor_cvp' });
+    await connection.query({
+      sql: 'CREATE TABLE contractor_cvp ( contractor_id BIGINT, contractor_version_id BIGINT)',
+    });
+    await connection.query({ sql: 'DROP TABLE IF EXISTS contractor_version_to_contractor_license' });
+    await connection.query({
+      sql:
+        'CREATE TABLE contractor_version_to_contractor_license ( contractor_version_id BIGINT, contractor_license_id BIGINT, array_order_index INT )',
+    });
+    await connection.query({ sql: 'DROP TABLE IF EXISTS contractor_version_to_contact_method' });
+    await connection.query({
+      sql:
+        'CREATE TABLE contractor_version_to_contact_method ( contractor_version_id BIGINT, contact_method_id BIGINT, array_order_index INT )',
+    });
+
+    // apply the sql
+    await connection.query({ sql: 'DROP VIEW IF EXISTS view_contractor_current;' }); // ensure possible previous state does not affect test
+    await connection.query({ sql: userDefSql });
+
+    // get get the SHOW CREATE sql
+    const liveResource = await getLiveResourceDefinitionFromDatabase({
+      connection,
+      resourceName: 'view_contractor_current',
+      resourceType: ResourceType.VIEW,
+    });
+    const showCreateDefSql = liveResource.sql;
+
+    // check that we normalize to the same thing
+    const normalizedUserSqlDef = normalizeDDLToSupportLossyShowCreateStatements({
+      ddl: userDefSql,
+      resourceType: ResourceType.VIEW,
+    });
+    const normalizedShowCreateDefSql = stripIrrelevantContentFromResourceDDL({
+      ddl: normalizeDDLToSupportLossyShowCreateStatements({
+        ddl: showCreateDefSql,
+        resourceType: ResourceType.VIEW,
+      }),
+      resourceType: ResourceType.VIEW,
+    });
+    expect(normalizedShowCreateDefSql).toEqual(normalizedUserSqlDef);
+  });
 });

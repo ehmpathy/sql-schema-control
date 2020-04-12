@@ -49,4 +49,12 @@ where 1=1
     });
     expect(cleanedUserDef).toEqual(cleanedShowCreateDef);
   });
+  it('should be able to normalize this ddl so that show create def looks reasonable', () => {
+    const showCreateDdlExample =
+      "CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `view_contractor_current` AS select `s`.`id` AS `id`,`s`.`uuid` AS `uuid`,`s`.`name` AS `name`,(select group_concat(`contractor_version_to_contractor_license`.`contractor_license_id` order by `contractor_version_to_contractor_license`.`array_order_index` ASC separator ',') from `contractor_version_to_contractor_license` where (`contractor_version_to_contractor_license`.`contractor_version_id` = `v`.`id`)) AS `license_ids`,(select group_concat(`contractor_version_to_contact_method`.`contact_method_id` order by `contractor_version_to_contact_method`.`array_order_index` ASC separator ',') from `contractor_version_to_contact_method` where (`contractor_version_to_contact_method`.`contractor_version_id` = `v`.`id`)) AS `proposed_suggestion_change_ids`,`s`.`created_at` AS `created_at`,`v`.`effective_at` AS `effective_at`,`v`.`created_at` AS `updated_at` from ((`contractor` `s` join `contractor_cvp` `cvp` on((`s`.`id` = `cvp`.`contractor_id`))) join `contractor_version` `v` on((`v`.`id` = `cvp`.`contractor_version_id`)))";
+    normalizeDDLToSupportLossyShowCreateStatements({
+      ddl: showCreateDdlExample,
+      resourceType: ResourceType.VIEW,
+    });
+  });
 });

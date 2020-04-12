@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`removeRedundantAliasDeclarations redundant declarations to be removed and nonredundant to remain 1`] = `
+"
+CREATE VIEW \`view_contractor_current\` AS
+SELECT
+  s.id,
+  s.uuid,
+  s.name,
+  (
+    SELECT GROUP_CONCAT(contractor_version_to_contractor_license.contractor_license_id ORDER BY contractor_version_to_contractor_license.array_order_index)
+    FROM contractor_version_to_contractor_license WHERE contractor_version_to_contractor_license.contractor_version_id = v.id
+  ) as license_ids,
+  (
+    SELECT GROUP_CONCAT(contractor_version_to_contact_method.contact_method_id ORDER BY contractor_version_to_contact_method.array_order_index)
+    FROM contractor_version_to_contact_method WHERE contractor_version_to_contact_method.contractor_version_id = v.id
+  ) as proposed_suggestion_change_ids,
+  s.created_at,
+  v.effective_at,
+  v.created_at as updated_at
+FROM contractor s
+JOIN contractor_cvp cvp ON s.id = cvp.contractor_id
+JOIN contractor_version v ON v.id = cvp.contractor_version_id;
+    "
+`;
