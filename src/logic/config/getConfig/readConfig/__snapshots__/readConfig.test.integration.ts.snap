@@ -10,48 +10,48 @@ ControlConfig {
     "username": "__USERNAME__",
   },
   "definitions": Array [
-    ChangeDefinition {
+    Object {
       "hash": "1c94e8540709dc58f76d528d843add1ca2ed56bddb40afddb550473bfc379054",
       "id": "first_change",
-      "path": "./first_change.sql",
+      "path": "__CWD__/src/logic/config/getConfig/readConfig/_test_assets/./first_change.sql",
       "reappliable": false,
       "sql": "wassup!
 ",
       "status": undefined,
     },
-    ChangeDefinition {
+    Object {
       "hash": "60675ff6ce6168cc979c4c24cd9d943938f3e66b585c855158c93fa6b0c18b4a",
       "id": "init_20190619_1",
-      "path": "./init/service_user.sql",
+      "path": "__CWD__/src/logic/config/getConfig/readConfig/_test_assets/definitions/./init/service_user.sql",
       "reappliable": false,
       "sql": "CREATE USER ...
 GRANT ...
 ",
       "status": undefined,
     },
-    ChangeDefinition {
+    Object {
       "hash": "57ccb893536b1a5708a6ffc105980eda3b3182ea57fc88e3f8362b3537d2a4d4",
       "id": "data_20190619_1",
-      "path": "./init/data_sources.sql",
+      "path": "__CWD__/src/logic/config/getConfig/readConfig/_test_assets/definitions/./init/data_sources.sql",
       "reappliable": false,
       "sql": "-- sometimes users want to provision their databases with some initial values or ensure something exists in the database
 INSERT INTO ...
 ",
       "status": undefined,
     },
-    ChangeDefinition {
+    Object {
       "hash": "c61a11e61b3fd7fdd827734dda8fbaec17cc1bbcf7d9784874e4d26348f79828",
       "id": "procedures_20190619_1",
-      "path": "./procedures/awesome_sproc.sql",
+      "path": "__CWD__/src/logic/config/getConfig/readConfig/_test_assets/definitions/./procedures/awesome_sproc.sql",
       "reappliable": true,
       "sql": "DROP IF EXISTS PROCEDURE ...
 CREATE PROCEDURE ...
 ",
       "status": undefined,
     },
-    ResourceDefinition {
+    Object {
       "name": "communication_channel",
-      "path": "./tables/communication_channel.sql",
+      "path": "__CWD__/src/logic/config/getConfig/readConfig/_test_assets/definitions/./tables/communication_channel.sql",
       "sql": "-- ----------------------------------------
 -- create communication channel table
 -- ----------------------------------------
@@ -72,9 +72,9 @@ CREATE TABLE \`communication_channel\` (
       "status": undefined,
       "type": "TABLE",
     },
-    ResourceDefinition {
+    Object {
       "name": "upsert_user_description",
-      "path": "./procedures/upsert_user_description.sql",
+      "path": "__CWD__/src/logic/config/getConfig/readConfig/_test_assets/definitions/./procedures/upsert_user_description.sql",
       "sql": "/*
   this is an example procedure with an example comment at the top, just to prove that we can extrac thte name and type from it
 */

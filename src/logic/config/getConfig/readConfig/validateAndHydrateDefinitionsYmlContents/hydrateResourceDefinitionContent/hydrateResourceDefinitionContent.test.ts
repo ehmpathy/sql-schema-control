@@ -65,7 +65,7 @@ describe('hydrate change definition content', () => {
     const result = await hydrateResourceDefinitionContent({ readRoot: '__READ_ROOT__', content: exampleContent });
     expect(result.constructor).toEqual(ResourceDefinition);
     expect(result.sql).toEqual('__SQL_CONTENTS__');
-    expect(result.path).toEqual(exampleContent.path);
+    expect(result.path).toEqual(`__READ_ROOT__/${exampleContent.path}`);
     expect(result.name).toEqual('__RESOURCE_NAME__');
     expect(result.type).toEqual(ResourceType.FUNCTION);
   });

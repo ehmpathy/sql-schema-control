@@ -5,16 +5,16 @@ exports[`plan should have an expected appearance when all changes need to be app
 
     
 
-      * [1m[1m[32m[APPLY][39m[1m ./tables/data_source.sql [90m(change:table_20190626_1)[39m[22m
-      * [1m[1m[32m[APPLY][39m[1m ./tables/notification.sql [90m(resource:table:notification)[39m[22m
-      * [1m[1m[32m[APPLY][39m[1m ./tables/notification_version.sql [90m(resource:table:notification_version)[39m[22m
-      * [1m[1m[32m[APPLY][39m[1m ./tables/spaceship.sql [90m(resource:table:spaceship)[39m[22m
-      * [1m[1m[32m[APPLY][39m[1m ./tables/spaceship_cargo.sql [90m(resource:table:spaceship_cargo)[39m[22m
-      * [1m[1m[32m[APPLY][39m[1m ./views/view_spaceship_with_cargo.sql [90m(resource:view:view_spaceship_with_cargo)[39m[22m
-      * [1m[1m[32m[APPLY][39m[1m ./functions/find_message_hash_by_text.sql [90m(resource:function:find_message_hash_by_text)[39m[22m
-      * [1m[1m[32m[APPLY][39m[1m ./procedures/upsert_message.sql [90m(resource:procedure:upsert_message)[39m[22m
-      * [1m[1m[32m[APPLY][39m[1m ./init/service_user.sql [90m(change:init_service_user)[39m[22m
-      * [1m[1m[32m[APPLY][39m[1m ./init/data_sources.sql [90m(change:init_data_source)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/definitions/tables/data_source.sql [90m(change:table_20190626_1)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/definitions/tables/notification.sql [90m(resource:table:notification)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/definitions/tables/notification_version.sql [90m(resource:table:notification_version)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/definitions/tables/spaceship.sql [90m(resource:table:spaceship)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/definitions/tables/spaceship_cargo.sql [90m(resource:table:spaceship_cargo)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/definitions/views/view_spaceship_with_cargo.sql [90m(resource:view:view_spaceship_with_cargo)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/definitions/functions/find_message_hash_by_text.sql [90m(resource:function:find_message_hash_by_text)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/definitions/procedures/upsert_message.sql [90m(resource:procedure:upsert_message)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/definitions/init/service_user.sql [90m(change:init_service_user)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/definitions/init/data_sources.sql [90m(change:init_data_source)[39m[22m
     
     [1mSummary...[22m
     
@@ -28,9 +28,9 @@ exports[`plan should have an expected appearance when some resources need to be 
 
     
 
-      * [1m[1m[32m[APPLY][39m[1m ./tables/data_source.sql [90m(change:table_20190626_1)[39m[22m
-      * [1m[1m[32m[APPLY][39m[1m ./tables/notification.sql [90m(resource:table:notification)[39m[22m
-      * [1m[1m[31m[MANUAL_MIGRATION][39m[1m ./tables/notification_version.sql [90m(resource:table:notification_version)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/definitions/tables/data_source.sql [90m(change:table_20190626_1)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/definitions/tables/notification.sql [90m(resource:table:notification)[39m[22m
+      * [1m[1m[31m[MANUAL_MIGRATION][39m[1m src/contract/__test_assets__/definitions/tables/notification_version.sql [90m(resource:table:notification_version)[39m[22m
           [32m- Expected[39m
           [31m+ Received[39m
     
@@ -48,10 +48,10 @@ exports[`plan should have an expected appearance when some resources need to be 
           [31m+   CONSTRAINT notification_version_fk1 FOREIGN KEY (\`notification_id\`) REFERENCES notification(id)[39m
           [31m+ ) ENGINE = InnoDB;[39m
     
-      * [1m[1m[32m[APPLY][39m[1m ./tables/spaceship.sql [90m(resource:table:spaceship)[39m[22m
-      * [1m[1m[32m[APPLY][39m[1m ./tables/spaceship_cargo.sql [90m(resource:table:spaceship_cargo)[39m[22m
-      * [1m[1m[32m[APPLY][39m[1m ./views/view_spaceship_with_cargo.sql [90m(resource:view:view_spaceship_with_cargo)[39m[22m
-      * [1m[1m[33m[REAPPLY][39m[1m ./functions/find_message_hash_by_text.sql [90m(resource:function:find_message_hash_by_text)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/definitions/tables/spaceship.sql [90m(resource:table:spaceship)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/definitions/tables/spaceship_cargo.sql [90m(resource:table:spaceship_cargo)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/definitions/views/view_spaceship_with_cargo.sql [90m(resource:view:view_spaceship_with_cargo)[39m[22m
+      * [1m[1m[33m[REAPPLY][39m[1m src/contract/__test_assets__/definitions/functions/find_message_hash_by_text.sql [90m(resource:function:find_message_hash_by_text)[39m[22m
           [32m- Expected[39m
           [31m+ Received[39m
     
@@ -67,9 +67,9 @@ exports[`plan should have an expected appearance when some resources need to be 
           [32m- END[39m
           [31m+ END[7m;[27m[39m
     
-      * [1m[1m[32m[APPLY][39m[1m ./procedures/upsert_message.sql [90m(resource:procedure:upsert_message)[39m[22m
-      * [1m[1m[32m[APPLY][39m[1m ./init/service_user.sql [90m(change:init_service_user)[39m[22m
-      * [1m[1m[32m[APPLY][39m[1m ./init/data_sources.sql [90m(change:init_data_source)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/definitions/procedures/upsert_message.sql [90m(resource:procedure:upsert_message)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/definitions/init/service_user.sql [90m(change:init_service_user)[39m[22m
+      * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/definitions/init/data_sources.sql [90m(change:init_data_source)[39m[22m
     
     [1mSummary...[22m
     

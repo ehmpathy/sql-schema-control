@@ -51,7 +51,7 @@ describe('hydrate change definition content', () => {
     expect(result.id).toEqual(exampleContent.id);
     expect(result.reappliable).toEqual(exampleContent.reappliable);
     expect(result.sql).toEqual('__SQL_CONTENTS__');
-    expect(result.path).toEqual(exampleContent.path);
+    expect(result.path).toEqual(`__READ_ROOT__/${exampleContent.path}`);
     expect(result.hash).toEqual('3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8');
   });
 });

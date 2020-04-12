@@ -9,7 +9,8 @@ export const hydrateChangeDefinitionContent = async ({ readRoot, content }: { re
   if (content.path.split('.').slice(-1)[0] !== 'sql') {
     throw new InvalidDefinitionError({ explanation: 'path must specify a .sql file', basis: content });
   }
-  const sql = await readFileAsync({ filePath: `${readRoot}/${content.path}` });
+  const filePath = `${readRoot}/${content.path}`;
+  const sql = await readFileAsync({ filePath });
 
   // 2. calculate the hash of the sql
   const hash = await sha256(sql);
@@ -18,7 +19,7 @@ export const hydrateChangeDefinitionContent = async ({ readRoot, content }: { re
   return new ChangeDefinition({
     sql,
     hash,
-    path: content.path,
+    path: filePath, // the absolute file path to the sql file
     id: content.id,
     reappliable: content.reappliable,
   });
