@@ -12,11 +12,13 @@ export enum ResourceType {
 
 export enum DatabaseLanguage {
   MYSQL = 'mysql',
+  POSTGRESQL = 'postgresql',
 }
 
 export interface DatabaseConnection {
-  query: (args: { sql: string; values?: any[] }) => Promise<any>;
+  query: (args: { sql: string; values?: any[] }) => Promise<{ rows: any[] }>;
   end: () => Promise<void>;
+  language: DatabaseLanguage;
 }
 
 export enum ChangeDefinitionStatus {
