@@ -1,0 +1,9 @@
+language: postgres
+dialect: 10.7
+connection: ./connection.config.js
+strict: false # strict = true -> display uncontrolled resources
+definitions:
+  - ./definitions/tables.yml
+  - ./definitions/views.yml
+  - ./definitions/functions.yml
+  - ./definitions/init.yml

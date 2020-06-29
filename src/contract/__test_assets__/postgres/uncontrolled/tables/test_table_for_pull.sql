@@ -1,0 +1,1 @@
+CREATE TABLE test_table_for_pull (id bigint NULL);

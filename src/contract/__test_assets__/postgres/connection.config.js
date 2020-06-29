@@ -2,9 +2,10 @@
 const promiseConfig = async () => {
   return {
     host: 'localhost',
-    port: 12821,
+    port: 7821,
+    database: 'superimportantdb',
     schema: 'superimportantdb',
-    username: 'root',
+    username: 'postgres',
     password: 'a-secure-password',
   };
 };

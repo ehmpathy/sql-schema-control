@@ -1,13 +1,13 @@
 import sha256 from 'simple-sha256';
 import uuid from 'uuid/v4';
 
-import { ChangeDefinition, DatabaseConnection, ControlConfig, DatabaseLanguage } from '../../../../types';
+import { promiseConfig } from '../../../../__test_assets__/connection.config';
+import { ChangeDefinition, ControlConfig, DatabaseConnection, DatabaseLanguage } from '../../../../types';
+import { initializeControlEnvironment } from '../../../config/initializeControlEnvironment';
 import {
   ChangeHasNotBeenAppliedError,
   getAppliedChangeDefinitionFromDatabase,
 } from './getAppliedChangeDefinitionFromDatabase';
-import { initializeControlEnvironment } from '../../../config/initializeControlEnvironment';
-import { promiseConfig } from '../../../__test_assets__/connection.config';
 
 describe('getAppliedChangeDefinitionFromDatabase', () => {
   describe('mysql', () => {

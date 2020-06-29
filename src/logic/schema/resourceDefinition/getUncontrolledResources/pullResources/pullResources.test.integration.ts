@@ -7,7 +7,7 @@ import {
   ResourceType,
 } from '../../../../../types';
 import { initializeControlEnvironment } from '../../../../config/initializeControlEnvironment';
-import { promiseConfig } from '../../../../__test_assets__/connection.config';
+import { promiseConfig } from '../../../../../__test_assets__/connection.config';
 
 describe('pullResources', () => {
   describe('mysql', () => {

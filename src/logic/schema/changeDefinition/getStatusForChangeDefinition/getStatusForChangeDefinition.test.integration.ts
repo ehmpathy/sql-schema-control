@@ -10,7 +10,7 @@ import {
 } from '../../../../types';
 import { initializeControlEnvironment } from '../../../config/initializeControlEnvironment';
 import { getStatusForChangeDefinition } from './getStatusForChangeDefinition';
-import { promiseConfig } from '../../../__test_assets__/connection.config';
+import { promiseConfig } from '../../../../__test_assets__/connection.config';
 
 describe('getStatusForChangeDefinition', () => {
   let connection: DatabaseConnection;

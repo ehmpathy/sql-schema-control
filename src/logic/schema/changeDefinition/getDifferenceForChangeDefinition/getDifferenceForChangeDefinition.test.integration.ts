@@ -9,7 +9,7 @@ import {
 } from '../../../../types';
 import { initializeControlEnvironment } from '../../../config/initializeControlEnvironment';
 import { getDifferenceForChangeDefinition } from './getDifferenceForChangeDefinition';
-import { promiseConfig } from '../../../__test_assets__/connection.config';
+import { promiseConfig } from '../../../../__test_assets__/connection.config';
 
 describe('getDifferenceForChangeDefinition', () => {
   let connection: DatabaseConnection;

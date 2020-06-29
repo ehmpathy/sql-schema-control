@@ -8,7 +8,7 @@ import {
 } from '../../../../types';
 import { initializeControlEnvironment } from '../../../config/initializeControlEnvironment';
 import { getDifferenceForResourceDefinition } from './getDifferenceForResourceDefinition';
-import { promiseConfig } from '../../../__test_assets__/connection.config';
+import { promiseConfig } from '../../../../__test_assets__/connection.config';
 
 /**
  * note: these are arguably the most important tests - because they define how useful "resources" really are

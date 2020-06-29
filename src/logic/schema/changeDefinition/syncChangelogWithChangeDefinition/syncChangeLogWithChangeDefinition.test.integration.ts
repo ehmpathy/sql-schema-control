@@ -3,7 +3,7 @@ import sha256 from 'simple-sha256';
 import { ChangeDefinition, DatabaseConnection, DatabaseLanguage, ControlConfig } from '../../../../types';
 import { initializeControlEnvironment } from '../../../config/initializeControlEnvironment';
 import { syncChangeLogWithChangeDefinition } from './syncChangeLogWithChangeDefinition';
-import { promiseConfig } from '../../../__test_assets__/connection.config';
+import { promiseConfig } from '../../../../__test_assets__/connection.config';
 
 describe('syncChangeLogWithChangeDefinition', () => {
   describe('mysql', () => {

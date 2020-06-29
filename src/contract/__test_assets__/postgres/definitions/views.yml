@@ -1,0 +1,2 @@
+- type: resource
+  path: './views/view_spaceship_with_cargo.sql'

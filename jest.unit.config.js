@@ -11,4 +11,5 @@ module.exports = {
   testMatch: ['**/src/**/?(*.)+(spec|test).(js|ts)'],
   testEnvironment: 'node',
   setupFiles: [],
+  verbose: true,
 };
