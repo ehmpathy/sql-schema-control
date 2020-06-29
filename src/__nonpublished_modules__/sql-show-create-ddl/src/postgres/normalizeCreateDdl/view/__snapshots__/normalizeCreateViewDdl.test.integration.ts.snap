@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`showCreateView should be possible to normalize create view ddl 1`] = `
+"CREATE OR REPLACE VIEW test_view_for_normalization_on AS
+select
+  'hello' as first_words"
+`;
+
+exports[`showCreateView should normalize a more complex create view ddl cleanly 1`] = `
+"CREATE OR REPLACE VIEW view_home_current AS
+select
+  s.id,
+  s.uuid,
+  s.name,
+  (
+    select
+      array_agg(
+        home_to_host.host_id
+        order by
+          home_to_host.array_order_index
+      ) as array_agg
+    from
+      home_to_host
+    where
+      home_to_host.home_id = s.id
+  ) as host_ids,
+  s.built,
+  s.bedrooms,
+  s.bathrooms,
+  (
+    select
+      array_agg(
+        home_version_to_photo.photo_id
+        order by
+          home_version_to_photo.array_order_index
+      ) as array_agg
+    from
+      home_version_to_photo
+    where
+      home_version_to_photo.home_version_id = v.id
+  ) as photo_ids,
+  s.created_at,
+  v.effective_at,
+  v.created_at as updated_at
+from
+  home s
+  join home_cvp cvp on s.id = cvp.home_id
+  join home_version v on v.id = cvp.home_version_id"
+`;

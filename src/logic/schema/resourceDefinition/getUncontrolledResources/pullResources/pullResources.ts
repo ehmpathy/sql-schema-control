@@ -4,15 +4,19 @@ import { getLiveResourceDefinitionFromDatabase } from '../../getLiveResourceDefi
 /*
   1. check existence of all supported resource types
     - tables
+    - views
     - functions
     - sprocs
 */
 export const pullResources = async ({ connection }: { connection: DatabaseConnection }) => {
   // 1. get table resource definitions
-  const [showTableRows] = await connection.query({ sql: "SHOW FULL TABLES WHERE Table_Type != 'VIEW';" });
+  // select TABLE_NAME as Name, UPDATE_TIME as Update_time from information_schema.tables where TABLE_SCHEMA='my_database_name'
+  const { rows: showTableRows } = await connection.query({
+    sql: `select table_name from information_schema.tables where table_schema = '${connection.schema}'`,
+  });
   const tableNames: string[] = showTableRows
-    .map((result: any) => Object.values(result)[0]) // cast from form TextRow { Tables_in_superimportantdb: 'data_source' },
-    .filter((tableName: string) => tableName !== 'schema_control_change_log');
+    .map((result) => result.table_name)
+    .filter((tableName: string) => tableName !== 'schema_control_change_log'); // since we provision this one internally
   const tables = await Promise.all(
     tableNames.map((tableName) =>
       getLiveResourceDefinitionFromDatabase({
@@ -24,8 +28,10 @@ export const pullResources = async ({ connection }: { connection: DatabaseConnec
   );
 
   // 2. get table resource definitions
-  const [showViewRows] = await connection.query({ sql: "SHOW FULL TABLES WHERE Table_Type = 'VIEW';" });
-  const viewNames: string[] = showViewRows.map((result: any) => Object.values(result)[0]); // cast from form TextRow { Tables_in_superimportantdb: 'data_source' },
+  const { rows: showViewRows } = await connection.query({
+    sql: `select table_name as view_name from information_schema.views where table_schema = '${connection.schema}'`,
+  });
+  const viewNames: string[] = showViewRows.map((result: any) => result.view_name);
   const views = await Promise.all(
     viewNames.map((viewName) =>
       getLiveResourceDefinitionFromDatabase({
@@ -37,8 +43,10 @@ export const pullResources = async ({ connection }: { connection: DatabaseConnec
   );
 
   // 2. get function definitions
-  const [showFunctionRows] = await connection.query({ sql: 'SHOW FUNCTION STATUS WHERE Db = DATABASE();' });
-  const functionNames: string[] = showFunctionRows.map((result: any) => result.Name);
+  const { rows: showFunctionRows } = await connection.query({
+    sql: `select routine_name from information_schema.routines where routine_type = 'FUNCTION' and routine_schema = '${connection.schema}'`,
+  });
+  const functionNames: string[] = showFunctionRows.map((result: any) => result.routine_name);
   const functions = await Promise.all(
     functionNames.map((functionName) =>
       getLiveResourceDefinitionFromDatabase({
@@ -50,8 +58,10 @@ export const pullResources = async ({ connection }: { connection: DatabaseConnec
   );
 
   // 3. get procedure definitions
-  const [showProcedureRows] = await connection.query({ sql: 'SHOW PROCEDURE STATUS WHERE Db = DATABASE();' });
-  const procedureNames: string[] = showProcedureRows.map((result: any) => result.Name);
+  const { rows: showProcedureRows } = await connection.query({
+    sql: `select routine_name from information_schema.routines where routine_type = 'FUNCTION' and routine_schema = '${connection.schema}'`,
+  });
+  const procedureNames: string[] = showProcedureRows.map((result: any) => result.routine_name);
   const procedures = await Promise.all(
     procedureNames.map((procedureName) =>
       getLiveResourceDefinitionFromDatabase({

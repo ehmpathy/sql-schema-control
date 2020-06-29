@@ -1,11 +1,13 @@
+import sqlFormatter from 'sql-formatter';
+
 import {
   flattenSqlByReferencingAndTokenizingSubqueries,
   hydrateSqlByReferencingAndReplacingSubqueryTokens,
-} from '../../../../../../__nonpublished_modules__/sql-subquery-tokenizer';
+} from '../../../../sql-subquery-tokenizer';
+import { SqlSubqueryReference } from '../../../../sql-subquery-tokenizer/model/SqlSubqueryReference';
+import { removeDoubleParenthesisInJoinOnConditions } from './normalizations/removeDoubleParenthesisInJoinOnConditions';
 import { removeParenthesisFromWhereConditions } from './normalizations/removeParenthesisFromWhereConditions';
 import { removeParenthesisSurroundingJoinsInFromClause } from './normalizations/removeParenthesisSurroundingJoinsInFromClause';
-import { removeDoubleParenthesisInJoinOnConditions } from './normalizations/removeDoubleParenthesisInJoinOnConditions';
-import { SqlSubqueryReference } from '../../../../../../__nonpublished_modules__/sql-subquery-tokenizer/model/SqlSubqueryReference';
 import { removeRedundantAliasDeclarations } from './normalizations/removeRedundantAliasDeclarations';
 
 /**
@@ -40,6 +42,9 @@ export const recursivelyHeavilyNormalizeViewQuerySql = ({ sql }: { sql: string }
     references: normalizedReferences,
   });
 
-  // 5. return the normalized sql
-  return hydratedNormalizedSql;
+  // 5. prettify it!
+  const prettifiedHydratedNormalizedSql = sqlFormatter.format(hydratedNormalizedSql);
+
+  // 6. return the normalized sql
+  return prettifiedHydratedNormalizedSql;
 };

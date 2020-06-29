@@ -2,19 +2,6 @@
   "sqltools.connections": [
     {
       "database": "superimportantdb",
-      "driver": "MySQL",
-      "mysqlOptions": {
-        "authProtocol": "default"
-      },
-      "name": "superimportantdb@localhost:12821",
-      "password": "a-secure-password",
-      "port": 12821,
-      "previewLimit": 50,
-      "server": "localhost",
-      "username": "root"
-    },
-    {
-      "database": "superimportantdb",
       "driver": "PostgreSQL",
       "name": "superimportantdb@localhost:7821",
       "password": "a-secure-password",
@@ -22,6 +9,16 @@
       "previewLimit": 50,
       "server": "localhost",
       "username": "postgres"
+    },
+    {
+      "database": "superimportantdb",
+      "driver": "MySQL",
+      "name": "superimportantdb@localhost:12821",
+      "password": "a-secure-password",
+      "port": 12821,
+      "previewLimit": 50,
+      "server": "localhost",
+      "username": "root"
     }
   ],
   "typescript.tsdk": "node_modules/typescript/lib"

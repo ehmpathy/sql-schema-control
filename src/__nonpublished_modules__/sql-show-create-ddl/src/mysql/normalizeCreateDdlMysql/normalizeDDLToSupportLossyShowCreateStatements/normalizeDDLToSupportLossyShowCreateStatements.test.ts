@@ -1,5 +1,5 @@
 import { normalizeDDLToSupportLossyShowCreateStatements } from './normalizeDDLToSupportLossyShowCreateStatements';
-import { ResourceType } from '../../../../../types';
+import { ResourceType } from '../../../../../../types';
 
 describe('normalizeDDLToSupportLossyShowCreateStatements', () => {
   it('should strip comments and reformat table create ddl', () => {

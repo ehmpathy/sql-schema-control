@@ -1,6 +1,8 @@
 import mysql from 'mysql2/promise';
 import pg from 'pg';
-import { DatabaseConnection, DatabaseLanguage, ControlConfig, ConnectionConfig } from '../../../types';
+
+import { ConnectionConfig, DatabaseLanguage } from '../../../../types';
+import { DatabaseConnection } from '../types';
 
 // create the connection to database
 const connectionAdapters = {
@@ -23,8 +25,6 @@ const connectionAdapters = {
         return { rows: result[0] }; // standardize the response
       },
       end: async () => connection.end(),
-      language: DatabaseLanguage.MYSQL,
-      schema: connectionConfig.schema,
     };
   },
   [DatabaseLanguage.POSTGRES]: async ({
@@ -46,18 +46,22 @@ const connectionAdapters = {
         return { rows: result.rows };
       },
       end: () => client.end(),
-      language: DatabaseLanguage.POSTGRES,
-      schema: connectionConfig.schema,
     };
   },
 };
 
-export const connectToDatabase = async ({ config }: { config: ControlConfig }): Promise<DatabaseConnection> => {
+export const connectToDatabase = async ({
+  language,
+  config,
+}: {
+  language: DatabaseLanguage;
+  config: ConnectionConfig;
+}): Promise<DatabaseConnection> => {
   // 1. get the connection adapter for the method
-  const getDbConnection = connectionAdapters[config.language];
+  const getDbConnection = connectionAdapters[language];
 
   // 2. attempt to connect
-  const connection = await getDbConnection({ connectionConfig: config.connection });
+  const connection = await getDbConnection({ connectionConfig: config });
 
   // 3. run a test query to check connection
   await connection.query({ sql: 'SELECT 1' });

@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`showCreateFunction should be possible to get create statement of function 1`] = `
+"CREATE OR REPLACE FUNCTION public.test_func_for_show_create_on(in_name character varying)
+ RETURNS integer
+ LANGUAGE plpgsql
+AS $function$
+  DECLARE
+    v_test_int int := 821;
+  BEGIN
+    RETURN v_test_int;
+  END;
+$function$
+"
+`;

@@ -1,7 +1,7 @@
 import { DatabaseConnection, ResourceDefinition } from '../../../../types';
 import { getSqlDifference } from '../../utils/getSqlDifference';
 import { getLiveResourceDefinitionFromDatabase } from '../getLiveResourceDefinitionFromDatabase';
-import { normalizeDDLToSupportLossyShowCreateStatements } from './normalizeDDLToSupportLossyShowCreateStatements/normalizeDDLToSupportLossyShowCreateStatements';
+import { normalizeDDLToSupportLossyShowCreateStatements } from '../../../../__nonpublished_modules__/sql-show-create-ddl/src/mysql/normalizeCreateDdlMysql/normalizeDDLToSupportLossyShowCreateStatements/normalizeDDLToSupportLossyShowCreateStatements';
 import { stripIrrelevantContentFromResourceDDL } from './stripIrrelevantContentFromResourceDDL/stripIrrelevantContentFromResourceDDL';
 
 const stripAndNormalizeResourceDDL = ({ resource }: { resource: ResourceDefinition }) => {

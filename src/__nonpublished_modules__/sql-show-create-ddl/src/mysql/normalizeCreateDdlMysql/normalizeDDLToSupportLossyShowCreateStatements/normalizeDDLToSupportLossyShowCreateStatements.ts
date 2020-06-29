@@ -1,8 +1,8 @@
 import sqlFormatter from 'sql-formatter';
 import strip from 'sql-strip-comments';
 
-import { ResourceType } from '../../../../../types';
-import { recursivelyHeavilyNormalizeViewDdl } from './recursivelyHeavilyNormalizeViewDdl/recursivelyHeavilyNormalizeViewDdl';
+import { ResourceType } from '../../../../../../types';
+import { recursivelyHeavilyNormalizeViewDdl } from '../../../generic/recursivelyHeavilyNormalizeViewDdl/recursivelyHeavilyNormalizeViewDdl';
 
 const RESOURCES_WITH_LOSSY_SHOW_CREATE_STATEMENTS = [ResourceType.TABLE, ResourceType.VIEW];
 

@@ -1,24 +1,17 @@
-import { promiseConfig } from '../../../../../contract/__test_assets__/connection.config';
-import { ControlConfig, DatabaseConnection, DatabaseLanguage, ResourceType } from '../../../../../types';
-import { initializeControlEnvironment } from '../../../../config/initializeControlEnvironment';
-import { getLiveResourceDefinitionFromDatabase } from '../../getLiveResourceDefinitionFromDatabase';
-import { normalizeDDLToSupportLossyShowCreateStatements } from './normalizeDDLToSupportLossyShowCreateStatements';
+import { DatabaseLanguage, ResourceType } from '../../../../../../types';
+import { getDbConnection } from '../../../__test_assets__/getDbConnection';
+import { DatabaseConnection } from '../../../types';
+import { showCreateDdlMysql } from '../../showCreateDdlMysql';
 import { stripIrrelevantContentFromResourceDDL } from '../stripIrrelevantContentFromResourceDDL/stripIrrelevantContentFromResourceDDL';
+import { normalizeDDLToSupportLossyShowCreateStatements } from './normalizeDDLToSupportLossyShowCreateStatements';
 
 describe('normalizeDDLToSupportLossyShowCreateStatements', () => {
-  let connection: DatabaseConnection;
+  let dbConnection: DatabaseConnection;
   beforeAll(async () => {
-    const config = new ControlConfig({
-      language: DatabaseLanguage.MYSQL,
-      dialect: '5.7',
-      connection: await promiseConfig(),
-      definitions: [],
-      strict: true,
-    });
-    ({ connection } = await initializeControlEnvironment({ config })); // ensure db is provisioned and get connection
+    dbConnection = await getDbConnection({ language: DatabaseLanguage.MYSQL });
   });
   afterAll(async () => {
-    await connection.end();
+    await dbConnection.end();
   });
   it('should be able to normalize the user def and show create into the same string for a view that has a subquery', async () => {
     // define the view sql
@@ -38,26 +31,26 @@ FROM car s
     `;
 
     // apply the tables needed to apply the view
-    await connection.query({ sql: 'DROP TABLE IF EXISTS car' });
-    await connection.query({
+    await dbConnection.query({ sql: 'DROP TABLE IF EXISTS car' });
+    await dbConnection.query({
       sql: 'CREATE TABLE car ( id BIGINT, uuid VARCHAR(255), vin VARCHAR(255), created_at DATETIME )',
     });
-    await connection.query({ sql: 'DROP TABLE IF EXISTS car_to_tire' });
-    await connection.query({
+    await dbConnection.query({ sql: 'DROP TABLE IF EXISTS car_to_tire' });
+    await dbConnection.query({
       sql: 'CREATE TABLE car_to_tire ( car_id BIGINT, tire_id BIGINT, array_order_index TINYINT)',
     });
 
     // apply the sql
-    await connection.query({ sql: 'DROP VIEW IF EXISTS view_car_current;' }); // ensure possible previous state does not affect test
-    await connection.query({ sql: userDefSql });
+    await dbConnection.query({ sql: 'DROP VIEW IF EXISTS view_car_current;' }); // ensure possible previous state does not affect test
+    await dbConnection.query({ sql: userDefSql });
 
     // get get the SHOW CREATE sql
-    const liveResource = await getLiveResourceDefinitionFromDatabase({
-      connection,
-      resourceName: 'view_car_current',
-      resourceType: ResourceType.VIEW,
+    const showCreateDefSql = await showCreateDdlMysql({
+      dbConnection,
+      type: ResourceType.VIEW,
+      schema: 'public',
+      name: 'view_car_current',
     });
-    const showCreateDefSql = liveResource.sql;
 
     // check that we normalize to the same thing
     const normalizedUserSqlDef = normalizeDDLToSupportLossyShowCreateStatements({
@@ -101,27 +94,27 @@ CREATE VIEW view_spaceship_with_cargo AS
     `.trim();
 
     // apply the tables needed to apply the view
-    await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship_cargo' });
+    await dbConnection.query({ sql: 'DROP TABLE IF EXISTS spaceship_cargo' });
 
-    await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship' });
-    await connection.query({
+    await dbConnection.query({ sql: 'DROP TABLE IF EXISTS spaceship' });
+    await dbConnection.query({
       sql: spaceshipTableCreate,
     });
-    await connection.query({
+    await dbConnection.query({
       sql: spaceshipCargoTableCreate,
     });
 
     // apply the sql
-    await connection.query({ sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo;' }); // ensure possible previous state does not affect test
-    await connection.query({ sql: viewCreateStatement });
+    await dbConnection.query({ sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo;' }); // ensure possible previous state does not affect test
+    await dbConnection.query({ sql: viewCreateStatement });
 
     // get get the SHOW CREATE sql
-    const liveResource = await getLiveResourceDefinitionFromDatabase({
-      connection,
-      resourceName: 'view_spaceship_with_cargo',
-      resourceType: ResourceType.VIEW,
+    const showCreateDefSql = await showCreateDdlMysql({
+      dbConnection,
+      schema: 'public',
+      type: ResourceType.VIEW,
+      name: 'view_spaceship_with_cargo',
     });
-    const showCreateDefSql = liveResource.sql;
 
     // check that we normalize to the same thing
     const normalizedUserSqlDef = normalizeDDLToSupportLossyShowCreateStatements({
@@ -163,42 +156,42 @@ CREATE VIEW view_spaceship_with_cargo AS
     `;
 
     // apply the tables needed to apply the view
-    await connection.query({ sql: 'DROP TABLE IF EXISTS contractor' });
-    await connection.query({
+    await dbConnection.query({ sql: 'DROP TABLE IF EXISTS contractor' });
+    await dbConnection.query({
       sql: 'CREATE TABLE contractor ( id BIGINT, uuid VARCHAR(255), name VARCHAR(255), created_at DATETIME )',
     });
-    await connection.query({ sql: 'DROP TABLE IF EXISTS contractor_version' });
-    await connection.query({
+    await dbConnection.query({ sql: 'DROP TABLE IF EXISTS contractor_version' });
+    await dbConnection.query({
       sql:
         'CREATE TABLE contractor_version ( id BIGINT, contractor_id BIGINT, created_at DATETIME, effective_at DATETIME)',
     });
 
-    await connection.query({ sql: 'DROP TABLE IF EXISTS contractor_cvp' });
-    await connection.query({
+    await dbConnection.query({ sql: 'DROP TABLE IF EXISTS contractor_cvp' });
+    await dbConnection.query({
       sql: 'CREATE TABLE contractor_cvp ( contractor_id BIGINT, contractor_version_id BIGINT)',
     });
-    await connection.query({ sql: 'DROP TABLE IF EXISTS contractor_version_to_contractor_license' });
-    await connection.query({
+    await dbConnection.query({ sql: 'DROP TABLE IF EXISTS contractor_version_to_contractor_license' });
+    await dbConnection.query({
       sql:
         'CREATE TABLE contractor_version_to_contractor_license ( contractor_version_id BIGINT, contractor_license_id BIGINT, array_order_index INT )',
     });
-    await connection.query({ sql: 'DROP TABLE IF EXISTS contractor_version_to_contact_method' });
-    await connection.query({
+    await dbConnection.query({ sql: 'DROP TABLE IF EXISTS contractor_version_to_contact_method' });
+    await dbConnection.query({
       sql:
         'CREATE TABLE contractor_version_to_contact_method ( contractor_version_id BIGINT, contact_method_id BIGINT, array_order_index INT )',
     });
 
     // apply the sql
-    await connection.query({ sql: 'DROP VIEW IF EXISTS view_contractor_current;' }); // ensure possible previous state does not affect test
-    await connection.query({ sql: userDefSql });
+    await dbConnection.query({ sql: 'DROP VIEW IF EXISTS view_contractor_current;' }); // ensure possible previous state does not affect test
+    await dbConnection.query({ sql: userDefSql });
 
     // get get the SHOW CREATE sql
-    const liveResource = await getLiveResourceDefinitionFromDatabase({
-      connection,
-      resourceName: 'view_contractor_current',
-      resourceType: ResourceType.VIEW,
+    const showCreateDefSql = await showCreateDdlMysql({
+      dbConnection,
+      schema: 'public',
+      type: ResourceType.VIEW,
+      name: 'view_contractor_current',
     });
-    const showCreateDefSql = liveResource.sql;
 
     // check that we normalize to the same thing
     const normalizedUserSqlDef = normalizeDDLToSupportLossyShowCreateStatements({

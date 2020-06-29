@@ -42,13 +42,13 @@ describe('provisionChangeLogTable', () => {
       expect(rows[0].change_id).toEqual('__ID__');
     });
   });
-  describe('postgresql', () => {
+  describe('postgres', () => {
     let connection: DatabaseConnection;
     beforeAll(async () => {
       const config = new ControlConfig({
-        language: DatabaseLanguage.POSTGRESQL,
+        language: DatabaseLanguage.POSTGRES,
         dialect: '5.7',
-        connection: (await promiseConfig()).postgresql,
+        connection: (await promiseConfig()).postgres,
         definitions: [],
         strict: true,
       });

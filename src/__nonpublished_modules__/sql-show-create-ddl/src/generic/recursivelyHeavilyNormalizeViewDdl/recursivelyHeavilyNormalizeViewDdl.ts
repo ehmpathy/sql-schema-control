@@ -1,3 +1,5 @@
+import strip from 'sql-strip-comments';
+
 import { addSpacesBetweenCommaParenthesisOccurances } from './normalizations/addSpacesBetweenCommaParenthesisOccurances';
 import { lowercaseAllAsTokensExceptFirstOne } from './normalizations/lowercaseAllAsTokensExceptFirstOne';
 import { lowercaseEverythingAfterFirstAs } from './normalizations/lowercaseEverythingAfterFirstAs';
@@ -13,8 +15,11 @@ import { recursivelyHeavilyNormalizeViewQuerySql } from './recursivelyHeavilyNor
  * we also do it recursively, because we support subqueries
  */
 export const recursivelyHeavilyNormalizeViewDdl = ({ ddl }: { ddl: string }) => {
+  // 0. strip comments
+  const strippedDdl = strip(ddl);
+
   // 1. normalize the query as a baseline, setting casing on everything
-  let normalizedDdl = ddl;
+  let normalizedDdl = strippedDdl;
   normalizedDdl = lowercaseAllAsTokensExceptFirstOne({ ddl: normalizedDdl });
   normalizedDdl = lowercaseEverythingAfterFirstAs({ ddl: normalizedDdl });
   normalizedDdl = removeAllBackticks({ ddl: normalizedDdl });

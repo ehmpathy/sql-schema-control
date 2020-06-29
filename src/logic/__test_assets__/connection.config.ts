@@ -7,7 +7,7 @@ export const promiseConfig = async () => ({
     username: 'root',
     password: 'a-secure-password',
   },
-  postgresql: {
+  postgres: {
     host: 'localhost',
     port: 7821,
     schema: 'superimportantdb',

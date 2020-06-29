@@ -1,5 +1,5 @@
 import { stripIrrelevantContentFromResourceDDL } from './stripIrrelevantContentFromResourceDDL';
-import { ResourceType } from '../../../../../types';
+import { ResourceType } from '../../../../../../types';
 
 describe('stripIrrelevantContentFromResourceDDL', () => {
   it('should strip the DEFINER from PROCEDUREs', () => {
