@@ -10,7 +10,7 @@ export const normalizeShowCreateDdl = async ({
   language: DatabaseLanguage;
   type: ResourceType;
   ddl: string;
-}) => {
+}): Promise<string> => {
   if (language === DatabaseLanguage.POSTGRES) {
     return normalizeCreateDdlPostgres({ type, ddl });
   }

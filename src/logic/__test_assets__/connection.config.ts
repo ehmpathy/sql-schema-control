@@ -3,13 +3,14 @@ export const promiseConfig = async () => ({
   mysql: {
     host: 'localhost',
     port: 12821,
-    schema: 'superimportantdb',
+    database: 'superimportantdb',
     username: 'root',
     password: 'a-secure-password',
   },
   postgres: {
     host: 'localhost',
     port: 7821,
+    database: 'superimportantdb',
     schema: 'superimportantdb',
     username: 'postgres',
     password: 'a-secure-password',

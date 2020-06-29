@@ -14,7 +14,7 @@ const connectionAdapters = {
     const connection = await mysql.createConnection({
       host: connectionConfig.host,
       port: connectionConfig.port,
-      database: connectionConfig.schema,
+      database: connectionConfig.database,
       user: connectionConfig.username,
       password: connectionConfig.password,
       multipleStatements: true,
@@ -37,7 +37,7 @@ const connectionAdapters = {
       port: connectionConfig.port,
       user: connectionConfig.username,
       password: connectionConfig.password,
-      database: connectionConfig.schema,
+      database: connectionConfig.database,
     });
     await client.connect();
     return {

@@ -6,14 +6,15 @@ export const config = {
   [DatabaseLanguage.MYSQL]: {
     host: 'localhost',
     port: 12821,
-    schema: 'superimportantdb',
+    database: 'superimportantdb',
     username: 'root',
     password: 'a-secure-password',
   },
   [DatabaseLanguage.POSTGRES]: {
     host: 'localhost',
     port: 7821,
-    schema: 'superimportantdb',
+    database: 'superimportantdb',
+    schema: 'public',
     username: 'postgres',
     password: 'a-secure-password',
   },

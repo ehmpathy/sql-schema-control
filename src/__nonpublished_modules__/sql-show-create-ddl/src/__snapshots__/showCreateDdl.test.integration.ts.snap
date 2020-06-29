@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`showCreateDdl mysql should be able to get create ddl for a function 1`] = `
+exports[`showCreateDdl mysql get ddl should be able to get create ddl for a function 1`] = `
 "CREATE FUNCTION \`f_some_function_for_testing_showcreate\`(
   in_message TEXT
 ) RETURNS binary(32)
@@ -9,7 +9,7 @@ BEGIN
 END"
 `;
 
-exports[`showCreateDdl mysql should be able to get create ddl for a procedure 1`] = `
+exports[`showCreateDdl mysql get ddl should be able to get create ddl for a procedure 1`] = `
 "CREATE PROCEDURE \`f_some_procedure_for_testing_showcreate\`(
   IN in_message TEXT
 )
@@ -18,16 +18,16 @@ BEGIN
 END"
 `;
 
-exports[`showCreateDdl mysql should be able to get create ddl for a table 1`] = `"CREATE TABLE \`test_table_for_showcreate\` (\`id\` bigint(20) DEFAULT NULL) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci"`;
+exports[`showCreateDdl mysql get ddl should be able to get create ddl for a table 1`] = `"CREATE TABLE \`test_table_for_showcreate\` (\`id\` bigint(20) DEFAULT NULL) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci"`;
 
-exports[`showCreateDdl mysql should be able to get create ddl for a view 1`] = `
+exports[`showCreateDdl mysql get ddl should be able to get create ddl for a view 1`] = `
 "CREATE VIEW test_view_for_showcreate AS
 select
   'hello' as first_words"
 `;
 
-exports[`showCreateDdl postgres should be able to get create ddl for a function 1`] = `
-"CREATE OR REPLACE FUNCTION public.f_some_function_for_testing_showcreate(
+exports[`showCreateDdl postgres get ddl should be able to get create ddl for a function 1`] = `
+"CREATE OR REPLACE FUNCTION f_some_function_for_testing_showcreate(
   in_message text
 )
 RETURNS text
@@ -40,9 +40,9 @@ $$
 "
 `;
 
-exports[`showCreateDdl postgres should be able to get create ddl for a table 1`] = `"CREATE TABLE public.test_table_for_showcreate (id bigint NULL);"`;
+exports[`showCreateDdl postgres get ddl should be able to get create ddl for a table 1`] = `"CREATE TABLE test_table_for_showcreate (id bigint NULL);"`;
 
-exports[`showCreateDdl postgres should be able to get create ddl for a view 1`] = `
+exports[`showCreateDdl postgres get ddl should be able to get create ddl for a view 1`] = `
 "CREATE OR REPLACE VIEW test_view_for_showcreate AS
 select
   'hello' as first_words"

@@ -12,7 +12,7 @@ export const pullResources = async ({ connection }: { connection: DatabaseConnec
   // 1. get table resource definitions
   // select TABLE_NAME as Name, UPDATE_TIME as Update_time from information_schema.tables where TABLE_SCHEMA='my_database_name'
   const { rows: showTableRows } = await connection.query({
-    sql: `select table_name from information_schema.tables where table_schema = '${connection.schema}'`,
+    sql: `select table_name from information_schema.tables where table_schema = '${connection.schema}' and table_type='BASE TABLE'`,
   });
   const tableNames: string[] = showTableRows
     .map((result) => result.table_name)
@@ -59,7 +59,7 @@ export const pullResources = async ({ connection }: { connection: DatabaseConnec
 
   // 3. get procedure definitions
   const { rows: showProcedureRows } = await connection.query({
-    sql: `select routine_name from information_schema.routines where routine_type = 'FUNCTION' and routine_schema = '${connection.schema}'`,
+    sql: `select routine_name from information_schema.routines where routine_type = 'PROCEDURE' and routine_schema = '${connection.schema}'`,
   });
   const procedureNames: string[] = showProcedureRows.map((result: any) => result.routine_name);
   const procedures = await Promise.all(

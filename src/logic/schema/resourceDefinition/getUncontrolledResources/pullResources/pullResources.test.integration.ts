@@ -94,11 +94,11 @@ END;
       await connection.end();
     });
     it('should be able to find an existing table', async () => {
-      await connection.query({ sql: 'DROP TABLE IF EXISTS test_table_pull' }); // ensure possible previous state does not affect test
-      await connection.query({ sql: 'CREATE TABLE test_table_pull ( id BIGINT )' });
+      await connection.query({ sql: 'DROP TABLE IF EXISTS test_table_for_pull' }); // ensure possible previous state does not affect test
+      await connection.query({ sql: 'CREATE TABLE test_table_for_pull ( id BIGINT )' });
       const resources = await pullResources({ connection });
       resources.forEach((resource) => expect(resource.constructor).toEqual(ResourceDefinition));
-      const createdResource = resources.find((resource) => resource.name === 'test_table_pull');
+      const createdResource = resources.find((resource) => resource.name === 'test_table_for_pull');
       expect(createdResource).not.toEqual(undefined);
     });
     it('should be able to find an existing view', async () => {
@@ -121,7 +121,7 @@ RETURNS bigint
 LANGUAGE plpgsql
 AS $$
   BEGIN
-    RETURN 821
+    RETURN 821;
   END;
 $$
     `,
@@ -131,7 +131,7 @@ $$
       const createdResource = resources.find((resource) => resource.name === 'f_some_function_for_testing_pull');
       expect(createdResource).not.toEqual(undefined);
     });
-    it.todo('should be able to find an existing procedure', async () => {
+    it.skip('should be able to find an existing procedure', async () => {
       // todo: test this when we get to supporting postgres v11
     });
   });

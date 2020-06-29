@@ -11,7 +11,7 @@ describe('normalizeCreateViewDdl', () => {
   it('should remove :: types from the ddl, since theyre not helpful for comparisons', () => {
     const normalizedDdl = normalizeCreateViewDdl({ ddl: simpleViewExample });
     expect(normalizedDdl).not.toContain(' :: text');
-    expect(normalizedDdl).toContain("'hello' AS first_words");
+    expect(normalizedDdl).toContain("'hello' as first_words");
   });
   it('should put CREATE and OR REPLACE on the same line, if not already', () => {
     const normalizedDdl = normalizeCreateViewDdl({ ddl: simpleViewExample });

@@ -12,7 +12,7 @@ const connectionAdapters = {
     const connection = await mysql.createConnection({
       host: connectionConfig.host,
       port: connectionConfig.port,
-      database: connectionConfig.schema,
+      database: connectionConfig.database,
       user: connectionConfig.username,
       password: connectionConfig.password,
       multipleStatements: true,
@@ -24,7 +24,7 @@ const connectionAdapters = {
       },
       end: async () => connection.end(),
       language: DatabaseLanguage.MYSQL,
-      schema: connectionConfig.schema,
+      schema: connectionConfig.database, // schema = database in mysql
     };
   },
   [DatabaseLanguage.POSTGRES]: async ({
@@ -32,14 +32,41 @@ const connectionAdapters = {
   }: {
     connectionConfig: ConnectionConfig;
   }): Promise<DatabaseConnection> => {
+    // check that database is defined
+    if (!connectionConfig.database) throw new Error('database must be defined for postgres connection'); // its not used for mysql, since they only have a schema concept
+
+    // connect to the db
     const client = new pg.Client({
       host: connectionConfig.host,
       port: connectionConfig.port,
       user: connectionConfig.username,
       password: connectionConfig.password,
-      database: connectionConfig.schema,
+      database: connectionConfig.database,
     });
     await client.connect();
+
+    // if schema is defined, setup connection to use it by default
+    if (connectionConfig.schema) {
+      try {
+        // throw an error if the requested schema does not exist in the database
+        const { rows } = await client.query(
+          `SELECT schema_name FROM information_schema.schemata WHERE schema_name = '${connectionConfig.schema}';`,
+        );
+        if (!rows.length) {
+          throw new Error(
+            `schema '${connectionConfig.schema}' does not exist in database '${connectionConfig.database}'.`,
+          );
+        }
+
+        // specify that all statements are expected to run in the input schema, not public schema
+        await client.query(`SET search_path TO ${connectionConfig.schema};`); // https://www.postgresql.org/docs/current/ddl-schemas.html#DDL-SCHEMAS-PATH
+      } catch (error) {
+        await client.end(); // close out the connection since we failed creating it fully
+        throw error; // and forward it
+      }
+    }
+
+    // return a standard api
     return {
       query: async ({ sql, values }: { sql: string; values?: (string | number)[] }) => {
         const result = await client.query(sql, values);
@@ -47,7 +74,7 @@ const connectionAdapters = {
       },
       end: () => client.end(),
       language: DatabaseLanguage.POSTGRES,
-      schema: connectionConfig.schema,
+      schema: connectionConfig.schema ?? 'public', // defaults to public in postgres
     };
   },
 };

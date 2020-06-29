@@ -24,6 +24,6 @@ export const showCreateTable = async ({
     sql: 'SELECT public.show_create_table($1, $2) as ddl',
     values: [schema, table],
   });
-  if (!result.rows) throw new Error(`could not find table '${schema}.${table}'`);
+  if (!result.rows.length) throw new Error(`could not find table '${schema}.${table}'`);
   return result.rows[0].ddl;
 };

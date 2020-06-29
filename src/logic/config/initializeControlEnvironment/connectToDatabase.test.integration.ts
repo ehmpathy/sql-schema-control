@@ -48,5 +48,12 @@ describe('connectToDatabase', () => {
       await connection.query({ sql: 'SELECT tablename FROM pg_catalog.pg_tables' });
       await connection.end();
     });
+    it('should throw an error if the requested schema does not exist in the database', async () => {
+      try {
+        await connectToDatabase({ config: { ...config, connection: { ...config.connection, schema: 'random_name' } } });
+      } catch (error) {
+        expect(error.message).toContain("schema 'random_name' does not exist in database 'superimportantdb'");
+      }
+    });
   });
 });
