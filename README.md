@@ -61,21 +61,21 @@ Resources are DDL created "resources" that we can track and "sync" with your che
   ```
 
 2. Define the database connection that sql-schema-control can use
+
+`sql-schema-control` supports both postgres and mysql.
+
   ```js
   // e.g., ./schema/control.connection.js
-  const Config = require('config-with-paramstore').default;
-  const configInstance = new Config();
-  const promiseConfig = async () => configInstance.get();
+  const promiseConfig = async () => { /* ... however you get config ... */};
 
   const promiseSchemaControlConfig = async () => {
     const config = await promiseConfig();
-    console.log(config);
-    const dbConfig = config.database.admin; // NOTE: sql-schema-control must have DDL privileges
     const schemaControlConfig = {
       host: dbConfig.host,
       port: dbConfig.port,
+      database: dbConnection.database,
       schema: dbConfig.schema,
-      username: dbConfig.user,
+      username: dbConfig.user, // NOTE: the schema-control user _must_ have DDL permissions
       password: dbConfig.pass,
     };
     return schemaControlConfig;
@@ -86,11 +86,11 @@ Resources are DDL created "resources" that we can track and "sync" with your che
   }
   ```
 
-4. Define a root control config yml
+3. Define a root control config yml
   ```yml
     # e.g., ./schema/control.yml
-    language: mysql
-    dialect: 5.7
+    language: postgres # mysql is also supported
+    dialect: 10.7
     connection: ./control.connection.js
     strict: true # true by default; false -> don't track uncontrolled resources
     definitions:
@@ -99,7 +99,7 @@ Resources are DDL created "resources" that we can track and "sync" with your che
         id: 'init_20190619_1'
         reappliable: false
       - type: resource
-        path: './definitions/procedures/upsert_notification.sql'
+        path: './definitions/functions/upsert_notification.sql'
       - ./definitions/tables.yml
       - ./definitions/procedures.yml
       - ./definitions/functions.yml

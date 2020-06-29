@@ -46,6 +46,12 @@ describe('extractResourceTypeAndNameFromDDL', () => {
     expect(name).toEqual('find_super_cool_stuff');
     expect(type).toEqual(ResourceType.FUNCTION);
   });
+  it('should be able to find a find a create or replace FUNCTION resource', () => {
+    const ddl = 'CREATE OR REPLACE FUNCTION find_super_cool_stuff ( ... )';
+    const { name, type } = extractResourceTypeAndNameFromDDL({ ddl });
+    expect(name).toEqual('find_super_cool_stuff');
+    expect(type).toEqual(ResourceType.FUNCTION);
+  });
   it('should be able to find a view resource', () => {
     const ddl = 'create view view_super_cool_stuff as select ...';
     const { name, type } = extractResourceTypeAndNameFromDDL({ ddl });

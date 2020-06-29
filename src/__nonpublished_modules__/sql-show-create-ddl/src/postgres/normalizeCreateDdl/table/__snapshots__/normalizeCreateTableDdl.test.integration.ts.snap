@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`showCreateTable should be possible to get create statement of table 1`] = `
+"CREATE TABLE public.test_tb_for_show_create_on (
+  id bigserial NOT NULL,
+  name varchar(150) NULL,
+  level varchar(50) NULL DEFAULT 'info',
+  description text NOT NULL,
+  CONSTRAINT test_tb_for_show_create_on_pkey PRIMARY KEY (id),
+  CONSTRAINT test_tb_for_show_create_on_level_check CHECK (level IN ('info', 'warn', 'error'))
+);"
+`;

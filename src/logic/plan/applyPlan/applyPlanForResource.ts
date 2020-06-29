@@ -19,5 +19,9 @@ export const applyPlanForResource = async ({
   }
 
   // 2. apply it
-  await connection.query({ sql: resource.sql });
+  try {
+    await connection.query({ sql: resource.sql });
+  } catch (error) {
+    throw new Error(`Could not apply ${plan.definition.path}: ${error.message}`);
+  }
 };

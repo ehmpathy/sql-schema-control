@@ -1,0 +1,5 @@
+- type: resource
+  path: './functions/get_answer_to_life.sql'
+
+- type: resource
+  path: './functions/upsert_photo.sql'

@@ -1,13 +1,22 @@
 {
   "sqltools.connections": [
     {
-      "database": "ideacurationdb",
-      "dialect": "MySQL",
-      "isActive": false,
-      "isConnected": false,
-      "name": "ideacurationdb:docker",
+      "database": "superimportantdb",
+      "driver": "PostgreSQL",
+      "name": "superimportantdb@localhost:7821",
       "password": "a-secure-password",
-      "port": 821,
+      "port": 7821,
+      "previewLimit": 50,
+      "server": "localhost",
+      "username": "postgres"
+    },
+    {
+      "database": "superimportantdb",
+      "driver": "MySQL",
+      "name": "superimportantdb@localhost:12821",
+      "password": "a-secure-password",
+      "port": 12821,
+      "previewLimit": 50,
       "server": "localhost",
       "username": "root"
     }

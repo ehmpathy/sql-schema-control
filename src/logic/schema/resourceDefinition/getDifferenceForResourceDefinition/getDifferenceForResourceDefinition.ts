@@ -1,17 +1,7 @@
 import { DatabaseConnection, ResourceDefinition } from '../../../../types';
 import { getSqlDifference } from '../../utils/getSqlDifference';
 import { getLiveResourceDefinitionFromDatabase } from '../getLiveResourceDefinitionFromDatabase';
-import { normalizeDDLToSupportLossyShowCreateStatements } from './normalizeDDLToSupportLossyShowCreateStatements/normalizeDDLToSupportLossyShowCreateStatements';
-import { stripIrrelevantContentFromResourceDDL } from './stripIrrelevantContentFromResourceDDL/stripIrrelevantContentFromResourceDDL';
-
-const stripAndNormalizeResourceDDL = ({ resource }: { resource: ResourceDefinition }) => {
-  const stripedDdl = stripIrrelevantContentFromResourceDDL({ ddl: resource.sql, resourceType: resource.type });
-  const normalizedDdl = normalizeDDLToSupportLossyShowCreateStatements({
-    ddl: stripedDdl,
-    resourceType: resource.type,
-  });
-  return normalizedDdl;
-};
+import { normalizeShowCreateDdl } from '../../../../__nonpublished_modules__/sql-show-create-ddl';
 
 export const getDifferenceForResourceDefinition = async ({
   connection,
@@ -28,8 +18,18 @@ export const getDifferenceForResourceDefinition = async ({
   });
 
   // 2. cast into string
-  const newSql = stripAndNormalizeResourceDDL({ resource });
-  const oldSql = stripAndNormalizeResourceDDL({ resource: liveResource });
+  const newSql = await normalizeShowCreateDdl({
+    schema: connection.schema,
+    language: connection.language,
+    type: resource.type,
+    ddl: resource.sql,
+  });
+  const oldSql = await normalizeShowCreateDdl({
+    schema: connection.schema,
+    language: connection.language,
+    type: liveResource.type,
+    ddl: liveResource.sql,
+  });
   const sqlDifference = getSqlDifference({
     // trim and add newline to standardize how diff calculates and displays
     oldSql: `${oldSql.trim()}\n`,

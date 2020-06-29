@@ -1,0 +1,13 @@
+version: '3'
+services:
+  postgres:
+    build:
+      context: .
+      dockerfile: build-image.dockerfile
+    container_name: superimportantdb_server_postgres
+    command: postgres -c 'max_connections=500'
+    ports:
+      - 7821:5432
+    environment:
+      POSTGRES_PASSWORD: a-secure-password # default user is `postgres`
+      POSTGRES_DB: superimportantdb # creates the database for us automatically

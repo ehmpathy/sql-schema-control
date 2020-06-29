@@ -9,8 +9,8 @@ import {
   ControlConfig,
   RequiredAction,
 } from '../../../types';
-import { promiseConfig } from './__test_assets__/connection.config';
 import { initializeControlEnvironment } from '../../config/initializeControlEnvironment';
+import { promiseConfig } from '../../../__test_assets__/connection.config';
 
 describe('applyChange', () => {
   let connection: DatabaseConnection;
@@ -18,7 +18,7 @@ describe('applyChange', () => {
     const config = new ControlConfig({
       language: DatabaseLanguage.MYSQL,
       dialect: '5.7',
-      connection: await promiseConfig(),
+      connection: (await promiseConfig()).mysql,
       definitions: [],
       strict: true,
     });
@@ -46,13 +46,15 @@ describe('applyChange', () => {
     await applyPlanForChange({ connection, plan });
 
     // check that the user was created
-    const [[{ user_exists: exists }]] = await connection.query({
+    const {
+      rows: [{ user_exists: exists }],
+    } = await connection.query({
       sql: `SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = '${userName}') AS user_exists;`,
     });
     expect(exists).toEqual(1);
 
     // check that the entry was recorded into the changelog accurately
-    const [changeLogRows] = await connection.query({
+    const { rows: changeLogRows } = await connection.query({
       sql: `select * from schema_control_change_log where change_id='${(plan.definition as ChangeDefinition).id}'`,
     });
     expect(changeLogRows.length).toEqual(1);
@@ -87,7 +89,7 @@ describe('applyChange', () => {
     await applyPlanForChange({ connection, plan });
 
     // check that the entry was updated accurately in the changelog
-    const [changeLogRows] = await connection.query({
+    const { rows: changeLogRows } = await connection.query({
       sql: `select * from schema_control_change_log where change_id='${(plan.definition as ChangeDefinition).id}'`,
     });
     expect(changeLogRows.length).toEqual(1);

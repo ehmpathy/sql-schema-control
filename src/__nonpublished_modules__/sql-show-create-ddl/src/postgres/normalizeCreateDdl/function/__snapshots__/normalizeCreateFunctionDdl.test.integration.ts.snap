@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`normalizeCreateFunctionDdl should be possible to get create statement of function 1`] = `
+"CREATE OR REPLACE FUNCTION public.test_func_for_show_create_on(
+  in_name varchar,
+  in_date timestamp with time zone,
+  in_counter int
+)
+RETURNS int
+LANGUAGE plpgsql
+AS $$
+  DECLARE
+    v_test_int int := 821;
+  BEGIN
+    RETURN v_test_int;
+  END;
+$$
+"
+`;

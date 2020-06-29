@@ -17,7 +17,12 @@ describe('ConnectionConfig', () => {
     name: '__NAME__',
     type: ResourceType.FUNCTION,
   });
-  const exampleDbConnection: DatabaseConnection = { query: (() => {}) as any, end: (() => {}) as any };
+  const exampleDbConnection: DatabaseConnection = {
+    query: (() => {}) as any,
+    end: (() => {}) as any,
+    language: DatabaseLanguage.POSTGRES,
+    schema: 'public',
+  };
   it('should initialize for valid inputs', () => {
     const config = new ControlContext({
       language: DatabaseLanguage.MYSQL,

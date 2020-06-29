@@ -3,6 +3,7 @@
 exports[`readConfig should be able to read the example config provisioned in _test_assets 1`] = `
 ControlConfig {
   "connection": ConnectionConfig {
+    "database": "__DATABASE__",
     "host": "__HOST__",
     "password": "__PASSWORD__",
     "port": 3306,

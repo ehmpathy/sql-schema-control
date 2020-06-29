@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`showCreateTable should be possible to get create statement of table 1`] = `
+"CREATE TABLE public.test_table_for_showcreate_on (
+  id bigint NOT NULL DEFAULT nextval('test_table_for_showcreate_on_id_seq'::regclass),
+  name character varying(150) NULL,
+  level character varying(50) NULL,
+  CONSTRAINT test_table_for_showcreate_on_pkey PRIMARY KEY (id),
+  CONSTRAINT test_table_for_showcreate_on_level_check CHECK (((level)::text = ANY ((ARRAY['info'::character varying, 'warn'::character varying, 'error'::character varying])::text[])))
+);
+"
+`;

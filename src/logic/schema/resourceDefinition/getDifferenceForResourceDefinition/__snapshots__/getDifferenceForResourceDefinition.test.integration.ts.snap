@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`getDifferenceForResourceDefinition procedure should find that an out of date procedure resource has a colored diff of changed lines 1`] = `
+exports[`getDifferenceForResourceDefinition mysql procedure should find that an out of date procedure resource has a colored diff of changed lines 1`] = `
 "[32m- Expected[39m
 [31m+ Received[39m
 
@@ -15,7 +15,7 @@ exports[`getDifferenceForResourceDefinition procedure should find that an out of
 [2m  END[22m"
 `;
 
-exports[`getDifferenceForResourceDefinition table should find that an out of date table resource has a colored diff of changed lines 1`] = `
+exports[`getDifferenceForResourceDefinition mysql table should find that an out of date table resource has a colored diff of changed lines 1`] = `
 "[32m- Expected[39m
 [31m+ Received[39m
 
@@ -27,11 +27,56 @@ exports[`getDifferenceForResourceDefinition table should find that an out of dat
 [2m  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci[22m"
 `;
 
-exports[`getDifferenceForResourceDefinition view should find that an out of date view resource has a colored diff of changed lines 1`] = `
+exports[`getDifferenceForResourceDefinition mysql view should find that an out of date view resource has a colored diff of changed lines 1`] = `
 "[32m- Expected[39m
 [31m+ Received[39m
 
 [2m  CREATE VIEW view_spacecraft_current AS[22m
+[2m  select[22m
+[32m-   'starship 7' as name[39m
+[31m+   'starship 7' as [7mship_[27mname[39m"
+`;
+
+exports[`getDifferenceForResourceDefinition postgres function should find that an out of date function resource has a colored diff of changed lines 1`] = `
+"[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  CREATE OR REPLACE FUNCTION upsert_user_description([22m
+[32m-   in_from_user_id bigint[39m
+[31m+   in_from_user_id bigint[7m,[27m[39m
+[31m+   in_another_arg boolean[39m
+[2m  )[22m
+[2m  RETURNS boolean[22m
+[2m  LANGUAGE plpgsql[22m
+[2m  AS $$[22m
+[2m    BEGIN[22m
+[32m-     -- just select something, and also include a comment[39m
+[31m+     -- just select something, and also include a comment[7m, which we changed here[27m[39m
+[2m      SELECT false;[22m
+[2m    END;[22m
+[2m  $$[22m"
+`;
+
+exports[`getDifferenceForResourceDefinition postgres table should find that an out of date table resource has a colored diff of changed lines 1`] = `
+"[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- CREATE TABLE some_resource_table[7m [27m([39m
+[31m+ CREATE TABLE some_resource_table([39m
+[32m-   id [7mbig[27mserial[7m NOT NULL[27m,[39m
+[31m+   id serial,[39m
+[32m-   created_at timestamp [7mwith time zone NOT NULL [27mDEFAULT now(),[39m
+[31m+   created_at timestamp DEFAULT now(),[39m
+[2m    CONSTRAINT some_resource_table_pk PRIMARY KEY (id)[22m
+[32m- )[7m;[27m[39m
+[31m+ )[39m"
+`;
+
+exports[`getDifferenceForResourceDefinition postgres view should find that an out of date view resource has a colored diff of changed lines 1`] = `
+"[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  CREATE OR REPLACE VIEW view_spacecraft_current AS[22m
 [2m  select[22m
 [32m-   'starship 7' as name[39m
 [31m+   'starship 7' as [7mship_[27mname[39m"

@@ -17,7 +17,9 @@ export const getAppliedChangeDefinitionFromDatabase = async ({
   changeId: string;
   changePath: string;
 }) => {
-  const [[result]] = await connection.query({
+  const {
+    rows: [result],
+  } = await connection.query({
     sql: `select * from schema_control_change_log where change_id = '${changeId}'`, // NOTE: we are not concerned with sql injection.
   });
   if (!result) throw new ChangeHasNotBeenAppliedError({ changeId, changePath });

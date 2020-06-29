@@ -5,6 +5,7 @@ describe('ConnectionConfig', () => {
     const changeDefinition = new ConnectionConfig({
       host: 'localhost',
       port: 3306,
+      database: 'awesome_database',
       schema: 'awesome_schema',
       username: 'service_user',
       password: 'super_secure_password',
@@ -12,6 +13,7 @@ describe('ConnectionConfig', () => {
     expect(changeDefinition).toMatchObject({
       host: 'localhost',
       port: 3306,
+      database: 'awesome_database',
       schema: 'awesome_schema',
       username: 'service_user',
       password: 'super_secure_password',

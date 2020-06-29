@@ -10,6 +10,10 @@ const controlContextSchema = Joi.object().keys({
   connection: Joi.object().keys({
     query: Joi.func().required(),
     end: Joi.func().required(),
+    language: Joi.string()
+      .valid(Object.values(DatabaseLanguage))
+      .required(),
+    schema: Joi.string().required(),
   }),
   definitions: Joi.array().items(ChangeDefinition.schema, ResourceDefinition.schema),
 });
