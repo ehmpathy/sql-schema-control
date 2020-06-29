@@ -62,7 +62,7 @@
     "prepublish": "npm run build"
   },
   "devDependencies": {
-    "@oclif/dev-cli": "^1.22.0",
+    "@oclif/dev-cli": "^1.22.2",
     "@types/dotenv": "^6.1.1",
     "@types/jest": "^25.1.0",
     "@types/joi": "^14.3.2",
@@ -81,19 +81,19 @@
     "tslint": "^5.11.0",
     "tslint-config-airbnb": "^5.11.0",
     "tslint-consistent-codestyle": "^1.13.3",
-    "typescript": "^3.8.3",
+    "typescript": "^3.9.5",
     "uuid": "^3.3.2"
   },
   "dependencies": {
-    "@oclif/command": "^1.5.15",
-    "@oclif/config": "^1.13.0",
-    "@oclif/plugin-help": "^2.2.0",
+    "@oclif/command": "^1.6.1",
+    "@oclif/config": "^1.15.1",
+    "@oclif/plugin-help": "^3.1.0",
     "chalk": "^2.4.2",
     "indent-string": "^4.0.0",
     "jest-diff": "^25.3.0",
     "joi": "^14.3.1",
     "mysql2": "^1.6.5",
-    "oclif": "^1.13.4",
+    "oclif": "^1.16.1",
     "pg": "^8.2.1",
     "schematic-joi-model": "^1.2.2",
     "simple-sha256": "^1.0.0",
