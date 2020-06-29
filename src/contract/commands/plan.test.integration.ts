@@ -138,6 +138,7 @@ CREATE TABLE notification_version (
       await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship CASCADE' });
       await connection.query({ sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo' });
       await connection.query({ sql: 'DROP FUNCTION IF EXISTS upsert_photo' });
+      await connection.query({ sql: 'DROP FUNCTION IF EXISTS get_answer_to_life' });
 
       // run plan
       stdout.stripColor = false; // dont strip color
@@ -159,6 +160,7 @@ CREATE TABLE notification_version (
       await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship CASCADE' });
       await connection.query({ sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo' });
       await connection.query({ sql: 'DROP FUNCTION IF EXISTS upsert_photo' });
+      await connection.query({ sql: 'DROP FUNCTION IF EXISTS get_answer_to_life' });
 
       // pre-provision two of the resources with different def (one reappliable, one not)
       const getAnswerToLifeAltSql = `
@@ -203,6 +205,7 @@ CREATE TABLE photo (
       await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship CASCADE' });
       await connection.query({ sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo' });
       await connection.query({ sql: 'DROP FUNCTION IF EXISTS upsert_photo' });
+      await connection.query({ sql: 'DROP FUNCTION IF EXISTS get_answer_to_life' });
 
       // create an uncontrolled resource
       await connection.query({

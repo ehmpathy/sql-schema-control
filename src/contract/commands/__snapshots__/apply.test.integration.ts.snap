@@ -65,6 +65,8 @@ exports[`apply postgres should have an expected appearance when all changes need
 
       [1m[32m✔[39m[22m [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/postgres/definitions/views/view_spaceship_with_cargo.sql [90m(resource:view:view_spaceship_with_cargo)[39m[22m
 
+      [1m[32m✔[39m[22m [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/postgres/definitions/functions/get_answer_to_life.sql [90m(resource:function:get_answer_to_life)[39m[22m
+
       [1m[32m✔[39m[22m [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/postgres/definitions/functions/upsert_photo.sql [90m(resource:function:upsert_photo)[39m[22m
 
       [1m[32m✔[39m[22m [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/postgres/definitions/init/service_user.sql [90m(change:init_service_user)[39m[22m

@@ -9,6 +9,7 @@ describe('ConnectionConfig', () => {
   const connectionConfig = new ConnectionConfig({
     host: 'localhost',
     port: 3306,
+    database: 'awesome_database',
     schema: 'awesome_schema',
     username: 'service_user',
     password: 'super_secure_password',

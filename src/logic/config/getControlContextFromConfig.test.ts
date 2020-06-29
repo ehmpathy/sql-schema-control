@@ -37,7 +37,12 @@ getConfigMock.mockResolvedValue(mockedConfigResponse); // since typechecked by C
 
 jest.mock('./initializeControlEnvironment');
 const initializeControlEnvironmentMock = initializeControlEnvironment as jest.Mock;
-const exampleConnection = { query: () => {}, end: () => {} };
+const exampleConnection = {
+  query: () => {},
+  end: () => {},
+  language: DatabaseLanguage.MYSQL,
+  schema: 'superimportantdb',
+};
 initializeControlEnvironmentMock.mockResolvedValue({ connection: exampleConnection }); // since typechecked by Context object
 
 jest.mock('../schema/resourceDefinition/getUncontrolledResources');
@@ -82,7 +87,7 @@ describe('getControlContextFromConfig', () => {
       connection: '__CONNECTION__',
       definitions: [],
     }); // since typechecked by Context object
-    initializeControlEnvironmentMock.mockResolvedValueOnce({ query: () => {}, end: () => {} }); // since typechecked by Context object
+    initializeControlEnvironmentMock.mockResolvedValueOnce(exampleConnection); // since typechecked by Context object
     const result = await getControlContextFromConfig({ configPath: '__CONFIG_PATH__' });
     expect(result.constructor).toEqual(ControlContext);
   });

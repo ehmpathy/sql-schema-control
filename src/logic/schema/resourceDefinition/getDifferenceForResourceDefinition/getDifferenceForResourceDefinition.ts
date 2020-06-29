@@ -19,11 +19,13 @@ export const getDifferenceForResourceDefinition = async ({
 
   // 2. cast into string
   const newSql = await normalizeShowCreateDdl({
+    schema: connection.schema,
     language: connection.language,
     type: resource.type,
     ddl: resource.sql,
   });
   const oldSql = await normalizeShowCreateDdl({
+    schema: connection.schema,
     language: connection.language,
     type: liveResource.type,
     ddl: liveResource.sql,

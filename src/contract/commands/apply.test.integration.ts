@@ -79,7 +79,7 @@ describe('apply', () => {
     beforeAll(async () => {
       const config = new ControlConfig({
         language: DatabaseLanguage.POSTGRES,
-        dialect: '5.7',
+        dialect: '10.7',
         connection: await promiseConfigPostgres(),
         definitions: [],
         strict: false,
@@ -92,13 +92,18 @@ describe('apply', () => {
     it('should have an expected appearance when all changes need to be applied', async () => {
       // ensure previous runs dont break this test
       await connection.query({ sql: 'DELETE FROM schema_control_change_log' });
-      await connection.query({ sql: 'DROP OWNED BY service_awesomeness;' });
-      await connection.query({ sql: 'DROP USER service_awesomeness;' });
+      try {
+        await connection.query({ sql: 'DROP OWNED BY service_awesomeness;' });
+        await connection.query({ sql: 'DROP USER service_awesomeness;' });
+      } catch (error) {
+        // do nothing if this throws error; i.e., "IF EXISTS"
+      }
       await connection.query({ sql: 'DROP TABLE IF EXISTS data_source CASCADE' });
       await connection.query({ sql: 'DROP TABLE IF EXISTS photo CASCADE' });
       await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship_cargo CASCADE' });
       await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship CASCADE' });
       await connection.query({ sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo' });
+      await connection.query({ sql: 'DROP FUNCTION IF EXISTS get_answer_to_life' });
       await connection.query({ sql: 'DROP FUNCTION IF EXISTS upsert_photo' });
 
       // run the test
@@ -117,14 +122,19 @@ describe('apply', () => {
     it('should have an expected appearance when all changes need to be reapplied, if possible', async () => {
       // ensure previous runs dont break this test
       await connection.query({ sql: 'DELETE FROM schema_control_change_log' });
-      await connection.query({ sql: 'DROP OWNED BY service_awesomeness;' });
-      await connection.query({ sql: 'DROP USER service_awesomeness;' });
+      try {
+        await connection.query({ sql: 'DROP OWNED BY service_awesomeness;' });
+        await connection.query({ sql: 'DROP USER service_awesomeness;' });
+      } catch (error) {
+        // do nothing if this throws error; i.e., "IF EXISTS"
+      }
       await connection.query({ sql: 'DROP TABLE IF EXISTS data_source CASCADE' });
       await connection.query({ sql: 'DROP TABLE IF EXISTS photo CASCADE' });
       await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship_cargo CASCADE' });
       await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship CASCADE' });
       await connection.query({ sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo' });
       await connection.query({ sql: 'DROP FUNCTION IF EXISTS upsert_photo' });
+      await connection.query({ sql: 'DROP FUNCTION IF EXISTS get_answer_to_life' });
 
       // apply the definitions the first time
       await Apply.run(['-c', `${__dirname}/../__test_assets__/postgres/control.yml`]);
