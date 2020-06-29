@@ -9,16 +9,16 @@ import {
   DatabaseLanguage,
 } from '../../../../types';
 import { initializeControlEnvironment } from '../../../config/initializeControlEnvironment';
-import { promiseConfig } from './__test_assets__/connection.config';
 import { getStatusForChangeDefinition } from './getStatusForChangeDefinition';
+import { promiseConfig } from '../../../__test_assets__/connection.config';
 
 describe('getStatusForChangeDefinition', () => {
   let connection: DatabaseConnection;
   beforeAll(async () => {
     const config = new ControlConfig({
-      language: DatabaseLanguage.MYSQL,
-      dialect: '5.7',
-      connection: await promiseConfig(),
+      language: DatabaseLanguage.POSTGRES,
+      dialect: '10.7',
+      connection: (await promiseConfig()).postgres,
       definitions: [],
       strict: true,
     });

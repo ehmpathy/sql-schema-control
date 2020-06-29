@@ -7,9 +7,9 @@ import {
   ChangeDefinition,
   ChangeDefinitionStatus,
 } from '../../../../types';
-import { promiseConfig } from './__test_assets__/connection.config';
 import { initializeControlEnvironment } from '../../../config/initializeControlEnvironment';
 import { getDifferenceForChangeDefinition } from './getDifferenceForChangeDefinition';
+import { promiseConfig } from '../../../__test_assets__/connection.config';
 
 describe('getDifferenceForChangeDefinition', () => {
   let connection: DatabaseConnection;
@@ -17,7 +17,7 @@ describe('getDifferenceForChangeDefinition', () => {
     const config = new ControlConfig({
       language: DatabaseLanguage.MYSQL,
       dialect: '5.7',
-      connection: await promiseConfig(),
+      connection: (await promiseConfig()).mysql,
       definitions: [],
       strict: true,
     });

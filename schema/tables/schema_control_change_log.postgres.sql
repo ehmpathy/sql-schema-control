@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS schema_control_change_log ( -- TODO: make this a vers
   -- meta
   id              bigserial,
   created_at      timestamp with time zone default now(),
-  updated_at      timestamp with time zone not null,
+  updated_at      timestamp with time zone,
 
   -- data
   change_id             VARCHAR NOT NULL, -- record the human generated id of the content
