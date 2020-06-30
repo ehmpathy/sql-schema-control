@@ -22,5 +22,5 @@ export const normalizeCreateDdlPostgres = ({
   })();
 
   // strip the ` ${schema}.` qualifier, if the resource is for the same schema that we expect
-  return normalizedDdl.replace(` ${schema}.`, ' '); // its implied that it will be for this schema, so no need to include it
+  return normalizedDdl.replace(new RegExp(` ${schema}.`, 'g'), ' '); // its implied that it will be for this schema, so no need to include it
 };
