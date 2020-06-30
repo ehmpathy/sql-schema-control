@@ -11,7 +11,8 @@ import { DatabaseConnection } from '../../../types';
  */
 export const provisionShowCreateTableFunction = async ({ dbConnection }: { dbConnection: DatabaseConnection }) => {
   const sql = await new Promise<string>((resolve, reject) =>
-    fs.readFile(`${__dirname}/show_create_table.sql`, (error, data) => {
+    // note: the file is defined in the `/schema` dir since tsc removes all non ts/js files and this is easier to reference than trying to "cp" into /dist postbuild
+    fs.readFile(`${__dirname}/../../../../../../../schema/functions/show_create_table.postgres.sql`, (error, data) => {
       if (error) return reject(error);
       return resolve(data.toString());
     }),
