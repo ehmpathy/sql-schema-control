@@ -3,19 +3,19 @@
 exports[`applyPlans should display an expected output for the plans 1`] = `
 "    [1mApplying required actions...[22m
 [2m[22m
-[2m      [2mat log ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:23:11)[22m[2m[22m
+[2m      [2mat [22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:23:11[22m[2m[22m
 
 
 [2m[22m
-[2m      [2mat log ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:24:11)[22m[2m[22m
+[2m      [2mat [22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:24:11[22m[2m[22m
 
       [1m[32m✔[39m[22m [1m[1m[32m[APPLY][39m[1m __PATH__ [90m(change:__UUID__)[39m[22m
 [2m[22m
-[2m      [2mat log ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:45:15)[22m[2m[22m
+[2m      [2mat [22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:45:15[22m[2m[22m
 
       [1m[32m✔[39m[22m [1m[1m[33m[REAPPLY][39m[1m __PATH__ [90m(change:__UUID__)[39m[22m
 [2m[22m
-[2m      [2mat log ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:45:15)[22m[2m[22m
+[2m      [2mat [22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:45:15[22m[2m[22m
 
 "
 `;

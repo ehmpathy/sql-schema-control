@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sync mysql should have an expected appearance when syncing change log for a change definition 1`] = `
+"    
+       [32m✔[39m [1m[32m[SYNC][39m src/contract/__test_assets__/mysql/definitions/init/service_user.sql [90m(change:init_service_user)[39m[22m
+[2m[22m
+[2m      [2mat [22m[2msrc/logic/commands/getAndSyncChangeLogForChangeDefinition.ts[2m:45:11[22m[2m[22m
+
+"
+`;
+
+exports[`sync postgres should have an expected appearance when syncing change log for a change definition 1`] = `
+"    
+       [32m✔[39m [1m[32m[SYNC][39m src/contract/__test_assets__/postgres/definitions/init/service_user.sql [90m(change:init_service_user)[39m[22m
+[2m[22m
+[2m      [2mat [22m[2msrc/logic/commands/getAndSyncChangeLogForChangeDefinition.ts[2m:45:11[22m[2m[22m
+
+"
+`;
