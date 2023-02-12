@@ -10,8 +10,14 @@ describe('recordUncontrolledResources', () => {
       type: ResourceType.TABLE,
       name: 'super_awesome_table',
     });
-    await recordUncontrolledResources({ targetDir, uncontrolledResources: [resource] });
-    const contents = await readFile(`${targetDir}/tables/${resource.name}.sql`, 'utf8');
+    await recordUncontrolledResources({
+      targetDir,
+      uncontrolledResources: [resource],
+    });
+    const contents = await readFile(
+      `${targetDir}/tables/${resource.name}.sql`,
+      'utf8',
+    );
     expect(contents).toEqual(resource.sql);
   });
   it('should accurately record an uncontrolled procedure resource', async () => {
@@ -20,8 +26,14 @@ describe('recordUncontrolledResources', () => {
       type: ResourceType.PROCEDURE,
       name: 'super_awesome_procedure',
     });
-    await recordUncontrolledResources({ targetDir, uncontrolledResources: [resource] });
-    const contents = await readFile(`${targetDir}/procedures/${resource.name}.sql`, 'utf8');
+    await recordUncontrolledResources({
+      targetDir,
+      uncontrolledResources: [resource],
+    });
+    const contents = await readFile(
+      `${targetDir}/procedures/${resource.name}.sql`,
+      'utf8',
+    );
     expect(contents).toEqual(resource.sql);
   });
   it('should accurately record an uncontrolled function resource', async () => {
@@ -30,8 +42,14 @@ describe('recordUncontrolledResources', () => {
       type: ResourceType.FUNCTION,
       name: 'super_awesome_function',
     });
-    await recordUncontrolledResources({ targetDir, uncontrolledResources: [resource] });
-    const contents = await readFile(`${targetDir}/functions/${resource.name}.sql`, 'utf8');
+    await recordUncontrolledResources({
+      targetDir,
+      uncontrolledResources: [resource],
+    });
+    const contents = await readFile(
+      `${targetDir}/functions/${resource.name}.sql`,
+      'utf8',
+    );
     expect(contents).toEqual(resource.sql);
   });
 });

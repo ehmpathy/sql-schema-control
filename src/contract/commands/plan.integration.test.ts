@@ -1,9 +1,14 @@
-import Plan from './plan';
 import { stdout } from 'stdout-stderr';
-import { DatabaseConnection, DatabaseLanguage, ControlConfig } from '../../types';
+
+import { initializeControlEnvironment } from '../../logic/config/initializeControlEnvironment';
+import {
+  DatabaseConnection,
+  DatabaseLanguage,
+  ControlConfig,
+} from '../../types';
 import { promiseConfig as promiseConfigMysql } from '../__test_assets__/mysql/connection.config';
 import { promiseConfig as promiseConfigPostgres } from '../__test_assets__/postgres/connection.config';
-import { initializeControlEnvironment } from '../../logic/config/initializeControlEnvironment';
+import Plan from './plan';
 
 describe('plan', () => {
   describe('mysql', () => {
@@ -24,18 +29,29 @@ describe('plan', () => {
     it('should have an expected appearance when all changes need to be applied', async () => {
       // ensure previous runs dont break this test
       await connection.query({ sql: 'DELETE FROM schema_control_change_log' });
-      await connection.query({ sql: 'DROP TABLE IF EXISTS notification_version' });
+      await connection.query({
+        sql: 'DROP TABLE IF EXISTS notification_version',
+      });
       await connection.query({ sql: 'DROP TABLE IF EXISTS notification' });
       await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship_cargo' });
       await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship' });
-      await connection.query({ sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo' });
-      await connection.query({ sql: 'DROP FUNCTION IF EXISTS find_message_hash_by_text' });
-      await connection.query({ sql: 'DROP PROCEDURE IF EXISTS upsert_message' });
+      await connection.query({
+        sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo',
+      });
+      await connection.query({
+        sql: 'DROP FUNCTION IF EXISTS find_message_hash_by_text',
+      });
+      await connection.query({
+        sql: 'DROP PROCEDURE IF EXISTS upsert_message',
+      });
 
       // run plan
       stdout.stripColor = false; // dont strip color
       stdout.start();
-      await Plan.run(['-c', `${__dirname}/../__test_assets__/mysql/control.yml`]);
+      await Plan.run([
+        '-c',
+        `${__dirname}/../__test_assets__/mysql/control.yml`,
+      ]);
       stdout.stop();
       const output = stdout.output
         .split('\n')
@@ -46,13 +62,21 @@ describe('plan', () => {
     it('should have an expected appearance when some resources need to be reapplied manually or automatically', async () => {
       // ensure previous runs dont break this test
       await connection.query({ sql: 'DELETE FROM schema_control_change_log' });
-      await connection.query({ sql: 'DROP TABLE IF EXISTS notification_version' });
+      await connection.query({
+        sql: 'DROP TABLE IF EXISTS notification_version',
+      });
       await connection.query({ sql: 'DROP TABLE IF EXISTS notification' });
       await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship_cargo' });
       await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship' });
-      await connection.query({ sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo' });
-      await connection.query({ sql: 'DROP FUNCTION IF EXISTS find_message_hash_by_text' });
-      await connection.query({ sql: 'DROP PROCEDURE IF EXISTS upsert_message' });
+      await connection.query({
+        sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo',
+      });
+      await connection.query({
+        sql: 'DROP FUNCTION IF EXISTS find_message_hash_by_text',
+      });
+      await connection.query({
+        sql: 'DROP PROCEDURE IF EXISTS upsert_message',
+      });
 
       // pre-provision two of the resources with different def (one reappliable, one not)
       const findMessageHashByTextAltSql = `
@@ -78,7 +102,10 @@ CREATE TABLE notification_version (
       // run plan
       stdout.stripColor = false; // dont strip color
       stdout.start();
-      await Plan.run(['-c', `${__dirname}/../__test_assets__/mysql/control.yml`]);
+      await Plan.run([
+        '-c',
+        `${__dirname}/../__test_assets__/mysql/control.yml`,
+      ]);
       stdout.stop();
       const output = stdout.output
         .split('\n')
@@ -89,13 +116,21 @@ CREATE TABLE notification_version (
     it('should find uncontrolled resources when strict=true', async () => {
       // ensure previous runs dont break this test
       await connection.query({ sql: 'DELETE FROM schema_control_change_log' });
-      await connection.query({ sql: 'DROP TABLE IF EXISTS notification_version' });
+      await connection.query({
+        sql: 'DROP TABLE IF EXISTS notification_version',
+      });
       await connection.query({ sql: 'DROP TABLE IF EXISTS notification' });
       await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship_cargo' });
       await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship' });
-      await connection.query({ sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo' });
-      await connection.query({ sql: 'DROP FUNCTION IF EXISTS find_message_hash_by_text' });
-      await connection.query({ sql: 'DROP PROCEDURE IF EXISTS upsert_message' });
+      await connection.query({
+        sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo',
+      });
+      await connection.query({
+        sql: 'DROP FUNCTION IF EXISTS find_message_hash_by_text',
+      });
+      await connection.query({
+        sql: 'DROP PROCEDURE IF EXISTS upsert_message',
+      });
 
       // create an uncontrolled resource
       await connection.query({
@@ -105,7 +140,10 @@ CREATE TABLE notification_version (
       // run plan
       stdout.stripColor = false; // dont strip color
       stdout.start();
-      await Plan.run(['-c', `${__dirname}/../__test_assets__/mysql/strict_control.yml`]); // separate schema since we don't want snapshot to break due to uncontrolled
+      await Plan.run([
+        '-c',
+        `${__dirname}/../__test_assets__/mysql/strict_control.yml`,
+      ]); // separate schema since we don't want snapshot to break due to uncontrolled
       stdout.stop();
       const output = stdout.output
         .split('\n')
@@ -132,18 +170,29 @@ CREATE TABLE notification_version (
     it('should have an expected appearance when all changes need to be applied', async () => {
       // ensure previous runs dont break this test
       await connection.query({ sql: 'DELETE FROM schema_control_change_log' });
-      await connection.query({ sql: 'DROP TABLE IF EXISTS data_source CASCADE' });
+      await connection.query({
+        sql: 'DROP TABLE IF EXISTS data_source CASCADE',
+      });
       await connection.query({ sql: 'DROP TABLE IF EXISTS photo CASCADE' });
-      await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship_cargo CASCADE' });
+      await connection.query({
+        sql: 'DROP TABLE IF EXISTS spaceship_cargo CASCADE',
+      });
       await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship CASCADE' });
-      await connection.query({ sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo' });
+      await connection.query({
+        sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo',
+      });
       await connection.query({ sql: 'DROP FUNCTION IF EXISTS upsert_photo' });
-      await connection.query({ sql: 'DROP FUNCTION IF EXISTS get_answer_to_life' });
+      await connection.query({
+        sql: 'DROP FUNCTION IF EXISTS get_answer_to_life',
+      });
 
       // run plan
       stdout.stripColor = false; // dont strip color
       stdout.start();
-      await Plan.run(['-c', `${__dirname}/../__test_assets__/postgres/control.yml`]);
+      await Plan.run([
+        '-c',
+        `${__dirname}/../__test_assets__/postgres/control.yml`,
+      ]);
       stdout.stop();
       const output = stdout.output
         .split('\n')
@@ -154,13 +203,21 @@ CREATE TABLE notification_version (
     it('should have an expected appearance when some resources need to be reapplied manually or automatically', async () => {
       // ensure previous runs dont break this test
       await connection.query({ sql: 'DELETE FROM schema_control_change_log' });
-      await connection.query({ sql: 'DROP TABLE IF EXISTS data_source CASCADE' });
+      await connection.query({
+        sql: 'DROP TABLE IF EXISTS data_source CASCADE',
+      });
       await connection.query({ sql: 'DROP TABLE IF EXISTS photo CASCADE' });
-      await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship_cargo CASCADE' });
+      await connection.query({
+        sql: 'DROP TABLE IF EXISTS spaceship_cargo CASCADE',
+      });
       await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship CASCADE' });
-      await connection.query({ sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo' });
+      await connection.query({
+        sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo',
+      });
       await connection.query({ sql: 'DROP FUNCTION IF EXISTS upsert_photo' });
-      await connection.query({ sql: 'DROP FUNCTION IF EXISTS get_answer_to_life' });
+      await connection.query({
+        sql: 'DROP FUNCTION IF EXISTS get_answer_to_life',
+      });
 
       // pre-provision two of the resources with different def (one reappliable, one not)
       const getAnswerToLifeAltSql = `
@@ -188,7 +245,10 @@ CREATE TABLE photo (
       // run plan
       stdout.stripColor = false; // dont strip color
       stdout.start();
-      await Plan.run(['-c', `${__dirname}/../__test_assets__/postgres/control.yml`]);
+      await Plan.run([
+        '-c',
+        `${__dirname}/../__test_assets__/postgres/control.yml`,
+      ]);
       stdout.stop();
       const output = stdout.output
         .split('\n')
@@ -199,13 +259,21 @@ CREATE TABLE photo (
     it('should find uncontrolled resources when strict=true', async () => {
       // ensure previous runs dont break this test
       await connection.query({ sql: 'DELETE FROM schema_control_change_log' });
-      await connection.query({ sql: 'DROP TABLE IF EXISTS data_source CASCADE' });
+      await connection.query({
+        sql: 'DROP TABLE IF EXISTS data_source CASCADE',
+      });
       await connection.query({ sql: 'DROP TABLE IF EXISTS photo CASCADE' });
-      await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship_cargo CASCADE' });
+      await connection.query({
+        sql: 'DROP TABLE IF EXISTS spaceship_cargo CASCADE',
+      });
       await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship CASCADE' });
-      await connection.query({ sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo' });
+      await connection.query({
+        sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo',
+      });
       await connection.query({ sql: 'DROP FUNCTION IF EXISTS upsert_photo' });
-      await connection.query({ sql: 'DROP FUNCTION IF EXISTS get_answer_to_life' });
+      await connection.query({
+        sql: 'DROP FUNCTION IF EXISTS get_answer_to_life',
+      });
 
       // create an uncontrolled resource
       await connection.query({
@@ -215,7 +283,10 @@ CREATE TABLE photo (
       // run plan
       stdout.stripColor = false; // dont strip color
       stdout.start();
-      await Plan.run(['-c', `${__dirname}/../__test_assets__/postgres/strict_control.yml`]); // separate schema since we don't want snapshot to break due to uncontrolled
+      await Plan.run([
+        '-c',
+        `${__dirname}/../__test_assets__/postgres/strict_control.yml`,
+      ]); // separate schema since we don't want snapshot to break due to uncontrolled
       stdout.stop();
       const output = stdout.output
         .split('\n')

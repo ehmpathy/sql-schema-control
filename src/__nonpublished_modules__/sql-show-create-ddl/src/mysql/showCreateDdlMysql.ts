@@ -19,7 +19,9 @@ export const showCreateDdlMysql = async ({
   schema: string;
   name: string;
 }) => {
-  const { rows } = await dbConnection.query({ sql: `SHOW CREATE ${type} ${name}` });
+  const { rows } = await dbConnection.query({
+    sql: `SHOW CREATE ${type} ${name}`,
+  });
   const ddl = rows[0][`Create ${resourceToTitleCase[type]}`];
   return normalizeCreateDdlMysql({ type, ddl });
 };

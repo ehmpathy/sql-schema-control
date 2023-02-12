@@ -1,8 +1,14 @@
-import { DatabaseConnection, ChangeDefinition, ResourceDefinition, DefinitionPlan, RequiredAction } from '../../types';
-import { getRequiredAction } from './getRequiredAction';
-import { getStatusForDefinition } from '../schema/getStatusForDefinition';
+import {
+  DatabaseConnection,
+  ChangeDefinition,
+  ResourceDefinition,
+  DefinitionPlan,
+  RequiredAction,
+} from '../../types';
 import { getDifferenceForDefinition } from '../schema/getDifferenceForDefinition';
 import { getReferenceIdForDefinition } from '../schema/getReferenceIdForDefinition';
+import { getStatusForDefinition } from '../schema/getStatusForDefinition';
+import { getRequiredAction } from './getRequiredAction';
 
 export const getPlanForDefinition = async ({
   connection,
@@ -12,7 +18,10 @@ export const getPlanForDefinition = async ({
   definition: ChangeDefinition | ResourceDefinition;
 }) => {
   // 1. ensure definition has a status
-  const definition = await getStatusForDefinition({ connection, definition: definitionWithoutStatus });
+  const definition = await getStatusForDefinition({
+    connection,
+    definition: definitionWithoutStatus,
+  });
 
   // 2. determine the required action
   const action = getRequiredAction({ definition });

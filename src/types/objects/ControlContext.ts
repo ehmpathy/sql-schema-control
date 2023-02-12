@@ -1,5 +1,6 @@
 import Joi from 'joi';
 import SchematicJoiModel from 'schematic-joi-model';
+
 import { DatabaseLanguage, DatabaseConnection } from '../constants';
 import { ChangeDefinition } from './ChangeDefinition';
 import { ResourceDefinition } from './ResourceDefinition';
@@ -10,12 +11,13 @@ const controlContextSchema = Joi.object().keys({
   connection: Joi.object().keys({
     query: Joi.func().required(),
     end: Joi.func().required(),
-    language: Joi.string()
-      .valid(Object.values(DatabaseLanguage))
-      .required(),
+    language: Joi.string().valid(Object.values(DatabaseLanguage)).required(),
     schema: Joi.string().required(),
   }),
-  definitions: Joi.array().items(ChangeDefinition.schema, ResourceDefinition.schema),
+  definitions: Joi.array().items(
+    ChangeDefinition.schema,
+    ResourceDefinition.schema,
+  ),
 });
 
 type DefinitionObject = ChangeDefinition | ResourceDefinition;

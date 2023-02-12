@@ -15,17 +15,23 @@ $function$
 
 describe('normalizeCreateTableDdl', () => {
   it('should be able to replace $function$ with $$', () => {
-    const normalizedDdl = normalizeCreateFunctionDdl({ ddl: exampleShowCreateDdl });
+    const normalizedDdl = normalizeCreateFunctionDdl({
+      ddl: exampleShowCreateDdl,
+    });
     expect(normalizedDdl).not.toContain('$function$');
     expect(normalizedDdl).toContain('$$');
   });
   it('should replace character varying with varchar', () => {
-    const normalizedDdl = normalizeCreateFunctionDdl({ ddl: exampleShowCreateDdl });
+    const normalizedDdl = normalizeCreateFunctionDdl({
+      ddl: exampleShowCreateDdl,
+    });
     expect(normalizedDdl).not.toContain('character varying');
     expect(normalizedDdl).toContain('varchar');
   });
   it('should stick each input arg on its own line', () => {
-    const normalizedDdl = normalizeCreateFunctionDdl({ ddl: exampleShowCreateDdl });
+    const normalizedDdl = normalizeCreateFunctionDdl({
+      ddl: exampleShowCreateDdl,
+    });
     expect(normalizedDdl).not.toContain('(in_name character varying)');
     expect(normalizedDdl).toContain(`(
   in_name varchar
@@ -46,7 +52,9 @@ AS $$
   END;
 $$
     `.trim();
-    const normalizedDdl = normalizeCreateFunctionDdl({ ddl: exampleShowCreateDdl });
+    const normalizedDdl = normalizeCreateFunctionDdl({
+      ddl: exampleShowCreateDdl,
+    });
     expect(normalizedDdl).not.toContain('varchar(255)');
     expect(normalizedDdl).toContain('varchar\n');
   });

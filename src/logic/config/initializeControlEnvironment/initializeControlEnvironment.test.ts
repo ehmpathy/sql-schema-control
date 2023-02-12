@@ -1,5 +1,5 @@
-import { initializeControlEnvironment } from './initializeControlEnvironment';
 import { connectToDatabase } from './connectToDatabase';
+import { initializeControlEnvironment } from './initializeControlEnvironment';
 import { provisionChangeLogTable } from './provisionChangeLogTable';
 
 jest.mock('./connectToDatabase');
@@ -26,7 +26,9 @@ describe('initializeControlEnvironment', () => {
     });
   });
   it('should return the database connection', async () => {
-    const result = await initializeControlEnvironment({ config: '__CONFIG__' as any });
+    const result = await initializeControlEnvironment({
+      config: '__CONFIG__' as any,
+    });
     expect(result).toHaveProperty('connection');
     expect(result.connection).toEqual('__CONNECTION__');
   });

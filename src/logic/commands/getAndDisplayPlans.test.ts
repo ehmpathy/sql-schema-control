@@ -1,10 +1,11 @@
-import { getAndDisplayPlans } from './getAndDisplayPlans';
 import { getControlContextFromConfig } from '../config/getControlContextFromConfig';
-import { getPlans } from './getPlans';
 import { displayPlans } from './displayPlans';
+import { getAndDisplayPlans } from './getAndDisplayPlans';
+import { getPlans } from './getPlans';
 
 jest.mock('../config/getControlContextFromConfig');
-const getControlContextFromConfigMock = getControlContextFromConfig as jest.Mock;
+const getControlContextFromConfigMock =
+  getControlContextFromConfig as jest.Mock;
 const exampleContext = {
   connection: {
     end: jest.fn(),

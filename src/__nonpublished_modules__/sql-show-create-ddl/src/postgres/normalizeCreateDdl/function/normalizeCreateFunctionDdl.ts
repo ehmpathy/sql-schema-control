@@ -20,12 +20,22 @@ export const normalizeCreateFunctionDdl = ({ ddl }: { ddl: string }) => {
   prettierDdl = (() => {
     const partsSplitOnParens = prettierDdl.split(/([\(\)])/g);
     const functionParams = partsSplitOnParens[2];
-    const functionParamsWithNewlines = `\n  ${functionParams.replace(/, /g, ',\n  ').trim()}\n`;
-    return [partsSplitOnParens[0], '(', functionParamsWithNewlines, ')', ...partsSplitOnParens.slice(4)].join('');
+    const functionParamsWithNewlines = `\n  ${functionParams
+      .replace(/, /g, ',\n  ')
+      .trim()}\n`;
+    return [
+      partsSplitOnParens[0],
+      '(',
+      functionParamsWithNewlines,
+      ')',
+      ...partsSplitOnParens.slice(4),
+    ].join('');
   })();
 
   // make sure there is no weird one space before RETURNS and LANGUAGE
-  prettierDdl = prettierDdl.replace(/ RETURNS/, 'RETURNS').replace(/ LANGUAGE/, 'LANGUAGE');
+  prettierDdl = prettierDdl
+    .replace(/ RETURNS/, 'RETURNS')
+    .replace(/ LANGUAGE/, 'LANGUAGE');
 
   return prettierDdl;
 };

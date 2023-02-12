@@ -1,3 +1,4 @@
+import { promiseConfig } from '../../../../__test_assets__/connection.config';
 import {
   ControlConfig,
   DatabaseConnection,
@@ -8,7 +9,6 @@ import {
 } from '../../../../types';
 import { initializeControlEnvironment } from '../../../config/initializeControlEnvironment';
 import { getDifferenceForResourceDefinition } from './getDifferenceForResourceDefinition';
-import { promiseConfig } from '../../../../__test_assets__/connection.config';
 
 /**
  * note: these are arguably the most important tests - because they define how useful "resources" really are
@@ -35,7 +35,9 @@ describe('getDifferenceForResourceDefinition', () => {
     });
     describe('table', () => {
       it('should find that an up to date table has no difference', async () => {
-        await connection.query({ sql: 'DROP TABLE IF EXISTS some_resource_table' });
+        await connection.query({
+          sql: 'DROP TABLE IF EXISTS some_resource_table',
+        });
 
         // apply the resource
         const definition = new ResourceDefinition({
@@ -54,11 +56,16 @@ CREATE TABLE \`some_resource_table\` (
         await connection.query({ sql: definition.sql });
 
         // get the diff
-        const result = await getDifferenceForResourceDefinition({ connection, resource: definition });
+        const result = await getDifferenceForResourceDefinition({
+          connection,
+          resource: definition,
+        });
         expect(result).toEqual(null);
       });
       it('should find that an up to date table has no difference, even if auto increment has gone up', async () => {
-        await connection.query({ sql: 'DROP TABLE IF EXISTS some_resource_table' });
+        await connection.query({
+          sql: 'DROP TABLE IF EXISTS some_resource_table',
+        });
 
         // apply the resource
         const definition = new ResourceDefinition({
@@ -77,14 +84,21 @@ CREATE TABLE \`some_resource_table\` (
         await connection.query({ sql: definition.sql });
 
         // insert into the table
-        await connection.query({ sql: 'INSERT INTO some_resource_table (created_at) VALUES (now(6))' });
+        await connection.query({
+          sql: 'INSERT INTO some_resource_table (created_at) VALUES (now(6))',
+        });
 
         // get the diff
-        const result = await getDifferenceForResourceDefinition({ connection, resource: definition });
+        const result = await getDifferenceForResourceDefinition({
+          connection,
+          resource: definition,
+        });
         expect(result).toEqual(null);
       });
       it('should find that an out of date table resource has a colored diff of changed lines', async () => {
-        await connection.query({ sql: 'DROP TABLE IF EXISTS some_resource_table' });
+        await connection.query({
+          sql: 'DROP TABLE IF EXISTS some_resource_table',
+        });
 
         // apply the resource
         const definition = new ResourceDefinition({
@@ -115,14 +129,19 @@ CREATE TABLE \`some_resource_table\` (
         });
 
         // get the diff
-        const result = await getDifferenceForResourceDefinition({ connection, resource: updatedDefinition });
+        const result = await getDifferenceForResourceDefinition({
+          connection,
+          resource: updatedDefinition,
+        });
         expect(typeof result).toEqual('string');
         expect(result).toMatchSnapshot(); // result is purely visual, so log an example of it
       });
     });
     describe('procedure', () => {
       it('should find that an up to date procedure has no difference', async () => {
-        await connection.query({ sql: 'DROP PROCEDURE IF EXISTS upsert_user_description' });
+        await connection.query({
+          sql: 'DROP PROCEDURE IF EXISTS upsert_user_description',
+        });
 
         // apply the resource
         const definition = new ResourceDefinition({
@@ -143,11 +162,16 @@ END
         await connection.query({ sql: definition.sql });
 
         // get the diff
-        const result = await getDifferenceForResourceDefinition({ connection, resource: definition });
+        const result = await getDifferenceForResourceDefinition({
+          connection,
+          resource: definition,
+        });
         expect(result).toEqual(null);
       });
       it('should find that an out of date procedure resource has a colored diff of changed lines', async () => {
-        await connection.query({ sql: 'DROP PROCEDURE IF EXISTS upsert_user_description' });
+        await connection.query({
+          sql: 'DROP PROCEDURE IF EXISTS upsert_user_description',
+        });
 
         // apply the resource
         const definition = new ResourceDefinition({
@@ -182,14 +206,19 @@ END
         });
 
         // get the diff
-        const result = await getDifferenceForResourceDefinition({ connection, resource: updatedDefinition });
+        const result = await getDifferenceForResourceDefinition({
+          connection,
+          resource: updatedDefinition,
+        });
         expect(typeof result).toEqual('string');
         expect(result).toMatchSnapshot(); // result is purely visual, so log an example of it
       });
     });
     describe('view', () => {
       it('should find that an up to date view has no difference', async () => {
-        await connection.query({ sql: 'DROP VIEW IF EXISTS view_spacecraft_current' });
+        await connection.query({
+          sql: 'DROP VIEW IF EXISTS view_spacecraft_current',
+        });
 
         // apply the resource
         const definition = new ResourceDefinition({
@@ -206,11 +235,16 @@ SELECT
         await connection.query({ sql: definition.sql });
 
         // get the diff
-        const result = await getDifferenceForResourceDefinition({ connection, resource: definition });
+        const result = await getDifferenceForResourceDefinition({
+          connection,
+          resource: definition,
+        });
         expect(result).toEqual(null);
       });
       it('should find that an out of date view resource has a colored diff of changed lines', async () => {
-        await connection.query({ sql: 'DROP VIEW IF EXISTS view_spacecraft_current' });
+        await connection.query({
+          sql: 'DROP VIEW IF EXISTS view_spacecraft_current',
+        });
 
         // apply the resource
         const definition = new ResourceDefinition({
@@ -237,7 +271,10 @@ SELECT
         });
 
         // get the diff
-        const result = await getDifferenceForResourceDefinition({ connection, resource: updatedDefinition });
+        const result = await getDifferenceForResourceDefinition({
+          connection,
+          resource: updatedDefinition,
+        });
         expect(typeof result).toEqual('string');
         expect(result).toMatchSnapshot(); // result is purely visual, so log an example of it
       });
@@ -260,7 +297,9 @@ SELECT
     });
     describe('table', () => {
       it('should find that an up to date table has no difference', async () => {
-        await connection.query({ sql: 'DROP TABLE IF EXISTS some_resource_table' });
+        await connection.query({
+          sql: 'DROP TABLE IF EXISTS some_resource_table',
+        });
 
         // apply the resource
         const definition = new ResourceDefinition({
@@ -279,11 +318,16 @@ CREATE TABLE some_resource_table (
         await connection.query({ sql: definition.sql });
 
         // get the diff
-        const result = await getDifferenceForResourceDefinition({ connection, resource: definition });
+        const result = await getDifferenceForResourceDefinition({
+          connection,
+          resource: definition,
+        });
         expect(result).toEqual(null);
       });
       it('should find that an up to date table has no difference, even if auto increment has gone up', async () => {
-        await connection.query({ sql: 'DROP TABLE IF EXISTS some_resource_table' });
+        await connection.query({
+          sql: 'DROP TABLE IF EXISTS some_resource_table',
+        });
 
         // apply the resource
         const definition = new ResourceDefinition({
@@ -302,14 +346,21 @@ CREATE TABLE some_resource_table (
         await connection.query({ sql: definition.sql });
 
         // insert into the table
-        await connection.query({ sql: 'INSERT INTO some_resource_table (created_at) VALUES (now())' });
+        await connection.query({
+          sql: 'INSERT INTO some_resource_table (created_at) VALUES (now())',
+        });
 
         // get the diff
-        const result = await getDifferenceForResourceDefinition({ connection, resource: definition });
+        const result = await getDifferenceForResourceDefinition({
+          connection,
+          resource: definition,
+        });
         expect(result).toEqual(null);
       });
       it('should find that an out of date table resource has a colored diff of changed lines', async () => {
-        await connection.query({ sql: 'DROP TABLE IF EXISTS some_resource_table' });
+        await connection.query({
+          sql: 'DROP TABLE IF EXISTS some_resource_table',
+        });
 
         // apply the resource
         const definition = new ResourceDefinition({
@@ -340,14 +391,19 @@ CREATE TABLE some_resource_table(
         });
 
         // get the diff
-        const result = await getDifferenceForResourceDefinition({ connection, resource: updatedDefinition });
+        const result = await getDifferenceForResourceDefinition({
+          connection,
+          resource: updatedDefinition,
+        });
         expect(typeof result).toEqual('string');
         expect(result).toMatchSnapshot(); // result is purely visual, so log an example of it
       });
     });
     describe('function', () => {
       it('should find that an up to date function has no difference', async () => {
-        await connection.query({ sql: 'DROP FUNCTION IF EXISTS upsert_user_description' });
+        await connection.query({
+          sql: 'DROP FUNCTION IF EXISTS upsert_user_description',
+        });
 
         // apply the resource
         const definition = new ResourceDefinition({
@@ -372,11 +428,16 @@ $$
         await connection.query({ sql: definition.sql });
 
         // get the diff
-        const result = await getDifferenceForResourceDefinition({ connection, resource: definition });
+        const result = await getDifferenceForResourceDefinition({
+          connection,
+          resource: definition,
+        });
         expect(result).toEqual(null);
       });
       it('should find that an out of date function resource has a colored diff of changed lines', async () => {
-        await connection.query({ sql: 'DROP FUNCTION IF EXISTS upsert_user_description' });
+        await connection.query({
+          sql: 'DROP FUNCTION IF EXISTS upsert_user_description',
+        });
 
         // apply the resource
         const definition = new ResourceDefinition({
@@ -420,14 +481,19 @@ $$
         });
 
         // get the diff
-        const result = await getDifferenceForResourceDefinition({ connection, resource: updatedDefinition });
+        const result = await getDifferenceForResourceDefinition({
+          connection,
+          resource: updatedDefinition,
+        });
         expect(typeof result).toEqual('string');
         expect(result).toMatchSnapshot(); // result is purely visual, so log an example of it
       });
     });
     describe('view', () => {
       it('should find that an up to date view has no difference', async () => {
-        await connection.query({ sql: 'DROP VIEW IF EXISTS view_spacecraft_current' });
+        await connection.query({
+          sql: 'DROP VIEW IF EXISTS view_spacecraft_current',
+        });
 
         // apply the resource
         const definition = new ResourceDefinition({
@@ -444,11 +510,16 @@ SELECT
         await connection.query({ sql: definition.sql });
 
         // get the diff
-        const result = await getDifferenceForResourceDefinition({ connection, resource: definition });
+        const result = await getDifferenceForResourceDefinition({
+          connection,
+          resource: definition,
+        });
         expect(result).toEqual(null);
       });
       it('should find that an out of date view resource has a colored diff of changed lines', async () => {
-        await connection.query({ sql: 'DROP VIEW IF EXISTS view_spacecraft_current' });
+        await connection.query({
+          sql: 'DROP VIEW IF EXISTS view_spacecraft_current',
+        });
 
         // apply the resource
         const definition = new ResourceDefinition({
@@ -475,7 +546,10 @@ SELECT
         });
 
         // get the diff
-        const result = await getDifferenceForResourceDefinition({ connection, resource: updatedDefinition });
+        const result = await getDifferenceForResourceDefinition({
+          connection,
+          resource: updatedDefinition,
+        });
         expect(typeof result).toEqual('string');
         expect(result).toMatchSnapshot(); // result is purely visual, so log an example of it
       });

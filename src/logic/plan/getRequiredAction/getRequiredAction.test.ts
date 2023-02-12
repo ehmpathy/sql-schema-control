@@ -1,5 +1,10 @@
 import sha256 from 'simple-sha256';
-import { ChangeDefinition, ResourceDefinition, ResourceType } from '../../../types';
+
+import {
+  ChangeDefinition,
+  ResourceDefinition,
+  ResourceType,
+} from '../../../types';
 import { getRequiredAction } from './getRequiredAction';
 import { getRequiredActionForChange } from './getRequiredActionForChange';
 import { getRequiredActionForResource } from './getRequiredActionForResource';
@@ -9,7 +14,8 @@ const getRequiredActionForChangeMock = getRequiredActionForChange as jest.Mock;
 getRequiredActionForChangeMock.mockReturnValue('__CHANGE_ACTION__');
 
 jest.mock('./getRequiredActionForResource');
-const getRequiredActionForResourceMock = getRequiredActionForResource as jest.Mock;
+const getRequiredActionForResourceMock =
+  getRequiredActionForResource as jest.Mock;
 getRequiredActionForResourceMock.mockReturnValue('__RESOURCE_ACTION__');
 
 describe('getRequiredAction', () => {

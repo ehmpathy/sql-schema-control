@@ -15,7 +15,10 @@ export const pullAndRecordUncontrolledResources = async ({
   targetDir: string;
 }) => {
   // 1. get the control context
-  const context = await getControlContextFromConfig({ configPath, strict: true }); // overwrite strict to true so that we get uncontrolled resources found
+  const context = await getControlContextFromConfig({
+    configPath,
+    strict: true,
+  }); // overwrite strict to true so that we get uncontrolled resources found
 
   // 2. get the plans
   const plans = await getPlans({ context });
@@ -26,6 +29,8 @@ export const pullAndRecordUncontrolledResources = async ({
   // 4. record each of the uncontrolled resources into target directory
   const uncontrolledResources = plans
     .map((plan) => plan.definition)
-    .filter((def) => def.status === ResourceDefinitionStatus.NOT_CONTROLLED) as ResourceDefinition[];
+    .filter(
+      (def) => def.status === ResourceDefinitionStatus.NOT_CONTROLLED,
+    ) as ResourceDefinition[];
   await recordUncontrolledResources({ targetDir, uncontrolledResources });
 };

@@ -1,9 +1,9 @@
 import { ControlConfig } from '../../../../types';
-import { readYmlFile } from './_utils/readYmlFile';
 import { getReadFilePath } from './_utils/getReadFilePath';
-import { validateAndHydrateDefinitionsYmlContents } from './validateAndHydrateDefinitionsYmlContents';
+import { readYmlFile } from './_utils/readYmlFile';
 import { flattenDefinitionsRecursive } from './flattenDefinitionsRecursive';
 import { getConnectionConfig } from './getConnectionConfig';
+import { validateAndHydrateDefinitionsYmlContents } from './validateAndHydrateDefinitionsYmlContents';
 
 /*
   1. read the yml file
@@ -11,10 +11,7 @@ import { getConnectionConfig } from './getConnectionConfig';
   3. get the definitions and flatten them
 */
 export const readConfig = async ({ filePath }: { filePath: string }) => {
-  const configDir = filePath
-    .split('/')
-    .slice(0, -1)
-    .join('/'); // drops the file name
+  const configDir = filePath.split('/').slice(0, -1).join('/'); // drops the file name
 
   // get the yml
   const contents = await readYmlFile({ filePath });
@@ -34,7 +31,10 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
   if (!contents.connection) throw new Error('connection must be defined');
   const connectionPath = contents.connection;
   const connection = await getConnectionConfig({
-    modulePath: getReadFilePath({ readRoot: configDir, relativePath: connectionPath }),
+    modulePath: getReadFilePath({
+      readRoot: configDir,
+      relativePath: connectionPath,
+    }),
   }); // NOTE: we expect connection path to be relative to the config path
 
   // get the resource and change definitions
@@ -44,7 +44,10 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
     readRoot: configDir,
     contents: definitionContents,
   });
-  const definitions = await flattenDefinitionsRecursive({ readRoot: configDir, definitions: nestedDefinitions });
+  const definitions = await flattenDefinitionsRecursive({
+    readRoot: configDir,
+    definitions: nestedDefinitions,
+  });
 
   // return the results
   return new ControlConfig({

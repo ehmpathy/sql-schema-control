@@ -1,4 +1,5 @@
 import { Command, Flags } from '@oclif/core';
+
 import { pullAndRecordUncontrolledResources } from '../../logic/commands/pullAndRecordUncontrolledResources';
 
 export default class Plan extends Command {
@@ -16,7 +17,11 @@ pulling uncontrolled resource definitions into .../schema-control/src/contract/c
 
   public static flags = {
     help: Flags.help({ char: 'h' }),
-    config: Flags.string({ char: 'c', description: 'path to config file', default: 'schema/control.yml' }),
+    config: Flags.string({
+      char: 'c',
+      description: 'path to config file',
+      default: 'schema/control.yml',
+    }),
     target: Flags.string({
       char: 't',
       description: 'target directory to record uncontrolled resources in',
@@ -30,8 +35,10 @@ pulling uncontrolled resource definitions into .../schema-control/src/contract/c
     const target = flags.target!;
 
     // get and display the plans
-    const configPath = config.slice(0, 1) === '/' ? config : `${process.cwd()}/${config}`; // if starts with /, consider it as an absolute path
-    const targetDir = target.slice(0, 1) === '/' ? target : `${process.cwd()}/${target}`; // if starts with /, consider it as an absolute path
+    const configPath =
+      config.slice(0, 1) === '/' ? config : `${process.cwd()}/${config}`; // if starts with /, consider it as an absolute path
+    const targetDir =
+      target.slice(0, 1) === '/' ? target : `${process.cwd()}/${target}`; // if starts with /, consider it as an absolute path
     await pullAndRecordUncontrolledResources({ configPath, targetDir });
   }
 }

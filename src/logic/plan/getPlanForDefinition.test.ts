@@ -1,7 +1,12 @@
 import sha256 from 'simple-sha256';
 import uuid from 'uuid/v4';
 
-import { ChangeDefinition, ChangeDefinitionStatus, DefinitionPlan, RequiredAction } from '../../types';
+import {
+  ChangeDefinition,
+  ChangeDefinitionStatus,
+  DefinitionPlan,
+  RequiredAction,
+} from '../../types';
 import { getDifferenceForDefinition } from '../schema/getDifferenceForDefinition';
 import { getReferenceIdForDefinition } from '../schema/getReferenceIdForDefinition';
 import { getStatusForDefinition } from '../schema/getStatusForDefinition';
@@ -29,13 +34,17 @@ const getDifferenceForDefinitionMock = getDifferenceForDefinition as jest.Mock;
 getDifferenceForDefinitionMock.mockResolvedValue('__DIFF__');
 
 jest.mock('../schema/getReferenceIdForDefinition');
-const getReferenceIdForDefinitionMock = getReferenceIdForDefinition as jest.Mock;
+const getReferenceIdForDefinitionMock =
+  getReferenceIdForDefinition as jest.Mock;
 getReferenceIdForDefinitionMock.mockReturnValue('__REFERENCE_ID__');
 
 describe('getDefinitionPlan', () => {
   beforeEach(() => jest.clearAllMocks());
   it('should get the status for the definition', async () => {
-    await getPlanForDefinition({ connection: '__CONNECTION__' as any, definition: exampleDefinition });
+    await getPlanForDefinition({
+      connection: '__CONNECTION__' as any,
+      definition: exampleDefinition,
+    });
     expect(getStatusForDefinitionMock).toHaveBeenCalledTimes(1);
     expect(getStatusForDefinitionMock).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -44,7 +53,10 @@ describe('getDefinitionPlan', () => {
     );
   });
   it('should get the required action', async () => {
-    await getPlanForDefinition({ connection: '__CONNECTION__' as any, definition: exampleDefinition });
+    await getPlanForDefinition({
+      connection: '__CONNECTION__' as any,
+      definition: exampleDefinition,
+    });
     expect(getRequiredActionMock).toHaveBeenCalledTimes(1);
     expect(getRequiredActionMock).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -53,7 +65,10 @@ describe('getDefinitionPlan', () => {
     );
   });
   it('should get the diff', async () => {
-    await getPlanForDefinition({ connection: '__CONNECTION__' as any, definition: exampleDefinition });
+    await getPlanForDefinition({
+      connection: '__CONNECTION__' as any,
+      definition: exampleDefinition,
+    });
     expect(getDifferenceForDefinitionMock).toHaveBeenCalledTimes(1);
     expect(getDifferenceForDefinitionMock).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -69,7 +84,10 @@ describe('getDefinitionPlan', () => {
       hash: sha256.sync('__SQL__'),
       status: ChangeDefinitionStatus.UP_TO_DATE,
     });
-    const plan = await getPlanForDefinition({ connection: '__CONNECTION__' as any, definition });
+    const plan = await getPlanForDefinition({
+      connection: '__CONNECTION__' as any,
+      definition,
+    });
     expect(plan.constructor).toEqual(DefinitionPlan);
     expect(plan.id).toEqual('__REFERENCE_ID__'); // should have the id defined by the expected function
   });

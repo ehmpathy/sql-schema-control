@@ -1,4 +1,9 @@
-import { ResourceDefinition, ResourceDefinitionStatus, RequiredAction, ResourceType } from '../../../types';
+import {
+  ResourceDefinition,
+  ResourceDefinitionStatus,
+  RequiredAction,
+  ResourceType,
+} from '../../../types';
 import { getRequiredActionForResource } from './getRequiredActionForResource';
 
 const baseResource = new ResourceDefinition({
@@ -10,17 +15,26 @@ const baseResource = new ResourceDefinition({
 
 describe('getRequiredActionForResource', () => {
   it('should find no action required if resource is synced', () => {
-    const resource = new ResourceDefinition({ ...baseResource, status: ResourceDefinitionStatus.SYNCED });
+    const resource = new ResourceDefinition({
+      ...baseResource,
+      status: ResourceDefinitionStatus.SYNCED,
+    });
     const action = getRequiredActionForResource({ definition: resource });
     expect(action).toEqual(RequiredAction.NO_CHANGE);
   });
   it('should find apply required for resource with status NOT_APPLIED', () => {
-    const resource = new ResourceDefinition({ ...baseResource, status: ResourceDefinitionStatus.NOT_APPLIED });
+    const resource = new ResourceDefinition({
+      ...baseResource,
+      status: ResourceDefinitionStatus.NOT_APPLIED,
+    });
     const action = getRequiredActionForResource({ definition: resource });
     expect(action).toEqual(RequiredAction.APPLY);
   });
   it('should find manual_pull required for resource with status NOT_CONTROLLED', () => {
-    const resource = new ResourceDefinition({ ...baseResource, status: ResourceDefinitionStatus.NOT_CONTROLLED });
+    const resource = new ResourceDefinition({
+      ...baseResource,
+      status: ResourceDefinitionStatus.NOT_CONTROLLED,
+    });
     const action = getRequiredActionForResource({ definition: resource });
     expect(action).toEqual(RequiredAction.MANUAL_PULL);
   });

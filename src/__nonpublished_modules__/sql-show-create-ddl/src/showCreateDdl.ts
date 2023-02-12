@@ -1,12 +1,18 @@
 import { DatabaseLanguage, ResourceType } from '../../../types';
-import { DatabaseConnection } from './types';
-import { showCreateDdlPostgres } from './postgres/showCreateDdlPostgres';
 import { showCreateDdlMysql } from './mysql/showCreateDdlMysql';
+import { showCreateDdlPostgres } from './postgres/showCreateDdlPostgres';
+import { DatabaseConnection } from './types';
 
 export class ResourceDoesNotExistError extends Error {
   public resourceType: ResourceType;
   public resourceName: string;
-  constructor({ resourceType, resourceName }: { resourceType: ResourceType; resourceName: string }) {
+  constructor({
+    resourceType,
+    resourceName,
+  }: {
+    resourceType: ResourceType;
+    resourceName: string;
+  }) {
     super(`resource ${resourceType}:${resourceName} does not exist`);
     this.resourceType = resourceType;
     this.resourceName = resourceName;
@@ -36,9 +42,20 @@ export const showCreateDdl = async ({
     throw new Error(`database language '${language}' is not supported`);
   } catch (error) {
     // see if the error can be classified as a "resource does not exist" error"
-    const doesNotExistErrorContents = ["doesn't exist", 'does not exist', 'could not find'];
-    if (doesNotExistErrorContents.some((relevantSubstring) => error.message.includes(relevantSubstring))) {
-      throw new ResourceDoesNotExistError({ resourceType: type, resourceName: name });
+    const doesNotExistErrorContents = [
+      "doesn't exist",
+      'does not exist',
+      'could not find',
+    ];
+    if (
+      doesNotExistErrorContents.some((relevantSubstring) =>
+        error.message.includes(relevantSubstring),
+      )
+    ) {
+      throw new ResourceDoesNotExistError({
+        resourceType: type,
+        resourceName: name,
+      });
     }
 
     // if not, then just forward the error without normalizing it

@@ -2,12 +2,20 @@ import { ChangeDefinition, ResourceDefinition } from '../../../types';
 import { getRequiredActionForChange } from './getRequiredActionForChange';
 import { getRequiredActionForResource } from './getRequiredActionForResource';
 
-export const getRequiredAction = ({ definition }: { definition: ChangeDefinition | ResourceDefinition }) => {
+export const getRequiredAction = ({
+  definition,
+}: {
+  definition: ChangeDefinition | ResourceDefinition;
+}) => {
   if (definition.constructor === ChangeDefinition) {
-    return getRequiredActionForChange({ definition: definition as ChangeDefinition });
+    return getRequiredActionForChange({
+      definition: definition as ChangeDefinition,
+    });
   }
   if (definition.constructor === ResourceDefinition) {
-    return getRequiredActionForResource({ definition: definition as ResourceDefinition });
+    return getRequiredActionForResource({
+      definition: definition as ResourceDefinition,
+    });
   }
   throw new Error('unexpected definition type');
 };

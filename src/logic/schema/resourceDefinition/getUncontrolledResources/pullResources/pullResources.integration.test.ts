@@ -1,4 +1,4 @@
-import { pullResources } from './pullResources';
+import { promiseConfig } from '../../../../../__test_assets__/connection.config';
 import {
   DatabaseConnection,
   DatabaseLanguage,
@@ -7,7 +7,7 @@ import {
   ResourceType,
 } from '../../../../../types';
 import { initializeControlEnvironment } from '../../../../config/initializeControlEnvironment';
-import { promiseConfig } from '../../../../../__test_assets__/connection.config';
+import { pullResources } from './pullResources';
 
 describe('pullResources', () => {
   describe('mysql', () => {
@@ -27,23 +27,37 @@ describe('pullResources', () => {
     });
     it('should be able to find an existing table', async () => {
       await connection.query({ sql: 'DROP TABLE IF EXISTS test_table_pull' }); // ensure possible previous state does not affect test
-      await connection.query({ sql: 'CREATE TABLE test_table_pull ( id BIGINT )' });
+      await connection.query({
+        sql: 'CREATE TABLE test_table_pull ( id BIGINT )',
+      });
       const resources = await pullResources({ connection });
-      resources.forEach((resource) => expect(resource.constructor).toEqual(ResourceDefinition));
-      const createdResource = resources.find((resource) => resource.name === 'test_table_pull');
+      resources.forEach((resource) =>
+        expect(resource.constructor).toEqual(ResourceDefinition),
+      );
+      const createdResource = resources.find(
+        (resource) => resource.name === 'test_table_pull',
+      );
       expect(createdResource).not.toEqual(undefined);
     });
     it('should be able to find an existing view', async () => {
       await connection.query({ sql: 'DROP VIEW IF EXISTS test_view_pull' }); // ensure possible previous state does not affect test
-      await connection.query({ sql: "CREATE VIEW test_view_pull as SELECT 'hello' as first_words" });
+      await connection.query({
+        sql: "CREATE VIEW test_view_pull as SELECT 'hello' as first_words",
+      });
       const resources = await pullResources({ connection });
-      resources.forEach((resource) => expect(resource.constructor).toEqual(ResourceDefinition));
-      const createdResource = resources.find((resource) => resource.name === 'test_view_pull');
+      resources.forEach((resource) =>
+        expect(resource.constructor).toEqual(ResourceDefinition),
+      );
+      const createdResource = resources.find(
+        (resource) => resource.name === 'test_view_pull',
+      );
       expect(createdResource).not.toEqual(undefined);
       expect(createdResource?.type).toEqual(ResourceType.VIEW);
     });
     it('should be able to find an existing function', async () => {
-      await connection.query({ sql: 'DROP FUNCTION IF EXISTS f_some_function_for_testing_pull;' }); // ensure possible previous state does not affect test
+      await connection.query({
+        sql: 'DROP FUNCTION IF EXISTS f_some_function_for_testing_pull;',
+      }); // ensure possible previous state does not affect test
       await connection.query({
         sql: `
 CREATE FUNCTION f_some_function_for_testing_pull(
@@ -56,12 +70,18 @@ END;
     `,
       });
       const resources = await pullResources({ connection });
-      resources.forEach((resource) => expect(resource.constructor).toEqual(ResourceDefinition));
-      const createdResource = resources.find((resource) => resource.name === 'f_some_function_for_testing_pull');
+      resources.forEach((resource) =>
+        expect(resource.constructor).toEqual(ResourceDefinition),
+      );
+      const createdResource = resources.find(
+        (resource) => resource.name === 'f_some_function_for_testing_pull',
+      );
       expect(createdResource).not.toEqual(undefined);
     });
     it('should be able to find an existing procedure', async () => {
-      await connection.query({ sql: 'DROP PROCEDURE IF EXISTS upsert_some_entity_for_pull;' }); // ensure possible previous state does not affect test
+      await connection.query({
+        sql: 'DROP PROCEDURE IF EXISTS upsert_some_entity_for_pull;',
+      }); // ensure possible previous state does not affect test
       await connection.query({
         sql: `
 CREATE PROCEDURE upsert_some_entity_for_pull(
@@ -73,8 +93,12 @@ END;
     `,
       });
       const resources = await pullResources({ connection });
-      resources.forEach((resource) => expect(resource.constructor).toEqual(ResourceDefinition));
-      const createdResource = resources.find((resource) => resource.name === 'upsert_some_entity_for_pull');
+      resources.forEach((resource) =>
+        expect(resource.constructor).toEqual(ResourceDefinition),
+      );
+      const createdResource = resources.find(
+        (resource) => resource.name === 'upsert_some_entity_for_pull',
+      );
       expect(createdResource).not.toEqual(undefined);
     });
   });
@@ -94,24 +118,40 @@ END;
       await connection.end();
     });
     it('should be able to find an existing table', async () => {
-      await connection.query({ sql: 'DROP TABLE IF EXISTS test_table_for_pull' }); // ensure possible previous state does not affect test
-      await connection.query({ sql: 'CREATE TABLE test_table_for_pull ( id BIGINT )' });
+      await connection.query({
+        sql: 'DROP TABLE IF EXISTS test_table_for_pull',
+      }); // ensure possible previous state does not affect test
+      await connection.query({
+        sql: 'CREATE TABLE test_table_for_pull ( id BIGINT )',
+      });
       const resources = await pullResources({ connection });
-      resources.forEach((resource) => expect(resource.constructor).toEqual(ResourceDefinition));
-      const createdResource = resources.find((resource) => resource.name === 'test_table_for_pull');
+      resources.forEach((resource) =>
+        expect(resource.constructor).toEqual(ResourceDefinition),
+      );
+      const createdResource = resources.find(
+        (resource) => resource.name === 'test_table_for_pull',
+      );
       expect(createdResource).not.toEqual(undefined);
     });
     it('should be able to find an existing view', async () => {
       await connection.query({ sql: 'DROP VIEW IF EXISTS test_view_pull' }); // ensure possible previous state does not affect test
-      await connection.query({ sql: "CREATE VIEW test_view_pull as SELECT 'hello' as first_words" });
+      await connection.query({
+        sql: "CREATE VIEW test_view_pull as SELECT 'hello' as first_words",
+      });
       const resources = await pullResources({ connection });
-      resources.forEach((resource) => expect(resource.constructor).toEqual(ResourceDefinition));
-      const createdResource = resources.find((resource) => resource.name === 'test_view_pull');
+      resources.forEach((resource) =>
+        expect(resource.constructor).toEqual(ResourceDefinition),
+      );
+      const createdResource = resources.find(
+        (resource) => resource.name === 'test_view_pull',
+      );
       expect(createdResource).not.toEqual(undefined);
       expect(createdResource?.type).toEqual(ResourceType.VIEW);
     });
     it('should be able to find an existing function', async () => {
-      await connection.query({ sql: 'DROP FUNCTION IF EXISTS f_some_function_for_testing_pull;' }); // ensure possible previous state does not affect test
+      await connection.query({
+        sql: 'DROP FUNCTION IF EXISTS f_some_function_for_testing_pull;',
+      }); // ensure possible previous state does not affect test
       await connection.query({
         sql: `
 CREATE OR REPLACE FUNCTION f_some_function_for_testing_pull(
@@ -127,8 +167,12 @@ $$
     `,
       });
       const resources = await pullResources({ connection });
-      resources.forEach((resource) => expect(resource.constructor).toEqual(ResourceDefinition));
-      const createdResource = resources.find((resource) => resource.name === 'f_some_function_for_testing_pull');
+      resources.forEach((resource) =>
+        expect(resource.constructor).toEqual(ResourceDefinition),
+      );
+      const createdResource = resources.find(
+        (resource) => resource.name === 'f_some_function_for_testing_pull',
+      );
       expect(createdResource).not.toEqual(undefined);
     });
     it.skip('should be able to find an existing procedure', async () => {

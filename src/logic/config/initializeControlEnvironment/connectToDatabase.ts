@@ -1,6 +1,12 @@
 import mysql from 'mysql2/promise';
 import pg from 'pg';
-import { DatabaseConnection, DatabaseLanguage, ControlConfig, ConnectionConfig } from '../../../types';
+
+import {
+  DatabaseConnection,
+  DatabaseLanguage,
+  ControlConfig,
+  ConnectionConfig,
+} from '../../../types';
 
 // create the connection to database
 const connectionAdapters = {
@@ -33,7 +39,8 @@ const connectionAdapters = {
     connectionConfig: ConnectionConfig;
   }): Promise<DatabaseConnection> => {
     // check that database is defined
-    if (!connectionConfig.database) throw new Error('database must be defined for postgres connection'); // its not used for mysql, since they only have a schema concept
+    if (!connectionConfig.database)
+      throw new Error('database must be defined for postgres connection'); // its not used for mysql, since they only have a schema concept
 
     // connect to the db
     const client = new pg.Client({
@@ -68,7 +75,13 @@ const connectionAdapters = {
 
     // return a standard api
     return {
-      query: async ({ sql, values }: { sql: string; values?: (string | number)[] }) => {
+      query: async ({
+        sql,
+        values,
+      }: {
+        sql: string;
+        values?: (string | number)[];
+      }) => {
         const result = await client.query(sql, values);
         return { rows: result.rows };
       },
@@ -79,12 +92,18 @@ const connectionAdapters = {
   },
 };
 
-export const connectToDatabase = async ({ config }: { config: ControlConfig }): Promise<DatabaseConnection> => {
+export const connectToDatabase = async ({
+  config,
+}: {
+  config: ControlConfig;
+}): Promise<DatabaseConnection> => {
   // 1. get the connection adapter for the method
   const getDbConnection = connectionAdapters[config.language];
 
   // 2. attempt to connect
-  const connection = await getDbConnection({ connectionConfig: config.connection });
+  const connection = await getDbConnection({
+    connectionConfig: config.connection,
+  });
 
   // 3. run a test query to check connection
   await connection.query({ sql: 'SELECT 1' });

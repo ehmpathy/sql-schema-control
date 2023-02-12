@@ -17,7 +17,10 @@ export const getDifferenceForChangeDefinition = async ({
   });
 
   // 2. cast into string
-  const sqlDifference = getSqlDifference({ oldSql: lastAppliedChange.sql, newSql: change.sql });
+  const sqlDifference = getSqlDifference({
+    oldSql: lastAppliedChange.sql,
+    newSql: change.sql,
+  });
 
   // 3. return the diff string
   return sqlDifference;

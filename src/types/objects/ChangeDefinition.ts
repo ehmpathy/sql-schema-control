@@ -1,18 +1,15 @@
 import Joi from 'joi';
 import SchematicJoiModel from 'schematic-joi-model';
+
 import { ChangeDefinitionStatus } from '../constants';
 
 const changeDefinitionSchema = Joi.object().keys({
   id: Joi.string().required(),
   path: Joi.string().required(),
   sql: Joi.string().required(),
-  hash: Joi.string()
-    .required()
-    .length(64), // sha256 hash
+  hash: Joi.string().required().length(64), // sha256 hash
   reappliable: Joi.boolean().required(),
-  status: Joi.string()
-    .valid(Object.values(ChangeDefinitionStatus))
-    .optional(),
+  status: Joi.string().valid(Object.values(ChangeDefinitionStatus)).optional(),
 });
 
 interface ChangeDefinitionConstructorProps {

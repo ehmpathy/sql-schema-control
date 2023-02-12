@@ -1,7 +1,7 @@
 import { DatabaseLanguage, ResourceType } from '../../../types';
 import { getDbConnection } from './__test_assets__/getDbConnection';
-import { DatabaseConnection } from './types';
 import { showCreateDdl, ResourceDoesNotExistError } from './showCreateDdl';
+import { DatabaseConnection } from './types';
 
 /**
  * this test suite simply proves that we can fetch the create ddl for each resource
@@ -12,15 +12,21 @@ describe('showCreateDdl', () => {
   describe('mysql', () => {
     let dbConnection: DatabaseConnection;
     beforeAll(async () => {
-      dbConnection = await getDbConnection({ language: DatabaseLanguage.MYSQL });
+      dbConnection = await getDbConnection({
+        language: DatabaseLanguage.MYSQL,
+      });
     });
     afterAll(async () => {
       await dbConnection.end();
     });
     describe('get ddl', () => {
       it('should be able to get create ddl for a table', async () => {
-        await dbConnection.query({ sql: 'DROP TABLE IF EXISTS test_table_for_showcreate' }); // ensure possible previous state does not affect test
-        await dbConnection.query({ sql: 'CREATE TABLE test_table_for_showcreate ( id BIGINT )' });
+        await dbConnection.query({
+          sql: 'DROP TABLE IF EXISTS test_table_for_showcreate',
+        }); // ensure possible previous state does not affect test
+        await dbConnection.query({
+          sql: 'CREATE TABLE test_table_for_showcreate ( id BIGINT )',
+        });
         const ddl = await showCreateDdl({
           dbConnection,
           language: DatabaseLanguage.MYSQL,
@@ -33,8 +39,12 @@ describe('showCreateDdl', () => {
         expect(ddl).toMatchSnapshot(); // just to print an example
       });
       it('should be able to get create ddl for a view', async () => {
-        await dbConnection.query({ sql: 'DROP VIEW IF EXISTS test_view_for_showcreate' }); // ensure possible previous state does not affect test
-        await dbConnection.query({ sql: "CREATE VIEW test_view_for_showcreate as SELECT 'hello' as first_words" });
+        await dbConnection.query({
+          sql: 'DROP VIEW IF EXISTS test_view_for_showcreate',
+        }); // ensure possible previous state does not affect test
+        await dbConnection.query({
+          sql: "CREATE VIEW test_view_for_showcreate as SELECT 'hello' as first_words",
+        });
         const ddl = await showCreateDdl({
           dbConnection,
           language: DatabaseLanguage.MYSQL,
@@ -47,7 +57,9 @@ describe('showCreateDdl', () => {
         expect(ddl).toMatchSnapshot(); // just to print an example
       });
       it('should be able to get create ddl for a function', async () => {
-        await dbConnection.query({ sql: 'DROP FUNCTION IF EXISTS f_some_function_for_testing_showcreate;' }); // ensure possible previous state does not affect test
+        await dbConnection.query({
+          sql: 'DROP FUNCTION IF EXISTS f_some_function_for_testing_showcreate;',
+        }); // ensure possible previous state does not affect test
         await dbConnection.query({
           sql: `
 CREATE FUNCTION f_some_function_for_testing_showcreate(
@@ -71,7 +83,9 @@ END;
         expect(ddl).toMatchSnapshot(); // just to print an example
       });
       it('should be able to get create ddl for a procedure', async () => {
-        await dbConnection.query({ sql: 'DROP PROCEDURE IF EXISTS f_some_procedure_for_testing_showcreate;' }); // ensure possible previous state does not affect test
+        await dbConnection.query({
+          sql: 'DROP PROCEDURE IF EXISTS f_some_procedure_for_testing_showcreate;',
+        }); // ensure possible previous state does not affect test
         await dbConnection.query({
           sql: `
 CREATE PROCEDURE f_some_procedure_for_testing_showcreate(
@@ -164,15 +178,21 @@ END;
   describe('postgres', () => {
     let dbConnection: DatabaseConnection;
     beforeAll(async () => {
-      dbConnection = await getDbConnection({ language: DatabaseLanguage.POSTGRES });
+      dbConnection = await getDbConnection({
+        language: DatabaseLanguage.POSTGRES,
+      });
     });
     afterAll(async () => {
       await dbConnection.end();
     });
     describe('get ddl', () => {
       it('should be able to get create ddl for a table', async () => {
-        await dbConnection.query({ sql: 'DROP TABLE IF EXISTS test_table_for_showcreate' }); // ensure possible previous state does not affect test
-        await dbConnection.query({ sql: 'CREATE TABLE test_table_for_showcreate ( id BIGINT )' });
+        await dbConnection.query({
+          sql: 'DROP TABLE IF EXISTS test_table_for_showcreate',
+        }); // ensure possible previous state does not affect test
+        await dbConnection.query({
+          sql: 'CREATE TABLE test_table_for_showcreate ( id BIGINT )',
+        });
         const ddl = await showCreateDdl({
           dbConnection,
           language: DatabaseLanguage.POSTGRES,
@@ -185,8 +205,12 @@ END;
         expect(ddl).toMatchSnapshot(); // just to print an example
       });
       it('should be able to get create ddl for a view', async () => {
-        await dbConnection.query({ sql: 'DROP VIEW IF EXISTS test_view_for_showcreate' }); // ensure possible previous state does not affect test
-        await dbConnection.query({ sql: "CREATE VIEW test_view_for_showcreate as SELECT 'hello' as first_words" });
+        await dbConnection.query({
+          sql: 'DROP VIEW IF EXISTS test_view_for_showcreate',
+        }); // ensure possible previous state does not affect test
+        await dbConnection.query({
+          sql: "CREATE VIEW test_view_for_showcreate as SELECT 'hello' as first_words",
+        });
         const ddl = await showCreateDdl({
           dbConnection,
           language: DatabaseLanguage.POSTGRES,
@@ -199,7 +223,9 @@ END;
         expect(ddl).toMatchSnapshot(); // just to print an example
       });
       it('should be able to get create ddl for a function', async () => {
-        await dbConnection.query({ sql: 'DROP FUNCTION IF EXISTS f_some_function_for_testing_showcreate;' }); // ensure possible previous state does not affect test
+        await dbConnection.query({
+          sql: 'DROP FUNCTION IF EXISTS f_some_function_for_testing_showcreate;',
+        }); // ensure possible previous state does not affect test
         await dbConnection.query({
           sql: `
 CREATE FUNCTION f_some_function_for_testing_showcreate(

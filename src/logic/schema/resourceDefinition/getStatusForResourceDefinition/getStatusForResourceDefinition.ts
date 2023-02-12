@@ -1,6 +1,10 @@
-import { DatabaseConnection, ResourceDefinition, ResourceDefinitionStatus } from '../../../../types';
-import { ResourceDoesNotExistError } from '../getLiveResourceDefinitionFromDatabase';
+import {
+  DatabaseConnection,
+  ResourceDefinition,
+  ResourceDefinitionStatus,
+} from '../../../../types';
 import { getDifferenceForResourceDefinition } from '../getDifferenceForResourceDefinition';
+import { ResourceDoesNotExistError } from '../getLiveResourceDefinitionFromDatabase';
 
 /*
   check if matching live definition can be found
@@ -17,7 +21,10 @@ export const getStatusForResourceDefinition = async ({
   resource: ResourceDefinition;
 }) => {
   try {
-    const difference = await getDifferenceForResourceDefinition({ connection, resource });
+    const difference = await getDifferenceForResourceDefinition({
+      connection,
+      resource,
+    });
     if (difference === null) return ResourceDefinitionStatus.SYNCED;
     return ResourceDefinitionStatus.OUT_OF_SYNC; // if difference is not null, then its out of sync
   } catch (error) {

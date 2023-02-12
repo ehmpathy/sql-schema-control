@@ -10,7 +10,9 @@ import { getPlanForDefinition } from '../../plan/getPlanForDefinition';
 export const getPlans = async ({ context }: { context: ControlContext }) => {
   // 1. cast each definition into definition plan elements
   const plans = await Promise.all(
-    context.definitions.map(async (definition) => getPlanForDefinition({ connection: context.connection, definition })),
+    context.definitions.map(async (definition) =>
+      getPlanForDefinition({ connection: context.connection, definition }),
+    ),
   );
 
   // 2. return the plan

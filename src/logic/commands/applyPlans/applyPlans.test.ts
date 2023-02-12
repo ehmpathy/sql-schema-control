@@ -1,8 +1,13 @@
 import sha256 from 'simple-sha256';
-import { applyPlans } from './applyPlans';
-import { applyPlan } from '../../plan/applyPlan';
-import { ChangeDefinition, DefinitionPlan, RequiredAction } from '../../../types';
 import { stdout } from 'stdout-stderr';
+
+import {
+  ChangeDefinition,
+  DefinitionPlan,
+  RequiredAction,
+} from '../../../types';
+import { applyPlan } from '../../plan/applyPlan';
+import { applyPlans } from './applyPlans';
 
 jest.mock('../../plan/applyPlan');
 const applyPlanMock = applyPlan as jest.Mock;
@@ -43,7 +48,10 @@ const manualReapplyPlan = new DefinitionPlan({
 describe('applyPlans', () => {
   beforeEach(() => jest.clearAllMocks());
   it('should attempt to apply each plan', async () => {
-    await applyPlans({ connection: {} as any, plans: [plan, plan, reapplyPlan] });
+    await applyPlans({
+      connection: {} as any,
+      plans: [plan, plan, reapplyPlan],
+    });
     expect(applyPlanMock.mock.calls.length).toEqual(3);
     expect(applyPlanMock.mock.calls[0][0]).toMatchObject({
       // check correct input
@@ -51,13 +59,19 @@ describe('applyPlans', () => {
     });
   });
   it('should not attempt to apply NO_CHANGE or MANUAL_REAPPLY plans', async () => {
-    await applyPlans({ connection: {} as any, plans: [plan, noChangePlan, manualReapplyPlan, reapplyPlan] });
+    await applyPlans({
+      connection: {} as any,
+      plans: [plan, noChangePlan, manualReapplyPlan, reapplyPlan],
+    });
     expect(applyPlanMock.mock.calls.length).toEqual(2);
   });
   it('should display MANUAL_REAPPLY as skipped', async () => {
     stdout.stripColor = false;
     stdout.start();
-    await applyPlans({ connection: {} as any, plans: [plan, noChangePlan, manualReapplyPlan, reapplyPlan] });
+    await applyPlans({
+      connection: {} as any,
+      plans: [plan, noChangePlan, manualReapplyPlan, reapplyPlan],
+    });
     stdout.stop();
     const output = stdout.output
       .split('\n')
@@ -69,7 +83,10 @@ describe('applyPlans', () => {
   it('should not display NO_CHANGE as skipped', async () => {
     stdout.stripColor = false;
     stdout.start();
-    await applyPlans({ connection: {} as any, plans: [plan, noChangePlan, manualReapplyPlan, reapplyPlan] });
+    await applyPlans({
+      connection: {} as any,
+      plans: [plan, noChangePlan, manualReapplyPlan, reapplyPlan],
+    });
     stdout.stop();
     const output = stdout.output
       .split('\n')

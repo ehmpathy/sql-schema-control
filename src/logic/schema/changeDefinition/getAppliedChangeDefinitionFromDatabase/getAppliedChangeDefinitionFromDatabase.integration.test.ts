@@ -2,7 +2,12 @@ import sha256 from 'simple-sha256';
 import uuid from 'uuid/v4';
 
 import { promiseConfig } from '../../../../__test_assets__/connection.config';
-import { ChangeDefinition, ControlConfig, DatabaseConnection, DatabaseLanguage } from '../../../../types';
+import {
+  ChangeDefinition,
+  ControlConfig,
+  DatabaseConnection,
+  DatabaseLanguage,
+} from '../../../../types';
 import { initializeControlEnvironment } from '../../../config/initializeControlEnvironment';
 import {
   ChangeHasNotBeenAppliedError,

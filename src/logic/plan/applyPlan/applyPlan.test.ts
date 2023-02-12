@@ -1,5 +1,10 @@
 import sha256 from 'simple-sha256';
-import { ChangeDefinition, ResourceDefinition, ResourceType } from '../../../types';
+
+import {
+  ChangeDefinition,
+  ResourceDefinition,
+  ResourceType,
+} from '../../../types';
 import { applyPlan } from './applyPlan';
 import { applyPlanForChange } from './applyPlanForChange';
 import { applyPlanForResource } from './applyPlanForResource';

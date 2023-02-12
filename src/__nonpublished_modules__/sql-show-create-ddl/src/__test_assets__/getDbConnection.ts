@@ -20,5 +20,8 @@ export const config = {
   },
 };
 
-export const getDbConnection = async ({ language }: { language: DatabaseLanguage }) =>
-  connectToDatabase({ language, config: config[language] });
+export const getDbConnection = async ({
+  language,
+}: {
+  language: DatabaseLanguage;
+}) => connectToDatabase({ language, config: config[language] });

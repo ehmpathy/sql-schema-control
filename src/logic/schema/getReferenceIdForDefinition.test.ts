@@ -1,7 +1,14 @@
 import sha256 from 'simple-sha256';
-import { ChangeDefinition, ChangeDefinitionStatus, ResourceDefinition, ResourceType } from '../../types';
-import uuid = require('uuid');
+
+import {
+  ChangeDefinition,
+  ChangeDefinitionStatus,
+  ResourceDefinition,
+  ResourceType,
+} from '../../types';
 import { getReferenceIdForDefinition } from './getReferenceIdForDefinition';
+
+import uuid = require('uuid');
 
 describe('getReferenceIdForDefinition', () => {
   it('should accurately define the plan id for a change definition', async () => {

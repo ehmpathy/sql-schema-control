@@ -16,8 +16,10 @@ export const normalizeCreateDdlPostgres = ({
   const normalizedDdl = (() => {
     if (type === ResourceType.TABLE) return normalizeCreateTableDdl({ ddl });
     if (type === ResourceType.VIEW) return normalizeCreateViewDdl({ ddl });
-    if (type === ResourceType.FUNCTION) return normalizeCreateFunctionDdl({ ddl });
-    if (type === ResourceType.PROCEDURE) throw new Error('todo: support show create for procedure');
+    if (type === ResourceType.FUNCTION)
+      return normalizeCreateFunctionDdl({ ddl });
+    if (type === ResourceType.PROCEDURE)
+      throw new Error('todo: support show create for procedure');
     throw new Error('unsupported resource type');
   })();
 

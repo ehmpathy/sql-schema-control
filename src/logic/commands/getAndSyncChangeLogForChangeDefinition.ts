@@ -18,13 +18,21 @@ export const getAndSyncChangeLogForChangeDefinition = async ({
 
   // 2. find the change definition with this id
   const targetDefinition = context.definitions.find(
-    (definition) => getReferenceIdForDefinition({ definition }) === `change:${changeId}`,
+    (definition) =>
+      getReferenceIdForDefinition({ definition }) === `change:${changeId}`,
   );
-  if (!targetDefinition) throw new Error(`could not find a definition with referenceId 'change:${changeId}'`);
-  if (!(targetDefinition instanceof ChangeDefinition)) throw new Error('can only sync state for change definitions');
+  if (!targetDefinition)
+    throw new Error(
+      `could not find a definition with referenceId 'change:${changeId}'`,
+    );
+  if (!(targetDefinition instanceof ChangeDefinition))
+    throw new Error('can only sync state for change definitions');
 
   // 3. sync change definition state manually
-  await syncChangeLogWithChangeDefinition({ connection: context.connection, definition: targetDefinition });
+  await syncChangeLogWithChangeDefinition({
+    connection: context.connection,
+    definition: targetDefinition,
+  });
 
   // 4. close the connection
   await context.connection.end();

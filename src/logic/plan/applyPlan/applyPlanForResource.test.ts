@@ -1,5 +1,10 @@
+import {
+  ResourceDefinition,
+  ResourceType,
+  DefinitionPlan,
+  RequiredAction,
+} from '../../../types';
 import { applyPlanForResource } from './applyPlanForResource';
-import { ResourceDefinition, ResourceType, DefinitionPlan, RequiredAction } from '../../../types';
 
 describe('applyPlanForResource', () => {
   it('should throw error if attempting to REAPPLY a resource.type=TABLE', async () => {

@@ -6,7 +6,9 @@ import { ControlConfig } from '../../../../types';
   - validates the definitions
   - throws error if anything is invalid; otherwise, does nothing
 */
-export const validateConfig = async ({}: { config: ControlConfig }): Promise<void> => {
+export const validateConfig = async ({}: {
+  config: ControlConfig;
+}): Promise<void> => {
   // tslint:disable-line no-unused
   // 1. check that definitions are sound; TODO
   // 2. check that we can connect to the db with the connection config; TODO

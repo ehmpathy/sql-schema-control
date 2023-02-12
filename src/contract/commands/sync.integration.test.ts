@@ -1,9 +1,14 @@
-import Sync from './sync';
 import { stdout } from 'stdout-stderr';
-import { DatabaseConnection, DatabaseLanguage, ControlConfig } from '../../types';
+
+import { initializeControlEnvironment } from '../../logic/config/initializeControlEnvironment';
+import {
+  DatabaseConnection,
+  DatabaseLanguage,
+  ControlConfig,
+} from '../../types';
 import { promiseConfig as promiseConfigMysql } from '../__test_assets__/mysql/connection.config';
 import { promiseConfig as promiseConfigPostgres } from '../__test_assets__/postgres/connection.config';
-import { initializeControlEnvironment } from '../../logic/config/initializeControlEnvironment';
+import Sync from './sync';
 
 describe('sync', () => {
   describe('mysql', () => {
@@ -26,7 +31,12 @@ describe('sync', () => {
       stdout.stripColor = false; // dont strip color
       // stdout.print = true;
       stdout.start();
-      await Sync.run(['-c', `${__dirname}/../__test_assets__/mysql/control.yml`, '--id', 'init_service_user']);
+      await Sync.run([
+        '-c',
+        `${__dirname}/../__test_assets__/mysql/control.yml`,
+        '--id',
+        'init_service_user',
+      ]);
       stdout.stop();
       const output = stdout.output
         .split('\n')
@@ -56,7 +66,12 @@ describe('sync', () => {
       stdout.stripColor = false; // dont strip color
       // stdout.print = true;
       stdout.start();
-      await Sync.run(['-c', `${__dirname}/../__test_assets__/postgres/control.yml`, '--id', 'init_service_user']);
+      await Sync.run([
+        '-c',
+        `${__dirname}/../__test_assets__/postgres/control.yml`,
+        '--id',
+        'init_service_user',
+      ]);
       stdout.stop();
       const output = stdout.output
         .split('\n')

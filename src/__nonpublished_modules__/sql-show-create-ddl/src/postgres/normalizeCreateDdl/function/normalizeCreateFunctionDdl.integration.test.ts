@@ -7,13 +7,17 @@ import { normalizeCreateFunctionDdl } from './normalizeCreateFunctionDdl';
 describe('normalizeCreateFunctionDdl', () => {
   let dbConnection: DatabaseConnection;
   beforeAll(async () => {
-    dbConnection = await getDbConnection({ language: DatabaseLanguage.POSTGRES });
+    dbConnection = await getDbConnection({
+      language: DatabaseLanguage.POSTGRES,
+    });
   });
   afterAll(async () => {
     await dbConnection.end();
   });
   it('should be possible to get create statement of function', async () => {
-    await dbConnection.query({ sql: 'DROP FUNCTION IF EXISTS test_func_for_show_create_on;' });
+    await dbConnection.query({
+      sql: 'DROP FUNCTION IF EXISTS test_func_for_show_create_on;',
+    });
     await dbConnection.query({
       sql: `
 CREATE FUNCTION test_func_for_show_create_on (
@@ -33,7 +37,11 @@ $$
 $$
       `.trim(),
     });
-    const ddl = await showCreateFunction({ dbConnection, schema: 'public', func: 'test_func_for_show_create_on' });
+    const ddl = await showCreateFunction({
+      dbConnection,
+      schema: 'public',
+      func: 'test_func_for_show_create_on',
+    });
     const normalizedDdl = normalizeCreateFunctionDdl({ ddl });
     expect(normalizedDdl).toMatchSnapshot();
   });

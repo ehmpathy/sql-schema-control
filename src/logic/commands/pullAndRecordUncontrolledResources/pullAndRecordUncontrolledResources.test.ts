@@ -1,11 +1,16 @@
-import { ResourceDefinition, ResourceType, ResourceDefinitionStatus } from '../../../types';
-import { pullAndRecordUncontrolledResources } from './pullAndRecordUncontrolledResources';
+import {
+  ResourceDefinition,
+  ResourceType,
+  ResourceDefinitionStatus,
+} from '../../../types';
 import { getControlContextFromConfig } from '../../config/getControlContextFromConfig';
 import { getPlans } from '../getPlans';
+import { pullAndRecordUncontrolledResources } from './pullAndRecordUncontrolledResources';
 import { recordUncontrolledResources } from './recordUncontrolledResources';
 
 jest.mock('../../config/getControlContextFromConfig');
-const getControlContextFromConfigMock = getControlContextFromConfig as jest.Mock;
+const getControlContextFromConfigMock =
+  getControlContextFromConfig as jest.Mock;
 const exampleContext = {
   connection: {
     end: jest.fn(),
@@ -30,15 +35,22 @@ const exampleResources = [
     name: '__EXAMPLE_RESOURCE_NAME_TWO__',
   }),
 ];
-getPlansMock.mockResolvedValue([{ definition: exampleResources[0] }, { definition: exampleResources[1] }]);
+getPlansMock.mockResolvedValue([
+  { definition: exampleResources[0] },
+  { definition: exampleResources[1] },
+]);
 
 jest.mock('./recordUncontrolledResources');
-const recordUncontrolledResourcesMock = recordUncontrolledResources as jest.Mock;
+const recordUncontrolledResourcesMock =
+  recordUncontrolledResources as jest.Mock;
 
 describe('pullAndRecordUncontrolledResources', () => {
   beforeEach(() => jest.clearAllMocks());
   it('should get the control context from config', async () => {
-    await pullAndRecordUncontrolledResources({ configPath: '__CONFIG_PATH__', targetDir: '__TARGET_DIR__' });
+    await pullAndRecordUncontrolledResources({
+      configPath: '__CONFIG_PATH__',
+      targetDir: '__TARGET_DIR__',
+    });
     expect(getControlContextFromConfigMock.mock.calls.length).toEqual(1);
     expect(getControlContextFromConfigMock.mock.calls[0][0]).toEqual({
       configPath: '__CONFIG_PATH__',
@@ -46,18 +58,27 @@ describe('pullAndRecordUncontrolledResources', () => {
     });
   });
   it('should get the plans', async () => {
-    await pullAndRecordUncontrolledResources({ configPath: '__CONFIG_PATH__', targetDir: '__TARGET_DIR__' });
+    await pullAndRecordUncontrolledResources({
+      configPath: '__CONFIG_PATH__',
+      targetDir: '__TARGET_DIR__',
+    });
     expect(getPlansMock.mock.calls.length).toEqual(1);
     expect(getPlansMock.mock.calls[0][0]).toEqual({
       context: exampleContext,
     });
   });
   it('should close the connection', async () => {
-    await pullAndRecordUncontrolledResources({ configPath: '__CONFIG_PATH__', targetDir: '__TARGET_DIR__' });
+    await pullAndRecordUncontrolledResources({
+      configPath: '__CONFIG_PATH__',
+      targetDir: '__TARGET_DIR__',
+    });
     expect(exampleContext.connection.end.mock.calls.length).toEqual(1);
   });
   it('should record only the uncontrolled resource', async () => {
-    await pullAndRecordUncontrolledResources({ configPath: '__CONFIG_PATH__', targetDir: '__TARGET_DIR__' });
+    await pullAndRecordUncontrolledResources({
+      configPath: '__CONFIG_PATH__',
+      targetDir: '__TARGET_DIR__',
+    });
     expect(recordUncontrolledResourcesMock.mock.calls.length).toEqual(1);
     expect(recordUncontrolledResourcesMock.mock.calls[0][0]).toEqual({
       targetDir: '__TARGET_DIR__',

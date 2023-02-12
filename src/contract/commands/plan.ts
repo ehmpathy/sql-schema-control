@@ -1,4 +1,5 @@
 import { Command, Flags } from '@oclif/core';
+
 import { getAndDisplayPlans } from '../../logic/commands/getAndDisplayPlans';
 
 export default class Plan extends Command {
@@ -14,7 +15,11 @@ export default class Plan extends Command {
 
   public static flags = {
     help: Flags.help({ char: 'h' }),
-    config: Flags.string({ char: 'c', description: 'path to config file', default: 'schema/control.yml' }),
+    config: Flags.string({
+      char: 'c',
+      description: 'path to config file',
+      default: 'schema/control.yml',
+    }),
   };
 
   public async run() {
@@ -22,7 +27,8 @@ export default class Plan extends Command {
     const config = flags.config!;
 
     // get and display the plans
-    const configPath = config.slice(0, 1) === '/' ? config : `${process.cwd()}/${config}`; // if starts with /, consider it as an absolute path
+    const configPath =
+      config.slice(0, 1) === '/' ? config : `${process.cwd()}/${config}`; // if starts with /, consider it as an absolute path
     await getAndDisplayPlans({ configPath });
   }
 }

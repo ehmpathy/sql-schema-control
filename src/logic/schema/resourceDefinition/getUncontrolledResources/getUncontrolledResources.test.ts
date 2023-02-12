@@ -1,4 +1,8 @@
-import { ResourceDefinition, ResourceType, ResourceDefinitionStatus } from '../../../../types';
+import {
+  ResourceDefinition,
+  ResourceType,
+  ResourceDefinitionStatus,
+} from '../../../../types';
 import { getUncontrolledResources } from './getUncontrolledResources';
 import { pullResources } from './pullResources';
 
@@ -22,7 +26,10 @@ pullResourcesMock.mockResolvedValue(exampleLiveResources);
 
 describe('getUncontrolledResources', () => {
   it('should pull resources accurately', async () => {
-    await getUncontrolledResources({ connection: '__CONNECTION__' as any, controlledResources: [] as any });
+    await getUncontrolledResources({
+      connection: '__CONNECTION__' as any,
+      controlledResources: [] as any,
+    });
     expect(pullResourcesMock.mock.calls.length).toEqual(1);
     expect(pullResourcesMock.mock.calls[0][0]).toMatchObject({
       connection: '__CONNECTION__',
@@ -36,7 +43,9 @@ describe('getUncontrolledResources', () => {
       name: '__EXAMPLE_RESOURCE_NAME_TWO__',
     });
     pullResourcesMock.mockResolvedValueOnce([liveResource]);
-    const controlledResources = [new ResourceDefinition({ ...liveResource, name: '__NOT_SAME_NAME__' })];
+    const controlledResources = [
+      new ResourceDefinition({ ...liveResource, name: '__NOT_SAME_NAME__' }),
+    ];
     const uncontrolledResources = await getUncontrolledResources({
       connection: '__CONNECTION__' as any,
       controlledResources,
@@ -65,7 +74,9 @@ describe('getUncontrolledResources', () => {
       controlledResources: [] as any,
     });
     uncontrolledResources.map((uncontrolledResource) =>
-      expect(uncontrolledResource.status).toEqual(ResourceDefinitionStatus.NOT_CONTROLLED),
+      expect(uncontrolledResource.status).toEqual(
+        ResourceDefinitionStatus.NOT_CONTROLLED,
+      ),
     );
   });
   it('should return all uncontrolled resources with path = identifier', async () => {
@@ -81,7 +92,9 @@ describe('getUncontrolledResources', () => {
       controlledResources: [] as any,
     });
     uncontrolledResources.map((uncontrolledResource) =>
-      expect(uncontrolledResource.path).toEqual(`${liveResource.type.toLowerCase()}:${liveResource.name}`),
+      expect(uncontrolledResource.path).toEqual(
+        `${liveResource.type.toLowerCase()}:${liveResource.name}`,
+      ),
     );
   });
 });

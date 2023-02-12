@@ -12,13 +12,17 @@ export const getColoredActionTitle = ({
   definition: ChangeDefinition | ResourceDefinition;
 }) => {
   // define the identifier string
-  const identifierString = chalk.grey(`(${getReferenceIdForDefinition({ definition })})`);
+  const identifierString = chalk.grey(
+    `(${getReferenceIdForDefinition({ definition })})`,
+  );
 
   // define relative path to file from user's current working directory
   const relativeFilePath = path.relative(process.cwd(), definition.path!);
 
   // define the header
-  const title = chalk.bold(`${actionToken} ${relativeFilePath} ${identifierString}`);
+  const title = chalk.bold(
+    `${actionToken} ${relativeFilePath} ${identifierString}`,
+  );
 
   // return header
   return title;

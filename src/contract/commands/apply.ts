@@ -1,4 +1,5 @@
 import { Command, Flags } from '@oclif/core';
+
 import { getAndApplyPlans } from '../../logic/commands/getAndApplyPlans';
 
 export default class Apply extends Command {
@@ -21,7 +22,11 @@ Could not apply ./init/service_user.sql: Operation CREATE USER failed for 'user_
 
   public static flags = {
     help: Flags.help({ char: 'h' }),
-    config: Flags.string({ char: 'c', description: 'path to config file', default: 'schema/control.yml' }),
+    config: Flags.string({
+      char: 'c',
+      description: 'path to config file',
+      default: 'schema/control.yml',
+    }),
   };
 
   public async run() {
@@ -29,7 +34,8 @@ Could not apply ./init/service_user.sql: Operation CREATE USER failed for 'user_
     const config = flags.config!;
 
     // apply changes
-    const configPath = config.slice(0, 1) === '/' ? config : `${process.cwd()}/${config}`; // if starts with /, consider it as an absolute path
+    const configPath =
+      config.slice(0, 1) === '/' ? config : `${process.cwd()}/${config}`; // if starts with /, consider it as an absolute path
     await getAndApplyPlans({ configPath });
   }
 }

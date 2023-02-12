@@ -1,9 +1,10 @@
 import sha256 from 'simple-sha256';
+
 import { DatabaseLanguage, ResourceType } from '../constants';
-import { ConnectionConfig } from './ConnectionConfig';
 import { ChangeDefinition } from './ChangeDefinition';
-import { ResourceDefinition } from './ResourceDefinition';
+import { ConnectionConfig } from './ConnectionConfig';
 import { ControlConfig } from './ControlConfig';
+import { ResourceDefinition } from './ResourceDefinition';
 
 describe('ConnectionConfig', () => {
   const connectionConfig = new ConnectionConfig({

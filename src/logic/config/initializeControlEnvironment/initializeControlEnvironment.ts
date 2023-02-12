@@ -7,7 +7,11 @@ import { provisionChangeLogTable } from './provisionChangeLogTable';
     1. connect to db
     2. provision change log table
 */
-export const initializeControlEnvironment = async ({ config }: { config: ControlConfig }) => {
+export const initializeControlEnvironment = async ({
+  config,
+}: {
+  config: ControlConfig;
+}) => {
   // 1. connect to db
   const connection = await connectToDatabase({ config });
 

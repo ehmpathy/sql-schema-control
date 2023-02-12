@@ -7,14 +7,18 @@ import { showCreateTable } from './showCreateTable';
 describe('showCreateTable', () => {
   let dbConnection: DatabaseConnection;
   beforeAll(async () => {
-    dbConnection = await getDbConnection({ language: DatabaseLanguage.POSTGRES });
+    dbConnection = await getDbConnection({
+      language: DatabaseLanguage.POSTGRES,
+    });
   });
   afterAll(async () => {
     await dbConnection.end();
   });
   it('should be possible to get create statement of table', async () => {
     await provisionShowCreateTableFunction({ dbConnection });
-    await dbConnection.query({ sql: 'DROP TABLE IF EXISTS test_table_for_showcreate_on;' });
+    await dbConnection.query({
+      sql: 'DROP TABLE IF EXISTS test_table_for_showcreate_on;',
+    });
     await dbConnection.query({
       sql: `
 CREATE TABLE test_table_for_showcreate_on (
@@ -24,7 +28,11 @@ CREATE TABLE test_table_for_showcreate_on (
 )
     `.trim(),
     });
-    const result = await showCreateTable({ dbConnection, schema: 'public', table: 'test_table_for_showcreate_on' });
+    const result = await showCreateTable({
+      dbConnection,
+      schema: 'public',
+      table: 'test_table_for_showcreate_on',
+    });
     expect(result).toMatchSnapshot();
   });
 });

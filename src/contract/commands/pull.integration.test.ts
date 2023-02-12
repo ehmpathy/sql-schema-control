@@ -1,9 +1,14 @@
-import Pull from './pull';
 import { stdout } from 'stdout-stderr';
-import { DatabaseConnection, DatabaseLanguage, ControlConfig } from '../../types';
+
+import { initializeControlEnvironment } from '../../logic/config/initializeControlEnvironment';
+import {
+  DatabaseConnection,
+  DatabaseLanguage,
+  ControlConfig,
+} from '../../types';
 import { promiseConfig as promiseConfigMysql } from '../__test_assets__/mysql/connection.config';
 import { promiseConfig as promiseConfigPostgres } from '../__test_assets__/postgres/connection.config';
-import { initializeControlEnvironment } from '../../logic/config/initializeControlEnvironment';
+import Pull from './pull';
 
 describe('pull', () => {
   describe('mysql', () => {

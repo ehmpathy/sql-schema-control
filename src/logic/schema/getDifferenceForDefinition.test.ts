@@ -1,15 +1,21 @@
 import sha256 from 'simple-sha256';
-import { ChangeDefinition, ResourceDefinition, ResourceType } from '../../types';
+
+import {
+  ChangeDefinition,
+  ResourceDefinition,
+  ResourceType,
+} from '../../types';
 import { getDifferenceForChangeDefinition } from './changeDefinition/getDifferenceForChangeDefinition';
-import { getDifferenceForResourceDefinition } from './resourceDefinition/getDifferenceForResourceDefinition';
 import { getDifferenceForDefinition } from './getDifferenceForDefinition';
+import { getDifferenceForResourceDefinition } from './resourceDefinition/getDifferenceForResourceDefinition';
 
 jest.mock('./changeDefinition/getDifferenceForChangeDefinition');
 const getChangeDifferenceMock = getDifferenceForChangeDefinition as jest.Mock;
 getChangeDifferenceMock.mockReturnValue('__CHANGE_DIFF__');
 
 jest.mock('./resourceDefinition/getDifferenceForResourceDefinition');
-const getResourceDifferenceMock = getDifferenceForResourceDefinition as jest.Mock;
+const getResourceDifferenceMock =
+  getDifferenceForResourceDefinition as jest.Mock;
 getResourceDifferenceMock.mockReturnValue('__RESOURCE_DIFF__');
 
 describe('getDifferenceForDefinition', () => {

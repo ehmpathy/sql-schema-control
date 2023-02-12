@@ -1,5 +1,5 @@
-import { getPlans } from './getPlans';
 import { getPlanForDefinition } from '../../plan/getPlanForDefinition';
+import { getPlans } from './getPlans';
 
 jest.mock('../../plan/getPlanForDefinition');
 const getDefinitionPlanMock = getPlanForDefinition as jest.Mock;

@@ -14,7 +14,11 @@ import { recursivelyHeavilyNormalizeViewQuerySql } from './recursivelyHeavilyNor
  *
  * we also do it recursively, because we support subqueries
  */
-export const recursivelyHeavilyNormalizeViewDdl = ({ ddl }: { ddl: string }) => {
+export const recursivelyHeavilyNormalizeViewDdl = ({
+  ddl,
+}: {
+  ddl: string;
+}) => {
   // 0. strip comments
   const strippedDdl = strip(ddl);
 
@@ -24,13 +28,17 @@ export const recursivelyHeavilyNormalizeViewDdl = ({ ddl }: { ddl: string }) => 
   normalizedDdl = lowercaseEverythingAfterFirstAs({ ddl: normalizedDdl });
   normalizedDdl = removeAllBackticks({ ddl: normalizedDdl });
   normalizedDdl = removeFinalSemicolon({ ddl: normalizedDdl });
-  normalizedDdl = addSpacesBetweenCommaParenthesisOccurances({ ddl: normalizedDdl });
+  normalizedDdl = addSpacesBetweenCommaParenthesisOccurances({
+    ddl: normalizedDdl,
+  });
 
   // 2. recursively normalize the query body; do so recursively to support the subqueries that may be present
   const ddlParts = normalizedDdl.split(' AS '); // NOTE: there is only one upper case AS, so it splits the sql from the view initial create statement
   const viewCreateHeader = ddlParts[0];
   const viewQuerySql = ddlParts[1];
-  const normalizedViewQuerySql = recursivelyHeavilyNormalizeViewQuerySql({ sql: viewQuerySql });
+  const normalizedViewQuerySql = recursivelyHeavilyNormalizeViewQuerySql({
+    sql: viewQuerySql,
+  });
   normalizedDdl = viewCreateHeader + ' AS ' + normalizedViewQuerySql; // tslint:disable-line prefer-template
 
   // 3. return the results

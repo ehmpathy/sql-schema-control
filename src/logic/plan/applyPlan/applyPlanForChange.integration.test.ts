@@ -1,6 +1,7 @@
-import uuid from 'uuid/v4';
 import sha256 from 'simple-sha256';
-import { applyPlanForChange } from './applyPlanForChange';
+import uuid from 'uuid/v4';
+
+import { promiseConfig } from '../../../__test_assets__/connection.config';
 import {
   ChangeDefinition,
   DefinitionPlan,
@@ -10,7 +11,7 @@ import {
   RequiredAction,
 } from '../../../types';
 import { initializeControlEnvironment } from '../../config/initializeControlEnvironment';
-import { promiseConfig } from '../../../__test_assets__/connection.config';
+import { applyPlanForChange } from './applyPlanForChange';
 
 describe('applyChange', () => {
   let connection: DatabaseConnection;
@@ -28,10 +29,7 @@ describe('applyChange', () => {
     await connection.end();
   });
   it('should be able to apply a new change', async () => {
-    const userName = `user${uuid()
-      .split('-')
-      .slice(0, 2)
-      .join('')}`;
+    const userName = `user${uuid().split('-').slice(0, 2).join('')}`;
     const plan = new DefinitionPlan({
       id: '__ID__',
       definition: new ChangeDefinition({
@@ -55,18 +53,19 @@ describe('applyChange', () => {
 
     // check that the entry was recorded into the changelog accurately
     const { rows: changeLogRows } = await connection.query({
-      sql: `select * from schema_control_change_log where change_id='${(plan.definition as ChangeDefinition).id}'`,
+      sql: `select * from schema_control_change_log where change_id='${
+        (plan.definition as ChangeDefinition).id
+      }'`,
     });
     expect(changeLogRows.length).toEqual(1);
-    expect(changeLogRows[0].change_hash).toEqual((plan.definition as ChangeDefinition).hash);
+    expect(changeLogRows[0].change_hash).toEqual(
+      (plan.definition as ChangeDefinition).hash,
+    );
     expect(changeLogRows[0].change_content).toEqual(plan.definition.sql);
     expect(changeLogRows[0].updated_at).toEqual(null);
   });
   it('should be able to reapply a change', async () => {
-    const userName = `user${uuid()
-      .split('-')
-      .slice(0, 2)
-      .join('')}`;
+    const userName = `user${uuid().split('-').slice(0, 2).join('')}`;
 
     // apply
     const plan = new DefinitionPlan({
@@ -84,16 +83,22 @@ describe('applyChange', () => {
 
     // reapply
     plan.definition.sql = 'SELECT true';
-    (plan.definition as ChangeDefinition).hash = sha256.sync(plan.definition.sql);
+    (plan.definition as ChangeDefinition).hash = sha256.sync(
+      plan.definition.sql,
+    );
     plan.action = RequiredAction.REAPPLY;
     await applyPlanForChange({ connection, plan });
 
     // check that the entry was updated accurately in the changelog
     const { rows: changeLogRows } = await connection.query({
-      sql: `select * from schema_control_change_log where change_id='${(plan.definition as ChangeDefinition).id}'`,
+      sql: `select * from schema_control_change_log where change_id='${
+        (plan.definition as ChangeDefinition).id
+      }'`,
     });
     expect(changeLogRows.length).toEqual(1);
-    expect(changeLogRows[0].change_hash).toEqual((plan.definition as ChangeDefinition).hash);
+    expect(changeLogRows[0].change_hash).toEqual(
+      (plan.definition as ChangeDefinition).hash,
+    );
     expect(changeLogRows[0].change_content).toEqual(plan.definition.sql);
     expect(changeLogRows[0].updated_at).not.toEqual(null);
   });

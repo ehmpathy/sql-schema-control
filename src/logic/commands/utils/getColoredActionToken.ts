@@ -2,7 +2,11 @@ import chalk from 'chalk';
 
 import { RequiredAction } from '../../../types';
 
-export const getColoredActionToken = ({ action }: { action: RequiredAction }) => {
+export const getColoredActionToken = ({
+  action,
+}: {
+  action: RequiredAction;
+}) => {
   // define action color
   const actionChalk = {
     [RequiredAction.APPLY]: chalk.green,

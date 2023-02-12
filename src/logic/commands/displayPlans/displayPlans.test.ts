@@ -1,9 +1,14 @@
 import Chalk from 'chalk';
 import sha256 from 'simple-sha256';
-import uuid from 'uuid/v4';
 import { stdout } from 'stdout-stderr';
+import uuid from 'uuid/v4';
+
+import {
+  ChangeDefinition,
+  DefinitionPlan,
+  RequiredAction,
+} from '../../../types';
 import { displayPlans } from './displayPlans';
-import { ChangeDefinition, DefinitionPlan, RequiredAction } from '../../../types';
 
 const exampleDefinition = new ChangeDefinition({
   id: uuid(),

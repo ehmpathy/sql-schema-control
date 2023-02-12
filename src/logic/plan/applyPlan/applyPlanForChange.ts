@@ -1,4 +1,8 @@
-import { DefinitionPlan, DatabaseConnection, ChangeDefinition } from '../../../types';
+import {
+  DefinitionPlan,
+  DatabaseConnection,
+  ChangeDefinition,
+} from '../../../types';
 import { syncChangeLogWithChangeDefinition } from '../../schema/changeDefinition/syncChangelogWithChangeDefinition/syncChangeLogWithChangeDefinition';
 
 /*
@@ -16,10 +20,16 @@ export const applyPlanForChange = async ({
   try {
     await connection.query({ sql: plan.definition.sql });
   } catch (error) {
-    throw new Error(`Could not apply ${plan.definition.path}: ${error.message}`);
+    throw new Error(
+      `Could not apply ${plan.definition.path}: ${error.message}`,
+    );
   }
 
   // 2. upsert that we have applied this change
-  if (!(plan.definition instanceof ChangeDefinition)) throw new Error('this should not occur'); // just sanity check to satisfy typescript
-  await syncChangeLogWithChangeDefinition({ connection, definition: plan.definition });
+  if (!(plan.definition instanceof ChangeDefinition))
+    throw new Error('this should not occur'); // just sanity check to satisfy typescript
+  await syncChangeLogWithChangeDefinition({
+    connection,
+    definition: plan.definition,
+  });
 };

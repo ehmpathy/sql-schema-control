@@ -8,7 +8,11 @@ import { getLiveResourceDefinitionFromDatabase } from '../../getLiveResourceDefi
     - functions
     - sprocs
 */
-export const pullResources = async ({ connection }: { connection: DatabaseConnection }) => {
+export const pullResources = async ({
+  connection,
+}: {
+  connection: DatabaseConnection;
+}) => {
   // 1. get table resource definitions
   // select TABLE_NAME as Name, UPDATE_TIME as Update_time from information_schema.tables where TABLE_SCHEMA='my_database_name'
   const { rows: showTableRows } = await connection.query({
@@ -31,7 +35,9 @@ export const pullResources = async ({ connection }: { connection: DatabaseConnec
   const { rows: showViewRows } = await connection.query({
     sql: `select table_name as view_name from information_schema.views where table_schema = '${connection.schema}'`,
   });
-  const viewNames: string[] = showViewRows.map((result: any) => result.view_name);
+  const viewNames: string[] = showViewRows.map(
+    (result: any) => result.view_name,
+  );
   const views = await Promise.all(
     viewNames.map((viewName) =>
       getLiveResourceDefinitionFromDatabase({
@@ -46,7 +52,9 @@ export const pullResources = async ({ connection }: { connection: DatabaseConnec
   const { rows: showFunctionRows } = await connection.query({
     sql: `select routine_name from information_schema.routines where routine_type = 'FUNCTION' and routine_schema = '${connection.schema}'`,
   });
-  const functionNames: string[] = showFunctionRows.map((result: any) => result.routine_name);
+  const functionNames: string[] = showFunctionRows.map(
+    (result: any) => result.routine_name,
+  );
   const functions = await Promise.all(
     functionNames.map((functionName) =>
       getLiveResourceDefinitionFromDatabase({
@@ -61,7 +69,9 @@ export const pullResources = async ({ connection }: { connection: DatabaseConnec
   const { rows: showProcedureRows } = await connection.query({
     sql: `select routine_name from information_schema.routines where routine_type = 'PROCEDURE' and routine_schema = '${connection.schema}'`,
   });
-  const procedureNames: string[] = showProcedureRows.map((result: any) => result.routine_name);
+  const procedureNames: string[] = showProcedureRows.map(
+    (result: any) => result.routine_name,
+  );
   const procedures = await Promise.all(
     procedureNames.map((procedureName) =>
       getLiveResourceDefinitionFromDatabase({

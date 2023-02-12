@@ -17,33 +17,54 @@ import { removeRedundantAliasDeclarations } from './normalizations/removeRedunda
  *
  * we also do it recursively, because we support subqueries
  */
-export const recursivelyHeavilyNormalizeViewQuerySql = ({ sql }: { sql: string }) => {
+export const recursivelyHeavilyNormalizeViewQuerySql = ({
+  sql,
+}: {
+  sql: string;
+}) => {
   // 1. flatten the ddl by extracting subqueries as referenced tokens
-  const { flattenedSql, references } = flattenSqlByReferencingAndTokenizingSubqueries({ sql });
+  const { flattenedSql, references } =
+    flattenSqlByReferencingAndTokenizingSubqueries({ sql });
 
   // 2. normalize the top level flat ddl; hover over the fn's for jsdoc based intellisense explanations for each normalization
   let normalizedFlattenedSql = flattenedSql;
-  normalizedFlattenedSql = removeParenthesisFromWhereConditions({ flattenedSql: normalizedFlattenedSql });
-  normalizedFlattenedSql = removeDoubleParenthesisInJoinOnConditions({ sql: normalizedFlattenedSql });
-  normalizedFlattenedSql = removeParenthesisSurroundingJoinsInFromClause({ flattenedSql: normalizedFlattenedSql });
-  normalizedFlattenedSql = removeRedundantAliasDeclarations({ sql: normalizedFlattenedSql });
+  normalizedFlattenedSql = removeParenthesisFromWhereConditions({
+    flattenedSql: normalizedFlattenedSql,
+  });
+  normalizedFlattenedSql = removeDoubleParenthesisInJoinOnConditions({
+    sql: normalizedFlattenedSql,
+  });
+  normalizedFlattenedSql = removeParenthesisSurroundingJoinsInFromClause({
+    flattenedSql: normalizedFlattenedSql,
+  });
+  normalizedFlattenedSql = removeRedundantAliasDeclarations({
+    sql: normalizedFlattenedSql,
+  });
 
   // 3. recursively apply this function to each referenced sql and replace the sql in the reference, ready to hydrate back
   const normalizedReferences = references.map((reference) => {
     const referencedSqlWithoutStartEndParen = reference.sql.slice(1, -1); // the flatten function puts subquery inside of parens
-    const normalizedReferencedSql = recursivelyHeavilyNormalizeViewQuerySql({ sql: referencedSqlWithoutStartEndParen });
+    const normalizedReferencedSql = recursivelyHeavilyNormalizeViewQuerySql({
+      sql: referencedSqlWithoutStartEndParen,
+    });
     const normalizedReferencedSqlWithStartEndParens = `(${normalizedReferencedSql})`; // add those parens back
-    return new SqlSubqueryReference({ id: reference.id, sql: normalizedReferencedSqlWithStartEndParens });
+    return new SqlSubqueryReference({
+      id: reference.id,
+      sql: normalizedReferencedSqlWithStartEndParens,
+    });
   });
 
   // 4. hydrate the references back up
-  const hydratedNormalizedSql = hydrateSqlByReferencingAndReplacingSubqueryTokens({
-    flattenedSql: normalizedFlattenedSql,
-    references: normalizedReferences,
-  });
+  const hydratedNormalizedSql =
+    hydrateSqlByReferencingAndReplacingSubqueryTokens({
+      flattenedSql: normalizedFlattenedSql,
+      references: normalizedReferences,
+    });
 
   // 5. prettify it!
-  const prettifiedHydratedNormalizedSql = sqlFormatter.format(hydratedNormalizedSql);
+  const prettifiedHydratedNormalizedSql = sqlFormatter.format(
+    hydratedNormalizedSql,
+  );
 
   // 6. return the normalized sql
   return prettifiedHydratedNormalizedSql;

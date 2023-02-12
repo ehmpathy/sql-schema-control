@@ -9,6 +9,9 @@ export interface SqlSubqueryReference {
   id: string;
   sql: string;
 }
-export class SqlSubqueryReference extends SchematicJoiModel<SqlSubqueryReference> implements SqlSubqueryReference {
+export class SqlSubqueryReference
+  extends SchematicJoiModel<SqlSubqueryReference>
+  implements SqlSubqueryReference
+{
   public static schema = schema;
 }

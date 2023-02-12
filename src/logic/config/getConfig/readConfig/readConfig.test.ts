@@ -1,8 +1,13 @@
-import { ControlConfig, ChangeDefinition, ConnectionConfig, DatabaseLanguage } from '../../../../types';
-import { readConfig } from './readConfig';
+import {
+  ControlConfig,
+  ChangeDefinition,
+  ConnectionConfig,
+  DatabaseLanguage,
+} from '../../../../types';
 import { readYmlFile } from './_utils/readYmlFile';
-import { getConnectionConfig } from './getConnectionConfig';
 import { flattenDefinitionsRecursive } from './flattenDefinitionsRecursive';
+import { getConnectionConfig } from './getConnectionConfig';
+import { readConfig } from './readConfig';
 import { validateAndHydrateDefinitionsYmlContents } from './validateAndHydrateDefinitionsYmlContents';
 
 jest.mock('./_utils/readYmlFile');
@@ -27,7 +32,8 @@ const exampleConnectionConfig = new ConnectionConfig({
 getConnectionConfigMock.mockResolvedValue(exampleConnectionConfig);
 
 jest.mock('./flattenDefinitionsRecursive');
-const flattenDefinitionsRecursiveMock = flattenDefinitionsRecursive as jest.Mock;
+const flattenDefinitionsRecursiveMock =
+  flattenDefinitionsRecursive as jest.Mock;
 const exampleDefinitions = [
   new ChangeDefinition({
     id: 'some id',
@@ -51,14 +57,17 @@ const exampleDefinitions = [
 flattenDefinitionsRecursiveMock.mockResolvedValue(exampleDefinitions);
 
 jest.mock('./validateAndHydrateDefinitionsYmlContents');
-const validateAndHydrateDefinitionsYmlContentsMock = validateAndHydrateDefinitionsYmlContents as jest.Mock;
+const validateAndHydrateDefinitionsYmlContentsMock =
+  validateAndHydrateDefinitionsYmlContents as jest.Mock;
 
 describe('readConfig', () => {
   beforeEach(() => jest.clearAllMocks());
   it('should read the yml file at the file path specified', async () => {
     await readConfig({ filePath: '__CONFIG_PATH__' });
     expect(readYmlFileMock.mock.calls.length).toEqual(1);
-    expect(readYmlFileMock.mock.calls[0][0]).toMatchObject({ filePath: '__CONFIG_PATH__' });
+    expect(readYmlFileMock.mock.calls[0][0]).toMatchObject({
+      filePath: '__CONFIG_PATH__',
+    });
   });
   it('throws an error if language is not defined', async () => {
     readYmlFileMock.mockResolvedValueOnce({
@@ -123,8 +132,12 @@ describe('readConfig', () => {
       '__HYDRATED_DEF_TWO__',
     ]);
     await readConfig({ filePath: '__CONFIG_DIR__/control.yml' });
-    expect(validateAndHydrateDefinitionsYmlContentsMock.mock.calls.length).toEqual(1);
-    expect(validateAndHydrateDefinitionsYmlContentsMock.mock.calls[0][0]).toMatchObject({
+    expect(
+      validateAndHydrateDefinitionsYmlContentsMock.mock.calls.length,
+    ).toEqual(1);
+    expect(
+      validateAndHydrateDefinitionsYmlContentsMock.mock.calls[0][0],
+    ).toMatchObject({
       contents: ['__DEF_1__', '__DEF_2__'],
     });
     expect(flattenDefinitionsRecursiveMock.mock.calls.length).toEqual(1);

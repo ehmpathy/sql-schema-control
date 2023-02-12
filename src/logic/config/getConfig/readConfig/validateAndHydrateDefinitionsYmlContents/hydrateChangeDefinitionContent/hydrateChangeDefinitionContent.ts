@@ -1,13 +1,27 @@
 import sha256 from 'simple-sha256';
-import { ChangeDefinition } from '../../../../../../types';
-import { InvalidDefinitionError } from './../errors';
-import { readFileAsync } from './../../../../_utils/readFileAsync';
 
-export const hydrateChangeDefinitionContent = async ({ readRoot, content }: { readRoot: string; content: any }) => {
+import { ChangeDefinition } from '../../../../../../types';
+import { readFileAsync } from './../../../../_utils/readFileAsync';
+import { InvalidDefinitionError } from './../errors';
+
+export const hydrateChangeDefinitionContent = async ({
+  readRoot,
+  content,
+}: {
+  readRoot: string;
+  content: any;
+}) => {
   // 1. get the sql defined at the path
-  if (!content.path) throw new InvalidDefinitionError({ explanation: 'path must be defined', basis: content });
+  if (!content.path)
+    throw new InvalidDefinitionError({
+      explanation: 'path must be defined',
+      basis: content,
+    });
   if (content.path.split('.').slice(-1)[0] !== 'sql') {
-    throw new InvalidDefinitionError({ explanation: 'path must specify a .sql file', basis: content });
+    throw new InvalidDefinitionError({
+      explanation: 'path must specify a .sql file',
+      basis: content,
+    });
   }
   const filePath = `${readRoot}/${content.path}`;
   const sql = await readFileAsync({ filePath });

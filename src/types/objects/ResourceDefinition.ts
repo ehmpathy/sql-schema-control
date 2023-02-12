@@ -1,5 +1,6 @@
 import Joi from 'joi';
 import SchematicJoiModel from 'schematic-joi-model';
+
 import { ResourceType, ResourceDefinitionStatus } from '../constants';
 
 const resourceDefinitionSchema = Joi.object().keys({

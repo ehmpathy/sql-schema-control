@@ -1,6 +1,7 @@
 import sha256 from 'simple-sha256';
 import uuid from 'uuid/v4';
 
+import { promiseConfig } from '../../../../__test_assets__/connection.config';
 import {
   ChangeDefinition,
   ChangeDefinitionStatus,
@@ -10,7 +11,6 @@ import {
 } from '../../../../types';
 import { initializeControlEnvironment } from '../../../config/initializeControlEnvironment';
 import { getStatusForChangeDefinition } from './getStatusForChangeDefinition';
-import { promiseConfig } from '../../../../__test_assets__/connection.config';
 
 describe('getStatusForChangeDefinition', () => {
   let connection: DatabaseConnection;
@@ -34,7 +34,10 @@ describe('getStatusForChangeDefinition', () => {
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
     });
-    const status = await getStatusForChangeDefinition({ connection, change: definition });
+    const status = await getStatusForChangeDefinition({
+      connection,
+      change: definition,
+    });
     expect(status).toEqual(ChangeDefinitionStatus.NOT_APPLIED);
   });
   it('should find that an applied change has status of UP_TO_DATE', async () => {
@@ -56,7 +59,10 @@ describe('getStatusForChangeDefinition', () => {
     });
 
     // get the status
-    const status = await getStatusForChangeDefinition({ connection, change: definition });
+    const status = await getStatusForChangeDefinition({
+      connection,
+      change: definition,
+    });
     expect(status).toEqual(ChangeDefinitionStatus.UP_TO_DATE);
   });
   it('should find that an applied change with a different hash has status of OUT_OF_DATE', async () => {
@@ -84,7 +90,10 @@ describe('getStatusForChangeDefinition', () => {
     });
 
     // get the status
-    const status = await getStatusForChangeDefinition({ connection, change: updatedDefinition });
+    const status = await getStatusForChangeDefinition({
+      connection,
+      change: updatedDefinition,
+    });
     expect(status).toEqual(ChangeDefinitionStatus.OUT_OF_DATE);
   });
 });

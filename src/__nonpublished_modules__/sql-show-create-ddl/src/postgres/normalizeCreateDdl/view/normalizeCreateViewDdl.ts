@@ -1,4 +1,5 @@
 import sqlFormatter from 'sql-formatter';
+
 import { recursivelyHeavilyNormalizeViewDdl } from '../../../generic/recursivelyHeavilyNormalizeViewDdl/recursivelyHeavilyNormalizeViewDdl';
 
 /**

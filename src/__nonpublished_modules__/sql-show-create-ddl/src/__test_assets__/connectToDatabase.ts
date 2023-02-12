@@ -41,7 +41,13 @@ const connectionAdapters = {
     });
     await client.connect();
     return {
-      query: async ({ sql, values }: { sql: string; values?: (string | number)[] }) => {
+      query: async ({
+        sql,
+        values,
+      }: {
+        sql: string;
+        values?: (string | number)[];
+      }) => {
         const result = await client.query(sql, values);
         return { rows: result.rows };
       },

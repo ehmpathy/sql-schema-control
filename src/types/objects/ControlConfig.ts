@@ -1,8 +1,9 @@
 import Joi from 'joi';
 import SchematicJoiModel from 'schematic-joi-model';
+
 import { DatabaseLanguage } from '../constants';
-import { ConnectionConfig } from './ConnectionConfig';
 import { ChangeDefinition } from './ChangeDefinition';
+import { ConnectionConfig } from './ConnectionConfig';
 import { ResourceDefinition } from './ResourceDefinition';
 
 const connectionConfigSchema = Joi.object().keys({
@@ -10,7 +11,10 @@ const connectionConfigSchema = Joi.object().keys({
   dialect: Joi.string().required(),
   strict: Joi.boolean().required(),
   connection: ConnectionConfig.schema,
-  definitions: Joi.array().items(ChangeDefinition.schema, ResourceDefinition.schema),
+  definitions: Joi.array().items(
+    ChangeDefinition.schema,
+    ResourceDefinition.schema,
+  ),
 });
 
 type DefinitionObject = ChangeDefinition | ResourceDefinition;

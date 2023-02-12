@@ -53,10 +53,12 @@ FROM car s
     });
 
     // check that we normalize to the same thing
-    const normalizedUserSqlDef = normalizeDDLToSupportLossyShowCreateStatements({
-      ddl: userDefSql,
-      resourceType: ResourceType.VIEW,
-    });
+    const normalizedUserSqlDef = normalizeDDLToSupportLossyShowCreateStatements(
+      {
+        ddl: userDefSql,
+        resourceType: ResourceType.VIEW,
+      },
+    );
     const normalizedShowCreateDefSql = stripIrrelevantContentFromResourceDDL({
       ddl: normalizeDDLToSupportLossyShowCreateStatements({
         ddl: showCreateDefSql,
@@ -105,7 +107,9 @@ CREATE VIEW view_spaceship_with_cargo AS
     });
 
     // apply the sql
-    await dbConnection.query({ sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo;' }); // ensure possible previous state does not affect test
+    await dbConnection.query({
+      sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo;',
+    }); // ensure possible previous state does not affect test
     await dbConnection.query({ sql: viewCreateStatement });
 
     // get get the SHOW CREATE sql
@@ -117,10 +121,12 @@ CREATE VIEW view_spaceship_with_cargo AS
     });
 
     // check that we normalize to the same thing
-    const normalizedUserSqlDef = normalizeDDLToSupportLossyShowCreateStatements({
-      ddl: viewCreateStatement,
-      resourceType: ResourceType.VIEW,
-    });
+    const normalizedUserSqlDef = normalizeDDLToSupportLossyShowCreateStatements(
+      {
+        ddl: viewCreateStatement,
+        resourceType: ResourceType.VIEW,
+      },
+    );
     const normalizedShowCreateDefSql = stripIrrelevantContentFromResourceDDL({
       ddl: normalizeDDLToSupportLossyShowCreateStatements({
         ddl: showCreateDefSql,
@@ -160,29 +166,34 @@ CREATE VIEW view_spaceship_with_cargo AS
     await dbConnection.query({
       sql: 'CREATE TABLE contractor ( id BIGINT, uuid VARCHAR(255), name VARCHAR(255), created_at DATETIME )',
     });
-    await dbConnection.query({ sql: 'DROP TABLE IF EXISTS contractor_version' });
     await dbConnection.query({
-      sql:
-        'CREATE TABLE contractor_version ( id BIGINT, contractor_id BIGINT, created_at DATETIME, effective_at DATETIME)',
+      sql: 'DROP TABLE IF EXISTS contractor_version',
+    });
+    await dbConnection.query({
+      sql: 'CREATE TABLE contractor_version ( id BIGINT, contractor_id BIGINT, created_at DATETIME, effective_at DATETIME)',
     });
 
     await dbConnection.query({ sql: 'DROP TABLE IF EXISTS contractor_cvp' });
     await dbConnection.query({
       sql: 'CREATE TABLE contractor_cvp ( contractor_id BIGINT, contractor_version_id BIGINT)',
     });
-    await dbConnection.query({ sql: 'DROP TABLE IF EXISTS contractor_version_to_contractor_license' });
     await dbConnection.query({
-      sql:
-        'CREATE TABLE contractor_version_to_contractor_license ( contractor_version_id BIGINT, contractor_license_id BIGINT, array_order_index INT )',
+      sql: 'DROP TABLE IF EXISTS contractor_version_to_contractor_license',
     });
-    await dbConnection.query({ sql: 'DROP TABLE IF EXISTS contractor_version_to_contact_method' });
     await dbConnection.query({
-      sql:
-        'CREATE TABLE contractor_version_to_contact_method ( contractor_version_id BIGINT, contact_method_id BIGINT, array_order_index INT )',
+      sql: 'CREATE TABLE contractor_version_to_contractor_license ( contractor_version_id BIGINT, contractor_license_id BIGINT, array_order_index INT )',
+    });
+    await dbConnection.query({
+      sql: 'DROP TABLE IF EXISTS contractor_version_to_contact_method',
+    });
+    await dbConnection.query({
+      sql: 'CREATE TABLE contractor_version_to_contact_method ( contractor_version_id BIGINT, contact_method_id BIGINT, array_order_index INT )',
     });
 
     // apply the sql
-    await dbConnection.query({ sql: 'DROP VIEW IF EXISTS view_contractor_current;' }); // ensure possible previous state does not affect test
+    await dbConnection.query({
+      sql: 'DROP VIEW IF EXISTS view_contractor_current;',
+    }); // ensure possible previous state does not affect test
     await dbConnection.query({ sql: userDefSql });
 
     // get get the SHOW CREATE sql
@@ -194,10 +205,12 @@ CREATE VIEW view_spaceship_with_cargo AS
     });
 
     // check that we normalize to the same thing
-    const normalizedUserSqlDef = normalizeDDLToSupportLossyShowCreateStatements({
-      ddl: userDefSql,
-      resourceType: ResourceType.VIEW,
-    });
+    const normalizedUserSqlDef = normalizeDDLToSupportLossyShowCreateStatements(
+      {
+        ddl: userDefSql,
+        resourceType: ResourceType.VIEW,
+      },
+    );
     const normalizedShowCreateDefSql = stripIrrelevantContentFromResourceDDL({
       ddl: normalizeDDLToSupportLossyShowCreateStatements({
         ddl: showCreateDefSql,

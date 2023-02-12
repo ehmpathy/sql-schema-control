@@ -23,7 +23,9 @@ SELECT s.id,
     JOIN home_cvp cvp ON ((s.id = cvp.home_id)))
     JOIN home_version v ON ((v.id = cvp.home_version_id)));
     `;
-    const normalizedDdl = recursivelyHeavilyNormalizeViewDdl({ ddl: rawCreateDefDdl });
+    const normalizedDdl = recursivelyHeavilyNormalizeViewDdl({
+      ddl: rawCreateDefDdl,
+    });
     expect(normalizedDdl).not.toContain('FROM ((home'); // there is no reason to wrap the "from" clauses in parens...
     expect(normalizedDdl).toMatchSnapshot();
   });

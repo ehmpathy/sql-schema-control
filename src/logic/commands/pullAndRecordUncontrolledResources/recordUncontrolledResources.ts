@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+
 import { ResourceDefinition, ResourceType } from '../../../types';
 import { mkdir, writeFile } from './utils/fileIO';
 
@@ -22,7 +23,9 @@ export const recordUncontrolledResources = async ({
   await Promise.all(
     uncontrolledResources.map(async (resource) => {
       // 1. find or create the resource directory for this resource
-      const dir = `${targetDir}/${standardResourceDirectoryNamePerResourceType[resource.type]}`;
+      const dir = `${targetDir}/${
+        standardResourceDirectoryNamePerResourceType[resource.type]
+      }`;
       await mkdir(dir).catch((error) => {
         if (error.code !== 'EEXIST') throw error;
       }); // mkdir and ignore if dir already exists
@@ -33,7 +36,9 @@ export const recordUncontrolledResources = async ({
 
       // 3. log that it was successfully pulled
       const pullBadge = chalk.green('✓ [PULLED]');
-      const identifier = chalk.white(`resource:${resource.type.toLowerCase()}:${resource.name}`);
+      const identifier = chalk.white(
+        `resource:${resource.type.toLowerCase()}:${resource.name}`,
+      );
       console.log(chalk.bold(`  ${pullBadge} ${identifier}`)); // tslint:disable-line no-console
     }),
   );

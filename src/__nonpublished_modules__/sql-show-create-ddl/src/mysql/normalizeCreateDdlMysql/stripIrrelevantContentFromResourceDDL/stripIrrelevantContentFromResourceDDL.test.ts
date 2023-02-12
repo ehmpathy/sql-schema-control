@@ -1,5 +1,5 @@
-import { stripIrrelevantContentFromResourceDDL } from './stripIrrelevantContentFromResourceDDL';
 import { ResourceType } from '../../../../../../types';
+import { stripIrrelevantContentFromResourceDDL } from './stripIrrelevantContentFromResourceDDL';
 
 describe('stripIrrelevantContentFromResourceDDL', () => {
   it('should strip the DEFINER from PROCEDUREs', () => {
@@ -36,8 +36,7 @@ END
   });
   it('should strip the definer, algorithm, and sql security setting from VIEWs', () => {
     const relevantContent = stripIrrelevantContentFromResourceDDL({
-      ddl:
-        "CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `view_spacecraft_current` AS select 'starship 7' AS `name`",
+      ddl: "CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `view_spacecraft_current` AS select 'starship 7' AS `name`",
       resourceType: ResourceType.VIEW,
     });
     expect(relevantContent).not.toContain('ALGORITHM');

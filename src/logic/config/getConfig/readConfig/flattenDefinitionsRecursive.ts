@@ -1,7 +1,7 @@
-import { readYmlFile } from './_utils/readYmlFile';
-import { validateAndHydrateDefinitionsYmlContents } from './validateAndHydrateDefinitionsYmlContents';
 import { ChangeDefinition, ResourceDefinition } from '../../../../types';
 import { getReadFilePath } from './_utils/getReadFilePath';
+import { readYmlFile } from './_utils/readYmlFile';
+import { validateAndHydrateDefinitionsYmlContents } from './validateAndHydrateDefinitionsYmlContents';
 
 /*
   recursivly parse, validate, and read schema control definitions:
@@ -20,31 +20,33 @@ export const flattenDefinitionsRecursive = async ({
   readRoot: string;
 }): Promise<DefinitionObject[]> => {
   const arraysOfDefinitions = await Promise.all(
-    definitions.map(
-      async (definition): Promise<DefinitionObject[]> => {
-        // if the element is a ChangeDefinition object, return it in an array
-        if (definition.constructor === ChangeDefinition) return [definition as ChangeDefinition]; // array since, although its the only definition we're getting from the list entry, it still needs to be "flatten"-able
-        if (definition.constructor === ResourceDefinition) return [definition as ResourceDefinition];
+    definitions.map(async (definition): Promise<DefinitionObject[]> => {
+      // if the element is a ChangeDefinition object, return it in an array
+      if (definition.constructor === ChangeDefinition)
+        return [definition as ChangeDefinition]; // array since, although its the only definition we're getting from the list entry, it still needs to be "flatten"-able
+      if (definition.constructor === ResourceDefinition)
+        return [definition as ResourceDefinition];
 
-        // since we now know it is not a ChangeDefinition, it must be a string.
-        const filePath = getReadFilePath({ readRoot, relativePath: definition as string });
-        const ymlContents = await readYmlFile({ filePath });
-        const subRoot = filePath
-          .split('/')
-          .slice(0, -1)
-          .join('/'); // drop the file name from filepath
-        const subDefinitions = await validateAndHydrateDefinitionsYmlContents({
-          readRoot: subRoot,
-          contents: ymlContents,
-        });
-        const subFlattenedDefinitions = await flattenDefinitionsRecursive({
-          readRoot: subRoot,
-          definitions: subDefinitions,
-        });
-        return subFlattenedDefinitions;
-      },
-    ),
+      // since we now know it is not a ChangeDefinition, it must be a string.
+      const filePath = getReadFilePath({
+        readRoot,
+        relativePath: definition as string,
+      });
+      const ymlContents = await readYmlFile({ filePath });
+      const subRoot = filePath.split('/').slice(0, -1).join('/'); // drop the file name from filepath
+      const subDefinitions = await validateAndHydrateDefinitionsYmlContents({
+        readRoot: subRoot,
+        contents: ymlContents,
+      });
+      const subFlattenedDefinitions = await flattenDefinitionsRecursive({
+        readRoot: subRoot,
+        definitions: subDefinitions,
+      });
+      return subFlattenedDefinitions;
+    }),
   );
-  const flattenedDefinitions = ([] as DefinitionObject[]).concat(...arraysOfDefinitions);
+  const flattenedDefinitions = ([] as DefinitionObject[]).concat(
+    ...arraysOfDefinitions,
+  );
   return flattenedDefinitions;
 };

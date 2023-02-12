@@ -1,6 +1,10 @@
-import { DatabaseConnection, ChangeDefinition, ChangeDefinitionStatus } from '../../../../types';
-import { getDifferenceForChangeDefinition } from '../getDifferenceForChangeDefinition/getDifferenceForChangeDefinition';
+import {
+  DatabaseConnection,
+  ChangeDefinition,
+  ChangeDefinitionStatus,
+} from '../../../../types';
 import { ChangeHasNotBeenAppliedError } from '../getAppliedChangeDefinitionFromDatabase/getAppliedChangeDefinitionFromDatabase';
+import { getDifferenceForChangeDefinition } from '../getDifferenceForChangeDefinition/getDifferenceForChangeDefinition';
 
 /*
 for each definition:
@@ -19,7 +23,10 @@ export const getStatusForChangeDefinition = async ({
   change: ChangeDefinition;
 }) => {
   try {
-    const difference = await getDifferenceForChangeDefinition({ connection, change });
+    const difference = await getDifferenceForChangeDefinition({
+      connection,
+      change,
+    });
     if (difference === null) return ChangeDefinitionStatus.UP_TO_DATE;
     return ChangeDefinitionStatus.OUT_OF_DATE; // if difference is not null, then its out of date
   } catch (error) {

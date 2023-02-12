@@ -1,5 +1,6 @@
-import { ChangeDefinition } from './ChangeDefinition';
 import sha256 from 'simple-sha256';
+
+import { ChangeDefinition } from './ChangeDefinition';
 
 describe('ChangeDefinition', () => {
   it('should initialize for valid inputs', () => {

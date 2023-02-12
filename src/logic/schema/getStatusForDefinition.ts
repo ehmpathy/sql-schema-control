@@ -1,4 +1,8 @@
-import { DatabaseConnection, ChangeDefinition, ResourceDefinition } from '../../types';
+import {
+  DatabaseConnection,
+  ChangeDefinition,
+  ResourceDefinition,
+} from '../../types';
 import { getStatusForChangeDefinition } from './changeDefinition/getStatusForChangeDefinition';
 import { getStatusForResourceDefinition } from './resourceDefinition/getStatusForResourceDefinition';
 
@@ -14,12 +18,20 @@ export const getStatusForDefinition = async ({
 
   // otherwise, find the status
   if (definition instanceof ChangeDefinition) {
-    const status = await getStatusForChangeDefinition({ connection, change: definition });
+    const status = await getStatusForChangeDefinition({
+      connection,
+      change: definition,
+    });
     return new ChangeDefinition({ ...definition, status });
   }
   if (definition instanceof ResourceDefinition) {
-    const status = await getStatusForResourceDefinition({ connection, resource: definition });
+    const status = await getStatusForResourceDefinition({
+      connection,
+      resource: definition,
+    });
     return new ResourceDefinition({ ...definition, status });
   }
-  throw new Error('unsupported controlled definition. this is an internal schema-generator error');
+  throw new Error(
+    'unsupported controlled definition. this is an internal schema-generator error',
+  );
 };

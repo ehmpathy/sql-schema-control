@@ -1,5 +1,5 @@
-import { normalizeCreateDdlPostgres } from './normalizeCreateDdlPostgres';
 import { ResourceType } from '../../../../types';
+import { normalizeCreateDdlPostgres } from './normalizeCreateDdlPostgres';
 
 describe('normalizeCreateDdlPostgres', () => {
   it('should remove the schema qualifier if the qualifier is for the expected schema', () => {

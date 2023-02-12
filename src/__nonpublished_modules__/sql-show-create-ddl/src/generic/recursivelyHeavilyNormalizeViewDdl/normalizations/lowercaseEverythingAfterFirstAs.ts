@@ -3,6 +3,8 @@
  */
 export const lowercaseEverythingAfterFirstAs = ({ ddl }: { ddl: string }) => {
   const casedAsDdlParts = ddl.split(' AS ');
-  const casedDdl = [casedAsDdlParts[0], casedAsDdlParts[1].toLowerCase()].join(' AS ');
+  const casedDdl = [casedAsDdlParts[0], casedAsDdlParts[1].toLowerCase()].join(
+    ' AS ',
+  );
   return casedDdl;
 };

@@ -1,5 +1,10 @@
 import sha256 from 'simple-sha256';
-import { ChangeDefinitionStatus, ChangeDefinition, RequiredAction } from '../../../types';
+
+import {
+  ChangeDefinitionStatus,
+  ChangeDefinition,
+  RequiredAction,
+} from '../../../types';
 import { getRequiredActionForChange } from './getRequiredActionForChange';
 
 describe('getRequiredActionForChange', () => {

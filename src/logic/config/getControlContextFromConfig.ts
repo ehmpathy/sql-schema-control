@@ -31,7 +31,10 @@ export const getControlContextFromConfig = async ({
     const controlledResources = definitions.filter(
       (def) => def.constructor === ResourceDefinition,
     ) as ResourceDefinition[];
-    const uncontrolledResources = await getUncontrolledResources({ connection, controlledResources });
+    const uncontrolledResources = await getUncontrolledResources({
+      connection,
+      controlledResources,
+    });
     definitions.push(...uncontrolledResources); // append the uncontrolled resources to the definitions
   }
 

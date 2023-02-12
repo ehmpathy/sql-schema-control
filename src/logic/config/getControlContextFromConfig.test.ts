@@ -1,6 +1,12 @@
 import sha256 from 'simple-sha256';
 
-import { ChangeDefinition, ControlContext, DatabaseLanguage, ResourceDefinition, ResourceType } from '../../types';
+import {
+  ChangeDefinition,
+  ControlContext,
+  DatabaseLanguage,
+  ResourceDefinition,
+  ResourceType,
+} from '../../types';
 import { getUncontrolledResources } from '../schema/resourceDefinition/getUncontrolledResources';
 import { getConfig } from './getConfig';
 import { getControlContextFromConfig } from './getControlContextFromConfig';
@@ -36,14 +42,17 @@ const mockedConfigResponse = {
 getConfigMock.mockResolvedValue(mockedConfigResponse); // since typechecked by Context object
 
 jest.mock('./initializeControlEnvironment');
-const initializeControlEnvironmentMock = initializeControlEnvironment as jest.Mock;
+const initializeControlEnvironmentMock =
+  initializeControlEnvironment as jest.Mock;
 const exampleConnection = {
   query: () => {},
   end: () => {},
   language: DatabaseLanguage.MYSQL,
   schema: 'superimportantdb',
 };
-initializeControlEnvironmentMock.mockResolvedValue({ connection: exampleConnection }); // since typechecked by Context object
+initializeControlEnvironmentMock.mockResolvedValue({
+  connection: exampleConnection,
+}); // since typechecked by Context object
 
 jest.mock('../schema/resourceDefinition/getUncontrolledResources');
 const getUncontrolledResourcesMock = getUncontrolledResources as jest.Mock;
@@ -88,17 +97,23 @@ describe('getControlContextFromConfig', () => {
       definitions: [],
     }); // since typechecked by Context object
     initializeControlEnvironmentMock.mockResolvedValueOnce(exampleConnection); // since typechecked by Context object
-    const result = await getControlContextFromConfig({ configPath: '__CONFIG_PATH__' });
+    const result = await getControlContextFromConfig({
+      configPath: '__CONFIG_PATH__',
+    });
     expect(result.constructor).toEqual(ControlContext);
   });
   it('should add uncontrolled resources to the definitions if strict', async () => {
     getConfigMock.mockResolvedValue({ ...mockedConfigResponse, strict: true });
-    const result = await getControlContextFromConfig({ configPath: '__CONFIG_PATH__' });
+    const result = await getControlContextFromConfig({
+      configPath: '__CONFIG_PATH__',
+    });
     expect(result.definitions).toContain(exampleUncontrolledResource);
   });
   it('should not add uncontrolled resources to the definitions if not strict', async () => {
     getConfigMock.mockResolvedValue({ ...mockedConfigResponse, strict: false });
-    const result = await getControlContextFromConfig({ configPath: '__CONFIG_PATH__' });
+    const result = await getControlContextFromConfig({
+      configPath: '__CONFIG_PATH__',
+    });
     expect(result.definitions).not.toContain(exampleUncontrolledResource);
   });
 });

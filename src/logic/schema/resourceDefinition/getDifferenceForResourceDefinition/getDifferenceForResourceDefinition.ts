@@ -1,7 +1,7 @@
+import { normalizeShowCreateDdl } from '../../../../__nonpublished_modules__/sql-show-create-ddl';
 import { DatabaseConnection, ResourceDefinition } from '../../../../types';
 import { getSqlDifference } from '../../utils/getSqlDifference';
 import { getLiveResourceDefinitionFromDatabase } from '../getLiveResourceDefinitionFromDatabase';
-import { normalizeShowCreateDdl } from '../../../../__nonpublished_modules__/sql-show-create-ddl';
 
 export const getDifferenceForResourceDefinition = async ({
   connection,

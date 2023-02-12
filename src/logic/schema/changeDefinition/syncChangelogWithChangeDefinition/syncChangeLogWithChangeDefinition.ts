@@ -1,6 +1,10 @@
 import { mysql as prepareMySQL, pg as preparePgSQL } from 'yesql';
 
-import { DatabaseConnection, ChangeDefinition, DatabaseLanguage } from '../../../../types';
+import {
+  DatabaseConnection,
+  ChangeDefinition,
+  DatabaseLanguage,
+} from '../../../../types';
 
 export const syncChangeLogWithChangeDefinition = async ({
   connection,
@@ -45,7 +49,10 @@ SET
       change_hash: definition.hash,
       change_content: definition.sql,
     });
-    return await connection.query({ sql: prepared.text, values: prepared.values });
+    return await connection.query({
+      sql: prepared.text,
+      values: prepared.values,
+    });
   }
 
   // if none of the above, throw error

@@ -1,5 +1,5 @@
-import { SqlSubqueryReference } from './model/SqlSubqueryReference';
 import { getTokenForSqlSubqueryReference } from './getTokenForSubqueryReference';
+import { SqlSubqueryReference } from './model/SqlSubqueryReference';
 
 export const hydrateSqlByReferencingAndReplacingSubqueryTokens = ({
   flattenedSql,

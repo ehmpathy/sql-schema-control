@@ -19,7 +19,9 @@ from
     join contractor_version v on v.id = cvp.contractor_version_id
   )
     `.trim();
-    const normalizedSql = removeParenthesisSurroundingJoinsInFromClause({ flattenedSql: exampleSql });
+    const normalizedSql = removeParenthesisSurroundingJoinsInFromClause({
+      flattenedSql: exampleSql,
+    });
     expect(normalizedSql).not.toContain('(');
     expect(normalizedSql).not.toContain(')');
     expect(normalizedSql).toMatchSnapshot();

@@ -73,14 +73,24 @@ CREATE INDEX home_cvp_fk0_ix ON home_cvp USING btree (home_id);
 CREATE INDEX home_cvp_fk1_ix ON home_cvp USING btree (home_version_id);
       `.trim(),
 ];
-const dependencyTablesNames = ['home_cvp', 'home_to_host', 'home_version_to_photo', 'home_version', 'home'];
+const dependencyTablesNames = [
+  'home_cvp',
+  'home_to_host',
+  'home_version_to_photo',
+  'home_version',
+  'home',
+];
 export const provisionDependencyTablesForMoreComplexView = async ({
   dbConnection,
 }: {
   dbConnection: DatabaseConnection;
 }) => {
   await Promise.all(
-    dependencyTablesNames.map((tableName) => dbConnection.query({ sql: `DROP TABLE IF EXISTS ${tableName} CASCADE` })),
+    dependencyTablesNames.map((tableName) =>
+      dbConnection.query({ sql: `DROP TABLE IF EXISTS ${tableName} CASCADE` }),
+    ),
   );
-  await Promise.all(dependencyTablesDdl.map((ddl) => dbConnection.query({ sql: ddl })));
+  await Promise.all(
+    dependencyTablesDdl.map((ddl) => dbConnection.query({ sql: ddl })),
+  );
 };

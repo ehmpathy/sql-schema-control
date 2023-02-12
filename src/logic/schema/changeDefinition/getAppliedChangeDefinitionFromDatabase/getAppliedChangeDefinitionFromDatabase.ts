@@ -2,7 +2,13 @@ import { DatabaseConnection, ChangeDefinition } from '../../../../types';
 
 export class ChangeHasNotBeenAppliedError extends Error {
   public changeId: string;
-  constructor({ changeId, changePath }: { changeId: string; changePath: string }) {
+  constructor({
+    changeId,
+    changePath,
+  }: {
+    changeId: string;
+    changePath: string;
+  }) {
     super(`change id:${changeId}:${changePath} has not yet been applied`);
     this.changeId = changeId;
   }

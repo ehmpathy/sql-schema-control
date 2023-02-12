@@ -21,6 +21,7 @@ WHERE 1=1
     `.trim(),
     values: [schema, name],
   });
-  if (!result.rows.length) throw new Error(`could not find view '${schema}.${name}'`);
+  if (!result.rows.length)
+    throw new Error(`could not find view '${schema}.${name}'`);
   return result.rows[0].ddl;
 };

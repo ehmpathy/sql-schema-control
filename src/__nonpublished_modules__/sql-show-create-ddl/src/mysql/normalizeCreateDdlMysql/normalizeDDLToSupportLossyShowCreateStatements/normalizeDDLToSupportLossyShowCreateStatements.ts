@@ -4,7 +4,10 @@ import strip from 'sql-strip-comments';
 import { ResourceType } from '../../../../../../types';
 import { recursivelyHeavilyNormalizeViewDdl } from '../../../generic/recursivelyHeavilyNormalizeViewDdl/recursivelyHeavilyNormalizeViewDdl';
 
-const RESOURCES_WITH_LOSSY_SHOW_CREATE_STATEMENTS = [ResourceType.TABLE, ResourceType.VIEW];
+const RESOURCES_WITH_LOSSY_SHOW_CREATE_STATEMENTS = [
+  ResourceType.TABLE,
+  ResourceType.VIEW,
+];
 
 /**
  * some SHOW CREATE statements are not lossy:
@@ -21,7 +24,8 @@ export const normalizeDDLToSupportLossyShowCreateStatements = ({
   ddl: string;
   resourceType: ResourceType;
 }) => {
-  if (!RESOURCES_WITH_LOSSY_SHOW_CREATE_STATEMENTS.includes(resourceType)) return ddl; // if does not have lossy show create, return the ddl without formatting
+  if (!RESOURCES_WITH_LOSSY_SHOW_CREATE_STATEMENTS.includes(resourceType))
+    return ddl; // if does not have lossy show create, return the ddl without formatting
 
   // strip comments from tables and views, since these are not preserved by the SHOW CREATEs
   const strippedDDL = strip(ddl);

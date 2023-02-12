@@ -41,13 +41,17 @@ describe('applyPlanForChange', () => {
     });
 
     // 1. ensure db is clean
-    await connection.query({ sql: `drop ${resource.type} if exists ${resource.name}` });
+    await connection.query({
+      sql: `drop ${resource.type} if exists ${resource.name}`,
+    });
 
     // 2. apply it
     await applyPlanForResource({ connection, plan });
 
     // 3. check it was applied
-    const result = await connection.query({ sql: `SHOW CREATE ${resource.type} ${resource.name}` }); // this will throw error if resource dne
+    const result = await connection.query({
+      sql: `SHOW CREATE ${resource.type} ${resource.name}`,
+    }); // this will throw error if resource dne
     expect(result.rows[0].Table).toEqual(resource.name);
   });
   it('should be able to reapply a function resource', async () => {
@@ -71,13 +75,17 @@ END;
     });
 
     // 1. ensure db is clean
-    await connection.query({ sql: `drop ${resource.type} if exists ${resource.name}` });
+    await connection.query({
+      sql: `drop ${resource.type} if exists ${resource.name}`,
+    });
 
     // 2. apply it
     await applyPlanForResource({ connection, plan });
 
     // 3. check it was applied
-    const result = await connection.query({ sql: 'SELECT some_fn_to_test_apply() as fn_result' }); // this will throw error if resource dne
+    const result = await connection.query({
+      sql: 'SELECT some_fn_to_test_apply() as fn_result',
+    }); // this will throw error if resource dne
     expect(result.rows[0].fn_result).toEqual(1);
 
     // 4. reapply it
@@ -92,7 +100,9 @@ END;
     await applyPlanForResource({ connection, plan });
 
     // 5. check it was reapplied
-    const resultTwo = await connection.query({ sql: 'SELECT some_fn_to_test_apply() as fn_result' }); // this will throw error if resource dne
+    const resultTwo = await connection.query({
+      sql: 'SELECT some_fn_to_test_apply() as fn_result',
+    }); // this will throw error if resource dne
     expect(resultTwo.rows[0].fn_result).toEqual(0);
   });
 });

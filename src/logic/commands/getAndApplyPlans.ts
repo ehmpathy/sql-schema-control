@@ -1,8 +1,12 @@
 import { getControlContextFromConfig } from '../config/getControlContextFromConfig';
-import { getPlans } from './getPlans';
 import { applyPlans } from './applyPlans';
+import { getPlans } from './getPlans';
 
-export const getAndApplyPlans = async ({ configPath }: { configPath: string }) => {
+export const getAndApplyPlans = async ({
+  configPath,
+}: {
+  configPath: string;
+}) => {
   // 1. get the control context
   const context = await getControlContextFromConfig({ configPath });
 

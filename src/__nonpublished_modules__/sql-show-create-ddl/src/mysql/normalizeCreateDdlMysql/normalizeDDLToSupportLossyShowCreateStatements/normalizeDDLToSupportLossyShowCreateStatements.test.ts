@@ -1,5 +1,5 @@
-import { normalizeDDLToSupportLossyShowCreateStatements } from './normalizeDDLToSupportLossyShowCreateStatements';
 import { ResourceType } from '../../../../../../types';
+import { normalizeDDLToSupportLossyShowCreateStatements } from './normalizeDDLToSupportLossyShowCreateStatements';
 
 describe('normalizeDDLToSupportLossyShowCreateStatements', () => {
   it('should strip comments and reformat table create ddl', () => {
@@ -42,11 +42,12 @@ where 1=1
           `.trim(),
       resourceType: ResourceType.VIEW,
     });
-    const cleanedShowCreateDef = normalizeDDLToSupportLossyShowCreateStatements({
-      ddl:
-        "CREATE VIEW `view_something_for_getResourceCreateStatement` AS select 'hello, world!' AS `first_words`,`u`.`id` AS `id` from `test_table_getResourceCreateStatement` `u` where ((1 = 1) and (`u`.`id` = 5))",
-      resourceType: ResourceType.VIEW,
-    });
+    const cleanedShowCreateDef = normalizeDDLToSupportLossyShowCreateStatements(
+      {
+        ddl: "CREATE VIEW `view_something_for_getResourceCreateStatement` AS select 'hello, world!' AS `first_words`,`u`.`id` AS `id` from `test_table_getResourceCreateStatement` `u` where ((1 = 1) and (`u`.`id` = 5))",
+        resourceType: ResourceType.VIEW,
+      },
+    );
     expect(cleanedUserDef).toEqual(cleanedShowCreateDef);
   });
   it('should be able to normalize this ddl so that show create def looks reasonable', () => {

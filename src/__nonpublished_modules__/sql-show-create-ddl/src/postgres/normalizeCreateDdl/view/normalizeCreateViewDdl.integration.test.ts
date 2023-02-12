@@ -3,24 +3,32 @@ import { getDbConnection } from '../../../__test_assets__/getDbConnection';
 import { DatabaseConnection } from '../../../types';
 import { provisionShowCreateTableFunction } from '../../showCreateDdl/table/provisionShowCreateTableFunction';
 import { showCreateView } from '../../showCreateDdl/view/showCreateView';
-import { normalizeCreateViewDdl } from './normalizeCreateViewDdl';
 import { provisionDependencyTablesForMoreComplexView } from './__test_assets__/provisionDependencyTablesForMoreComplexView';
+import { normalizeCreateViewDdl } from './normalizeCreateViewDdl';
 
 describe('showCreateView', () => {
   let dbConnection: DatabaseConnection;
   beforeAll(async () => {
-    dbConnection = await getDbConnection({ language: DatabaseLanguage.POSTGRES });
+    dbConnection = await getDbConnection({
+      language: DatabaseLanguage.POSTGRES,
+    });
   });
   afterAll(async () => {
     await dbConnection.end();
   });
   it('should be possible to normalize create view ddl', async () => {
     await provisionShowCreateTableFunction({ dbConnection });
-    await dbConnection.query({ sql: 'DROP VIEW IF EXISTS test_view_for_normalization_on;' });
+    await dbConnection.query({
+      sql: 'DROP VIEW IF EXISTS test_view_for_normalization_on;',
+    });
     await dbConnection.query({
       sql: "CREATE VIEW test_view_for_normalization_on as SELECT 'hello' as first_words",
     });
-    const ddl = await showCreateView({ dbConnection, schema: 'public', name: 'test_view_for_normalization_on' });
+    const ddl = await showCreateView({
+      dbConnection,
+      schema: 'public',
+      name: 'test_view_for_normalization_on',
+    });
     const normalizedDdl = await normalizeCreateViewDdl({ ddl });
     expect(normalizedDdl).toMatchSnapshot();
   });
@@ -54,7 +62,11 @@ JOIN home_version v ON v.id = cvp.home_version_id;
     await dbConnection.query({
       sql: complexViewDdl,
     });
-    const ddl = await showCreateView({ dbConnection, schema: 'public', name: 'view_home_current' });
+    const ddl = await showCreateView({
+      dbConnection,
+      schema: 'public',
+      name: 'view_home_current',
+    });
     const normalizedDdl = await normalizeCreateViewDdl({ ddl });
     expect(normalizedDdl).toMatchSnapshot();
 

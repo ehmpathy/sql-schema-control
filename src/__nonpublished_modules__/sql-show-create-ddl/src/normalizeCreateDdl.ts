@@ -1,6 +1,6 @@
 import { DatabaseLanguage, ResourceType } from '../../../types';
-import { normalizeCreateDdlPostgres } from './postgres/normalizeCreateDdlPostgres';
 import { normalizeCreateDdlMysql } from './mysql/normalizeCreateDdlMysql';
+import { normalizeCreateDdlPostgres } from './postgres/normalizeCreateDdlPostgres';
 
 export const normalizeShowCreateDdl = async ({
   language,

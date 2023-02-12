@@ -1,5 +1,7 @@
 import sha256 from 'simple-sha256';
 import uuid from 'uuid/v4';
+
+import { promiseConfig } from '../../../../__test_assets__/connection.config';
 import {
   DatabaseLanguage,
   DatabaseConnection,
@@ -9,7 +11,6 @@ import {
 } from '../../../../types';
 import { initializeControlEnvironment } from '../../../config/initializeControlEnvironment';
 import { getDifferenceForChangeDefinition } from './getDifferenceForChangeDefinition';
-import { promiseConfig } from '../../../../__test_assets__/connection.config';
 
 describe('getDifferenceForChangeDefinition', () => {
   let connection: DatabaseConnection;
@@ -52,7 +53,10 @@ describe('getDifferenceForChangeDefinition', () => {
     });
 
     // show that there is no diff
-    const result = await getDifferenceForChangeDefinition({ connection, change: definition });
+    const result = await getDifferenceForChangeDefinition({
+      connection,
+      change: definition,
+    });
     expect(result).toEqual(null);
   });
   it('should find that an out of date change has a colored diff of changed lines', async () => {
@@ -91,7 +95,10 @@ created_at      DATETIME(3) DEFAULT CURRENT_TIMESTAMP
     });
 
     // get the diff
-    const result = await getDifferenceForChangeDefinition({ connection, change: updatedDefinition });
+    const result = await getDifferenceForChangeDefinition({
+      connection,
+      change: updatedDefinition,
+    });
     expect(typeof result).toEqual('string');
     expect(result).toMatchSnapshot(); // result is purely visual, so log an example of it
   });

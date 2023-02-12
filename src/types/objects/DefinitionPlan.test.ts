@@ -1,8 +1,9 @@
+import sha256 from 'simple-sha256';
+
 import { RequiredAction, ResourceType } from '../constants';
 import { ChangeDefinition } from './ChangeDefinition';
-import { ResourceDefinition } from './ResourceDefinition';
 import { DefinitionPlan } from './DefinitionPlan';
-import sha256 from 'simple-sha256';
+import { ResourceDefinition } from './ResourceDefinition';
 
 describe('DefinitionPlan', () => {
   const changeDefinition = new ChangeDefinition({

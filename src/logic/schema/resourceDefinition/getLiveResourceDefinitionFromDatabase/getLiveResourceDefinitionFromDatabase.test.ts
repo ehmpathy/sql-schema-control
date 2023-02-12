@@ -1,6 +1,6 @@
-import { getLiveResourceDefinitionFromDatabase } from './getLiveResourceDefinitionFromDatabase';
-import { ResourceType, ResourceDefinition } from '../../../../types';
 import { showCreateDdl } from '../../../../__nonpublished_modules__/sql-show-create-ddl';
+import { ResourceType, ResourceDefinition } from '../../../../types';
+import { getLiveResourceDefinitionFromDatabase } from './getLiveResourceDefinitionFromDatabase';
 
 jest.mock('../../../../__nonpublished_modules__/sql-show-create-ddl');
 const showCreateDdlMock = showCreateDdl as jest.Mock;
