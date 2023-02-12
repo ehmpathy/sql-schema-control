@@ -7,7 +7,7 @@ import { ConnectionConfig } from './ConnectionConfig';
 import { ResourceDefinition } from './ResourceDefinition';
 
 const schema = Joi.object().keys({
-  language: Joi.string().valid(Object.values(DatabaseLanguage)),
+  language: Joi.string().valid(...Object.values(DatabaseLanguage)),
   dialect: Joi.string().required(),
   strict: Joi.boolean().required(),
   connection: ConnectionConfig.schema,

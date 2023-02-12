@@ -9,7 +9,9 @@ const schema = Joi.object().keys({
   sql: Joi.string().required(),
   hash: Joi.string().required().length(64), // sha256 hash
   reappliable: Joi.boolean().required(),
-  status: Joi.string().valid(Object.values(ChangeDefinitionStatus)).optional(),
+  status: Joi.string()
+    .valid(...Object.values(ChangeDefinitionStatus))
+    .optional(),
 });
 
 interface ChangeDefinitionConstructorProps {

@@ -3,6 +3,8 @@
 exports[`getAndDisplayPlans should log that the change log was synced successfully 1`] = `
 "    
        [32m✔[39m [1m[32m[SYNC][39m __PATH__ [90m(change:__ID__)[39m[22m
+[2m[22m
+[2m      [2mat log ([22m[2msrc/logic/commands/getAndSyncChangeLogForChangeDefinition.ts[2m:45:11)[22m[2m[22m
 
 "
 `;

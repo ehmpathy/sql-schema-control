@@ -1,16 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`breakSqlIntoNestedSqlArraysAtParentheses should accurately break up this example 1`] = `
-Array [
+[
   "SELECT
   s.id,
   s.uuid,
   s.name,
   ",
-  Array [
+  [
     "(
     SELECT GROUP_CONCAT",
-    Array [
+    [
       "(ice_cream_to_ingredient.ingredient_id ORDER BY ice_cream_to_ingredient.ingredient_id)",
     ],
     "

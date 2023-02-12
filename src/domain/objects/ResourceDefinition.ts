@@ -4,12 +4,12 @@ import Joi from 'joi';
 import { ResourceType, ResourceDefinitionStatus } from '../../domain/constants';
 
 const schema = Joi.object().keys({
-  type: Joi.string().valid(Object.values(ResourceType)),
+  type: Joi.string().valid(...Object.values(ResourceType)),
   name: Joi.string().required(),
   sql: Joi.string().required(),
   path: Joi.string().optional(), // not defined for definitions taken from database
   status: Joi.string()
-    .valid(Object.values(ResourceDefinitionStatus))
+    .valid(...Object.values(ResourceDefinitionStatus))
     .optional(),
 });
 

@@ -6,12 +6,14 @@ import { ChangeDefinition } from './ChangeDefinition';
 import { ResourceDefinition } from './ResourceDefinition';
 
 const schema = Joi.object().keys({
-  language: Joi.string().valid(Object.values(DatabaseLanguage)),
+  language: Joi.string().valid(...Object.values(DatabaseLanguage)),
   dialect: Joi.string().required(),
   connection: Joi.object().keys({
     query: Joi.func().required(),
     end: Joi.func().required(),
-    language: Joi.string().valid(Object.values(DatabaseLanguage)).required(),
+    language: Joi.string()
+      .valid(...Object.values(DatabaseLanguage))
+      .required(),
     schema: Joi.string().required(),
   }),
   definitions: Joi.array().items(
