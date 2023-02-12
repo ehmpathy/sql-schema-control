@@ -1,4 +1,4 @@
-import { Command, flags } from '@oclif/command';
+import { Command, Flags } from '@oclif/core';
 import { pullAndRecordUncontrolledResources } from '../../logic/commands/pullAndRecordUncontrolledResources';
 
 export default class Plan extends Command {
@@ -15,9 +15,9 @@ pulling uncontrolled resource definitions into .../schema-control/src/contract/c
   ];
 
   public static flags = {
-    help: flags.help({ char: 'h' }),
-    config: flags.string({ char: 'c', description: 'path to config file', default: 'schema/control.yml' }),
-    target: flags.string({
+    help: Flags.help({ char: 'h' }),
+    config: Flags.string({ char: 'c', description: 'path to config file', default: 'schema/control.yml' }),
+    target: Flags.string({
       char: 't',
       description: 'target directory to record uncontrolled resources in',
       default: 'schema',
@@ -25,7 +25,7 @@ pulling uncontrolled resource definitions into .../schema-control/src/contract/c
   };
 
   public async run() {
-    const { flags } = this.parse(Plan);
+    const { flags } = await this.parse(Plan);
     const config = flags.config!;
     const target = flags.target!;
 

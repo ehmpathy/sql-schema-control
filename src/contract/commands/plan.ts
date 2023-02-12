@@ -1,4 +1,4 @@
-import { Command, flags } from '@oclif/command';
+import { Command, Flags } from '@oclif/core';
 import { getAndDisplayPlans } from '../../logic/commands/getAndDisplayPlans';
 
 export default class Plan extends Command {
@@ -13,12 +13,12 @@ export default class Plan extends Command {
   ];
 
   public static flags = {
-    help: flags.help({ char: 'h' }),
-    config: flags.string({ char: 'c', description: 'path to config file', default: 'schema/control.yml' }),
+    help: Flags.help({ char: 'h' }),
+    config: Flags.string({ char: 'c', description: 'path to config file', default: 'schema/control.yml' }),
   };
 
   public async run() {
-    const { flags } = this.parse(Plan);
+    const { flags } = await this.parse(Plan);
     const config = flags.config!;
 
     // get and display the plans

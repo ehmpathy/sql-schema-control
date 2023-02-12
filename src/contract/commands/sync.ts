@@ -1,4 +1,4 @@
-import { Command, flags } from '@oclif/command';
+import { Command, Flags } from '@oclif/core';
 import { getAndSyncChangeLogForChangeDefinition } from '../../logic/commands/getAndSyncChangeLogForChangeDefinition';
 
 export default class Sync extends Command {
@@ -12,9 +12,9 @@ export default class Sync extends Command {
   ];
 
   public static flags = {
-    help: flags.help({ char: 'h' }),
-    config: flags.string({ char: 'c', description: 'path to config file', default: 'schema/control.yml' }),
-    id: flags.string({
+    help: Flags.help({ char: 'h' }),
+    config: Flags.string({ char: 'c', description: 'path to config file', default: 'schema/control.yml' }),
+    id: Flags.string({
       name: 'id',
       description: 'reference id of the change definition',
       required: true,
@@ -22,7 +22,7 @@ export default class Sync extends Command {
   };
 
   public async run() {
-    const { flags } = this.parse(Sync);
+    const { flags } = await this.parse(Sync);
     const config = flags.config!;
     const changeId = flags.id;
 

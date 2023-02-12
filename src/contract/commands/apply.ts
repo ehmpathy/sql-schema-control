@@ -1,4 +1,4 @@
-import { Command, flags } from '@oclif/command';
+import { Command, Flags } from '@oclif/core';
 import { getAndApplyPlans } from '../../logic/commands/getAndApplyPlans';
 
 export default class Apply extends Command {
@@ -20,12 +20,12 @@ Could not apply ./init/service_user.sql: Operation CREATE USER failed for 'user_
   ];
 
   public static flags = {
-    help: flags.help({ char: 'h' }),
-    config: flags.string({ char: 'c', description: 'path to config file', default: 'schema/control.yml' }),
+    help: Flags.help({ char: 'h' }),
+    config: Flags.string({ char: 'c', description: 'path to config file', default: 'schema/control.yml' }),
   };
 
   public async run() {
-    const { flags } = this.parse(Apply);
+    const { flags } = await this.parse(Apply);
     const config = flags.config!;
 
     // apply changes
