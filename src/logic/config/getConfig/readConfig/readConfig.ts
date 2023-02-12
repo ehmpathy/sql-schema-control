@@ -1,4 +1,4 @@
-import { ControlConfig } from '../../../../types';
+import { ControlConfig } from '../../../../domain';
 import { getReadFilePath } from './_utils/getReadFilePath';
 import { readYmlFile } from './_utils/readYmlFile';
 import { flattenDefinitionsRecursive } from './flattenDefinitionsRecursive';

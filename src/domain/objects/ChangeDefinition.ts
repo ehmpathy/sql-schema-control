@@ -1,9 +1,9 @@
+import { DomainObject } from 'domain-objects';
 import Joi from 'joi';
-import SchematicJoiModel from 'schematic-joi-model';
 
-import { ChangeDefinitionStatus } from '../constants';
+import { ChangeDefinitionStatus } from '../../domain/constants';
 
-const changeDefinitionSchema = Joi.object().keys({
+const schema = Joi.object().keys({
   id: Joi.string().required(),
   path: Joi.string().required(),
   sql: Joi.string().required(),
@@ -20,7 +20,7 @@ interface ChangeDefinitionConstructorProps {
   reappliable?: boolean; // optional from constructor input, but is defined by the constructor
   status?: ChangeDefinitionStatus;
 }
-export class ChangeDefinition extends SchematicJoiModel<ChangeDefinitionConstructorProps> {
+export class ChangeDefinition extends DomainObject<ChangeDefinitionConstructorProps> {
   constructor(props: ChangeDefinitionConstructorProps) {
     const modifiedProps = { ...props, reappliable: !!props.reappliable };
     super(modifiedProps);
@@ -31,5 +31,5 @@ export class ChangeDefinition extends SchematicJoiModel<ChangeDefinitionConstruc
   public hash!: string;
   public reappliable!: boolean;
   public status?: ChangeDefinitionStatus;
-  public static schema = changeDefinitionSchema;
+  public static schema = schema;
 }

@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import sha256 from 'simple-sha256';
 import { stdout } from 'stdout-stderr';
 
-import { ChangeDefinition } from '../../types';
+import { ChangeDefinition } from '../../domain';
 import { getControlContextFromConfig } from '../config/getControlContextFromConfig';
 import { syncChangeLogWithChangeDefinition } from '../schema/changeDefinition/syncChangelogWithChangeDefinition';
 import { getAndSyncChangeLogForChangeDefinition } from './getAndSyncChangeLogForChangeDefinition';

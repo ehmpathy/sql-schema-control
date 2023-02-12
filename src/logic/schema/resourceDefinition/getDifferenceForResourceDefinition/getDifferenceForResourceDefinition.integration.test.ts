@@ -6,7 +6,7 @@ import {
   ResourceDefinition,
   ResourceDefinitionStatus,
   ResourceType,
-} from '../../../../types';
+} from '../../../../domain';
 import { initializeControlEnvironment } from '../../../config/initializeControlEnvironment';
 import { getDifferenceForResourceDefinition } from './getDifferenceForResourceDefinition';
 

@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 
-import { ResourceDefinition, ResourceType } from '../../../types';
+import { ResourceDefinition, ResourceType } from '../../../domain';
 import { mkdir, writeFile } from './utils/fileIO';
 
 /*

@@ -1,4 +1,4 @@
-import { ChangeDefinition, ResourceDefinition } from '../../types';
+import { ChangeDefinition, ResourceDefinition } from '../../domain';
 
 export const getReferenceIdForDefinition = ({
   definition,

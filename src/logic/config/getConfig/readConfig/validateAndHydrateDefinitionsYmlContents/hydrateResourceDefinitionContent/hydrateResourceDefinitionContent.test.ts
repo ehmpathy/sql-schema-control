@@ -2,7 +2,7 @@ import {
   ResourceDefinition,
   DefinitionType,
   ResourceType,
-} from '../../../../../../types';
+} from '../../../../../../domain';
 import { InvalidDefinitionError } from '../errors';
 import { readFileAsync } from './../../../../_utils/readFileAsync';
 import { extractResourceTypeAndNameFromDDL } from './extractResourceTypeAndNameFromDDL';

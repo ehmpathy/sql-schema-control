@@ -1,4 +1,4 @@
-import { ConnectionConfig } from '../../../../types';
+import { ConnectionConfig } from '../../../../domain';
 
 /*
   we ask the user to define the path to a node module which exports a promiseConfig method

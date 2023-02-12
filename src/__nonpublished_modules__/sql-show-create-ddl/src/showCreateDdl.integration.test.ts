@@ -1,4 +1,4 @@
-import { DatabaseLanguage, ResourceType } from '../../../types';
+import { DatabaseLanguage, ResourceType } from '../../../domain';
 import { getDbConnection } from './__test_assets__/getDbConnection';
 import { showCreateDdl, ResourceDoesNotExistError } from './showCreateDdl';
 import { DatabaseConnection } from './types';

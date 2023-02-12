@@ -2,7 +2,7 @@ import {
   ResourceDefinition,
   ResourceType,
   ResourceDefinitionStatus,
-} from '../../../../types';
+} from '../../../../domain';
 import { getUncontrolledResources } from './getUncontrolledResources';
 import { pullResources } from './pullResources';
 
@@ -73,7 +73,7 @@ describe('getUncontrolledResources', () => {
       connection: '__CONNECTION__' as any,
       controlledResources: [] as any,
     });
-    uncontrolledResources.map(uncontrolledResource =>
+    uncontrolledResources.map((uncontrolledResource) =>
       expect(uncontrolledResource.status).toEqual(
         ResourceDefinitionStatus.NOT_CONTROLLED,
       ),
@@ -91,7 +91,7 @@ describe('getUncontrolledResources', () => {
       connection: '__CONNECTION__' as any,
       controlledResources: [] as any,
     });
-    uncontrolledResources.map(uncontrolledResource =>
+    uncontrolledResources.map((uncontrolledResource) =>
       expect(uncontrolledResource.path).toEqual(
         `${liveResource.type.toLowerCase()}:${liveResource.name}`,
       ),

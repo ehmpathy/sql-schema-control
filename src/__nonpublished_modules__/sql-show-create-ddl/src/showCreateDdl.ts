@@ -1,4 +1,4 @@
-import { DatabaseLanguage, ResourceType } from '../../../types';
+import { DatabaseLanguage, ResourceType } from '../../../domain';
 import { showCreateDdlMysql } from './mysql/showCreateDdlMysql';
 import { showCreateDdlPostgres } from './postgres/showCreateDdlPostgres';
 import { DatabaseConnection } from './types';

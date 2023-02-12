@@ -1,4 +1,4 @@
-import { ResourceType } from '../../../../types';
+import { ResourceType } from '../../../../domain';
 import { DatabaseConnection } from '../types';
 import { normalizeCreateDdlMysql } from './normalizeCreateDdlMysql';
 

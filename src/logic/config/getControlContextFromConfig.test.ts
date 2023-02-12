@@ -6,7 +6,7 @@ import {
   DatabaseLanguage,
   ResourceDefinition,
   ResourceType,
-} from '../../types';
+} from '../../domain';
 import { getUncontrolledResources } from '../schema/resourceDefinition/getUncontrolledResources';
 import { getConfig } from './getConfig';
 import { getControlContextFromConfig } from './getControlContextFromConfig';

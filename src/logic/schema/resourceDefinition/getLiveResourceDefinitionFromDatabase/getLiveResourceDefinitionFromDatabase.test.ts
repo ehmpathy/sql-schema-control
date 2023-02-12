@@ -1,5 +1,5 @@
 import { showCreateDdl } from '../../../../__nonpublished_modules__/sql-show-create-ddl';
-import { ResourceType, ResourceDefinition } from '../../../../types';
+import { ResourceType, ResourceDefinition } from '../../../../domain';
 import { getLiveResourceDefinitionFromDatabase } from './getLiveResourceDefinitionFromDatabase';
 
 jest.mock('../../../../__nonpublished_modules__/sql-show-create-ddl');

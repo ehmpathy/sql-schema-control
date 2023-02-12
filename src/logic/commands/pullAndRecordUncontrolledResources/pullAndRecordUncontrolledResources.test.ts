@@ -2,7 +2,7 @@ import {
   ResourceDefinition,
   ResourceType,
   ResourceDefinitionStatus,
-} from '../../../types';
+} from '../../../domain';
 import { getControlContextFromConfig } from '../../config/getControlContextFromConfig';
 import { getPlans } from '../getPlans';
 import { pullAndRecordUncontrolledResources } from './pullAndRecordUncontrolledResources';

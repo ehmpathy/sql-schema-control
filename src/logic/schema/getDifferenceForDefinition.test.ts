@@ -4,7 +4,7 @@ import {
   ChangeDefinition,
   ResourceDefinition,
   ResourceType,
-} from '../../types';
+} from '../../domain';
 import { getDifferenceForChangeDefinition } from './changeDefinition/getDifferenceForChangeDefinition';
 import { getDifferenceForDefinition } from './getDifferenceForDefinition';
 import { getDifferenceForResourceDefinition } from './resourceDefinition/getDifferenceForResourceDefinition';

@@ -1,4 +1,4 @@
-import { ConnectionConfig } from '../../../../types';
+import { ConnectionConfig } from '../../../../domain';
 import { getConnectionConfig } from './getConnectionConfig';
 
 // note: this is an integration test because we cant mock out the require method and because its worth proving that this works

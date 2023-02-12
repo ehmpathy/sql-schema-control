@@ -7,7 +7,7 @@ import {
   DatabaseConnection,
   DatabaseLanguage,
   ControlConfig,
-} from '../../../../types';
+} from '../../../../domain';
 import { initializeControlEnvironment } from '../../../config/initializeControlEnvironment';
 import { syncChangeLogWithChangeDefinition } from './syncChangeLogWithChangeDefinition';
 

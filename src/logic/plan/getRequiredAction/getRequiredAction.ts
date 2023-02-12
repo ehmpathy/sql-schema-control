@@ -1,4 +1,4 @@
-import { ChangeDefinition, ResourceDefinition } from '../../../types';
+import { ChangeDefinition, ResourceDefinition } from '../../../domain';
 import { getRequiredActionForChange } from './getRequiredActionForChange';
 import { getRequiredActionForResource } from './getRequiredActionForResource';
 

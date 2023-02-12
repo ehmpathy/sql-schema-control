@@ -5,7 +5,7 @@ import {
   ControlConfig,
   ResourceDefinition,
   ResourceType,
-} from '../../../../../types';
+} from '../../../../../domain';
 import { initializeControlEnvironment } from '../../../../config/initializeControlEnvironment';
 import { pullResources } from './pullResources';
 

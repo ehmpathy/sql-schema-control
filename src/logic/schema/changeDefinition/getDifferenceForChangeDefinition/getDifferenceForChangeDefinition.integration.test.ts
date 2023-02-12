@@ -8,7 +8,7 @@ import {
   ControlConfig,
   ChangeDefinition,
   ChangeDefinitionStatus,
-} from '../../../../types';
+} from '../../../../domain';
 import { initializeControlEnvironment } from '../../../config/initializeControlEnvironment';
 import { getDifferenceForChangeDefinition } from './getDifferenceForChangeDefinition';
 

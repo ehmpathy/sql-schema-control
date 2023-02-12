@@ -1,11 +1,11 @@
 import { stdout } from 'stdout-stderr';
 
-import { initializeControlEnvironment } from '../../logic/config/initializeControlEnvironment';
 import {
   DatabaseConnection,
   DatabaseLanguage,
   ControlConfig,
-} from '../../types';
+} from '../../domain';
+import { initializeControlEnvironment } from '../../logic/config/initializeControlEnvironment';
 import { promiseConfig as promiseConfigMysql } from '../__test_assets__/mysql/connection.config';
 import { promiseConfig as promiseConfigPostgres } from '../__test_assets__/postgres/connection.config';
 import Sync from './sync';

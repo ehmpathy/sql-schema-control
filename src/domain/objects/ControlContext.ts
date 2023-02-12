@@ -1,11 +1,11 @@
+import { DomainObject } from 'domain-objects';
 import Joi from 'joi';
-import SchematicJoiModel from 'schematic-joi-model';
 
 import { DatabaseLanguage, DatabaseConnection } from '../constants';
 import { ChangeDefinition } from './ChangeDefinition';
 import { ResourceDefinition } from './ResourceDefinition';
 
-const controlContextSchema = Joi.object().keys({
+const schema = Joi.object().keys({
   language: Joi.string().valid(Object.values(DatabaseLanguage)),
   dialect: Joi.string().required(),
   connection: Joi.object().keys({
@@ -21,16 +21,15 @@ const controlContextSchema = Joi.object().keys({
 });
 
 type DefinitionObject = ChangeDefinition | ResourceDefinition;
-interface ControlContextConstructorProps {
+export interface ControlContext {
   language: DatabaseLanguage;
   dialect: string;
   connection: DatabaseConnection;
   definitions: DefinitionObject[];
 }
-export class ControlContext extends SchematicJoiModel<ControlContextConstructorProps> {
-  public language!: DatabaseLanguage;
-  public dialect!: string;
-  public connection!: DatabaseConnection;
-  public definitions!: DefinitionObject[];
-  public static schema = controlContextSchema;
+export class ControlContext
+  extends DomainObject<ControlContext>
+  implements ControlContext
+{
+  public static schema = schema;
 }

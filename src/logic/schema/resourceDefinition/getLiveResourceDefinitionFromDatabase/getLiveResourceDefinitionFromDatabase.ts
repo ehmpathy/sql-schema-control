@@ -4,7 +4,7 @@ import {
   DatabaseConnection,
   ResourceType,
   ResourceDefinition,
-} from '../../../../types';
+} from '../../../../domain';
 
 export const getLiveResourceDefinitionFromDatabase = async ({
   connection,

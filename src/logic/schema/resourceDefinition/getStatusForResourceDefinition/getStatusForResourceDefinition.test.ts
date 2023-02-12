@@ -2,7 +2,7 @@ import {
   ResourceDefinition,
   ResourceType,
   ResourceDefinitionStatus,
-} from '../../../../types';
+} from '../../../../domain';
 import { getDifferenceForResourceDefinition } from '../getDifferenceForResourceDefinition';
 import { ResourceDoesNotExistError } from '../getLiveResourceDefinitionFromDatabase';
 import { getStatusForResourceDefinition } from './getStatusForResourceDefinition';

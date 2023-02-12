@@ -9,7 +9,7 @@ import {
   DatabaseLanguage,
   ControlConfig,
   RequiredAction,
-} from '../../../types';
+} from '../../../domain';
 import { initializeControlEnvironment } from '../../config/initializeControlEnvironment';
 import { applyPlanForChange } from './applyPlanForChange';
 

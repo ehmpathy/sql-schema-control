@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 
-import { ChangeDefinition } from '../../types';
+import { ChangeDefinition } from '../../domain';
 import { getControlContextFromConfig } from '../config/getControlContextFromConfig';
 import { syncChangeLogWithChangeDefinition } from '../schema/changeDefinition/syncChangelogWithChangeDefinition';
 import { getReferenceIdForDefinition } from '../schema/getReferenceIdForDefinition';

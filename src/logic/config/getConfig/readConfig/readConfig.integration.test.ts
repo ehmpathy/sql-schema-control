@@ -1,6 +1,6 @@
 import process from 'process';
 
-import { ControlConfig } from '../../../../types';
+import { ControlConfig } from '../../../../domain';
 import { readConfig } from './readConfig';
 
 describe('readConfig', () => {

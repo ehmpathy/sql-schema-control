@@ -2,7 +2,7 @@ import {
   ChangeDefinition,
   ResourceDefinition,
   ResourceType,
-} from '../../../../types';
+} from '../../../../domain';
 import { readYmlFile } from './_utils/readYmlFile';
 import { flattenDefinitionsRecursive } from './flattenDefinitionsRecursive';
 import { validateAndHydrateDefinitionsYmlContents } from './validateAndHydrateDefinitionsYmlContents';

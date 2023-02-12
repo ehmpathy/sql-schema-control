@@ -6,7 +6,7 @@ import {
   ResourceDefinition,
   ResourceType,
   ResourceDefinitionStatus,
-} from '../../types';
+} from '../../domain';
 import { getStatusForChangeDefinition } from './changeDefinition/getStatusForChangeDefinition';
 import { getStatusForDefinition } from './getStatusForDefinition';
 import { getStatusForResourceDefinition } from './resourceDefinition/getStatusForResourceDefinition';

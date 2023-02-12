@@ -1,4 +1,4 @@
-import { ControlContext } from '../../../types';
+import { ControlContext } from '../../../domain';
 import { getPlanForDefinition } from '../../plan/getPlanForDefinition';
 
 /*

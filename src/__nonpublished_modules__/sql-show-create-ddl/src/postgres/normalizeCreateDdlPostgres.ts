@@ -1,4 +1,4 @@
-import { ResourceType } from '../../../../types';
+import { ResourceType } from '../../../../domain';
 import { normalizeCreateFunctionDdl } from './normalizeCreateDdl/function/normalizeCreateFunctionDdl';
 import { normalizeCreateTableDdl } from './normalizeCreateDdl/table/normalizeCreateTableDdl';
 import { normalizeCreateViewDdl } from './normalizeCreateDdl/view/normalizeCreateViewDdl';

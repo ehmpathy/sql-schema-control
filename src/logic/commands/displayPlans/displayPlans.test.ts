@@ -7,7 +7,7 @@ import {
   ChangeDefinition,
   DefinitionPlan,
   RequiredAction,
-} from '../../../types';
+} from '../../../domain';
 import { displayPlans } from './displayPlans';
 
 const exampleDefinition = new ChangeDefinition({

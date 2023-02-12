@@ -1,4 +1,4 @@
-import { ControlContext, ResourceDefinition } from '../../types';
+import { ControlContext, ResourceDefinition } from '../../domain';
 import { getUncontrolledResources } from '../schema/resourceDefinition/getUncontrolledResources';
 import { getConfig } from './getConfig';
 import { initializeControlEnvironment } from './initializeControlEnvironment';

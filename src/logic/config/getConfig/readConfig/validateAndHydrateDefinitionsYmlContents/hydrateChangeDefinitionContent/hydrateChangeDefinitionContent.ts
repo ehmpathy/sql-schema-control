@@ -1,6 +1,6 @@
 import sha256 from 'simple-sha256';
 
-import { ChangeDefinition } from '../../../../../../types';
+import { ChangeDefinition } from '../../../../../../domain';
 import { readFileAsync } from './../../../../_utils/readFileAsync';
 import { InvalidDefinitionError } from './../errors';
 

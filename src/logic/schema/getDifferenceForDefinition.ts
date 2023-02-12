@@ -2,7 +2,7 @@ import {
   DatabaseConnection,
   ChangeDefinition,
   ResourceDefinition,
-} from '../../types';
+} from '../../domain';
 import { getDifferenceForChangeDefinition } from './changeDefinition/getDifferenceForChangeDefinition';
 import { getDifferenceForResourceDefinition } from './resourceDefinition/getDifferenceForResourceDefinition';
 

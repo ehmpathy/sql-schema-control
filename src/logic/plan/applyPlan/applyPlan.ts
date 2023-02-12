@@ -3,7 +3,7 @@ import {
   DefinitionPlan,
   ChangeDefinition,
   ResourceDefinition,
-} from '../../../types';
+} from '../../../domain';
 import { applyPlanForChange } from './applyPlanForChange';
 import { applyPlanForResource } from './applyPlanForResource';
 

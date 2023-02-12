@@ -1,4 +1,4 @@
-import { DatabaseConnection, ChangeDefinition } from '../../../../types';
+import { DatabaseConnection, ChangeDefinition } from '../../../../domain';
 
 export class ChangeHasNotBeenAppliedError extends Error {
   public changeId: string;

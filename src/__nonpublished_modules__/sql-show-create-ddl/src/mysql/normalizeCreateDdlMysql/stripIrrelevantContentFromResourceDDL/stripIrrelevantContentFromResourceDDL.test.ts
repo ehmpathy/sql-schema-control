@@ -1,4 +1,4 @@
-import { ResourceType } from '../../../../../../types';
+import { ResourceType } from '../../../../../../domain';
 import { stripIrrelevantContentFromResourceDDL } from './stripIrrelevantContentFromResourceDDL';
 
 describe('stripIrrelevantContentFromResourceDDL', () => {

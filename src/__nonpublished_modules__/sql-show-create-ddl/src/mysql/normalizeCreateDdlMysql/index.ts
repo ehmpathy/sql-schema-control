@@ -1,4 +1,4 @@
-import { ResourceType } from '../../../../../types';
+import { ResourceType } from '../../../../../domain';
 import { normalizeDDLToSupportLossyShowCreateStatements } from './normalizeDDLToSupportLossyShowCreateStatements/normalizeDDLToSupportLossyShowCreateStatements';
 import { stripIrrelevantContentFromResourceDDL } from './stripIrrelevantContentFromResourceDDL/stripIrrelevantContentFromResourceDDL';
 

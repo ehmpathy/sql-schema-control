@@ -3,7 +3,7 @@ import {
   ResourceDefinitionStatus,
   RequiredAction,
   ResourceType,
-} from '../../../types';
+} from '../../../domain';
 import { getRequiredActionForResource } from './getRequiredActionForResource';
 
 const baseResource = new ResourceDefinition({

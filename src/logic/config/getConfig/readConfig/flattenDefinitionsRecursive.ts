@@ -1,4 +1,4 @@
-import { ChangeDefinition, ResourceDefinition } from '../../../../types';
+import { ChangeDefinition, ResourceDefinition } from '../../../../domain';
 import { getReadFilePath } from './_utils/getReadFilePath';
 import { readYmlFile } from './_utils/readYmlFile';
 import { validateAndHydrateDefinitionsYmlContents } from './validateAndHydrateDefinitionsYmlContents';

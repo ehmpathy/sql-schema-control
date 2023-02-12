@@ -3,7 +3,7 @@ import {
   ResourceDefinitionStatus,
   RequiredAction,
   ResourceType,
-} from '../../../types';
+} from '../../../domain';
 
 const REAPPLIABLE_RESOURCE = [
   ResourceType.FUNCTION,

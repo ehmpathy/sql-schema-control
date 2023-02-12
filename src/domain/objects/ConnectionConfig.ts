@@ -1,5 +1,5 @@
+import { DomainObject } from 'domain-objects';
 import Joi from 'joi';
-import SchematicJoiModel from 'schematic-joi-model';
 
 const connectionConfigSchema = Joi.object().keys({
   host: Joi.string().required(),
@@ -10,7 +10,7 @@ const connectionConfigSchema = Joi.object().keys({
   password: Joi.string().required(),
 });
 
-interface ConnectionConfigConstructorProps {
+export interface ConnectionConfig {
   host: string;
   port: number;
   database: string;
@@ -18,12 +18,9 @@ interface ConnectionConfigConstructorProps {
   username: string;
   password: string;
 }
-export class ConnectionConfig extends SchematicJoiModel<ConnectionConfigConstructorProps> {
-  public host!: string;
-  public port!: number;
-  public database!: string;
-  public schema?: string;
-  public username!: string;
-  public password!: string;
+export class ConnectionConfig
+  extends DomainObject<ConnectionConfig>
+  implements ConnectionConfig
+{
   public static schema = connectionConfigSchema;
 }

@@ -3,7 +3,7 @@ import {
   DatabaseConnection,
   ControlConfig,
   DatabaseLanguage,
-} from '../../../types';
+} from '../../../domain';
 import { connectToDatabase } from './connectToDatabase';
 import { provisionChangeLogTable } from './provisionChangeLogTable';
 

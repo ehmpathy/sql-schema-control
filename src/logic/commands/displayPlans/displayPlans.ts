@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import indentString from 'indent-string';
 
-import { DefinitionPlan, RequiredAction } from '../../../types';
+import { DefinitionPlan, RequiredAction } from '../../../domain';
 import { getColoredActionToken } from '../utils/getColoredActionToken';
 import { getColoredPlanTitle } from '../utils/getColoredPlanTitle';
 

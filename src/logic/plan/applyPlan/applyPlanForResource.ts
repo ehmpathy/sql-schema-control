@@ -4,7 +4,7 @@ import {
   DatabaseConnection,
   ResourceDefinition,
   ResourceType,
-} from '../../../types';
+} from '../../../domain';
 
 const REAPPLIABLE_RESOURCES = [
   ResourceType.FUNCTION,

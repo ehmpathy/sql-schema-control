@@ -4,7 +4,7 @@ import {
   RequiredAction,
   DefinitionPlan,
   DatabaseConnection,
-} from '../../../types';
+} from '../../../domain';
 import { applyPlan } from '../../plan/applyPlan';
 import { getColoredPlanTitle } from '../utils/getColoredPlanTitle';
 

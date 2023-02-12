@@ -6,7 +6,7 @@ import {
   ChangeDefinitionStatus,
   ResourceDefinition,
   ResourceType,
-} from '../../types';
+} from '../../domain';
 import { getReferenceIdForDefinition } from './getReferenceIdForDefinition';
 
 describe('getReferenceIdForDefinition', () => {

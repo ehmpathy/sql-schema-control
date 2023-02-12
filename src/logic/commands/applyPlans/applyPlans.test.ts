@@ -5,7 +5,7 @@ import {
   ChangeDefinition,
   DefinitionPlan,
   RequiredAction,
-} from '../../../types';
+} from '../../../domain';
 import { applyPlan } from '../../plan/applyPlan';
 import { applyPlans } from './applyPlans';
 

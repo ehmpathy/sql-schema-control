@@ -6,7 +6,7 @@ import {
   DatabaseLanguage,
   ControlConfig,
   ConnectionConfig,
-} from '../../../types';
+} from '../../../domain';
 
 // create the connection to database
 const connectionAdapters = {

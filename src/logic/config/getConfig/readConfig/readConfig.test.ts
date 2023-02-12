@@ -3,7 +3,7 @@ import {
   ChangeDefinition,
   ConnectionConfig,
   DatabaseLanguage,
-} from '../../../../types';
+} from '../../../../domain';
 import { readYmlFile } from './_utils/readYmlFile';
 import { flattenDefinitionsRecursive } from './flattenDefinitionsRecursive';
 import { getConnectionConfig } from './getConnectionConfig';

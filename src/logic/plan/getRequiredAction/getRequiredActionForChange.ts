@@ -2,7 +2,7 @@ import {
   ChangeDefinition,
   ChangeDefinitionStatus,
   RequiredAction,
-} from '../../../types';
+} from '../../../domain';
 
 export const getRequiredActionForChange = ({
   definition,

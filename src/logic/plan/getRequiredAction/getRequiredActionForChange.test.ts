@@ -4,7 +4,7 @@ import {
   ChangeDefinitionStatus,
   ChangeDefinition,
   RequiredAction,
-} from '../../../types';
+} from '../../../domain';
 import { getRequiredActionForChange } from './getRequiredActionForChange';
 
 describe('getRequiredActionForChange', () => {

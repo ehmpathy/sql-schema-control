@@ -1,4 +1,4 @@
-import { ControlConfig } from '../../../types';
+import { ControlConfig } from '../../../domain';
 import { readConfig } from './readConfig';
 import { validateConfig } from './validateConfig';
 

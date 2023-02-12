@@ -1,4 +1,4 @@
-import { ResourceType } from '../../../../types';
+import { ResourceType } from '../../../../domain';
 import { normalizeCreateDdlPostgres } from './normalizeCreateDdlPostgres';
 
 describe('normalizeCreateDdlPostgres', () => {

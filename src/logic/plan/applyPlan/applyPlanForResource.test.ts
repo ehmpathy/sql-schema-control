@@ -3,7 +3,7 @@ import {
   ResourceType,
   DefinitionPlan,
   RequiredAction,
-} from '../../../types';
+} from '../../../domain';
 import { applyPlanForResource } from './applyPlanForResource';
 
 describe('applyPlanForResource', () => {

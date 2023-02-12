@@ -1,7 +1,7 @@
 import mysql from 'mysql2/promise';
 import pg from 'pg';
 
-import { ConnectionConfig, DatabaseLanguage } from '../../../../types';
+import { ConnectionConfig, DatabaseLanguage } from '../../../../domain';
 import { DatabaseConnection } from '../types';
 
 // create the connection to database

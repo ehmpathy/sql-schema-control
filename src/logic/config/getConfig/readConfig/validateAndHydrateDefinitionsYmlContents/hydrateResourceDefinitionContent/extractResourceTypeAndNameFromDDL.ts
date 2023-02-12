@@ -1,4 +1,4 @@
-import { ResourceType } from '../../../../../../types';
+import { ResourceType } from '../../../../../../domain';
 
 // TODO: generalize to other databases with adapter pattern
 const SQL_TYPE_NAME_CAPTURE_REGEX =

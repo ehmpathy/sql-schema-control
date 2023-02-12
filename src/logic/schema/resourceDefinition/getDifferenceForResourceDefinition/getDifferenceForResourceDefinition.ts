@@ -1,5 +1,5 @@
 import { normalizeShowCreateDdl } from '../../../../__nonpublished_modules__/sql-show-create-ddl';
-import { DatabaseConnection, ResourceDefinition } from '../../../../types';
+import { DatabaseConnection, ResourceDefinition } from '../../../../domain';
 import { getSqlDifference } from '../../utils/getSqlDifference';
 import { getLiveResourceDefinitionFromDatabase } from '../getLiveResourceDefinitionFromDatabase';
 

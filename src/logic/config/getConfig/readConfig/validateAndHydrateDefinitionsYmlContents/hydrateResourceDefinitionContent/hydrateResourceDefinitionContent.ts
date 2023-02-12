@@ -1,4 +1,4 @@
-import { ResourceDefinition } from '../../../../../../types';
+import { ResourceDefinition } from '../../../../../../domain';
 import { InvalidDefinitionError } from '../errors';
 import { readFileAsync } from './../../../../_utils/readFileAsync';
 import { extractResourceTypeAndNameFromDDL } from './extractResourceTypeAndNameFromDDL';

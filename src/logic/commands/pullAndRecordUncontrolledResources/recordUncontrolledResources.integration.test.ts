@@ -1,4 +1,4 @@
-import { ResourceDefinition, ResourceType } from '../../../types';
+import { ResourceDefinition, ResourceType } from '../../../domain';
 import { recordUncontrolledResources } from './recordUncontrolledResources';
 import { readFile } from './utils/fileIO';
 

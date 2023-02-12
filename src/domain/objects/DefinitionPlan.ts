@@ -1,11 +1,11 @@
+import { DomainObject } from 'domain-objects';
 import Joi, { SchemaLikeWithoutArray } from 'joi';
-import SchematicJoiModel from 'schematic-joi-model';
 
-import { RequiredAction } from '../constants';
+import { RequiredAction } from '../../domain/constants';
 import { ChangeDefinition } from './ChangeDefinition';
 import { ResourceDefinition } from './ResourceDefinition';
 
-const definitionPlanSchema = Joi.object().keys({
+const schema = Joi.object().keys({
   id: Joi.string().required(),
   definition: Joi.alternatives().try([
     ChangeDefinition.schema,
@@ -14,16 +14,15 @@ const definitionPlanSchema = Joi.object().keys({
   difference: Joi.string().optional(), // a human readable string of the difference
   action: Joi.string().valid(Object.values(RequiredAction)), // a key that catogorizes how to display the definition (e.g., color it, bold it, warn about it, throw an error)
 });
-interface DefinitionPlanConstructorProps {
+export interface DefinitionPlan {
   id: string;
   definition: ChangeDefinition | ResourceDefinition;
   difference?: string;
   action: RequiredAction;
 }
-export class DefinitionPlan extends SchematicJoiModel<DefinitionPlanConstructorProps> {
-  public id!: string;
-  public definition!: ChangeDefinition | ResourceDefinition;
-  public difference?: string;
-  public action!: RequiredAction;
-  public static schema = definitionPlanSchema;
+export class DefinitionPlan
+  extends DomainObject<DefinitionPlan>
+  implements DefinitionPlan
+{
+  public static schema = schema;
 }

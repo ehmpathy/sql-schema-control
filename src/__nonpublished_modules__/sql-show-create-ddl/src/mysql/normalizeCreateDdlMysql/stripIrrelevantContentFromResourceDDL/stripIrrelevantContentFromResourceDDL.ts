@@ -1,4 +1,4 @@
-import { ResourceType } from '../../../../../../types';
+import { ResourceType } from '../../../../../../domain';
 
 export const stripIrrelevantContentFromResourceDDL = ({
   ddl,

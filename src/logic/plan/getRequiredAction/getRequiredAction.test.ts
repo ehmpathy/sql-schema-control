@@ -4,7 +4,7 @@ import {
   ChangeDefinition,
   ResourceDefinition,
   ResourceType,
-} from '../../../types';
+} from '../../../domain';
 import { getRequiredAction } from './getRequiredAction';
 import { getRequiredActionForChange } from './getRequiredActionForChange';
 import { getRequiredActionForResource } from './getRequiredActionForResource';

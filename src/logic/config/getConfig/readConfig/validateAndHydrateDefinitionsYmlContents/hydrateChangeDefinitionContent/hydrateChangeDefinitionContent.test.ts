@@ -1,4 +1,4 @@
-import { ChangeDefinition, DefinitionType } from '../../../../../../types';
+import { ChangeDefinition, DefinitionType } from '../../../../../../domain';
 import { InvalidDefinitionError } from '../errors';
 import { readFileAsync } from './../../../../_utils/readFileAsync';
 import { hydrateChangeDefinitionContent } from './hydrateChangeDefinitionContent';

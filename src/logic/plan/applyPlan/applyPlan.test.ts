@@ -4,7 +4,7 @@ import {
   ChangeDefinition,
   ResourceDefinition,
   ResourceType,
-} from '../../../types';
+} from '../../../domain';
 import { applyPlan } from './applyPlan';
 import { applyPlanForChange } from './applyPlanForChange';
 import { applyPlanForResource } from './applyPlanForResource';

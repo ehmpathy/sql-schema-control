@@ -1,4 +1,4 @@
-import { DatabaseLanguage } from '../../../../../../types';
+import { DatabaseLanguage } from '../../../../../../domain';
 import { getDbConnection } from '../../../__test_assets__/getDbConnection';
 import { DatabaseConnection } from '../../../types';
 import { showCreateView } from './showCreateView';

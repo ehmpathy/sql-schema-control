@@ -1,4 +1,4 @@
-import { DatabaseConnection, ChangeDefinition } from '../../../../types';
+import { DatabaseConnection, ChangeDefinition } from '../../../../domain';
 import { getSqlDifference } from '../../utils/getSqlDifference';
 import { getAppliedChangeDefinitionFromDatabase } from '../getAppliedChangeDefinitionFromDatabase/getAppliedChangeDefinitionFromDatabase';
 

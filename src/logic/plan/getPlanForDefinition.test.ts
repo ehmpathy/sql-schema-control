@@ -6,7 +6,7 @@ import {
   ChangeDefinitionStatus,
   DefinitionPlan,
   RequiredAction,
-} from '../../types';
+} from '../../domain';
 import { getDifferenceForDefinition } from '../schema/getDifferenceForDefinition';
 import { getReferenceIdForDefinition } from '../schema/getReferenceIdForDefinition';
 import { getStatusForDefinition } from '../schema/getStatusForDefinition';

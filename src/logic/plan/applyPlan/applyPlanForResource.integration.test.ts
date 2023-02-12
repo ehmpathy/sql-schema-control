@@ -7,7 +7,7 @@ import {
   RequiredAction,
   ResourceDefinition,
   ResourceType,
-} from '../../../types';
+} from '../../../domain';
 import { initializeControlEnvironment } from '../../config/initializeControlEnvironment';
 import { applyPlanForResource } from './applyPlanForResource';
 

@@ -1,4 +1,4 @@
-import { ResourceType, DatabaseConnection } from '../../../../../types';
+import { ResourceType, DatabaseConnection } from '../../../../../domain';
 import { getLiveResourceDefinitionFromDatabase } from '../../getLiveResourceDefinitionFromDatabase';
 
 /*

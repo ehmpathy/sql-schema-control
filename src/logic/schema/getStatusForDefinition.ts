@@ -2,7 +2,7 @@ import {
   DatabaseConnection,
   ChangeDefinition,
   ResourceDefinition,
-} from '../../types';
+} from '../../domain';
 import { getStatusForChangeDefinition } from './changeDefinition/getStatusForChangeDefinition';
 import { getStatusForResourceDefinition } from './resourceDefinition/getStatusForResourceDefinition';
 

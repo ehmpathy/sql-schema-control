@@ -4,7 +4,7 @@ import {
   DatabaseConnection,
   ChangeDefinition,
   DatabaseLanguage,
-} from '../../../../types';
+} from '../../../../domain';
 
 export const syncChangeLogWithChangeDefinition = async ({
   connection,
