@@ -1,19 +1,23 @@
 {
+  "extends": "@tsconfig/node-lts-strictest/tsconfig.json",
   "compilerOptions": {
-    "strict": true,
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "target": "es6",
-    "noImplicitAny": true,
-    "moduleResolution": "node",
+    "importsNotUsedAsValues": "remove",
+    "noPropertyAccessFromIndexSignature": false,
+    "noImplicitOverride": false,
+    "resolveJsonModule": true,
+    "useUnknownInCatchVariables": false,
+    "exactOptionalPropertyTypes": false,
+    "declaration": true,
     "sourceMap": true,
     "outDir": "dist",
-    "lib": [
-      "dom",
-      "es7",
-    ],
+    "target": "es6",
   },
-  "atom": {
-    "rewriteTsconfig": false
-  }
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "dist",
+    "coverage",
+    "node_modules",
+  ]
 }

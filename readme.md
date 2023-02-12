@@ -1,5 +1,4 @@
-sql-schema-control
-==============
+# sql-schema-control
 
 Declarative database schema management. Provision, track, sync, and modify your database schema with plain, version controlled, sql.
 

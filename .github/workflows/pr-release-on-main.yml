@@ -1,0 +1,17 @@
+name: pr-release-on-main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release-please:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: google-github-actions/release-please-action@v3
+        with:
+          token: ${{ secrets.RELEASE_PLEASE_GITHUB_TOKEN }}
+          release-type: node
+          pull-request-title-pattern: 'chore(release): v${version} 🎉'
+          changelog-path: changelog.md
