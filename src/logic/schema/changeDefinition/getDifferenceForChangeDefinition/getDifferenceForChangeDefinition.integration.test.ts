@@ -1,7 +1,7 @@
 import sha256 from 'simple-sha256';
-import uuid from 'uuid/v4';
 
 import { promiseConfig } from '../../../../__test_assets__/connection.config';
+import { uuid } from '../../../../deps';
 import {
   DatabaseLanguage,
   DatabaseConnection,

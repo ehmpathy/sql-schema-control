@@ -1,8 +1,8 @@
 import Chalk from 'chalk';
 import sha256 from 'simple-sha256';
 import { stdout } from 'stdout-stderr';
-import uuid from 'uuid/v4';
 
+import { uuid } from '../../../deps';
 import {
   ChangeDefinition,
   DefinitionPlan,

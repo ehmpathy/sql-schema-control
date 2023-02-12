@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import Joi, { SchemaLikeWithoutArray } from 'joi';
 import SchematicJoiModel from 'schematic-joi-model';
 
 import { RequiredAction } from '../constants';
@@ -10,7 +10,7 @@ const definitionPlanSchema = Joi.object().keys({
   definition: Joi.alternatives().try([
     ChangeDefinition.schema,
     ResourceDefinition.schema,
-  ]),
+  ] as any as SchemaLikeWithoutArray),
   difference: Joi.string().optional(), // a human readable string of the difference
   action: Joi.string().valid(Object.values(RequiredAction)), // a key that catogorizes how to display the definition (e.g., color it, bold it, warn about it, throw an error)
 });

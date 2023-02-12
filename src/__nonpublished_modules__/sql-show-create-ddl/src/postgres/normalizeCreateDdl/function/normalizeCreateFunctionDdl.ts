@@ -20,7 +20,7 @@ export const normalizeCreateFunctionDdl = ({ ddl }: { ddl: string }) => {
   prettierDdl = (() => {
     const partsSplitOnParens = prettierDdl.split(/([\(\)])/g);
     const functionParams = partsSplitOnParens[2];
-    const functionParamsWithNewlines = `\n  ${functionParams
+    const functionParamsWithNewlines = `\n  ${functionParams!
       .replace(/, /g, ',\n  ')
       .trim()}\n`;
     return [

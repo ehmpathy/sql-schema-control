@@ -21,7 +21,7 @@ export const removeParenthesisSurroundingJoinsInFromClause = ({
     ); // fail fast
 
   // remove the parens that encapsulate each join
-  const fromClauseWithoutParens = flattenedSqlParts[1]
+  const fromClauseWithoutParens = flattenedSqlParts[1]!
     .replace(/\(/g, '')
     .replace(/\)/g, ''); // note: we replace all parens, since subqueries are taken care of
 

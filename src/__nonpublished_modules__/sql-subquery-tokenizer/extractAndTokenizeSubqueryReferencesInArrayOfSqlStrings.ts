@@ -1,5 +1,4 @@
-import uuid from 'uuid';
-
+import { uuid } from '../../deps';
 import { getTokenForSqlSubqueryReference } from './getTokenForSubqueryReference';
 import { SqlSubqueryReference } from './model/SqlSubqueryReference';
 
