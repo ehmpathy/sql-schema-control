@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/ehmpathy/sql-schema-control/compare/v1.5.0...v1.5.1) (2023-02-12)
+
+
+### Bug Fixes
+
+* **deps:** add ts-node dependency for the bin executable ([96a73be](https://github.com/ehmpathy/sql-schema-control/commit/96a73be06b4d100b7486bb4a89c908e2f1c1d33c))
+
 ## [1.5.0](https://github.com/ehmpathy/sql-schema-control/compare/v1.4.0...v1.5.0) (2023-02-12)
 
 
