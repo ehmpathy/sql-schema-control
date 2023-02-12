@@ -90,6 +90,7 @@
     "simple-sha256": "^1.0.0",
     "sql-formatter": "^2.3.3",
     "sql-strip-comments": "0.0.23",
+    "ts-node": "^10.9.1",
     "uuid": "9.0.0",
     "yaml": "^1.6.0",
     "yesql": "^3.2.2"
