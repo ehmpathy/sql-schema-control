@@ -12,7 +12,8 @@ module.exports = {
     sourceType: 'module', // Allows for the use of imports
   },
   rules: {
-    '@typescript-eslint/explicit-function-return-type': 'off', // this can be figured out implicitly, and that is better
+    '@typescript-eslint/explicit-module-boundary-types': 'warn', // makes code-reviews easier + code quality better by explicitly defining outputs of exported functions+classes
+    '@typescript-eslint/explicit-function-return-type': 'off', // prefer '@typescript-eslint/explicit-module-boundary-types' since it only requires the check on exported functions+classes
     'sort-imports': 'off',
     'import/prefer-default-export': 'off', // default export = bad
     'import/no-default-export': 'error', // require named exports - they make it easier to refactor, enforce consistency, and increase constraints
@@ -42,5 +43,6 @@ module.exports = {
     '@typescript-eslint/lines-between-class-members': 'off',
     'no-return-await': 'off', // this does not help anything and actually leads to bugs if we subsequently wrap the return in a try catch without remembering to _then_ add await
     '@typescript-eslint/return-await': 'off',
+    '@typescript-eslint/no-unsafe-declaration-merging': 'off', // dobjs are built off of this
   },
 };
