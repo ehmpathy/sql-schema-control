@@ -40,7 +40,7 @@ jobs:
           node-version-file: '.nvmrc'
 
       - name: get node-modules from cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v4
         with:
           path: ./node_modules
           key: ${{ needs.install.outputs.node-modules-cache-key }}
@@ -61,7 +61,7 @@ jobs:
           node-version-file: '.nvmrc'
 
       - name: get node-modules from cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v4
         with:
           path: ./node_modules
           key: ${{ needs.install.outputs.node-modules-cache-key }}
@@ -82,7 +82,7 @@ jobs:
           node-version-file: '.nvmrc'
 
       - name: get node-modules from cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v4
         with:
           path: ./node_modules
           key: ${{ needs.install.outputs.node-modules-cache-key }}
@@ -103,7 +103,7 @@ jobs:
           node-version-file: '.nvmrc'
 
       - name: get node-modules from cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v4
         with:
           path: ./node_modules
           key: ${{ needs.install.outputs.node-modules-cache-key }}
@@ -124,7 +124,7 @@ jobs:
           node-version-file: '.nvmrc'
 
       - name: get node-modules from cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v4
         with:
           path: ./node_modules
           key: ${{ needs.install.outputs.node-modules-cache-key }}
@@ -145,7 +145,7 @@ jobs:
           node-version-file: '.nvmrc'
 
       - name: get node-modules from cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v4
         with:
           path: ./node_modules
           key: ${{ needs.install.outputs.node-modules-cache-key }}
@@ -185,7 +185,7 @@ jobs:
           node-version-file: '.nvmrc'
 
       - name: get node-modules from cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v4
         with:
           path: ./node_modules
           key: ${{ needs.install.outputs.node-modules-cache-key }}
