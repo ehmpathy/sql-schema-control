@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.3](https://github.com/ehmpathy/sql-schema-control/compare/v1.5.2...v1.5.3) (2024-07-27)
+
+
+### Bug Fixes
+
+* **practs:** bump practs to latest best ([662975f](https://github.com/ehmpathy/sql-schema-control/commit/662975f00b9a8a073448f107b7163a2d8e037d13))
+
 ## [1.5.2](https://github.com/ehmpathy/sql-schema-control/compare/v1.5.1...v1.5.2) (2024-07-27)
 
 
