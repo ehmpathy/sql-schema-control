@@ -2,7 +2,7 @@
   "name": "sql-schema-control",
   "author": "ehmpathy",
   "description": "Declarative database schema management. Provision, track, sync, and modify your database schema with plain, version controlled, sql.",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "license": "MIT",
   "repository": "ehmpathy/sql-schema-control",
   "homepage": "https://github.com/ehmpathy/sql-schema-control",
