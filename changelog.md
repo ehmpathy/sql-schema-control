@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.4](https://github.com/ehmpathy/sql-schema-control/compare/v1.5.3...v1.5.4) (2024-08-03)
+
+
+### Bug Fixes
+
+* **apply:** cascade drop views to support nested views ([8619b06](https://github.com/ehmpathy/sql-schema-control/commit/8619b0623ab9b7d24f88b243f4a9c0451cc1f2e8))
+* **practs:** bump practs to latest best ([b651492](https://github.com/ehmpathy/sql-schema-control/commit/b65149206af1b5517a212c44eb43d7cf92a63d24))
+
 ## [1.5.3](https://github.com/ehmpathy/sql-schema-control/compare/v1.5.2...v1.5.3) (2024-07-27)
 
 
