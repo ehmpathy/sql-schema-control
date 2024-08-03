@@ -1,3 +1,5 @@
+import { UnexpectedCodePathError } from '@ehmpathy/error-fns';
+
 import {
   RequiredAction,
   DefinitionPlan,
@@ -27,7 +29,19 @@ export const applyPlanForResource = async ({
   if (plan.action === RequiredAction.REAPPLY) {
     if (!REAPPLIABLE_RESOURCES.includes(resource.type))
       throw new Error(`resource ${plan.id} is not reappliable`); // if we can't drop this resource (i.e., its a table) throw an error
-    await connection.query({ sql: `DROP ${resource.type} ${resource.name}` });
+    try {
+      const shouldCascade = resource.type === ResourceType.VIEW;
+      await connection.query({
+        sql: `DROP ${resource.type} ${resource.name} ${
+          shouldCascade ? 'CASCADE' : ''
+        }`,
+      });
+    } catch (error) {
+      if (!(error instanceof Error)) throw error;
+
+      // if we're told it does not exist, then do nothing. it must have been previously removed via cascade
+      if (!error.message.includes('does not exist')) throw error;
+    }
   }
 
   // 2. apply it
