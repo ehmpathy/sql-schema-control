@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/ehmpathy/sql-schema-control/compare/v1.5.5...v1.6.0) (2025-09-01)
+
+
+### Features
+
+* **schemas:** support cross schema control ([#63](https://github.com/ehmpathy/sql-schema-control/issues/63)) ([052990c](https://github.com/ehmpathy/sql-schema-control/commit/052990c1a421ad301dc17aeb959bb068d284f9de))
+
 ## [1.5.5](https://github.com/ehmpathy/sql-schema-control/compare/v1.5.4...v1.5.5) (2025-09-01)
 
 
