@@ -10,7 +10,7 @@
     "declaration": true,
     "sourceMap": true,
     "outDir": "dist",
-    "target": "es6",
+    "target": "es2020",
     "noUnusedLocals": false,
     "noUnusedParameters": false
   },

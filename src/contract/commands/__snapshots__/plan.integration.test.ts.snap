@@ -3,11 +3,11 @@
 exports[`plan mysql should have an expected appearance when all changes need to be applied 1`] = `
 "    [1mPlanning required actions...[22m
 [2m[22m
-[2m      [2mat [22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:19:11[22m[2m[22m
+[2m      [2mat displayPlans ([22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:19:11)[22m[2m[22m
 
 
 [2m[22m
-[2m      [2mat [22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:20:11[22m[2m[22m
+[2m      [2mat displayPlans ([22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:20:11)[22m[2m[22m
 
       * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/mysql/definitions/tables/data_source.sql [90m(change:table_20190626_1)[39m[22m
       * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/mysql/definitions/tables/notification.sql [90m(resource:table:notification)[39m[22m
@@ -24,7 +24,7 @@ exports[`plan mysql should have an expected appearance when all changes need to 
     
       * [1m[32m[APPLY][39m[22m 10
 [2m[22m
-[2m      [2mat [22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:90:11[22m[2m[22m
+[2m      [2mat displayPlans ([22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:90:11)[22m[2m[22m
 
 "
 `;
@@ -32,11 +32,11 @@ exports[`plan mysql should have an expected appearance when all changes need to 
 exports[`plan mysql should have an expected appearance when some resources need to be reapplied manually or automatically 1`] = `
 "    [1mPlanning required actions...[22m
 [2m[22m
-[2m      [2mat [22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:19:11[22m[2m[22m
+[2m      [2mat displayPlans ([22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:19:11)[22m[2m[22m
 
 
 [2m[22m
-[2m      [2mat [22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:20:11[22m[2m[22m
+[2m      [2mat displayPlans ([22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:20:11)[22m[2m[22m
 
       * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/mysql/definitions/tables/data_source.sql [90m(change:table_20190626_1)[39m[22m
       * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/mysql/definitions/tables/notification.sql [90m(resource:table:notification)[39m[22m
@@ -87,7 +87,7 @@ exports[`plan mysql should have an expected appearance when some resources need 
       * [1m[33m[REAPPLY][39m[22m 1
       * [1m[31m[MANUAL_MIGRATION][39m[22m 1
 [2m[22m
-[2m      [2mat [22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:90:11[22m[2m[22m
+[2m      [2mat displayPlans ([22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:90:11)[22m[2m[22m
 
 "
 `;
@@ -95,11 +95,11 @@ exports[`plan mysql should have an expected appearance when some resources need 
 exports[`plan postgres should have an expected appearance when all changes need to be applied 1`] = `
 "    [1mPlanning required actions...[22m
 [2m[22m
-[2m      [2mat [22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:19:11[22m[2m[22m
+[2m      [2mat displayPlans ([22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:19:11)[22m[2m[22m
 
 
 [2m[22m
-[2m      [2mat [22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:20:11[22m[2m[22m
+[2m      [2mat displayPlans ([22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:20:11)[22m[2m[22m
 
       * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/postgres/definitions/tables/data_source.sql [90m(change:table_20190626_1)[39m[22m
       * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/postgres/definitions/tables/photo.sql [90m(resource:table:photo)[39m[22m
@@ -115,7 +115,7 @@ exports[`plan postgres should have an expected appearance when all changes need 
     
       * [1m[32m[APPLY][39m[22m 9
 [2m[22m
-[2m      [2mat [22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:90:11[22m[2m[22m
+[2m      [2mat displayPlans ([22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:90:11)[22m[2m[22m
 
 "
 `;
@@ -123,11 +123,11 @@ exports[`plan postgres should have an expected appearance when all changes need 
 exports[`plan postgres should have an expected appearance when some resources need to be reapplied manually or automatically 1`] = `
 "    [1mPlanning required actions...[22m
 [2m[22m
-[2m      [2mat [22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:19:11[22m[2m[22m
+[2m      [2mat displayPlans ([22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:19:11)[22m[2m[22m
 
 
 [2m[22m
-[2m      [2mat [22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:20:11[22m[2m[22m
+[2m      [2mat displayPlans ([22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:20:11)[22m[2m[22m
 
       * [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/postgres/definitions/tables/data_source.sql [90m(change:table_20190626_1)[39m[22m
       * [1m[1m[31m[MANUAL_MIGRATION][39m[1m src/contract/__test_assets__/postgres/definitions/tables/photo.sql [90m(resource:table:photo)[39m[22m
@@ -158,7 +158,7 @@ exports[`plan postgres should have an expected appearance when some resources ne
       * [1m[32m[APPLY][39m[22m 7
       * [1m[31m[MANUAL_MIGRATION][39m[22m 1
 [2m[22m
-[2m      [2mat [22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:90:11[22m[2m[22m
+[2m      [2mat displayPlans ([22m[2msrc/logic/commands/displayPlans/displayPlans.ts[2m:90:11)[22m[2m[22m
 
 "
 `;

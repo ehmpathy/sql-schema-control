@@ -26,7 +26,7 @@ jobs:
 
   # run tests in parallel
   test-commits:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     needs: [install]
     steps:
       - name: checkout
@@ -49,7 +49,7 @@ jobs:
         run: npm run test:commits
 
   test-types:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     needs: [install]
     steps:
       - name: checkout
@@ -70,13 +70,13 @@ jobs:
         run: npm run test:types
 
   test-format:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     needs: [install]
     steps:
       - name: checkout
         uses: actions/checkout@v3
 
-      - name: set node-version
+      - name: set node version
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
@@ -91,7 +91,7 @@ jobs:
         run: npm run test:format
 
   test-lint:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     needs: [install]
     steps:
       - name: checkout
@@ -112,7 +112,7 @@ jobs:
         run: npm run test:lint
 
   test-unit:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     needs: [install]
     steps:
       - name: checkout
@@ -133,7 +133,7 @@ jobs:
         run: THOROUGH=true npm run test:unit
 
   test-integration:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     needs: [install]
     steps:
       - name: checkout
@@ -173,7 +173,7 @@ jobs:
         run: THOROUGH=true npm run test:integration
 
   test-acceptance-locally:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     needs: [install]
     steps:
       - name: checkout
