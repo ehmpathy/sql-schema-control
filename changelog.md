@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.5](https://github.com/ehmpathy/sql-schema-control/compare/v1.5.4...v1.5.5) (2025-09-01)
+
+
+### Bug Fixes
+
+* **practs:** bump to latest best ([#61](https://github.com/ehmpathy/sql-schema-control/issues/61)) ([b86e0c8](https://github.com/ehmpathy/sql-schema-control/commit/b86e0c8c6a150fa488af6a6d82f3cfa9e70d2587))
+
 ## [1.5.4](https://github.com/ehmpathy/sql-schema-control/compare/v1.5.3...v1.5.4) (2024-08-03)
 
 
