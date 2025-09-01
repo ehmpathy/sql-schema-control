@@ -1,8 +1,10 @@
+import { HelpfulError } from 'helpful-errors';
+
 import { ResourceType } from '../../../../../../domain';
 
 // TODO: generalize to other databases with adapter pattern
 const SQL_TYPE_NAME_CAPTURE_REGEX =
-  /(?:CREATE|create)(?:\s+)(?:DEFINER=`[a-zA-Z0-9_]+`@`[a-zA-Z0-9_%]+`)?(?:\s*)(?:OR REPLACE )?(PROCEDURE|procedure|FUNCTION|function|TABLE|table|VIEW|view)(?:\s+)(?:`?)(\w+)(?:`?)(?:\s*)(?:\(|AS\s|as\s)/g; // captures type and name from create statements of resources
+  /(?:CREATE|create)(?:\s+)(?:DEFINER=`[a-zA-Z0-9_]+`@`[a-zA-Z0-9_%]+`)?(?:\s*)(?:OR REPLACE )?(PROCEDURE|procedure|FUNCTION|function|TABLE|table|VIEW|view)(?:\s+)(`?[\w]+`?(?:\.`?[\w]+`?)?)(?:\s*)(?:\(|AS\s|as\s)/g; // captures type and name from create statements of resources
 
 const regexTypeMatchToTypeEnum = {
   PROCEDURE: ResourceType.PROCEDURE,
@@ -30,8 +32,9 @@ export const extractResourceTypeAndNameFromDDL = ({ ddl }: { ddl: string }) => {
 
   // if no matches, throw error
   if (!extractionMatches)
-    throw new Error(
+    throw new HelpfulError(
       'resource creation type and name could not be found in ddl',
+      { ddl },
     );
 
   // format the type
@@ -39,7 +42,7 @@ export const extractResourceTypeAndNameFromDDL = ({ ddl }: { ddl: string }) => {
   const type = regexTypeMatchToTypeEnum[regexTypeMatch];
 
   // extract the name
-  const name = extractionMatches[2]!;
+  const name = extractionMatches[2]!.replace(/`/g, ''); // the second capture group is the name, remove any backticks
 
   // return type and name
   return {

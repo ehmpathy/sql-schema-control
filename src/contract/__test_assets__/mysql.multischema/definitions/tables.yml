@@ -1,0 +1,10 @@
+- type: resource
+  path: './tables/notification.sql'
+
+- type: resource
+  path: './tables/notification_version.sql'
+
+- type: resource
+  path: ./tables/spaceship.sql
+- type: resource
+  path: ./tables/spaceship_cargo.sql

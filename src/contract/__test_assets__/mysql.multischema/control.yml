@@ -1,0 +1,10 @@
+language: mysql
+dialect: 5.7
+connection: ./connection.config.ts
+strict: false # strict = true -> display uncontrolled resources
+definitions:
+  - ./definitions/init.yml
+  - ./definitions/tables.yml
+  - ./definitions/views.yml
+  - ./definitions/functions.yml
+  - ./definitions/procedures.yml

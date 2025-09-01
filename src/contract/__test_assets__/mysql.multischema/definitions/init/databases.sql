@@ -1,0 +1,2 @@
+CREATE DATABASE commsdb;
+CREATE DATABASE spacedb;
