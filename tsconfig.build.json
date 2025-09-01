@@ -13,7 +13,9 @@
     "prettier.*",
     "commitlint.*",
     "codegen.*",
+    "src/**/.scratch/**/*.(ts|js)",
     "src/**/*.test.(ts|js)",
+    "src/**/.test/**/*.(ts|js)",
     "src/**/__test_utils__/**/*.(ts|js)"
   ]
 }
