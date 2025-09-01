@@ -7,7 +7,7 @@ describe('extractResourceTypeAndNameFromDDL', () => {
     try {
       extractResourceTypeAndNameFromDDL({ ddl });
     } catch (error) {
-      expect(error.message).toEqual(
+      expect(error.message).toContain(
         'resource creation type and name could not be found in ddl',
       );
     }
@@ -70,6 +70,18 @@ describe('extractResourceTypeAndNameFromDDL', () => {
     const ddl = 'CREATE TABLE `super_cool_table` ( ... )';
     const { name, type } = extractResourceTypeAndNameFromDDL({ ddl });
     expect(name).toEqual('super_cool_table');
+    expect(type).toEqual(ResourceType.TABLE);
+  });
+  it('should be able to find a resource name even if scoped', () => {
+    const ddl = 'CREATE TABLE cooldb.super_cool_table ( ... )';
+    const { name, type } = extractResourceTypeAndNameFromDDL({ ddl });
+    expect(name).toEqual('cooldb.super_cool_table');
+    expect(type).toEqual(ResourceType.TABLE);
+  });
+  it('should be able to find a resource name even if scoped and backticked', () => {
+    const ddl = 'CREATE TABLE `cooldb`.`super_cool_table` ( ... )';
+    const { name, type } = extractResourceTypeAndNameFromDDL({ ddl });
+    expect(name).toEqual('cooldb.super_cool_table');
     expect(type).toEqual(ResourceType.TABLE);
   });
   it('should be able to find the resource name even if there is no whitespace between name and definition start', () => {

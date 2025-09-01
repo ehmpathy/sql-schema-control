@@ -1,6 +1,94 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`apply mysql should have an expected appearance when all changes need to be applied 1`] = `
+exports[`apply mysql multiple schemas should have an expected appearance when all changes need to be applied 1`] = `
+"    [1mApplying required actions...[22m
+[2m[22m
+[2m      [2mat applyPlans ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:23:11)[22m[2m[22m
+
+
+[2m[22m
+[2m      [2mat applyPlans ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:24:11)[22m[2m[22m
+
+      [1m[32m✔[39m[22m [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/mysql.multischema/definitions/init/databases.sql [90m(change:init_databases)[39m[22m
+[2m[22m
+[2m      [2mat applyPlans ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:45:15)[22m[2m[22m
+
+      [1m[32m✔[39m[22m [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/mysql.multischema/definitions/init/service_user.sql [90m(change:init_service_user)[39m[22m
+[2m[22m
+[2m      [2mat applyPlans ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:45:15)[22m[2m[22m
+
+      [1m[32m✔[39m[22m [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/mysql.multischema/definitions/tables/notification.sql [90m(resource:table:commsdb.notification)[39m[22m
+[2m[22m
+[2m      [2mat applyPlans ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:45:15)[22m[2m[22m
+
+      [1m[32m✔[39m[22m [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/mysql.multischema/definitions/tables/notification_version.sql [90m(resource:table:commsdb.notification_version)[39m[22m
+[2m[22m
+[2m      [2mat applyPlans ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:45:15)[22m[2m[22m
+
+      [1m[32m✔[39m[22m [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/mysql.multischema/definitions/tables/spaceship.sql [90m(resource:table:spacedb.spaceship)[39m[22m
+[2m[22m
+[2m      [2mat applyPlans ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:45:15)[22m[2m[22m
+
+      [1m[32m✔[39m[22m [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/mysql.multischema/definitions/tables/spaceship_cargo.sql [90m(resource:table:spacedb.spaceship_cargo)[39m[22m
+[2m[22m
+[2m      [2mat applyPlans ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:45:15)[22m[2m[22m
+
+      [1m[32m✔[39m[22m [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/mysql.multischema/definitions/views/view_spaceship_with_cargo.sql [90m(resource:view:spacedb.view_spaceship_with_cargo)[39m[22m
+[2m[22m
+[2m      [2mat applyPlans ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:45:15)[22m[2m[22m
+
+      [1m[32m✔[39m[22m [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/mysql.multischema/definitions/functions/find_message_hash_by_text.sql [90m(resource:function:commsdb.find_message_hash_by_text)[39m[22m
+[2m[22m
+[2m      [2mat applyPlans ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:45:15)[22m[2m[22m
+
+      [1m[32m✔[39m[22m [1m[1m[32m[APPLY][39m[1m src/contract/__test_assets__/mysql.multischema/definitions/procedures/upsert_message.sql [90m(resource:procedure:commsdb.upsert_message)[39m[22m
+[2m[22m
+[2m      [2mat applyPlans ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:45:15)[22m[2m[22m
+
+"
+`;
+
+exports[`apply mysql multiple schemas should have an expected appearance when all changes need to be reapplied, if possible 1`] = `
+"    [1mApplying required actions...[22m
+[2m[22m
+[2m      [2mat applyPlans ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:23:11)[22m[2m[22m
+
+
+[2m[22m
+[2m      [2mat applyPlans ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:24:11)[22m[2m[22m
+
+      [1m[33m↓[39m[22m [1m[1m[31m[MANUAL_MIGRATION][39m[1m src/contract/__test_assets__/mysql.multischema/definitions/tables/notification.sql [90m(resource:table:commsdb.notification)[39m[22m
+[2m[22m
+[2m      [2mat applyPlans ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:36:15)[22m[2m[22m
+
+      [1m[33m↓[39m[22m [1m[1m[31m[MANUAL_MIGRATION][39m[1m src/contract/__test_assets__/mysql.multischema/definitions/tables/notification_version.sql [90m(resource:table:commsdb.notification_version)[39m[22m
+[2m[22m
+[2m      [2mat applyPlans ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:36:15)[22m[2m[22m
+
+      [1m[33m↓[39m[22m [1m[1m[31m[MANUAL_MIGRATION][39m[1m src/contract/__test_assets__/mysql.multischema/definitions/tables/spaceship.sql [90m(resource:table:spacedb.spaceship)[39m[22m
+[2m[22m
+[2m      [2mat applyPlans ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:36:15)[22m[2m[22m
+
+      [1m[33m↓[39m[22m [1m[1m[31m[MANUAL_MIGRATION][39m[1m src/contract/__test_assets__/mysql.multischema/definitions/tables/spaceship_cargo.sql [90m(resource:table:spacedb.spaceship_cargo)[39m[22m
+[2m[22m
+[2m      [2mat applyPlans ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:36:15)[22m[2m[22m
+
+      [1m[32m✔[39m[22m [1m[1m[33m[REAPPLY][39m[1m src/contract/__test_assets__/mysql.multischema/definitions/views/view_spaceship_with_cargo.sql [90m(resource:view:spacedb.view_spaceship_with_cargo)[39m[22m
+[2m[22m
+[2m      [2mat applyPlans ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:45:15)[22m[2m[22m
+
+      [1m[32m✔[39m[22m [1m[1m[33m[REAPPLY][39m[1m src/contract/__test_assets__/mysql.multischema/definitions/functions/find_message_hash_by_text.sql [90m(resource:function:commsdb.find_message_hash_by_text)[39m[22m
+[2m[22m
+[2m      [2mat applyPlans ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:45:15)[22m[2m[22m
+
+      [1m[32m✔[39m[22m [1m[1m[33m[REAPPLY][39m[1m src/contract/__test_assets__/mysql.multischema/definitions/procedures/upsert_message.sql [90m(resource:procedure:commsdb.upsert_message)[39m[22m
+[2m[22m
+[2m      [2mat applyPlans ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:45:15)[22m[2m[22m
+
+"
+`;
+
+exports[`apply mysql single schema should have an expected appearance when all changes need to be applied 1`] = `
 "    [1mApplying required actions...[22m
 [2m[22m
 [2m      [2mat applyPlans ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:23:11)[22m[2m[22m
@@ -52,7 +140,7 @@ exports[`apply mysql should have an expected appearance when all changes need to
 "
 `;
 
-exports[`apply mysql should have an expected appearance when all changes need to be reapplied, if possible 1`] = `
+exports[`apply mysql single schema should have an expected appearance when all changes need to be reapplied, if possible 1`] = `
 "    [1mApplying required actions...[22m
 [2m[22m
 [2m      [2mat applyPlans ([22m[2msrc/logic/commands/applyPlans/applyPlans.ts[2m:23:11)[22m[2m[22m

@@ -26,80 +26,188 @@ describe('apply', () => {
     afterAll(async () => {
       await connection.end();
     });
-    it('should have an expected appearance when all changes need to be applied', async () => {
-      // ensure previous runs dont break this test
-      await connection.query({ sql: 'DROP USER IF EXISTS user_name' });
-      await connection.query({ sql: 'DROP TABLE IF EXISTS data_source' });
-      await connection.query({
-        sql: 'DROP TABLE IF EXISTS notification_version',
-      });
-      await connection.query({ sql: 'DROP TABLE IF EXISTS notification' });
-      await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship_cargo' });
-      await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship' });
-      await connection.query({
-        sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo',
-      });
-      await connection.query({
-        sql: 'DROP FUNCTION IF EXISTS find_message_hash_by_text',
-      });
-      await connection.query({
-        sql: 'DROP PROCEDURE IF EXISTS upsert_message',
-      });
-      await connection.query({ sql: 'DELETE FROM schema_control_change_log' });
+    describe('single schema', () => {
+      it('should have an expected appearance when all changes need to be applied', async () => {
+        // ensure previous runs dont break this test
+        await connection.query({ sql: 'DROP USER IF EXISTS user_name' });
+        await connection.query({ sql: 'DROP TABLE IF EXISTS data_source' });
+        await connection.query({
+          sql: 'DROP TABLE IF EXISTS notification_version',
+        });
+        await connection.query({ sql: 'DROP TABLE IF EXISTS notification' });
+        await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship_cargo' });
+        await connection.query({ sql: 'DROP TABLE IF EXISTS spaceship' });
+        await connection.query({
+          sql: 'DROP VIEW IF EXISTS view_spaceship_with_cargo',
+        });
+        await connection.query({
+          sql: 'DROP FUNCTION IF EXISTS find_message_hash_by_text',
+        });
+        await connection.query({
+          sql: 'DROP PROCEDURE IF EXISTS upsert_message',
+        });
+        await connection.query({
+          sql: 'DELETE FROM schema_control_change_log',
+        });
 
-      // run the test
-      stdout.stripColor = false; // dont strip color
-      // stdout.print = true;
-      stdout.start();
-      await Apply.run([
-        '-c',
-        `${__dirname}/../__test_assets__/mysql/control.yml`,
-      ]);
-      stdout.stop();
-      const output = stdout.output
-        .split('\n')
-        .filter((line) => !line.includes('console.log'))
-        .join('\n') // strip the console log portion
-        .replace(/\[\d\d:\d\d:\d\d\]/g, ''); // remove all timestamps, since they change over time...
-      expect(output).toMatchSnapshot();
+        // run the test
+        stdout.stripColor = false; // dont strip color
+        // stdout.print = true;
+        stdout.start();
+        await Apply.run([
+          '-c',
+          `${__dirname}/../__test_assets__/mysql/control.yml`,
+        ]);
+        stdout.stop();
+        const output = stdout.output
+          .split('\n')
+          .filter((line) => !line.includes('console.log'))
+          .join('\n') // strip the console log portion
+          .replace(/\[\d\d:\d\d:\d\d\]/g, ''); // remove all timestamps, since they change over time...
+        expect(output).toMatchSnapshot();
+      });
+      it('should have an expected appearance when all changes need to be reapplied, if possible', async () => {
+        // ensure previous runs dont break this test
+        await connection.query({ sql: 'DROP USER IF EXISTS user_name' });
+        await connection.query({ sql: 'DROP TABLE IF EXISTS data_source' });
+        await connection.query({
+          sql: 'DROP TABLE IF EXISTS notification_version',
+        });
+        await connection.query({ sql: 'DROP TABLE IF EXISTS notification' });
+        await connection.query({
+          sql: 'DROP FUNCTION IF EXISTS find_message_hash_by_text',
+        });
+        await connection.query({
+          sql: 'DROP PROCEDURE IF EXISTS upsert_message',
+        });
+        await connection.query({
+          sql: 'DELETE FROM schema_control_change_log',
+        });
+
+        // apply the definitions the first time
+        await Apply.run([
+          '-c',
+          `${__dirname}/../__test_assets__/mysql/control.yml`,
+        ]);
+
+        // reapply the definitions
+        stdout.stripColor = false; // dont strip color
+        // stdout.print = true;
+        stdout.start();
+        await Apply.run([
+          '-c',
+          `${__dirname}/../__test_assets__/mysql/control.yml`,
+        ]);
+        stdout.stop();
+        const output = stdout.output
+          .split('\n')
+          .filter((line) => !line.includes('console.log'))
+          .join('\n') // strip the console log portion
+          .replace(/\[\d\d:\d\d:\d\d\]/g, ''); // remove all timestamps, since they change over time...
+        expect(output).toMatchSnapshot();
+      });
     });
-    it('should have an expected appearance when all changes need to be reapplied, if possible', async () => {
-      // ensure previous runs dont break this test
-      await connection.query({ sql: 'DROP USER IF EXISTS user_name' });
-      await connection.query({ sql: 'DROP TABLE IF EXISTS data_source' });
-      await connection.query({
-        sql: 'DROP TABLE IF EXISTS notification_version',
-      });
-      await connection.query({ sql: 'DROP TABLE IF EXISTS notification' });
-      await connection.query({
-        sql: 'DROP FUNCTION IF EXISTS find_message_hash_by_text',
-      });
-      await connection.query({
-        sql: 'DROP PROCEDURE IF EXISTS upsert_message',
-      });
-      await connection.query({ sql: 'DELETE FROM schema_control_change_log' });
+    describe('multiple schemas', () => {
+      it('should have an expected appearance when all changes need to be applied', async () => {
+        // ensure previous runs dont break this test
+        await connection.query({ sql: 'DROP DATABASE IF EXISTS commsdb' });
+        await connection.query({ sql: 'DROP DATABASE IF EXISTS spacedb' });
+        await connection.query({ sql: 'DROP USER IF EXISTS user_name' });
+        await connection.query({
+          sql: 'DROP TABLE IF EXISTS commsdb.notification_version',
+        });
+        await connection.query({
+          sql: 'DROP TABLE IF EXISTS commsdb.notification',
+        });
+        await connection.query({
+          sql: 'DROP TABLE IF EXISTS spacedb.spaceship_cargo',
+        });
+        await connection.query({
+          sql: 'DROP TABLE IF EXISTS spacedb.spaceship',
+        });
+        await connection.query({
+          sql: 'DROP VIEW IF EXISTS spacedb.view_spaceship_with_cargo',
+        });
+        await connection.query({
+          sql: 'DROP FUNCTION IF EXISTS commsdb.find_message_hash_by_text',
+        });
+        await connection.query({
+          sql: 'DROP PROCEDURE IF EXISTS commsdb.upsert_message',
+        });
+        await connection.query({
+          sql: 'DELETE FROM schema_control_change_log',
+        });
 
-      // apply the definitions the first time
-      await Apply.run([
-        '-c',
-        `${__dirname}/../__test_assets__/mysql/control.yml`,
-      ]);
+        // run the test
+        stdout.stripColor = false; // dont strip color
+        stdout.print = true;
+        stdout.start();
+        await Apply.run([
+          '-c',
+          `${__dirname}/../__test_assets__/mysql.multischema/control.yml`,
+        ]);
+        stdout.stop();
+        console.log('post stdout.stop');
 
-      // reapply the definitions
-      stdout.stripColor = false; // dont strip color
-      // stdout.print = true;
-      stdout.start();
-      await Apply.run([
-        '-c',
-        `${__dirname}/../__test_assets__/mysql/control.yml`,
-      ]);
-      stdout.stop();
-      const output = stdout.output
-        .split('\n')
-        .filter((line) => !line.includes('console.log'))
-        .join('\n') // strip the console log portion
-        .replace(/\[\d\d:\d\d:\d\d\]/g, ''); // remove all timestamps, since they change over time...
-      expect(output).toMatchSnapshot();
+        const output = stdout.output
+          .split('\n')
+          .filter((line) => !line.includes('console.log'))
+          .join('\n') // strip the console log portion
+          .replace(/\[\d\d:\d\d:\d\d\]/g, ''); // remove all timestamps, since they change over time...
+        expect(output).toMatchSnapshot();
+      });
+      it('should have an expected appearance when all changes need to be reapplied, if possible', async () => {
+        // ensure previous runs dont break this test
+        await connection.query({ sql: 'DROP DATABASE IF EXISTS commsdb' });
+        await connection.query({ sql: 'DROP DATABASE IF EXISTS spacedb' });
+        await connection.query({ sql: 'DROP USER IF EXISTS user_name' });
+        await connection.query({
+          sql: 'DROP TABLE IF EXISTS commsdb.notification_version',
+        });
+        await connection.query({
+          sql: 'DROP TABLE IF EXISTS commsdb.notification',
+        });
+        await connection.query({
+          sql: 'DROP FUNCTION IF EXISTS commsdb.find_message_hash_by_text',
+        });
+        await connection.query({
+          sql: 'DROP PROCEDURE IF EXISTS commsdb.upsert_message',
+        });
+        await connection.query({
+          sql: 'DROP VIEW IF EXISTS spacedb.view_spaceship_with_cargo',
+        });
+        await connection.query({
+          sql: 'DROP TABLE IF EXISTS spacedb.spaceship_cargo',
+        });
+        await connection.query({
+          sql: 'DROP TABLE IF EXISTS spacedb.spaceship',
+        });
+        await connection.query({
+          sql: 'DELETE FROM schema_control_change_log',
+        });
+
+        // apply the definitions the first time
+        await Apply.run([
+          '-c',
+          `${__dirname}/../__test_assets__/mysql.multischema/control.yml`,
+        ]);
+
+        // reapply the definitions
+        stdout.stripColor = false; // dont strip color
+        // stdout.print = true;
+        stdout.start();
+        await Apply.run([
+          '-c',
+          `${__dirname}/../__test_assets__/mysql.multischema/control.yml`,
+        ]);
+        stdout.stop();
+        const output = stdout.output
+          .split('\n')
+          .filter((line) => !line.includes('console.log'))
+          .join('\n') // strip the console log portion
+          .replace(/\[\d\d:\d\d:\d\d\]/g, ''); // remove all timestamps, since they change over time...
+        expect(output).toMatchSnapshot();
+      });
     });
   });
   describe('postgres', () => {
