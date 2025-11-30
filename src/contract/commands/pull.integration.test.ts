@@ -1,13 +1,13 @@
 import { stdout } from 'stdout-stderr';
 
 import {
-  DatabaseConnection,
-  DatabaseLanguage,
   ControlConfig,
+  type DatabaseConnection,
+  DatabaseLanguage,
 } from '../../domain';
 import { initializeControlEnvironment } from '../../logic/config/initializeControlEnvironment';
-import { promiseConfig as promiseConfigMysql } from '../__test_assets__/mysql/connection.config';
-import { promiseConfig as promiseConfigPostgres } from '../__test_assets__/postgres/connection.config';
+import { promiseConfig as promiseConfigMysql } from '../.test/assets/mysql/connection.config';
+import { promiseConfig as promiseConfigPostgres } from '../.test/assets/postgres/connection.config';
 import Pull from './pull';
 
 describe('pull', () => {
@@ -32,9 +32,9 @@ describe('pull', () => {
       stdout.start();
       await Pull.run([
         '-c',
-        `${__dirname}/../__test_assets__/mysql/control.yml`, // note how the config does not need to be strict for this to work
+        `${__dirname}/../.test/assets/mysql/control.yml`, // note how the config does not need to be strict for this to work
         '-t',
-        `${__dirname}/../__test_assets__/mysql/uncontrolled`,
+        `${__dirname}/../.test/assets/mysql/uncontrolled`,
       ]);
       stdout.stop();
       const output = stdout.output
@@ -65,9 +65,9 @@ describe('pull', () => {
       stdout.start();
       await Pull.run([
         '-c',
-        `${__dirname}/../__test_assets__/postgres/control.yml`, // note how the config does not need to be strict for this to work
+        `${__dirname}/../.test/assets/postgres/control.yml`, // note how the config does not need to be strict for this to work
         '-t',
-        `${__dirname}/../__test_assets__/postgres/uncontrolled`,
+        `${__dirname}/../.test/assets/postgres/uncontrolled`,
       ]);
       stdout.stop();
       const output = stdout.output

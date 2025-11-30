@@ -1,4 +1,4 @@
-import { exampleSqlQueryWithSubquery } from './__test_assets__/exampleSqlQueryWithSubquery';
+import { exampleSqlQueryWithSubquery } from './.test/assets/exampleSqlQueryWithSubquery';
 import { breakSqlIntoNestedSqlArraysAtParentheses } from './breakSqlIntoNestedSqlArraysAtParentheses';
 
 describe('breakSqlIntoNestedSqlArraysAtParentheses', () => {
@@ -12,7 +12,7 @@ describe('breakSqlIntoNestedSqlArraysAtParentheses', () => {
     const sql = "SELECT CONCAT('hel', 'lo');";
     const nestedSqlArray = breakSqlIntoNestedSqlArraysAtParentheses({ sql });
     expect(nestedSqlArray).toHaveLength(3);
-    expect(nestedSqlArray[1]![0]![0]).toEqual('(');
-    expect(nestedSqlArray[1]![0]!.slice(-1)[0]).toEqual(')');
+    expect(nestedSqlArray[1]?.[0]?.[0]).toEqual('(');
+    expect(nestedSqlArray[1]?.[0]?.slice(-1)[0]).toEqual(')');
   });
 });

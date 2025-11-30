@@ -21,5 +21,9 @@
       "username": "root"
     }
   ],
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "terraform.languageServer.enable": false,
+  "yaml.validate": false,
+  "cSpell.enabled": false,
+  "eslint.enable": true
 }

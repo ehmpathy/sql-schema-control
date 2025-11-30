@@ -1,7 +1,7 @@
 import {
-  ControlConfig,
   ChangeDefinition,
   ConnectionConfig,
+  ControlConfig,
   DatabaseLanguage,
 } from '../../../../domain';
 import { readYmlFile } from './_utils/readYmlFile';

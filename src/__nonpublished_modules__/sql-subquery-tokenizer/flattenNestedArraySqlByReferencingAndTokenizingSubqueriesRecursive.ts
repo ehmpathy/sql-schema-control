@@ -1,6 +1,6 @@
-import { NestedStringArray } from './breakSqlIntoNestedSqlArraysAtParentheses';
+import type { NestedStringArray } from './breakSqlIntoNestedSqlArraysAtParentheses';
 import { extractAndTokenizeSubqueryReferencesInArrayOfSqlStrings } from './extractAndTokenizeSubqueryReferencesInArrayOfSqlStrings';
-import { SqlSubqueryReference } from './model/SqlSubqueryReference';
+import type { SqlSubqueryReference } from './model/SqlSubqueryReference';
 
 export const flattenNestedArraySqlByReferencingAndTokenizingSubqueriesRecursive =
   ({

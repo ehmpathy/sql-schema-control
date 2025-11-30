@@ -1,8 +1,8 @@
 import mysql from 'mysql2/promise';
 import pg from 'pg';
 
-import { ConnectionConfig, DatabaseLanguage } from '../../../../domain';
-import { DatabaseConnection } from '../types';
+import { type ConnectionConfig, DatabaseLanguage } from '../../../../../domain';
+import type { DatabaseConnection } from '../../types';
 
 // create the connection to database
 const connectionAdapters = {
@@ -65,6 +65,8 @@ export const connectToDatabase = async ({
 }): Promise<DatabaseConnection> => {
   // 1. get the connection adapter for the method
   const getDbConnection = connectionAdapters[language];
+  if (!getDbConnection)
+    throw new Error(`Unsupported database language: ${language}`);
 
   // 2. attempt to connect
   const connection = await getDbConnection({ connectionConfig: config });

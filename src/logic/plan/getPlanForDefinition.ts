@@ -1,9 +1,9 @@
 import {
-  DatabaseConnection,
-  ChangeDefinition,
-  ResourceDefinition,
+  type ChangeDefinition,
+  type DatabaseConnection,
   DefinitionPlan,
   RequiredAction,
+  type ResourceDefinition,
 } from '../../domain';
 import { getDifferenceForDefinition } from '../schema/getDifferenceForDefinition';
 import { getReferenceIdForDefinition } from '../schema/getReferenceIdForDefinition';

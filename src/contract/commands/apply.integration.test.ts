@@ -1,13 +1,13 @@
 import { stdout } from 'stdout-stderr';
 
 import {
-  DatabaseConnection,
-  DatabaseLanguage,
   ControlConfig,
+  type DatabaseConnection,
+  DatabaseLanguage,
 } from '../../domain';
 import { initializeControlEnvironment } from '../../logic/config/initializeControlEnvironment';
-import { promiseConfig as promiseConfigMysql } from '../__test_assets__/mysql/connection.config';
-import { promiseConfig as promiseConfigPostgres } from '../__test_assets__/postgres/connection.config';
+import { promiseConfig as promiseConfigMysql } from '../.test/assets/mysql/connection.config';
+import { promiseConfig as promiseConfigPostgres } from '../.test/assets/postgres/connection.config';
 import Apply from './apply';
 
 describe('apply', () => {
@@ -56,7 +56,7 @@ describe('apply', () => {
         stdout.start();
         await Apply.run([
           '-c',
-          `${__dirname}/../__test_assets__/mysql/control.yml`,
+          `${__dirname}/../.test/assets/mysql/control.yml`,
         ]);
         stdout.stop();
         const output = stdout.output
@@ -87,7 +87,7 @@ describe('apply', () => {
         // apply the definitions the first time
         await Apply.run([
           '-c',
-          `${__dirname}/../__test_assets__/mysql/control.yml`,
+          `${__dirname}/../.test/assets/mysql/control.yml`,
         ]);
 
         // reapply the definitions
@@ -96,7 +96,7 @@ describe('apply', () => {
         stdout.start();
         await Apply.run([
           '-c',
-          `${__dirname}/../__test_assets__/mysql/control.yml`,
+          `${__dirname}/../.test/assets/mysql/control.yml`,
         ]);
         stdout.stop();
         const output = stdout.output
@@ -144,7 +144,7 @@ describe('apply', () => {
         stdout.start();
         await Apply.run([
           '-c',
-          `${__dirname}/../__test_assets__/mysql.multischema/control.yml`,
+          `${__dirname}/../.test/assets/mysql.multischema/control.yml`,
         ]);
         stdout.stop();
         console.log('post stdout.stop');
@@ -189,7 +189,7 @@ describe('apply', () => {
         // apply the definitions the first time
         await Apply.run([
           '-c',
-          `${__dirname}/../__test_assets__/mysql.multischema/control.yml`,
+          `${__dirname}/../.test/assets/mysql.multischema/control.yml`,
         ]);
 
         // reapply the definitions
@@ -198,7 +198,7 @@ describe('apply', () => {
         stdout.start();
         await Apply.run([
           '-c',
-          `${__dirname}/../__test_assets__/mysql.multischema/control.yml`,
+          `${__dirname}/../.test/assets/mysql.multischema/control.yml`,
         ]);
         stdout.stop();
         const output = stdout.output
@@ -231,7 +231,7 @@ describe('apply', () => {
       try {
         await connection.query({ sql: 'DROP OWNED BY service_awesomeness;' });
         await connection.query({ sql: 'DROP USER service_awesomeness;' });
-      } catch (error) {
+      } catch (_error) {
         // do nothing if this throws error; i.e., "IF EXISTS"
       }
       await connection.query({
@@ -256,7 +256,7 @@ describe('apply', () => {
       stdout.start();
       await Apply.run([
         '-c',
-        `${__dirname}/../__test_assets__/postgres/control.yml`,
+        `${__dirname}/../.test/assets/postgres/control.yml`,
       ]);
       stdout.stop();
       const output = stdout.output
@@ -272,7 +272,7 @@ describe('apply', () => {
       try {
         await connection.query({ sql: 'DROP OWNED BY service_awesomeness;' });
         await connection.query({ sql: 'DROP USER service_awesomeness;' });
-      } catch (error) {
+      } catch (_error) {
         // do nothing if this throws error; i.e., "IF EXISTS"
       }
       await connection.query({
@@ -294,7 +294,7 @@ describe('apply', () => {
       // apply the definitions the first time
       await Apply.run([
         '-c',
-        `${__dirname}/../__test_assets__/postgres/control.yml`,
+        `${__dirname}/../.test/assets/postgres/control.yml`,
       ]);
 
       // reapply the definitions
@@ -303,7 +303,7 @@ describe('apply', () => {
       stdout.start();
       await Apply.run([
         '-c',
-        `${__dirname}/../__test_assets__/postgres/control.yml`,
+        `${__dirname}/../.test/assets/postgres/control.yml`,
       ]);
       stdout.stop();
       const output = stdout.output

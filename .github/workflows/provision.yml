@@ -1,0 +1,24 @@
+name: provision
+
+on:
+  push:
+    tags:
+      - v*
+    branches:
+      - "main"
+      - "master"
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }} # per [workflow] x [branch, tag]
+  cancel-in-progress: true #  cancel workflows for non-latest commits
+
+jobs:
+  github:
+    uses: ./.github/workflows/.declastruct.yml
+    with:
+      wish-path: provision/github/declastruct.resources.ts
+      github-environment: prod
+    secrets:
+      github-token: ${{ secrets.PROVISION_GITHUB_GITHUB_TOKEN }}

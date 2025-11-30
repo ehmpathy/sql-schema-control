@@ -1,7 +1,7 @@
 import {
   ResourceDefinition,
-  ResourceType,
   ResourceDefinitionStatus,
+  ResourceType,
 } from '../../../../domain';
 import { getUncontrolledResources } from './getUncontrolledResources';
 import { pullResources } from './pullResources';
@@ -51,7 +51,7 @@ describe('getUncontrolledResources', () => {
       controlledResources,
     });
     expect(uncontrolledResources.length).toEqual(1);
-    expect(uncontrolledResources[0]!.name).toEqual(liveResource.name);
+    expect(uncontrolledResources[0]?.name).toEqual(liveResource.name);
   });
   it('should find that a resource in pullResources that does exist in liveResource is controlled', async () => {
     const liveResource = new ResourceDefinition({

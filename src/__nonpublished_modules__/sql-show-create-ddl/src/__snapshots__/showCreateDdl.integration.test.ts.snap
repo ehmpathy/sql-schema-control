@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`showCreateDdl mysql get ddl should be able to get create ddl for a function 1`] = `
 "CREATE FUNCTION \`f_some_function_for_testing_showcreate\`(

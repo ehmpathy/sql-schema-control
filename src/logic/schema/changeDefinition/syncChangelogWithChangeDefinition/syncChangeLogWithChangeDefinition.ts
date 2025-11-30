@@ -1,8 +1,8 @@
 import { mysql as prepareMySQL, pg as preparePgSQL } from 'yesql';
 
 import {
-  DatabaseConnection,
-  ChangeDefinition,
+  type ChangeDefinition,
+  type DatabaseConnection,
   DatabaseLanguage,
 } from '../../../../domain';
 

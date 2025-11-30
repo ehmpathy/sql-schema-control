@@ -3,11 +3,19 @@ ignores:
   - declapract
   - declapract-typescript-ehmpathy
   - '@commitlint/config-conventional'
-  - '@trivago/prettier-plugin-sort-imports'
-  - '@tsconfig/node-lts-strictest'
-  - core-js
-  - ts-jest
   - husky
   - '@oclif/plugin-help'
   - oclif
   - tsx # used in `./bin/run
+  - rhachet
+  - "@tsconfig/node20"
+  - "@tsconfig/strictest"
+  - "@biomejs/biome"
+  - esbuild-register
+  - "@swc/core"
+  - "@swc/jest"
+  - type-fns # used transitively
+  - "@tsconfig/node-lts-strictest" # likely used in other configs
+  - core-js # polyfill
+  - test-fns # test utilities
+  - ts-jest # kept for compatibility

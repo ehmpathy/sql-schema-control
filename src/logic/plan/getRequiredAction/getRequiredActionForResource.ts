@@ -1,7 +1,7 @@
 import {
-  ResourceDefinition,
-  ResourceDefinitionStatus,
   RequiredAction,
+  type ResourceDefinition,
+  ResourceDefinitionStatus,
   ResourceType,
 } from '../../../domain';
 

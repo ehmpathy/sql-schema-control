@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`removeParenthesisSurroundingJoinsInFromClause should remove them from every join 1`] = `
 "select

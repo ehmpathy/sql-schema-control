@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`readConfig should be able to read the example config provisioned in _test_assets 1`] = `
 ControlConfig {
@@ -11,15 +11,15 @@ ControlConfig {
     "username": "__USERNAME__",
   },
   "definitions": [
-    {
+    ChangeDefinition {
       "hash": "1c94e8540709dc58f76d528d843add1ca2ed56bddb40afddb550473bfc379054",
       "id": "first_change",
       "path": "__CWD__/src/logic/config/getConfig/readConfig/_test_assets/./first_change.sql",
-      "reappliable": false,
+      "reappliable": undefined,
       "sql": "wassup!
 ",
     },
-    {
+    ChangeDefinition {
       "hash": "60675ff6ce6168cc979c4c24cd9d943938f3e66b585c855158c93fa6b0c18b4a",
       "id": "init_20190619_1",
       "path": "__CWD__/src/logic/config/getConfig/readConfig/_test_assets/definitions/./init/service_user.sql",
@@ -28,7 +28,7 @@ ControlConfig {
 GRANT ...
 ",
     },
-    {
+    ChangeDefinition {
       "hash": "57ccb893536b1a5708a6ffc105980eda3b3182ea57fc88e3f8362b3537d2a4d4",
       "id": "data_20190619_1",
       "path": "__CWD__/src/logic/config/getConfig/readConfig/_test_assets/definitions/./init/data_sources.sql",
@@ -37,7 +37,7 @@ GRANT ...
 INSERT INTO ...
 ",
     },
-    {
+    ChangeDefinition {
       "hash": "c61a11e61b3fd7fdd827734dda8fbaec17cc1bbcf7d9784874e4d26348f79828",
       "id": "procedures_20190619_1",
       "path": "__CWD__/src/logic/config/getConfig/readConfig/_test_assets/definitions/./procedures/awesome_sproc.sql",
@@ -46,7 +46,7 @@ INSERT INTO ...
 CREATE PROCEDURE ...
 ",
     },
-    {
+    ResourceDefinition {
       "name": "communication_channel",
       "path": "__CWD__/src/logic/config/getConfig/readConfig/_test_assets/definitions/./tables/communication_channel.sql",
       "sql": "-- ----------------------------------------
@@ -68,7 +68,7 @@ CREATE TABLE \`communication_channel\` (
 ",
       "type": "TABLE",
     },
-    {
+    ResourceDefinition {
       "name": "upsert_user_description",
       "path": "__CWD__/src/logic/config/getConfig/readConfig/_test_assets/definitions/./procedures/upsert_user_description.sql",
       "sql": "/*

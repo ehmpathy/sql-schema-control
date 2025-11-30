@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`getDifferenceForChangeDefinition should find that an out of date change has a colored diff of changed lines 1`] = `
 "[32m- Expected[39m

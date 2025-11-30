@@ -1,4 +1,4 @@
-import { promiseConfig } from '../../../__test_assets__/connection.config';
+import { promiseConfig } from '../../../.test/assets/connection.config';
 import { ControlConfig, DatabaseLanguage } from '../../../domain';
 import { connectToDatabase } from './connectToDatabase';
 

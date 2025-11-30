@@ -1,4 +1,4 @@
-import { DatabaseLanguage, ResourceType } from '../../../domain';
+import { DatabaseLanguage, type ResourceType } from '../../../domain';
 import { normalizeCreateDdlMysql } from './mysql/normalizeCreateDdlMysql';
 import { normalizeCreateDdlPostgres } from './postgres/normalizeCreateDdlPostgres';
 

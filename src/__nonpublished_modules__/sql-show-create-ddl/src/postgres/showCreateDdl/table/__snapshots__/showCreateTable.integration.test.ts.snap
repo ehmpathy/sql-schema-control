@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`showCreateTable should be possible to get create statement of table 1`] = `
 "CREATE TABLE public.test_table_for_showcreate_on (

@@ -1,6 +1,6 @@
 import {
-  DatabaseConnection,
   ChangeDefinition,
+  type DatabaseConnection,
   ResourceDefinition,
 } from '../../domain';
 import { getDifferenceForChangeDefinition } from './changeDefinition/getDifferenceForChangeDefinition';

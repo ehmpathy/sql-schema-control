@@ -1,4 +1,7 @@
-import { ResourceDefinition, ResourceDefinitionStatus } from '../../../domain';
+import {
+  type ResourceDefinition,
+  ResourceDefinitionStatus,
+} from '../../../domain';
 import { getControlContextFromConfig } from '../../config/getControlContextFromConfig';
 import { getPlans } from '../getPlans';
 import { recordUncontrolledResources } from './recordUncontrolledResources';

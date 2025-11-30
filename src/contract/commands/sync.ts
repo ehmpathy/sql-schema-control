@@ -7,7 +7,7 @@ export default class Sync extends Command {
     'sync the change log for a specific change definition without applying it, for cases where a change has been reapplied manually';
 
   public static examples = [
-    `$ sql-schema-control sync -c src/contract/__test_assets__/control.yml --id init_service_user
+    `$ sql-schema-control sync -c src/contract/.test/assets/control.yml --id init_service_user
   ✔ [SYNC] ./init/service_user.sql (change:init_service_user)
     `,
   ];

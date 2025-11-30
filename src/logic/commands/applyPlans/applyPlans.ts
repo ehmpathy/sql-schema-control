@@ -1,9 +1,9 @@
 import chalk from 'chalk';
 
 import {
+  type DatabaseConnection,
+  type DefinitionPlan,
   RequiredAction,
-  DefinitionPlan,
-  DatabaseConnection,
 } from '../../../domain';
 import { applyPlan } from '../../plan/applyPlan';
 import { getColoredPlanTitle } from '../utils/getColoredPlanTitle';

@@ -1,4 +1,4 @@
-import { SqlSubqueryReference } from './model/SqlSubqueryReference';
+import type { SqlSubqueryReference } from './model/SqlSubqueryReference';
 
 export const getTokenForSqlSubqueryReference = ({
   reference,

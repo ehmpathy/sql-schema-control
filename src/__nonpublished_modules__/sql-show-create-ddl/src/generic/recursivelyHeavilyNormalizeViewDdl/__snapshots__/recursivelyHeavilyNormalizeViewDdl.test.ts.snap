@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`recursivelyHeavilyNormalizeViewDdl should be able to normalize a more complex postgres viewdef result into something more reasonable, without all the extra parens 1`] = `
 "CREATE OR REPLACE VIEW view_home_current AS select

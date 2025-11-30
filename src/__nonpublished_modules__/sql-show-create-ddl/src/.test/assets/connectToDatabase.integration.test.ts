@@ -1,4 +1,4 @@
-import { DatabaseLanguage } from '../../../../domain';
+import { DatabaseLanguage } from '../../../../../domain';
 import { connectToDatabase } from './connectToDatabase';
 import { config } from './getDbConnection';
 

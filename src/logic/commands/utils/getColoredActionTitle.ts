@@ -1,7 +1,7 @@
+import path from 'node:path';
 import chalk from 'chalk';
-import path from 'path';
 
-import { ChangeDefinition, ResourceDefinition } from '../../../domain';
+import type { ChangeDefinition, ResourceDefinition } from '../../../domain';
 import { getReferenceIdForDefinition } from '../../schema/getReferenceIdForDefinition';
 
 export const getColoredActionTitle = ({

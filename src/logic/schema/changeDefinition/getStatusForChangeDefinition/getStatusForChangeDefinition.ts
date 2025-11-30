@@ -1,7 +1,7 @@
 import {
-  DatabaseConnection,
-  ChangeDefinition,
+  type ChangeDefinition,
   ChangeDefinitionStatus,
+  type DatabaseConnection,
 } from '../../../../domain';
 import { ChangeHasNotBeenAppliedError } from '../getAppliedChangeDefinitionFromDatabase/getAppliedChangeDefinitionFromDatabase';
 import { getDifferenceForChangeDefinition } from '../getDifferenceForChangeDefinition/getDifferenceForChangeDefinition';

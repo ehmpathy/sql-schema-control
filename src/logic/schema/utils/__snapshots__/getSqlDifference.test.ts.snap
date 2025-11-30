@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`getSqlDifference should find that a colored diff of changes if sql is different 1`] = `
 "[32m- Expected[39m

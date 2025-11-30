@@ -1,7 +1,7 @@
 import {
-  DatabaseConnection,
-  DefinitionPlan,
   ChangeDefinition,
+  type DatabaseConnection,
+  type DefinitionPlan,
   ResourceDefinition,
 } from '../../../domain';
 import { applyPlanForChange } from './applyPlanForChange';

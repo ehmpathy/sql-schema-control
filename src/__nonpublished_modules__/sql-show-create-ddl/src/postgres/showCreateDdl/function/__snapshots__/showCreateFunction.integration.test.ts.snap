@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`showCreateFunction should be possible to get create statement of function 1`] = `
 "CREATE OR REPLACE FUNCTION public.test_func_for_show_create_on(in_name character varying)

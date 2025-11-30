@@ -1,13 +1,13 @@
 import { stdout } from 'stdout-stderr';
 
 import {
-  DatabaseConnection,
-  DatabaseLanguage,
   ControlConfig,
+  type DatabaseConnection,
+  DatabaseLanguage,
 } from '../../domain';
 import { initializeControlEnvironment } from '../../logic/config/initializeControlEnvironment';
-import { promiseConfig as promiseConfigMysql } from '../__test_assets__/mysql/connection.config';
-import { promiseConfig as promiseConfigPostgres } from '../__test_assets__/postgres/connection.config';
+import { promiseConfig as promiseConfigMysql } from '../.test/assets/mysql/connection.config';
+import { promiseConfig as promiseConfigPostgres } from '../.test/assets/postgres/connection.config';
 import Sync from './sync';
 
 describe('sync', () => {
@@ -33,7 +33,7 @@ describe('sync', () => {
       stdout.start();
       await Sync.run([
         '-c',
-        `${__dirname}/../__test_assets__/mysql/control.yml`,
+        `${__dirname}/../.test/assets/mysql/control.yml`,
         '--id',
         'init_service_user',
       ]);
@@ -68,7 +68,7 @@ describe('sync', () => {
       stdout.start();
       await Sync.run([
         '-c',
-        `${__dirname}/../__test_assets__/postgres/control.yml`,
+        `${__dirname}/../.test/assets/postgres/control.yml`,
         '--id',
         'init_service_user',
       ]);

@@ -1,9 +1,9 @@
 // TODO: use this in pull resources too. make it a util
 import { showCreateDdl } from '../../../../__nonpublished_modules__/sql-show-create-ddl';
 import {
-  DatabaseConnection,
-  ResourceType,
+  type DatabaseConnection,
   ResourceDefinition,
+  type ResourceType,
 } from '../../../../domain';
 
 export const getLiveResourceDefinitionFromDatabase = async ({

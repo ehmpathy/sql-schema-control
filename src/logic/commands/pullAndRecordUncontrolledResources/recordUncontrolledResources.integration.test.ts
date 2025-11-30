@@ -3,7 +3,7 @@ import { recordUncontrolledResources } from './recordUncontrolledResources';
 import { readFile } from './utils/fileIO';
 
 describe('recordUncontrolledResources', () => {
-  const targetDir = `${__dirname}/__test_assets__/uncontrolled`;
+  const targetDir = `${__dirname}/.test/assets/uncontrolled`;
   it('should accurately record an uncontrolled table resource', async () => {
     const resource = new ResourceDefinition({
       sql: '__TABLE_SQL__',

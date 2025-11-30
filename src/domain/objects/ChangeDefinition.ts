@@ -8,13 +8,13 @@ const schema = Joi.object().keys({
   path: Joi.string().required(),
   sql: Joi.string().required(),
   hash: Joi.string().required().length(64), // sha256 hash
-  reappliable: Joi.boolean().required(),
+  reappliable: Joi.boolean().optional().default(false),
   status: Joi.string()
     .valid(...Object.values(ChangeDefinitionStatus))
     .optional(),
 });
 
-interface ChangeDefinitionConstructorProps {
+export interface ChangeDefinition {
   id: string; // id ensures that you can move the file while maintaining the relationship to the hash
   path: string;
   sql: string;
@@ -22,16 +22,9 @@ interface ChangeDefinitionConstructorProps {
   reappliable?: boolean; // optional from constructor input, but is defined by the constructor
   status?: ChangeDefinitionStatus;
 }
-export class ChangeDefinition extends DomainObject<ChangeDefinitionConstructorProps> {
-  constructor(props: ChangeDefinitionConstructorProps) {
-    const modifiedProps = { ...props, reappliable: !!props.reappliable };
-    super(modifiedProps);
-  }
-  public id!: string;
-  public path!: string;
-  public sql!: string;
-  public hash!: string;
-  public reappliable!: boolean;
-  public status?: ChangeDefinitionStatus;
+export class ChangeDefinition
+  extends DomainObject<ChangeDefinition>
+  implements ChangeDefinition
+{
   public static schema = schema;
 }

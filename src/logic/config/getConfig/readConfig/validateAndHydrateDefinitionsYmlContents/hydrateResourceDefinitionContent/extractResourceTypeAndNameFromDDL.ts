@@ -42,7 +42,11 @@ export const extractResourceTypeAndNameFromDDL = ({ ddl }: { ddl: string }) => {
   const type = regexTypeMatchToTypeEnum[regexTypeMatch];
 
   // extract the name
-  const name = extractionMatches[2]!.replace(/`/g, ''); // the second capture group is the name, remove any backticks
+  const name = extractionMatches[2]?.replace(/`/g, ''); // the second capture group is the name, remove any backticks
+  if (!name)
+    throw new HelpfulError('resource name could not be extracted from ddl', {
+      ddl,
+    });
 
   // return type and name
   return {

@@ -39,7 +39,7 @@ export const recursivelyHeavilyNormalizeViewDdl = ({
   const normalizedViewQuerySql = recursivelyHeavilyNormalizeViewQuerySql({
     sql: viewQuerySql,
   });
-  normalizedDdl = viewCreateHeader + ' AS ' + normalizedViewQuerySql; // tslint:disable-line prefer-template
+  normalizedDdl = `${viewCreateHeader} AS ${normalizedViewQuerySql}`; // tslint:disable-line prefer-template
 
   // 3. return the results
   return normalizedDdl;

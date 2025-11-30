@@ -1,4 +1,4 @@
-import { DatabaseLanguage } from '../../../../domain';
+import { DatabaseLanguage } from '../../../../../domain';
 import { connectToDatabase } from './connectToDatabase';
 
 // the connection config for our integration test dbs, provisioned by docker

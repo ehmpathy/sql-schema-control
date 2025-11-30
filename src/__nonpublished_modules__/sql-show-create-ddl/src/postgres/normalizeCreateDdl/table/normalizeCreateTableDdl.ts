@@ -12,7 +12,7 @@ export const normalizeCreateTableDdl = ({ ddl }: { ddl: string }) => {
 
   // swap back to better aliases
   prettierDdl = prettierDdl.replace(
-    /int NOT NULL DEFAULT nextval\([\'\w: \n]+\)/g,
+    /int NOT NULL DEFAULT nextval\(['\w: \n]+\)/g,
     'serial NOT NULL',
   ); // e.g., `bigint DEFAULT nextval('test_tb_for_show_create_on_id_seq' :: regclass)` -> `bigserial`; although 'bigint default ...' is the canonical def, its just too verbose to be useful
   prettierDdl = prettierDdl.replace(/character varying/g, 'varchar'); // although `character varying` is the canonical term, `varchar` is used more regularly in practice -> more helpful

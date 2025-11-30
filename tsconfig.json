@@ -1,5 +1,8 @@
 {
-  "extends": "@tsconfig/node-lts-strictest/tsconfig.json",
+  "extends": [
+    "@tsconfig/strictest/tsconfig.json",
+    "@tsconfig/node20/tsconfig.json"
+  ],
   "compilerOptions": {
     "importsNotUsedAsValues": "remove",
     "noPropertyAccessFromIndexSignature": false,
@@ -12,14 +15,17 @@
     "outDir": "dist",
     "target": "es2020",
     "noUnusedLocals": false,
-    "noUnusedParameters": false
+    "noUnusedParameters": false,
+    "incremental": true
   },
   "include": [
-    "**/*.ts"
+    "**/*.ts",
   ],
   "exclude": [
     "dist",
     "coverage",
-    "node_modules"
+    "node_modules",
+    "**/.test/assets/*.ts",
+    "**/.test.assets/*.ts",
   ]
 }

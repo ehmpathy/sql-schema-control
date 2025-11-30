@@ -1,7 +1,7 @@
 import {
-  ChangeDefinition,
-  ResourceDefinition,
+  type ChangeDefinition,
   DefinitionType,
+  type ResourceDefinition,
 } from '../../../../../domain';
 import { InvalidDefinitionError } from './errors';
 import { hydrateChangeDefinitionContent } from './hydrateChangeDefinitionContent';

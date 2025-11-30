@@ -1,7 +1,7 @@
 import { DomainObject } from 'domain-objects';
 import Joi from 'joi';
 
-import { ResourceType, ResourceDefinitionStatus } from '../../domain/constants';
+import { ResourceDefinitionStatus, ResourceType } from '../../domain/constants';
 
 const schema = Joi.object().keys({
   type: Joi.string().valid(...Object.values(ResourceType)),

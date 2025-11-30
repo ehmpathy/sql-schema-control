@@ -1,5 +1,5 @@
 import { ResourceType } from '../../../../domain';
-import { DatabaseConnection } from '../types';
+import type { DatabaseConnection } from '../types';
 import { normalizeCreateDdlMysql } from './normalizeCreateDdlMysql';
 
 const resourceToTitleCase = {
