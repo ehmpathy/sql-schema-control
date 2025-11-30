@@ -1,7 +1,7 @@
 import {
-  DefinitionPlan,
-  DatabaseConnection,
   ChangeDefinition,
+  type DatabaseConnection,
+  type DefinitionPlan,
 } from '../../../domain';
 import { syncChangeLogWithChangeDefinition } from '../../schema/changeDefinition/syncChangelogWithChangeDefinition/syncChangeLogWithChangeDefinition';
 

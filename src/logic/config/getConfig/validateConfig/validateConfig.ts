@@ -1,4 +1,4 @@
-import { ControlConfig } from '../../../../domain';
+import type { ControlConfig } from '../../../../domain';
 
 /*
   validate the config
@@ -6,7 +6,7 @@ import { ControlConfig } from '../../../../domain';
   - validates the definitions
   - throws error if anything is invalid; otherwise, does nothing
 */
-export const validateConfig = async ({}: {
+export const validateConfig = async (_input: {
   config: ControlConfig;
 }): Promise<void> => {
   // tslint:disable-line no-unused

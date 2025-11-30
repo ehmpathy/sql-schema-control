@@ -18,10 +18,10 @@ export const normalizeCreateFunctionDdl = ({ ddl }: { ddl: string }) => {
 
   // make sure that function inputs each have their own line. postgres returns them all on one line - hard to read
   prettierDdl = (() => {
-    const partsSplitOnParens = prettierDdl.split(/([\(\)])/g);
+    const partsSplitOnParens = prettierDdl.split(/([()])/g);
     const functionParams = partsSplitOnParens[2];
-    const functionParamsWithNewlines = `\n  ${functionParams!
-      .replace(/, /g, ',\n  ')
+    const functionParamsWithNewlines = `\n  ${functionParams
+      ?.replace(/, /g, ',\n  ')
       .trim()}\n`;
     return [
       partsSplitOnParens[0],

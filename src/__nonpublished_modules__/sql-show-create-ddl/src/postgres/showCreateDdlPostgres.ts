@@ -1,5 +1,5 @@
 import { ResourceType } from '../../../../domain';
-import { DatabaseConnection } from '../types';
+import type { DatabaseConnection } from '../types';
 import { normalizeCreateDdlPostgres } from './normalizeCreateDdlPostgres';
 import { showCreateFunction } from './showCreateDdl/function/showCreateFunction';
 import { showCreateTable } from './showCreateDdl/table/showCreateTable';

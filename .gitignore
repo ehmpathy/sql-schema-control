@@ -5,8 +5,10 @@
 .artifact
 .env
 .serverless
+.temp
 .terraform
 .terraform.lock
+.vscode
 .yalc
 /.nyc_output
 /dist

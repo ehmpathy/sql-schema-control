@@ -1,10 +1,10 @@
 import {
-  ResourceDefinition,
   DefinitionType,
+  ResourceDefinition,
   ResourceType,
 } from '../../../../../../domain';
-import { InvalidDefinitionError } from '../errors';
 import { readFileAsync } from './../../../../_utils/readFileAsync';
+import { InvalidDefinitionError } from '../errors';
 import { extractResourceTypeAndNameFromDDL } from './extractResourceTypeAndNameFromDDL';
 import { hydrateResourceDefinitionContent } from './hydrateResourceDefinitionContent';
 

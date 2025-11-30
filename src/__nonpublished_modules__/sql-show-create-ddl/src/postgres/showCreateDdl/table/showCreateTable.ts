@@ -1,4 +1,4 @@
-import { DatabaseConnection } from '../../../types';
+import type { DatabaseConnection } from '../../../types';
 import { provisionShowCreateTableFunction } from './provisionShowCreateTableFunction';
 
 export const showCreateTable = async ({

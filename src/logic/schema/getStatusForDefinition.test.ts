@@ -4,8 +4,8 @@ import { uuid } from '../../deps';
 import {
   ChangeDefinition,
   ResourceDefinition,
-  ResourceType,
   ResourceDefinitionStatus,
+  ResourceType,
 } from '../../domain';
 import { getStatusForChangeDefinition } from './changeDefinition/getStatusForChangeDefinition';
 import { getStatusForDefinition } from './getStatusForDefinition';

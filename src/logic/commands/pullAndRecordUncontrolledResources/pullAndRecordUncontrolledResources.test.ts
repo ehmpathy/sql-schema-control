@@ -1,7 +1,7 @@
 import {
   ResourceDefinition,
-  ResourceType,
   ResourceDefinitionStatus,
+  ResourceType,
 } from '../../../domain';
 import { getControlContextFromConfig } from '../../config/getControlContextFromConfig';
 import { getPlans } from '../getPlans';

@@ -1,4 +1,4 @@
-import { DatabaseConnection } from '../../../domain';
+import type { DatabaseConnection } from '../../../domain';
 import { readFileAsync } from '../_utils/readFileAsync';
 
 export const provisionChangeLogTable = async ({

@@ -1,6 +1,6 @@
 import { DatabaseLanguage } from '../../../../../../domain';
-import { getDbConnection } from '../../../__test_assets__/getDbConnection';
-import { DatabaseConnection } from '../../../types';
+import { getDbConnection } from '../../../.test/assets/getDbConnection';
+import type { DatabaseConnection } from '../../../types';
 import { showCreateView } from './showCreateView';
 
 describe('showCreateView', () => {

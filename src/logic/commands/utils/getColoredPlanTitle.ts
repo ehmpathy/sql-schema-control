@@ -1,4 +1,4 @@
-import { DefinitionPlan } from '../../../domain';
+import type { DefinitionPlan } from '../../../domain';
 import { getColoredActionTitle } from './getColoredActionTitle';
 import { getColoredActionToken } from './getColoredActionToken';
 

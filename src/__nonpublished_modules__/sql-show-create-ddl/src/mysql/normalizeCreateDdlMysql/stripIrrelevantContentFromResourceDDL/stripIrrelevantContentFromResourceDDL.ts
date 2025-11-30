@@ -23,7 +23,7 @@ export const stripIrrelevantContentFromResourceDDL = ({
   // if resource type is TABLE, strip the auto increment record
   if (resourceType === ResourceType.TABLE) {
     // e.g., ") ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" -> ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
-    const regex = new RegExp('(AUTO_INCREMENT=[0-9]+ )');
+    const regex = /(AUTO_INCREMENT=[0-9]+ )/;
     relevantSql = relevantSql.replace(regex, '');
   }
 

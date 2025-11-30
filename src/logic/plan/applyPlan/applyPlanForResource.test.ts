@@ -1,8 +1,8 @@
 import {
-  ResourceDefinition,
-  ResourceType,
   DefinitionPlan,
   RequiredAction,
+  ResourceDefinition,
+  ResourceType,
 } from '../../../domain';
 import { applyPlanForResource } from './applyPlanForResource';
 

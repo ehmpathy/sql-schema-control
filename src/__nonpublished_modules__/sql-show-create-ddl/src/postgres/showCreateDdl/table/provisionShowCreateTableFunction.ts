@@ -1,6 +1,6 @@
-import fs from 'fs';
+import fs from 'node:fs';
 
-import { DatabaseConnection } from '../../../types';
+import type { DatabaseConnection } from '../../../types';
 
 /**
  * fortunately for us, postgres does not come with built in `SHOW CREATE TABLE/VIEW/FUNCTION`

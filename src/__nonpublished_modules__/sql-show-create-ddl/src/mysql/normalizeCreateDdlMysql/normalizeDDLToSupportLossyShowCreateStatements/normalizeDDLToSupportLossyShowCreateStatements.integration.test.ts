@@ -1,6 +1,6 @@
 import { DatabaseLanguage, ResourceType } from '../../../../../../domain';
-import { getDbConnection } from '../../../__test_assets__/getDbConnection';
-import { DatabaseConnection } from '../../../types';
+import { getDbConnection } from '../../../.test/assets/getDbConnection';
+import type { DatabaseConnection } from '../../../types';
 import { showCreateDdlMysql } from '../../showCreateDdlMysql';
 import { stripIrrelevantContentFromResourceDDL } from '../stripIrrelevantContentFromResourceDDL/stripIrrelevantContentFromResourceDDL';
 import { normalizeDDLToSupportLossyShowCreateStatements } from './normalizeDDLToSupportLossyShowCreateStatements';

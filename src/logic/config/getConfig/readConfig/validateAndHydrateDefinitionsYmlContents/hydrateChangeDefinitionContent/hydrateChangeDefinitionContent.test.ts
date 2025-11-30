@@ -1,6 +1,6 @@
 import { ChangeDefinition, DefinitionType } from '../../../../../../domain';
-import { InvalidDefinitionError } from '../errors';
 import { readFileAsync } from './../../../../_utils/readFileAsync';
+import { InvalidDefinitionError } from '../errors';
 import { hydrateChangeDefinitionContent } from './hydrateChangeDefinitionContent';
 
 jest.mock('./../../../../_utils/readFileAsync');

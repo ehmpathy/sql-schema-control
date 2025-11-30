@@ -1,5 +1,5 @@
 import {
-  DatabaseConnection,
+  type DatabaseConnection,
   ResourceDefinition,
   ResourceDefinitionStatus,
 } from '../../../../domain';

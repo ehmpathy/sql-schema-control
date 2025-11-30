@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`getDifferenceForResourceDefinition mysql procedure should find that an out of date procedure resource has a colored diff of changed lines 1`] = `
 "[32m- Expected[39m

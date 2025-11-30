@@ -1,11 +1,10 @@
-import { exampleSqlQueryWithSubquery } from './__test_assets__/exampleSqlQueryWithSubquery';
+import { exampleSqlQueryWithSubquery } from './.test/assets/exampleSqlQueryWithSubquery';
 import { breakSqlIntoNestedSqlArraysAtParentheses } from './breakSqlIntoNestedSqlArraysAtParentheses';
 import { flattenNestedArraySqlByReferencingAndTokenizingSubqueriesRecursive } from './flattenNestedArraySqlByReferencingAndTokenizingSubqueriesRecursive';
 
-import uuid = require('uuid');
-jest.mock('uuid');
-const uuidMock = uuid as any as jest.Mock;
-uuidMock.mockReturnValue('__UUID__');
+jest.mock('../../deps', () => ({
+  uuid: jest.fn(() => '__UUID__'),
+}));
 
 describe('flattenNestedArraySqlByReferencingAndTokenizingSubqueriesRecursive', () => {
   it('should accurately flatten and tokenize this example', async () => {

@@ -1,6 +1,6 @@
 import {
-  DatabaseConnection,
-  ResourceDefinition,
+  type DatabaseConnection,
+  type ResourceDefinition,
   ResourceDefinitionStatus,
 } from '../../../../domain';
 import { getDifferenceForResourceDefinition } from '../getDifferenceForResourceDefinition';

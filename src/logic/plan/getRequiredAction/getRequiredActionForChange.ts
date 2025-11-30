@@ -1,5 +1,5 @@
 import {
-  ChangeDefinition,
+  type ChangeDefinition,
   ChangeDefinitionStatus,
   RequiredAction,
 } from '../../../domain';

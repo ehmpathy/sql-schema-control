@@ -1,13 +1,13 @@
 import { stdout } from 'stdout-stderr';
 
 import {
-  DatabaseConnection,
-  DatabaseLanguage,
   ControlConfig,
+  type DatabaseConnection,
+  DatabaseLanguage,
 } from '../../domain';
 import { initializeControlEnvironment } from '../../logic/config/initializeControlEnvironment';
-import { promiseConfig as promiseConfigMysql } from '../__test_assets__/mysql/connection.config';
-import { promiseConfig as promiseConfigPostgres } from '../__test_assets__/postgres/connection.config';
+import { promiseConfig as promiseConfigMysql } from '../.test/assets/mysql/connection.config';
+import { promiseConfig as promiseConfigPostgres } from '../.test/assets/postgres/connection.config';
 import Plan from './plan';
 
 describe('plan', () => {
@@ -48,10 +48,7 @@ describe('plan', () => {
       // run plan
       stdout.stripColor = false; // dont strip color
       stdout.start();
-      await Plan.run([
-        '-c',
-        `${__dirname}/../__test_assets__/mysql/control.yml`,
-      ]);
+      await Plan.run(['-c', `${__dirname}/../.test/assets/mysql/control.yml`]);
       stdout.stop();
       const output = stdout.output
         .split('\n')
@@ -102,10 +99,7 @@ CREATE TABLE notification_version (
       // run plan
       stdout.stripColor = false; // dont strip color
       stdout.start();
-      await Plan.run([
-        '-c',
-        `${__dirname}/../__test_assets__/mysql/control.yml`,
-      ]);
+      await Plan.run(['-c', `${__dirname}/../.test/assets/mysql/control.yml`]);
       stdout.stop();
       const output = stdout.output
         .split('\n')
@@ -142,7 +136,7 @@ CREATE TABLE notification_version (
       stdout.start();
       await Plan.run([
         '-c',
-        `${__dirname}/../__test_assets__/mysql/strict_control.yml`,
+        `${__dirname}/../.test/assets/mysql/strict_control.yml`,
       ]); // separate schema since we don't want snapshot to break due to uncontrolled
       stdout.stop();
       const output = stdout.output
@@ -191,7 +185,7 @@ CREATE TABLE notification_version (
       stdout.start();
       await Plan.run([
         '-c',
-        `${__dirname}/../__test_assets__/postgres/control.yml`,
+        `${__dirname}/../.test/assets/postgres/control.yml`,
       ]);
       stdout.stop();
       const output = stdout.output
@@ -247,7 +241,7 @@ CREATE TABLE photo (
       stdout.start();
       await Plan.run([
         '-c',
-        `${__dirname}/../__test_assets__/postgres/control.yml`,
+        `${__dirname}/../.test/assets/postgres/control.yml`,
       ]);
       stdout.stop();
       const output = stdout.output
@@ -285,7 +279,7 @@ CREATE TABLE photo (
       stdout.start();
       await Plan.run([
         '-c',
-        `${__dirname}/../__test_assets__/postgres/strict_control.yml`,
+        `${__dirname}/../.test/assets/postgres/strict_control.yml`,
       ]); // separate schema since we don't want snapshot to break due to uncontrolled
       stdout.stop();
       const output = stdout.output

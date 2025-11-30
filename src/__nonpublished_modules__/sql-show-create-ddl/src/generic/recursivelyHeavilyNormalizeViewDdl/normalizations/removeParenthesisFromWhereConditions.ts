@@ -6,7 +6,7 @@ export const removeParenthesisFromWhereConditions = ({
 }: {
   flattenedSql: string;
 }): string => {
-  const whereCasing = !!flattenedSql.match(/\sWHERE\s/) ? 'WHERE' : 'where'; // determine if user is using upper case or lower case "where"
+  const whereCasing = flattenedSql.match(/\sWHERE\s/) ? 'WHERE' : 'where'; // determine if user is using upper case or lower case "where"
   const sqlSplitOnWhere = flattenedSql.split(whereCasing);
   if (sqlSplitOnWhere.length > 2) {
     // should not occur because the sql should have been flattened already
@@ -20,7 +20,7 @@ export const removeParenthesisFromWhereConditions = ({
         '\n' +
         whereCasing +
         '\n' +
-        sqlSplitOnWhere[1]!.replace(/[\(\)]/g, '') // tslint:disable-line prefer-template
+        sqlSplitOnWhere[1]?.replace(/[()]/g, '') // tslint:disable-line prefer-template
       : sqlSplitOnWhere[0]!; // if no where clause, then nothing to replace
   return sqlWithoutParens;
 };

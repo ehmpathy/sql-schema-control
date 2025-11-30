@@ -21,13 +21,12 @@ export const removeParenthesisSurroundingJoinsInFromClause = ({
     ); // fail fast
 
   // remove the parens that encapsulate each join
-  const fromClauseWithoutParens = flattenedSqlParts[1]!
-    .replace(/\(/g, '')
+  const fromClauseWithoutParens = flattenedSqlParts[1]
+    ?.replace(/\(/g, '')
     .replace(/\)/g, ''); // note: we replace all parens, since subqueries are taken care of
 
   // join them back and the ddl w/o this mess
-  const flattenedSqlWithoutOpenCloseParenInFromClause =
-    flattenedSqlParts[0] + '\nfrom\n' + fromClauseWithoutParens; // tslint:disable-line prefer-template
+  const flattenedSqlWithoutOpenCloseParenInFromClause = `${flattenedSqlParts[0]}\nfrom\n${fromClauseWithoutParens}`; // tslint:disable-line prefer-template
 
   // return without the parens
   return flattenedSqlWithoutOpenCloseParenInFromClause;

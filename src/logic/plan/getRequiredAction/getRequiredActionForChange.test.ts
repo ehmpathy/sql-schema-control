@@ -1,8 +1,8 @@
 import sha256 from 'simple-sha256';
 
 import {
-  ChangeDefinitionStatus,
   ChangeDefinition,
+  ChangeDefinitionStatus,
   RequiredAction,
 } from '../../../domain';
 import { getRequiredActionForChange } from './getRequiredActionForChange';

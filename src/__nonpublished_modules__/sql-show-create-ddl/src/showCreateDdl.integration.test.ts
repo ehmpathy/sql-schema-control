@@ -1,7 +1,7 @@
 import { DatabaseLanguage, ResourceType } from '../../../domain';
-import { getDbConnection } from './__test_assets__/getDbConnection';
-import { showCreateDdl, ResourceDoesNotExistError } from './showCreateDdl';
-import { DatabaseConnection } from './types';
+import { getDbConnection } from './.test/assets/getDbConnection';
+import { ResourceDoesNotExistError, showCreateDdl } from './showCreateDdl';
+import type { DatabaseConnection } from './types';
 
 /**
  * this test suite simply proves that we can fetch the create ddl for each resource

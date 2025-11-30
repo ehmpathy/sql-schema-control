@@ -1,7 +1,7 @@
 import {
+  RequiredAction,
   ResourceDefinition,
   ResourceDefinitionStatus,
-  RequiredAction,
   ResourceType,
 } from '../../../domain';
 import { getRequiredActionForResource } from './getRequiredActionForResource';

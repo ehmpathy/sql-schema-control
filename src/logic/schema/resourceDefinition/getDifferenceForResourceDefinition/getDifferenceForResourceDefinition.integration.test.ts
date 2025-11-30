@@ -1,7 +1,7 @@
-import { promiseConfig } from '../../../../__test_assets__/connection.config';
+import { promiseConfig } from '../../../../.test/assets/connection.config';
 import {
   ControlConfig,
-  DatabaseConnection,
+  type DatabaseConnection,
   DatabaseLanguage,
   ResourceDefinition,
   ResourceDefinitionStatus,

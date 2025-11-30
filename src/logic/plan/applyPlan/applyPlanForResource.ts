@@ -1,9 +1,7 @@
-import { UnexpectedCodePathError } from 'helpful-errors';
-
 import {
+  type DatabaseConnection,
+  type DefinitionPlan,
   RequiredAction,
-  DefinitionPlan,
-  DatabaseConnection,
   ResourceDefinition,
   ResourceType,
 } from '../../../domain';

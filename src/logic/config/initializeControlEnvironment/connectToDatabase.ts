@@ -2,10 +2,10 @@ import mysql from 'mysql2/promise';
 import pg from 'pg';
 
 import {
-  DatabaseConnection,
+  type ConnectionConfig,
+  type ControlConfig,
+  type DatabaseConnection,
   DatabaseLanguage,
-  ControlConfig,
-  ConnectionConfig,
 } from '../../../domain';
 
 // create the connection to database

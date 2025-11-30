@@ -1,8 +1,8 @@
-import { promiseConfig } from '../../../../../__test_assets__/connection.config';
+import { promiseConfig } from '../../../../../.test/assets/connection.config';
 import {
-  DatabaseConnection,
-  DatabaseLanguage,
   ControlConfig,
+  type DatabaseConnection,
+  DatabaseLanguage,
   ResourceDefinition,
   ResourceType,
 } from '../../../../../domain';
@@ -31,9 +31,9 @@ describe('pullResources', () => {
         sql: 'CREATE TABLE test_table_pull ( id BIGINT )',
       });
       const resources = await pullResources({ connection });
-      resources.forEach((resource) =>
-        expect(resource.constructor).toEqual(ResourceDefinition),
-      );
+      for (const resource of resources) {
+        expect(resource.constructor).toEqual(ResourceDefinition);
+      }
       const createdResource = resources.find(
         (resource) => resource.name === 'test_table_pull',
       );
@@ -45,9 +45,9 @@ describe('pullResources', () => {
         sql: "CREATE VIEW test_view_pull as SELECT 'hello' as first_words",
       });
       const resources = await pullResources({ connection });
-      resources.forEach((resource) =>
-        expect(resource.constructor).toEqual(ResourceDefinition),
-      );
+      for (const resource of resources) {
+        expect(resource.constructor).toEqual(ResourceDefinition);
+      }
       const createdResource = resources.find(
         (resource) => resource.name === 'test_view_pull',
       );
@@ -70,9 +70,9 @@ END;
     `,
       });
       const resources = await pullResources({ connection });
-      resources.forEach((resource) =>
-        expect(resource.constructor).toEqual(ResourceDefinition),
-      );
+      for (const resource of resources) {
+        expect(resource.constructor).toEqual(ResourceDefinition);
+      }
       const createdResource = resources.find(
         (resource) => resource.name === 'f_some_function_for_testing_pull',
       );
@@ -93,9 +93,9 @@ END;
     `,
       });
       const resources = await pullResources({ connection });
-      resources.forEach((resource) =>
-        expect(resource.constructor).toEqual(ResourceDefinition),
-      );
+      for (const resource of resources) {
+        expect(resource.constructor).toEqual(ResourceDefinition);
+      }
       const createdResource = resources.find(
         (resource) => resource.name === 'upsert_some_entity_for_pull',
       );
@@ -125,9 +125,9 @@ END;
         sql: 'CREATE TABLE test_table_for_pull ( id BIGINT )',
       });
       const resources = await pullResources({ connection });
-      resources.forEach((resource) =>
-        expect(resource.constructor).toEqual(ResourceDefinition),
-      );
+      for (const resource of resources) {
+        expect(resource.constructor).toEqual(ResourceDefinition);
+      }
       const createdResource = resources.find(
         (resource) => resource.name === 'test_table_for_pull',
       );
@@ -139,9 +139,9 @@ END;
         sql: "CREATE VIEW test_view_pull as SELECT 'hello' as first_words",
       });
       const resources = await pullResources({ connection });
-      resources.forEach((resource) =>
-        expect(resource.constructor).toEqual(ResourceDefinition),
-      );
+      for (const resource of resources) {
+        expect(resource.constructor).toEqual(ResourceDefinition);
+      }
       const createdResource = resources.find(
         (resource) => resource.name === 'test_view_pull',
       );
@@ -167,9 +167,9 @@ $$
     `,
       });
       const resources = await pullResources({ connection });
-      resources.forEach((resource) =>
-        expect(resource.constructor).toEqual(ResourceDefinition),
-      );
+      for (const resource of resources) {
+        expect(resource.constructor).toEqual(ResourceDefinition);
+      }
       const createdResource = resources.find(
         (resource) => resource.name === 'f_some_function_for_testing_pull',
       );

@@ -1,9 +1,9 @@
 import { DatabaseLanguage } from '../../../../../../domain';
-import { getDbConnection } from '../../../__test_assets__/getDbConnection';
-import { DatabaseConnection } from '../../../types';
+import { getDbConnection } from '../../../.test/assets/getDbConnection';
+import type { DatabaseConnection } from '../../../types';
 import { provisionShowCreateTableFunction } from '../../showCreateDdl/table/provisionShowCreateTableFunction';
 import { showCreateView } from '../../showCreateDdl/view/showCreateView';
-import { provisionDependencyTablesForMoreComplexView } from './__test_assets__/provisionDependencyTablesForMoreComplexView';
+import { provisionDependencyTablesForMoreComplexView } from './.test/assets/provisionDependencyTablesForMoreComplexView';
 import { normalizeCreateViewDdl } from './normalizeCreateViewDdl';
 
 describe('showCreateView', () => {

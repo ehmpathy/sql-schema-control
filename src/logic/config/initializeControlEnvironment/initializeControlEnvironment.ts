@@ -1,4 +1,4 @@
-import { ControlConfig } from '../../../domain';
+import type { ControlConfig } from '../../../domain';
 import { connectToDatabase } from './connectToDatabase';
 import { provisionChangeLogTable } from './provisionChangeLogTable';
 

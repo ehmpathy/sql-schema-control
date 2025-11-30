@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`normalizeDDLToSupportLossyShowCreateStatements should strip comments and reformat table create ddl 1`] = `
 "CREATE TABLE \`some_resource_table\` (

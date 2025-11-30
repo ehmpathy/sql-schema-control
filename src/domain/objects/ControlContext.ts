@@ -1,7 +1,7 @@
 import { DomainObject } from 'domain-objects';
 import Joi from 'joi';
 
-import { DatabaseLanguage, DatabaseConnection } from '../constants';
+import { type DatabaseConnection, DatabaseLanguage } from '../constants';
 import { ChangeDefinition } from './ChangeDefinition';
 import { ResourceDefinition } from './ResourceDefinition';
 

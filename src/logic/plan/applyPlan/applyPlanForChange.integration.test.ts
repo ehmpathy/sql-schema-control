@@ -1,13 +1,13 @@
 import sha256 from 'simple-sha256';
 
-import { promiseConfig } from '../../../__test_assets__/connection.config';
+import { promiseConfig } from '../../../.test/assets/connection.config';
 import { uuid } from '../../../deps';
 import {
   ChangeDefinition,
-  DefinitionPlan,
-  DatabaseConnection,
-  DatabaseLanguage,
   ControlConfig,
+  type DatabaseConnection,
+  DatabaseLanguage,
+  DefinitionPlan,
   RequiredAction,
 } from '../../../domain';
 import { initializeControlEnvironment } from '../../config/initializeControlEnvironment';

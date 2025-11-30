@@ -1,4 +1,4 @@
-import { exampleSqlQueryWithSubquery } from './__test_assets__/exampleSqlQueryWithSubquery';
+import { exampleSqlQueryWithSubquery } from './.test/assets/exampleSqlQueryWithSubquery';
 import { flattenSqlByReferencingAndTokenizingSubqueries } from './flattenSqlByReferencingAndTokenizingSubqueries';
 import { hydrateSqlByReferencingAndReplacingSubqueryTokens } from './hydrateSqlByReferencingAndReplacingSubqueryTokens';
 

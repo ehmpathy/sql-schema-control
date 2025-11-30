@@ -1,7 +1,7 @@
-import { DatabaseLanguage, ResourceType } from '../../../domain';
+import { DatabaseLanguage, type ResourceType } from '../../../domain';
 import { showCreateDdlMysql } from './mysql/showCreateDdlMysql';
 import { showCreateDdlPostgres } from './postgres/showCreateDdlPostgres';
-import { DatabaseConnection } from './types';
+import type { DatabaseConnection } from './types';
 
 export class ResourceDoesNotExistError extends Error {
   public resourceType: ResourceType;

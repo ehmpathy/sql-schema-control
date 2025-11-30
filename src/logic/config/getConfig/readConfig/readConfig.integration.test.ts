@@ -1,4 +1,4 @@
-import process from 'process';
+import process from 'node:process';
 
 import { ControlConfig } from '../../../../domain';
 import { readConfig } from './readConfig';
@@ -22,10 +22,11 @@ describe('readConfig', () => {
     expect(config.definitions.length).toEqual(6); // 4 changes, 2 resource
 
     // replace the "cwd" from each of the paths w/ a hardcoded string, since we dont want to tie test to any particular env (e.g., your machine vs my machine vs cicd)
-    config.definitions = config.definitions.map((definition) => ({
-      ...definition,
-      path: definition.path!.replace(process.cwd(), '__CWD__'),
-    }));
+    for (const definition of config.definitions) {
+      if (definition.path) {
+        definition.path = definition.path.replace(process.cwd(), '__CWD__');
+      }
+    }
 
     expect(config).toMatchSnapshot(); // to log an example of the output
   });
