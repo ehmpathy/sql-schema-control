@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/ehmpathy/sql-schema-control/compare/v1.6.0...v1.7.0) (2025-11-30)
+
+
+### Features
+
+* **tsx:** use tsx instead of ts-node for future compat ([0097ad0](https://github.com/ehmpathy/sql-schema-control/commit/0097ad0926375a6ed06869cca8cca102beddc4b4))
+
 ## [1.6.0](https://github.com/ehmpathy/sql-schema-control/compare/v1.5.5...v1.6.0) (2025-09-01)
 
 
