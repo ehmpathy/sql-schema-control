@@ -10,4 +10,4 @@ ignores:
   - husky
   - '@oclif/plugin-help'
   - oclif
-  - ts-node # used in `./bin/run
+  - tsx # used in `./bin/run
