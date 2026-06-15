@@ -25,6 +25,7 @@ export interface ChangeDefinition {
 }
 export class ChangeDefinition
   extends DomainObject<ChangeDefinition>
-  implements ChangeDefinition {
+  implements ChangeDefinition
+{
   public static schema = schema;
 }

@@ -29,6 +29,7 @@ export interface DefinitionPlan {
 }
 export class DefinitionPlan
   extends DomainObject<DefinitionPlan>
-  implements DefinitionPlan {
+  implements DefinitionPlan
+{
   public static schema = schema;
 }

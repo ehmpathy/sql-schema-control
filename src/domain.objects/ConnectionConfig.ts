@@ -20,6 +20,7 @@ export interface ConnectionConfig {
 }
 export class ConnectionConfig
   extends DomainObject<ConnectionConfig>
-  implements ConnectionConfig {
+  implements ConnectionConfig
+{
   public static schema = schema;
 }

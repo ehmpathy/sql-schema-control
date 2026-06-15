@@ -32,7 +32,8 @@ export interface ControlConfig {
 }
 export class ControlConfig
   extends DomainObject<ControlConfig>
-  implements ControlConfig {
+  implements ControlConfig
+{
   public static schema = schema;
   public static nested = {
     connection: ConnectionConfigClass,

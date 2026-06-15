@@ -25,6 +25,7 @@ export interface ResourceDefinition {
 }
 export class ResourceDefinition
   extends DomainObject<ResourceDefinition>
-  implements ResourceDefinition {
+  implements ResourceDefinition
+{
   public static schema = schema;
 }
