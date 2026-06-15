@@ -1,14 +1,14 @@
 import { stdout } from 'stdout-stderr';
 
+import { promiseConfig as promiseConfigMysql } from '@src/contract/.test/assets/mysql/connection.config';
+import { promiseConfig as promiseConfigPostgres } from '@src/contract/.test/assets/postgres/connection.config';
+import { createProgram } from '@src/contract/cli';
 import {
   ControlConfig,
   type DatabaseConnection,
   DatabaseLanguage,
-} from '../../domain';
-import { initializeControlEnvironment } from '../../logic/config/initializeControlEnvironment';
-import { promiseConfig as promiseConfigMysql } from '../.test/assets/mysql/connection.config';
-import { promiseConfig as promiseConfigPostgres } from '../.test/assets/postgres/connection.config';
-import Apply from './apply';
+} from '@src/domain';
+import { initializeControlEnvironment } from '@src/domain.operations/config/initializeControlEnvironment';
 
 describe('apply', () => {
   describe('mysql', () => {
@@ -54,7 +54,10 @@ describe('apply', () => {
         stdout.stripColor = false; // dont strip color
         // stdout.print = true;
         stdout.start();
-        await Apply.run([
+        await createProgram().parseAsync([
+          'node',
+          'test',
+          'apply',
           '-c',
           `${__dirname}/../.test/assets/mysql/control.yml`,
         ]);
@@ -85,7 +88,10 @@ describe('apply', () => {
         });
 
         // apply the definitions the first time
-        await Apply.run([
+        await createProgram().parseAsync([
+          'node',
+          'test',
+          'apply',
           '-c',
           `${__dirname}/../.test/assets/mysql/control.yml`,
         ]);
@@ -94,7 +100,10 @@ describe('apply', () => {
         stdout.stripColor = false; // dont strip color
         // stdout.print = true;
         stdout.start();
-        await Apply.run([
+        await createProgram().parseAsync([
+          'node',
+          'test',
+          'apply',
           '-c',
           `${__dirname}/../.test/assets/mysql/control.yml`,
         ]);
@@ -142,7 +151,10 @@ describe('apply', () => {
         stdout.stripColor = false; // dont strip color
         stdout.print = true;
         stdout.start();
-        await Apply.run([
+        await createProgram().parseAsync([
+          'node',
+          'test',
+          'apply',
           '-c',
           `${__dirname}/../.test/assets/mysql.multischema/control.yml`,
         ]);
@@ -187,7 +199,10 @@ describe('apply', () => {
         });
 
         // apply the definitions the first time
-        await Apply.run([
+        await createProgram().parseAsync([
+          'node',
+          'test',
+          'apply',
           '-c',
           `${__dirname}/../.test/assets/mysql.multischema/control.yml`,
         ]);
@@ -196,7 +211,10 @@ describe('apply', () => {
         stdout.stripColor = false; // dont strip color
         // stdout.print = true;
         stdout.start();
-        await Apply.run([
+        await createProgram().parseAsync([
+          'node',
+          'test',
+          'apply',
           '-c',
           `${__dirname}/../.test/assets/mysql.multischema/control.yml`,
         ]);
@@ -254,7 +272,10 @@ describe('apply', () => {
       stdout.stripColor = false; // dont strip color
       // stdout.print = true;
       stdout.start();
-      await Apply.run([
+      await createProgram().parseAsync([
+        'node',
+        'test',
+        'apply',
         '-c',
         `${__dirname}/../.test/assets/postgres/control.yml`,
       ]);
@@ -292,7 +313,10 @@ describe('apply', () => {
       });
 
       // apply the definitions the first time
-      await Apply.run([
+      await createProgram().parseAsync([
+        'node',
+        'test',
+        'apply',
         '-c',
         `${__dirname}/../.test/assets/postgres/control.yml`,
       ]);
@@ -301,7 +325,10 @@ describe('apply', () => {
       stdout.stripColor = false; // dont strip color
       // stdout.print = true;
       stdout.start();
-      await Apply.run([
+      await createProgram().parseAsync([
+        'node',
+        'test',
+        'apply',
         '-c',
         `${__dirname}/../.test/assets/postgres/control.yml`,
       ]);

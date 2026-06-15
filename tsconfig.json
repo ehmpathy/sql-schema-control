@@ -16,16 +16,26 @@
     "target": "es2020",
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "incremental": true
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "*"
+      ],
+      "@src/*": [
+        "src/*"
+      ]
+    },
+    "module": "node16",
+    "moduleResolution": "node16"
   },
   "include": [
-    "**/*.ts",
+    "**/*.ts"
   ],
   "exclude": [
+    ".agent/.cache",
     "dist",
     "coverage",
-    "node_modules",
-    "**/.test/assets/*.ts",
-    "**/.test.assets/*.ts",
+    "node_modules"
   ]
 }

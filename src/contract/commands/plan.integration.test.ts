@@ -1,14 +1,14 @@
 import { stdout } from 'stdout-stderr';
 
+import { promiseConfig as promiseConfigMysql } from '@src/contract/.test/assets/mysql/connection.config';
+import { promiseConfig as promiseConfigPostgres } from '@src/contract/.test/assets/postgres/connection.config';
+import { createProgram } from '@src/contract/cli';
 import {
   ControlConfig,
   type DatabaseConnection,
   DatabaseLanguage,
-} from '../../domain';
-import { initializeControlEnvironment } from '../../logic/config/initializeControlEnvironment';
-import { promiseConfig as promiseConfigMysql } from '../.test/assets/mysql/connection.config';
-import { promiseConfig as promiseConfigPostgres } from '../.test/assets/postgres/connection.config';
-import Plan from './plan';
+} from '@src/domain';
+import { initializeControlEnvironment } from '@src/domain.operations/config/initializeControlEnvironment';
 
 describe('plan', () => {
   describe('mysql', () => {
@@ -48,7 +48,13 @@ describe('plan', () => {
       // run plan
       stdout.stripColor = false; // dont strip color
       stdout.start();
-      await Plan.run(['-c', `${__dirname}/../.test/assets/mysql/control.yml`]);
+      await createProgram().parseAsync([
+        'node',
+        'test',
+        'plan',
+        '-c',
+        `${__dirname}/../.test/assets/mysql/control.yml`,
+      ]);
       stdout.stop();
       const output = stdout.output
         .split('\n')
@@ -99,7 +105,13 @@ CREATE TABLE notification_version (
       // run plan
       stdout.stripColor = false; // dont strip color
       stdout.start();
-      await Plan.run(['-c', `${__dirname}/../.test/assets/mysql/control.yml`]);
+      await createProgram().parseAsync([
+        'node',
+        'test',
+        'plan',
+        '-c',
+        `${__dirname}/../.test/assets/mysql/control.yml`,
+      ]);
       stdout.stop();
       const output = stdout.output
         .split('\n')
@@ -134,7 +146,10 @@ CREATE TABLE notification_version (
       // run plan
       stdout.stripColor = false; // dont strip color
       stdout.start();
-      await Plan.run([
+      await createProgram().parseAsync([
+        'node',
+        'test',
+        'plan',
         '-c',
         `${__dirname}/../.test/assets/mysql/strict_control.yml`,
       ]); // separate schema since we don't want snapshot to break due to uncontrolled
@@ -183,7 +198,10 @@ CREATE TABLE notification_version (
       // run plan
       stdout.stripColor = false; // dont strip color
       stdout.start();
-      await Plan.run([
+      await createProgram().parseAsync([
+        'node',
+        'test',
+        'plan',
         '-c',
         `${__dirname}/../.test/assets/postgres/control.yml`,
       ]);
@@ -239,7 +257,10 @@ CREATE TABLE photo (
       // run plan
       stdout.stripColor = false; // dont strip color
       stdout.start();
-      await Plan.run([
+      await createProgram().parseAsync([
+        'node',
+        'test',
+        'plan',
         '-c',
         `${__dirname}/../.test/assets/postgres/control.yml`,
       ]);
@@ -277,7 +298,10 @@ CREATE TABLE photo (
       // run plan
       stdout.stripColor = false; // dont strip color
       stdout.start();
-      await Plan.run([
+      await createProgram().parseAsync([
+        'node',
+        'test',
+        'plan',
         '-c',
         `${__dirname}/../.test/assets/postgres/strict_control.yml`,
       ]); // separate schema since we don't want snapshot to break due to uncontrolled

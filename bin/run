@@ -2,7 +2,9 @@
 
 require('tsx/cjs'); // register tsx so that require() method can import typescript files as well as js
 
-require('@oclif/core')
-  .run()
-  .then(require('@oclif/core/flush'))
-  .catch(require('@oclif/core/handle'));
+const { run } = require('../src/contract/cli');
+
+run().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});

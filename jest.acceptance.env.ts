@@ -1,8 +1,10 @@
-import { existsSync, readFileSync } from 'fs';
-import { join } from 'path';
-import util from 'util';
+import { existsSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import util from 'node:util';
 
-// eslint-disable-next-line no-undef
+import { jest } from '@jest/globals';
+import { keyrack } from 'rhachet/keyrack';
+
 jest.setTimeout(90000); // we're calling downstream apis
 
 // set console.log to not truncate nested objects
@@ -32,3 +34,13 @@ if (
   throw new Error(
     'no aws credentials present. please authenticate with aws to run acceptance tests',
   );
+
+/**
+ * .what = source credentials from keyrack for test env
+ * .why =
+ *   - auto-inject keys into process.env
+ *   - fail fast with helpful error if keyrack locked or keys absent
+ */
+const keyrackYmlPath = join(process.cwd(), '.agent/keyrack.yml');
+if (existsSync(keyrackYmlPath))
+  keyrack.source({ env: 'test', owner: 'ehmpath', mode: 'strict' });

@@ -12,8 +12,15 @@ process.env.FORCE_COLOR = 'true';
 // https://jestjs.io/docs/configuration
 const config: Config = {
   verbose: true,
+  reporters: [
+    ['default', { summaryThreshold: 0 }], // ensure we always get a failure summary at the bottom, to avoid the hunt
+    ['test-fns/slowtest.reporter.jest', { slow: '10s', output: '.log/slowtest/unit.report.json' }],
+  ],
   testEnvironment: 'node',
   moduleFileExtensions: ['js', 'ts'],
+  moduleNameMapper: {
+    '^@src/(.*)$': '<rootDir>/src/$1',
+  },
   transform: {
     '^.+\\.(t|j)sx?$': '@swc/jest',
   },
@@ -26,6 +33,8 @@ const config: Config = {
     '**/*.test.ts',
     '!**/*.acceptance.test.ts',
     '!**/*.integration.test.ts',
+    '!**/.agent/.cache/**',
+    '!**/.yalc/**',
   ],
   setupFilesAfterEnv: ['./jest.unit.env.ts'],
 
