@@ -15,7 +15,13 @@ ignores:
   - "@swc/core"
   - "@swc/jest"
   - type-fns # used transitively
-  - "@tsconfig/node-lts-strictest" # likely used in other configs
-  - core-js # polyfill
   - test-fns # test utilities
-  - ts-jest # kept for compatibility
+  - "@src/*"
+  - "@src/.*"
+  - rhachet-brains-anthropic
+  - rhachet-brains-xai
+  - rhachet-roles-bhrain
+  - rhachet-roles-bhuild
+  - rhachet-roles-ehmpathy
+  - tsc-alias
+  - yalc

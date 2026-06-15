@@ -1,4 +1,4 @@
-// note: this connection config is defined in /provision/integration_test_db/docker-compose
+// note: this connection config is defined in /provision/testdb/docker-compose
 const promiseConfig = async () => {
 	return {
 		host: "localhost",

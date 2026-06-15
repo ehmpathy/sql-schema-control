@@ -1,14 +1,14 @@
 import { stdout } from 'stdout-stderr';
 
+import { promiseConfig as promiseConfigMysql } from '@src/contract/.test/assets/mysql/connection.config';
+import { promiseConfig as promiseConfigPostgres } from '@src/contract/.test/assets/postgres/connection.config';
+import { createProgram } from '@src/contract/cli';
 import {
   ControlConfig,
   type DatabaseConnection,
   DatabaseLanguage,
-} from '../../domain';
-import { initializeControlEnvironment } from '../../logic/config/initializeControlEnvironment';
-import { promiseConfig as promiseConfigMysql } from '../.test/assets/mysql/connection.config';
-import { promiseConfig as promiseConfigPostgres } from '../.test/assets/postgres/connection.config';
-import Sync from './sync';
+} from '@src/domain';
+import { initializeControlEnvironment } from '@src/domain.operations/config/initializeControlEnvironment';
 
 describe('sync', () => {
   describe('mysql', () => {
@@ -31,7 +31,10 @@ describe('sync', () => {
       stdout.stripColor = false; // dont strip color
       // stdout.print = true;
       stdout.start();
-      await Sync.run([
+      await createProgram().parseAsync([
+        'node',
+        'test',
+        'sync',
         '-c',
         `${__dirname}/../.test/assets/mysql/control.yml`,
         '--id',
@@ -66,7 +69,10 @@ describe('sync', () => {
       stdout.stripColor = false; // dont strip color
       // stdout.print = true;
       stdout.start();
-      await Sync.run([
+      await createProgram().parseAsync([
+        'node',
+        'test',
+        'sync',
         '-c',
         `${__dirname}/../.test/assets/postgres/control.yml`,
         '--id',

@@ -1,14 +1,14 @@
 import { stdout } from 'stdout-stderr';
 
+import { promiseConfig as promiseConfigMysql } from '@src/contract/.test/assets/mysql/connection.config';
+import { promiseConfig as promiseConfigPostgres } from '@src/contract/.test/assets/postgres/connection.config';
+import { createProgram } from '@src/contract/cli';
 import {
   ControlConfig,
   type DatabaseConnection,
   DatabaseLanguage,
-} from '../../domain';
-import { initializeControlEnvironment } from '../../logic/config/initializeControlEnvironment';
-import { promiseConfig as promiseConfigMysql } from '../.test/assets/mysql/connection.config';
-import { promiseConfig as promiseConfigPostgres } from '../.test/assets/postgres/connection.config';
-import Pull from './pull';
+} from '@src/domain';
+import { initializeControlEnvironment } from '@src/domain.operations/config/initializeControlEnvironment';
 
 describe('pull', () => {
   describe('mysql', () => {
@@ -30,7 +30,10 @@ describe('pull', () => {
       // run pull
       stdout.stripColor = false; // dont strip color
       stdout.start();
-      await Pull.run([
+      await createProgram().parseAsync([
+        'node',
+        'test',
+        'pull',
         '-c',
         `${__dirname}/../.test/assets/mysql/control.yml`, // note how the config does not need to be strict for this to work
         '-t',
@@ -63,7 +66,10 @@ describe('pull', () => {
       // run pull
       stdout.stripColor = false; // dont strip color
       stdout.start();
-      await Pull.run([
+      await createProgram().parseAsync([
+        'node',
+        'test',
+        'pull',
         '-c',
         `${__dirname}/../.test/assets/postgres/control.yml`, // note how the config does not need to be strict for this to work
         '-t',

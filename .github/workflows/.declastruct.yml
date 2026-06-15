@@ -13,10 +13,18 @@ on:
         type: boolean
         description: "whether the apply step is enabled. defaults to true on main"
         default: ${{ github.ref == 'refs/heads/main' }}
-    secrets:
-      github-token:
+      creds-github-app-owner:
+        type: string
         required: false
-        description: optional credentials to support authenticating with github provider
+        description: "the owner of the github app to generate a token for"
+      creds-github-app-id:
+        type: string
+        required: false
+        description: "the id of the github app to generate a token for"
+    secrets:
+      creds-github-app-private-key:
+        required: false
+        description: the private key of the github app to generate a token for
 
 jobs:
   # install the dependencies
@@ -30,10 +38,10 @@ jobs:
       has-changes-planned: ${{ steps.evaluate-plan.outputs.has-changes-planned }}
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: set node-version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
 
@@ -43,11 +51,23 @@ jobs:
           path: ./node_modules
           key: ${{ needs.install.outputs.node-modules-cache-key }}
 
+      - name: get github auth, if creds supplied
+        if: ${{ inputs.creds-github-app-id }}
+        id: github-app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          owner: ${{ inputs.creds-github-app-owner }}
+          repositories: ${{ github.event.repository.name }}
+          app-id: ${{ inputs.creds-github-app-id }}
+          private-key: ${{ secrets.creds-github-app-private-key }}
+
       - name: declastruct plan
         id: plan
-        run: npx declastruct plan --wish ${{ inputs.wish-path }} --into ${{ inputs.wish-path }}.plan.json | tee ./plan.log
+        run: |
+          set -o pipefail
+          npx declastruct plan --wish ${{ inputs.wish-path }} --into ${{ inputs.wish-path }}.plan.json | tee ./plan.log
         env:
-          GITHUB_TOKEN: ${{ secrets.github-token }} # allow specifying a github token to pass to the terraform command
+          GITHUB_TOKEN: ${{ steps.github-app-token.outputs.token }}
 
       - name: evaluate plan
         id: evaluate-plan
@@ -80,10 +100,10 @@ jobs:
     if: ${{ inputs.allow-apply == true && needs.plan.outputs.has-changes-planned == 'true' }}
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: set node-version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
 
@@ -103,7 +123,19 @@ jobs:
           name: declastruct-plan
           path: ${{ steps.extract-dir.outputs.wish-dir }}
 
+      - name: get github auth, if creds supplied
+        if: ${{ inputs.creds-github-app-id }}
+        id: github-app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          owner: ${{ inputs.creds-github-app-owner }}
+          repositories: ${{ github.event.repository.name }}
+          app-id: ${{ inputs.creds-github-app-id }}
+          private-key: ${{ secrets.creds-github-app-private-key }}
+
       - name: declastruct apply
-        run: npx declastruct apply --plan ${{ inputs.wish-path }}.plan.json | tee ./apply.log
+        run: |
+          set -o pipefail
+          npx declastruct apply --plan ${{ inputs.wish-path }}.plan.json | tee ./apply.log
         env:
-          GITHUB_TOKEN: ${{ secrets.github-token }} # allow specifying a github token to pass to the terraform command
+          GITHUB_TOKEN: ${{ steps.github-app-token.outputs.token }}

@@ -12,8 +12,16 @@ process.env.FORCE_COLOR = 'true';
 // https://jestjs.io/docs/configuration
 const config: Config = {
   verbose: true,
+  reporters: [
+    ['default', { summaryThreshold: 0 }], // ensure we always get a failure summary at the bottom, to avoid the hunt
+    ['test-fns/slowtest.reporter.jest', { slow: '10s', output: '.log/slowtest/acceptance.report.json' }],
+  ],
   testEnvironment: 'node',
   moduleFileExtensions: ['js', 'ts'],
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/$1',
+    '^@src/(.*)$': '<rootDir>/src/$1',
+  },
   transform: {
     '^.+\\.(t|j)sx?$': '@swc/jest',
   },
@@ -21,7 +29,7 @@ const config: Config = {
     // here's an example of how to ignore esm module transformation, when needed
     // 'node_modules/(?!(@octokit|universal-user-agent|before-after-hook)/)',
   ],
-  testMatch: ['**/*.acceptance.test.ts'],
+  testMatch: ['**/*.acceptance.test.ts', '!**/.agent/.cache/**', '!**/.yalc/**'],
   setupFilesAfterEnv: ['./jest.acceptance.env.ts'],
 
   // use 50% of threads to leave headroom for other processes

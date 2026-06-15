@@ -12,8 +12,16 @@ process.env.FORCE_COLOR = 'true';
 // https://jestjs.io/docs/configuration
 const config: Config = {
   verbose: true,
+  reporters: [
+    ['default', { summaryThreshold: 0 }], // ensure we always get a failure summary at the bottom, to avoid the hunt
+    ['test-fns/slowtest.reporter.jest', { slow: '10s', output: '.log/slowtest/integration.report.json' }],
+  ],
   testEnvironment: 'node',
   moduleFileExtensions: ['js', 'ts'],
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/$1',
+    '^@src/(.*)$': '<rootDir>/src/$1',
+  },
   transform: {
     '^.+\\.(t|j)sx?$': '@swc/jest',
   },
@@ -21,11 +29,11 @@ const config: Config = {
     // here's an example of how to ignore esm module transformation, when needed
     // 'node_modules/(?!(@octokit|universal-user-agent|before-after-hook)/)',
   ],
-  testMatch: ['**/*.integration.test.ts'],
+  testMatch: ['**/*.integration.test.ts', '!**/.agent/.cache/**', '!**/.yalc/**'],
   setupFilesAfterEnv: ['./jest.integration.env.ts'],
 
-  // use 50% of threads to leave headroom for other processes
-  maxWorkers: '50%', // https://stackoverflow.com/questions/71287710/why-does-jest-run-faster-with-maxworkers-50
+  // run in series: tests share database state and interfere when parallel
+  maxWorkers: 1,
 };
 
 // eslint-disable-next-line import/no-default-export

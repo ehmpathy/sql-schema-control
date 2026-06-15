@@ -1,0 +1,56 @@
+import { HelpfulError } from 'helpful-errors';
+
+import { ResourceType } from '@src/domain';
+
+// TODO: generalize to other databases with adapter pattern
+const SQL_TYPE_NAME_CAPTURE_REGEX =
+  /(?:CREATE|create)(?:\s+)(?:DEFINER=`[a-zA-Z0-9_]+`@`[a-zA-Z0-9_%]+`)?(?:\s*)(?:OR REPLACE )?(PROCEDURE|procedure|FUNCTION|function|TABLE|table|VIEW|view)(?:\s+)(`?[\w]+`?(?:\.`?[\w]+`?)?)(?:\s*)(?:\(|AS\s|as\s)/g; // captures type and name from create statements of resources
+
+const regexTypeMatchToTypeEnum = {
+  PROCEDURE: ResourceType.PROCEDURE,
+  procedure: ResourceType.PROCEDURE,
+  FUNCTION: ResourceType.FUNCTION,
+  function: ResourceType.FUNCTION,
+  TABLE: ResourceType.TABLE,
+  table: ResourceType.TABLE,
+  view: ResourceType.VIEW,
+  VIEW: ResourceType.VIEW,
+};
+type RegexTypeMatchOption =
+  | 'PROCEDURE'
+  | 'procedure'
+  | 'FUNCTION'
+  | 'function'
+  | 'TABLE'
+  | 'table'
+  | 'VIEW'
+  | 'view';
+export const extractResourceTypeAndNameFromDDL = ({ ddl }: { ddl: string }) => {
+  // get name and type with regex
+  const captureRegex = new RegExp(SQL_TYPE_NAME_CAPTURE_REGEX, 'gm'); // note, we reinstantiate so as to not share regex object (i.e., state) between calls
+  const extractionMatches = captureRegex.exec(ddl);
+
+  // if no matches, throw error
+  if (!extractionMatches)
+    throw new HelpfulError(
+      'resource creation type and name could not be found in ddl',
+      { ddl },
+    );
+
+  // format the type
+  const regexTypeMatch = extractionMatches[1] as RegexTypeMatchOption; // the first capture group is the type match
+  const type = regexTypeMatchToTypeEnum[regexTypeMatch];
+
+  // extract the name
+  const name = extractionMatches[2]?.replace(/`/g, ''); // the second capture group is the name, remove any backticks
+  if (!name)
+    throw new HelpfulError('resource name could not be extracted from ddl', {
+      ddl,
+    });
+
+  // return type and name
+  return {
+    type,
+    name,
+  };
+};

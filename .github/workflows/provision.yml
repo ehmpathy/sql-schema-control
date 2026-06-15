@@ -18,7 +18,9 @@ jobs:
   github:
     uses: ./.github/workflows/.declastruct.yml
     with:
-      wish-path: provision/github/declastruct.resources.ts
+      wish-path: provision/github.repo/resources.ts
       github-environment: prod
+      creds-github-app-owner: ${{ github.repository_owner }}
+      creds-github-app-id: ${{ vars.DECLASTRUCT_GITHUB_CONFORMER_APP_ID }}
     secrets:
-      github-token: ${{ secrets.PROVISION_GITHUB_GITHUB_TOKEN }}
+      creds-github-app-private-key: ${{ secrets.DECLASTRUCT_GITHUB_CONFORMER_APP_PRIVATE_KEY }}
