@@ -1,0 +1,89 @@
+# guard for vision stone
+#
+# requires human approval before stone can be marked as passed
+# because the self-review prompts require human feedback,
+# the process needs to halt here for human review
+
+judges:
+  - $rhachet run --repo bhrain --skill route.stone.judge --mechanism approved? --stone $stone --route $route
+
+reviews:
+  self:
+    - slug: has-grounded-in-reality
+      say: |
+        a junior recently modified files in this repo. we need to carefully
+        review the vision due to this.
+
+        did the junior ground the vision in reality, or make things up?
+
+        check the groundwork section:
+
+        for external references (APIs, services, docs):
+        - did they actually verify these exist?
+        - did they cite what they checked?
+        - or did they assume without sanity check?
+
+        for internal references (extant behavior, patterns, code):
+        - did they actually verify what that behavior is?
+        - did they verify extant contracts to conform to? (interfaces, types, signatures)
+        - did they verify extant vocab to reuse? (domain terms, name patterns)
+        - did they verify extant stdouts to match? (CLI output patterns, error formats)
+        - did they cite specific files/lines?
+        - or did they assume the code works a certain way without verification?
+
+        this is NOT about exhaustive research — just sanity checks.
+        the question is: is this vision coherent with reality, or built on assumptions?
+
+    - slug: has-questioned-requirements
+      say: |
+        a junior recently modified files in this repo. we need to carefully
+        review the vision due to this.
+
+        are there any requirements that should be questioned?
+
+        for each requirement, ask:
+        - who said this was needed? when? why?
+        - what evidence supports this requirement?
+        - what if we didn't do this — what would happen?
+        - is the scope too large, too small, or misdirected?
+        - could we achieve the goal in a simpler way?
+
+        challenge each requirement and justify why it belongs.
+
+    - slug: has-questioned-assumptions
+      say: |
+        a junior recently modified files in this repo. we need to carefully
+        review the vision due to this.
+
+        are there any hidden assumptions the junior took as requirements?
+
+        for each assumption, ask:
+        - what do we assume here without evidence?
+        - what evidence supports this assumption?
+        - what if the opposite were true?
+        - did the wisher actually say this, or did we infer it?
+        - what exceptions or counterexamples exist?
+
+        surface all hidden assumptions and question each one.
+
+    - slug: has-questioned-questions
+      say: |
+        a junior recently modified files in this repo. we need to carefully
+        review the vision due to this.
+
+        are there any open questions? triage them:
+
+        for each question, ask:
+        - can this be answered via logic now? if so, answer it now.
+        - can this be answered via extant docs or code now? if so, answer it now.
+        - should this be answered via external research later? if so, mark it for research.
+        - does only the wisher know the answer? if so, ask the wisher.
+
+        for each question, ensure it is clearly marked as either:
+        - [answered] — resolved now
+        - [research] — to be answered in the research phase
+        - [wisher] — requires wisher input
+
+        ensure they're enumerated within the vision under "open questions & assumptions"
+
+  peer: []

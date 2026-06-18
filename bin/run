@@ -2,7 +2,7 @@
 
 require('tsx/cjs'); // register tsx so that require() method can import typescript files as well as js
 
-const { run } = require('../src/contract/cli');
+const { run } = require('sql-schema-control/cli');
 
 run().catch((error) => {
   console.error(error);

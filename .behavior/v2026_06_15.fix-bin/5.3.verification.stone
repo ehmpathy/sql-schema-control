@@ -1,0 +1,304 @@
+prove the deliverable works via test verification — fix all gaps
+
+---
+
+## .what
+
+this is the verification gate — the **buttonup phase**.
+
+you cannot pass execution without proof that all tests pass. more importantly: **test coverage enforces prod coverage**. if tests are absent, prod is incomplete. if prod is incomplete, fix it.
+
+## .the buttonup mandate: zero omissions
+
+**this is not a detection phase. this is a completion phase.**
+
+when you find a gap, you do not note it and move on. you **fix it**.
+
+| gap type | action |
+|----------|--------|
+| absent test coverage | write the test NOW |
+| absent prod coverage | implement the behavior NOW |
+| failed test | fix the code or fix the test NOW |
+| skipped test | remove the skip and make it pass NOW |
+
+**if you detect it, you fix it. no exceptions.**
+
+## .strictness: zero tolerance, zero exceptions
+
+**this gate enforces absolute standards. there is no leniency.**
+
+| constraint | definition |
+|------------|------------|
+| zero deferrals | you cannot defer any test to later. all tests pass now or you fail. |
+| zero fake tests | tests must verify real behavior. assertions that always pass are fraud. |
+| zero unproven claims | every claim of "test passes" must cite the exact command run and output. |
+| zero credential excuses | "i don't have creds" is not an excuse. get them, mock them, or fail. |
+| zero skips | .skip() and .only() are forbidden. silent bypasses are forbidden. |
+| zero exceptions | there are no special cases. the rules apply to all. |
+| zero omissions | if you find a gap in coverage, you fix it — test or prod. |
+
+**if a blocker prevents tests from run, that is a BLOCKER. full stop.**
+
+you do not proceed. you do not defer. you fix it or you fail the gate.
+
+## .why
+
+**why does this gate exist?**
+
+your crew is about to review a pr you wrote. they need proof it works — not words, proof. tests are that proof.
+
+**test coverage drives prod coverage.** if a behavior lacks a test, that behavior is unproven. unproven behaviors are incomplete deliverables. the test proves the implementation exists and works.
+
+without this gate:
+- tests might fail and nobody notices
+- tests might be skipped and nobody notices
+- behaviors might lack coverage and nobody notices
+- broken code ships to peers
+- incomplete implementations slip through
+
+with this gate:
+- every test passes or you fix it
+- every behavior has coverage or you add it
+- every skip is removed or justified
+- proven code ships to peers
+- **gaps get fixed, not deferred**
+
+**the cardinal rules**:
+1. never leave behavior without true, dependable test coverage
+2. never offload work onto your crew unless there is truly, fundamentally no other option
+3. never claim a test passes without cite of the exact command and output
+
+you fix it yourself. you exhaust every option: debug, research, try alternatives. only when you hit a wall that is physically impossible to climb alone — credentials only the foreman possesses, access only they can grant — only then may you ask for help.
+
+## .how
+
+reference the below for full context
+- .behavior/v2026_06_15.fix-bin/0.wish.md
+- .behavior/v2026_06_15.fix-bin/1.vision.md
+- .behavior/v2026_06_15.fix-bin/2.1.criteria.blackbox.md (if declared)
+- .behavior/v2026_06_15.fix-bin/3.2.distill.repros.experience.*.md (if declared) ← **repros artifact**
+
+---
+
+### step 1: emit verification checklist
+
+emit to
+- .behavior/v2026_06_15.fix-bin/5.3.verification.yield.md
+
+this is your roadmap. emit it first, then work through it step by step.
+
+**checklist structure:**
+
+```
+## verification checklist
+
+### behavior coverage (with reference to repros)
+
+for each journey sketched in repros, verify it was implemented with snapshots.
+
+| journey (from repros) | test file | snapshots? | critical path? | ergonomics ok? | status |
+|-----------------------|-----------|------------|----------------|----------------|--------|
+| {journey 1}           | {path}    | ✓ / ✗      | ✓ frictionless / needs work | ✓ natural / needs work | ⏳ |
+| {journey 2}           | {path}    | ✓ / ✗      | ✓ frictionless / needs work | ✓ natural / needs work | ⏳ |
+...
+
+### zero skips verified
+- [ ] no .skip() or .only() found
+- [ ] no silent credential bypasses
+- [ ] no prior failures carried forward
+
+### snapshot coverage for contract outputs
+
+each public contract needs dedicated snapshots that demonstrate its stdout for:
+- **vibechecks in prs** — reviewers see actual output without executing code
+- **drift detection** — changes to output surface in diffs over time
+
+| contract | output variants | snapshot file | status |
+|----------|-----------------|---------------|--------|
+| {command 1} | success, error, help | {path.snap} | ⏳ |
+| {command 2} | success, error, help | {path.snap} | ⏳ |
+...
+
+checklist:
+- [ ] every new cli command has `.snap` snapshots for stdout/stderr
+- [ ] every new app screen has `.snap` snapshots for screenshots
+- [ ] every new sdk method has `.snap` snapshots for responses
+- [ ] each output variant is exercised (success, error, edge cases)
+- [ ] snapshots demonstrate actual output, not just "it ran"
+
+### snapshot change rationalization
+
+for each `.snap` file changed, rationalize whether the change was intended or accidental:
+
+| snap file | change type | intended? | rationale |
+|-----------|-------------|-----------|-----------|
+| {path.snap} | added / modified / deleted | yes / no | {why this change is correct} |
+...
+
+checklist:
+- [ ] every `.snap` change has been reviewed
+- [ ] intended changes have clear rationale
+- [ ] accidental changes have been reverted or justified as improvements
+
+### tests executed — with proof
+
+**every test run must be proven with exact command and output.**
+
+| test suite | command run | result | proof (exit code + summary) |
+|------------|-------------|--------|----------------------------|
+| types | `npm run test:types` | ✓ / ✗ | exit 0, no errors |
+| lint | `npm run test:lint` | ✓ / ✗ | exit 0, no errors |
+| format | `npm run test:format` | ✓ / ✗ | exit 0, no errors |
+| unit | `npm run test:unit` | ✓ / ✗ | exit 0, N tests passed |
+| integration | `npm run test:integration` | ✓ / ✗ | exit 0, N tests passed |
+| acceptance | `npm run test:acceptance` | ✓ / ✗ | exit 0, N tests passed |
+
+checklist:
+- [ ] every test command was run (not "i think it passed")
+- [ ] every test command output was observed (not assumed)
+- [ ] the exact exit code was verified (0 = pass, non-zero = fail)
+- [ ] no tests were skipped, mocked, or faked
+
+**zero unproven claims.** if you claim a test passes, cite the command and output.
+
+### contract output snapshot exhaustiveness
+
+**every user-faced contract must have exhaustive snapshot coverage.**
+
+| contract type | contract | positive path snapped? | negative path snapped? | edge cases snapped? |
+|---------------|----------|------------------------|------------------------|---------------------|
+| cli | {command} | ✓ / ✗ | ✓ / ✗ | ✓ / ✗ |
+| api | {endpoint} | ✓ / ✗ | ✓ / ✗ | ✓ / ✗ |
+| sdk | {method} | ✓ / ✗ | ✓ / ✗ | ✓ / ✗ |
+
+checklist:
+- [ ] every cli command has stdout/stderr snapshots for success, error, and help
+- [ ] every api endpoint has response snapshots for success and error codes
+- [ ] every sdk method has return value snapshots for success and error
+- [ ] every contract has edge case snapshots (empty input, invalid input, boundary)
+
+**zero gaps in caller experience.** the reviewer must see exactly what callers see.
+
+### blockers
+- none (or list handoff references)
+```
+
+update the checklist as you complete each step below.
+
+---
+
+### step 2: verify AND FIX behavior coverage
+
+walk through wish and vision:
+- every behavior promised must have an acceptance test
+- for each behavior, you can point to the test file
+- no behavior left untested
+
+**why?** your crew trusts the test suite. if a behavior isn't tested, it isn't proven. untested behaviors are unverified promises.
+
+**test coverage enforces prod coverage.** if a test is absent, either:
+1. the behavior was not implemented → IMPLEMENT IT NOW
+2. the behavior was implemented without a test → WRITE THE TEST NOW
+
+if a behavior lacks a test, **write one NOW**. do not move on with gaps. update your checklist when done.
+
+---
+
+### step 3: verify AND FIX zero skips
+
+scan for forbidden patterns:
+- `.skip()` or `.only()` in test files
+- `if (!credentials) return` or similar silent bypasses
+- prior failures carried forward (known-broken tests)
+
+**why?** failures are better than skips. skips hide problems. failures expose them. a skipped test is a lie — it pretends coverage exists when it doesn't.
+
+**this is buttonup.** if you find skips:
+1. REMOVE the skip
+2. MAKE the test pass (fix the code or fix the test)
+3. update your checklist
+
+do not note skips and move on. fix them. all tests must run.
+
+---
+
+### step 4: run all tests AND FIX all failures
+
+run each test suite and **cite the exact command and output**.
+
+```bash
+npm run test:types      # cite exit code
+npm run test:lint       # cite exit code
+npm run test:format     # cite exit code
+npm run test:unit       # cite exit code + test count
+npm run test:integration # cite exit code + test count
+npm run test:acceptance  # cite exit code + test count
+```
+
+all must pass — no exceptions. no deferrals. no "i'll fix it later."
+
+**this is buttonup.** if tests fail, fix them. that is the job.
+
+failures indicate one of:
+1. prod code is broken → FIX THE PROD CODE
+2. test has a bug → FIX THE TEST BUG (preserve intention)
+3. coverage gap exists → FILL THE GAP
+
+**consider all failures as defects from this pr.** there are no "prior failures."
+
+if a test was broken before you started — fix it. if a test is flaky — fix it. if a test fails for reasons unrelated to your changes — fix it anyway. you do not get to say "that was already broken." you are here now. you fix it.
+
+**take initiative. take ownership.**
+
+**preserve test intentions.** when you fix a test, you fix why it failed — not what it tests. to change what a test verifies is not a fix. it is at worst malicious deception, at best reckless negligence. the test knew a truth. if it fails, either the code is wrong or the test has a bug. fix the cause, not the assertion.
+
+**zero fake tests.** a test that always passes is fraud. a test that skips is a lie. a test that mocks the system under test proves nothingness. tests must verify real behavior against real code.
+
+**escalation path:**
+1. debug the failure — read the error, understand the cause
+2. research — search for similar issues, read docs
+3. try alternatives — different approach, different tool
+4. ask for help — other resources, other clones
+5. deeper research — exhaust every option
+6. only if insurmountable — emit handoff (see step 5)
+
+**ask yourself at each level:**
+- did i read the error message carefully?
+- did i search for similar issues?
+- did i try a different approach?
+- did i isolate the problem?
+- did i ask for help?
+- did i exhaust every option?
+
+you move to handoff only when you can answer "yes" to all of the above and still cannot proceed.
+
+update your checklist when all tests pass.
+
+---
+
+### step 5: handoff (only if insurmountable)
+
+a handoff is a document that transfers work to your foreman because you hit a wall that is physically impossible to climb alone.
+
+**foreman-only blockers:**
+- credentials only the foreman possesses
+- external access only the foreman can grant
+- approval that requires foreman authority
+
+handoff is the absolute last resort. you must exhaust every option before you consider it.
+
+if you need to emit a handoff:
+
+emit to
+- .behavior/v2026_06_15.fix-bin/5.3.verification.handoff.v$N.to_foreman.md
+
+**handoff must include:**
+1. what you tried (list every approach you attempted)
+2. why each approach failed (be specific)
+3. what makes this fundamentally impossible without foreman intervention
+4. is this truly a "foreman possesses the key" situation?
+5. rewind instruction: `rhx route.stone.set --stone 5.3.verification --as rewound`
+
+your crew should read your handoff and think: "yes, there was truly no other way."
+
+update your checklist to reference the handoff.

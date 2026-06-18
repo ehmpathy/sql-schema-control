@@ -25,3 +25,4 @@ ignores:
   - rhachet-roles-ehmpathy
   - tsc-alias
   - yalc
+  - sql-schema-control # self-link for acceptance tests (bin/run via node_modules)

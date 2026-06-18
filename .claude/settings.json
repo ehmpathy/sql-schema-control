@@ -358,12 +358,6 @@
             "command": "./node_modules/.bin/rhachet roles boot --repo ehmpathy --role mechanic",
             "timeout": 60,
             "author": "repo=ehmpathy/role=mechanic"
-          },
-          {
-            "type": "command",
-            "command": "./node_modules/.bin/rhachet roles boot --role librarian",
-            "timeout": 30,
-            "author": "repo=bhrain/role=librarian"
           }
         ]
       },

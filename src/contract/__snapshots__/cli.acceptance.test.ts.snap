@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`cli.acceptance given: [case1] --help flag when: [t0] bin/run is called with --help then: it should show help and exit 0 1`] = `
+"Usage: sql-schema-control [options] [command]
+
+Declarative database schema management. Provision, track, sync, and modify your
+database schema with plain, version controlled, sql.
+
+Options:
+  -V, --version    output the version number
+  -h, --help       display help for command
+
+Commands:
+  plan [options]   generate and show an execution plan
+  apply [options]  apply an execution plan
+  sync [options]   sync the change log for a specific change definition without
+                   applying it, for cases where a change has been reapplied
+                   manually
+  pull [options]   pull and record uncontrolled resources
+  help [command]   display help for command
+"
+`;
+
+exports[`cli.acceptance given: [case2] plan with .js config when: [t0] bin/run plan is called with .js config then: it should run plan and exit 0 1`] = `
+"[1mPlanning required actions...[22m
+
+
+[1mEverything is up to date 🎉[22m. No actions required.
+"
+`;
+
+exports[`cli.acceptance given: [case3] plan with .ts config when: [t0] bin/run plan is called with .ts config then: it should run plan and exit 0 (tsx registration works) 1`] = `
+"[1mPlanning required actions...[22m
+
+
+[1mEverything is up to date 🎉[22m. No actions required.
+"
+`;
+
+exports[`cli.acceptance given: [case4] invalid config path when: [t0] bin/run plan is called with non-existent config then: it should exit with error and show helpful message 1`] = `
+"<REPO>
+      if (err) throw err;
+               ^
+
+[Error: ENOENT: no such file or directory, open '/nonexistent/control.yml'] {
+  errno: [33m-2[39m,
+  code: [32m'ENOENT'[39m,
+  syscall: [32m'open'[39m,
+  path: [32m'/nonexistent/control.yml'[39m
+}
+
+Node.js <VERSION>
+"
+`;
+
+exports[`cli.acceptance given: [case5] no command provided when: [t0] bin/run is called with no arguments then: it should show help 1`] = `
+"Usage: sql-schema-control [options] [command]
+
+Declarative database schema management. Provision, track, sync, and modify your
+database schema with plain, version controlled, sql.
+
+Options:
+  -V, --version    output the version number
+  -h, --help       display help for command
+
+Commands:
+  plan [options]   generate and show an execution plan
+  apply [options]  apply an execution plan
+  sync [options]   sync the change log for a specific change definition without
+                   applying it, for cases where a change has been reapplied
+                   manually
+  pull [options]   pull and record uncontrolled resources
+  help [command]   display help for command
+"
+`;
