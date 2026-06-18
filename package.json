@@ -16,8 +16,12 @@
     "db-migrate"
   ],
   "bugs": "https://github.com/ehmpathy/sql-schema-control/issues",
-  "main": "dist/contract/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/contract/sdk.js",
+  "types": "dist/contract/sdk.d.ts",
+  "exports": {
+    ".": "./dist/contract/sdk.js",
+    "./cli": "./dist/contract/cli.js"
+  },
   "bin": {
     "sql-schema-control": "./bin/run"
   },
@@ -77,7 +81,7 @@
     "preversion": "npm run prepush",
     "postversion": "git push origin HEAD --tags --no-verify",
     "prepare:husky": "husky install && chmod ug+x .husky/*",
-    "prepare:rhachet": "rhachet init --keys --hooks --roles mechanic behaver driver dispatcher reviewer librarian ergonomist architect",
+    "prepare:rhachet": "rhachet init --hooks --roles mechanic behaver driver architect ergonomist reviewer dreamer dispatcher",
     "prepare": "if [ -e .git ] && [ -z $CI ]; then npm run prepare:husky && npm run prepare:rhachet; fi",
     "test:lint:cycles": "dpdm --no-warning --no-tree --transform --exit-code circular:1 --exclude \"$(yq -r '.exclude | join(\"|\") // \"^$\"' .dpdmrc.yaml)\" 'src/**/!(*.test).ts'",
     "upgrade:rhachet": "rhachet upgrade"
@@ -127,12 +131,13 @@
     "esbuild-register": "3.6.0",
     "husky": "8.0.3",
     "jest": "30.2.0",
-    "rhachet": "1.41.15",
+    "rhachet": "1.41.21",
     "rhachet-brains-anthropic": "0.4.1",
     "rhachet-brains-xai": "0.3.3",
-    "rhachet-roles-bhrain": "0.27.8",
-    "rhachet-roles-bhuild": "0.21.11",
-    "rhachet-roles-ehmpathy": "1.35.8",
+    "rhachet-roles-bhrain": "0.29.2",
+    "rhachet-roles-bhuild": "0.21.16",
+    "rhachet-roles-ehmpathy": "1.35.15",
+    "sql-schema-control": "link:.",
     "stdout-stderr": "^0.1.9",
     "test-fns": "1.15.8",
     "tsc-alias": "1.8.10",
