@@ -1,4 +1,7 @@
-import { execSync, ExecSyncOptionsWithStringEncoding } from 'child_process';
+import {
+  type ExecSyncOptionsWithStringEncoding,
+  execSync,
+} from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 import { genTempDir, given, then, useBeforeAll, when } from 'test-fns';
@@ -141,7 +144,10 @@ const redactPaths = (output: string): string => {
  */
 describe('cli.acceptance', () => {
   // use the self-linked package in node_modules (via "sql-schema-control": "link:." in devDependencies)
-  const binPath = path.resolve(__dirname, '../../node_modules/sql-schema-control/bin/run');
+  const binPath = path.resolve(
+    __dirname,
+    '../../node_modules/sql-schema-control/bin/run',
+  );
 
   given('[case1] --help flag', () => {
     when('[t0] bin/run is called with --help', () => {
