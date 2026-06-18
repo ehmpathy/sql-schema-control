@@ -166,7 +166,7 @@ describe('cli.acceptance', () => {
   });
 
   given('[case2] plan with .js config', () => {
-    const scene = useBeforeAll(() => {
+    const scene = useBeforeAll(async () => {
       const configDir = genTempDir({ slug: 'config-js' });
       writeConnectionConfig({ dir: configDir, ext: 'js' });
       writeControlYml({ dir: configDir, connectionExt: 'js' });
@@ -191,7 +191,7 @@ describe('cli.acceptance', () => {
   });
 
   given('[case3] plan with .ts config', () => {
-    const scene = useBeforeAll(() => {
+    const scene = useBeforeAll(async () => {
       const configDir = genTempDir({ slug: 'config-ts' });
       writeConnectionConfig({ dir: configDir, ext: 'ts' });
       writeControlYml({ dir: configDir, connectionExt: 'ts' });
