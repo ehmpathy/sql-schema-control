@@ -27,7 +27,7 @@ describe('getDifferenceForDefinition', () => {
     sql: '__SQL__',
   });
   const changeDefinition = new ChangeDefinition({
-    id: '__ID__',
+    exid: '__ID__',
     path: '__PATH__',
     sql: '__SQL__',
     hash: sha256.sync('__SQL__'),

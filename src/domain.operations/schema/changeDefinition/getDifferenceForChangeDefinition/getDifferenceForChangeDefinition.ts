@@ -12,7 +12,7 @@ export const getDifferenceForChangeDefinition = async ({
   // 1. get state of change in db
   const lastAppliedChange = await getAppliedChangeDefinitionFromDatabase({
     connection,
-    changeId: change.id,
+    changeExid: change.exid,
     changePath: change.path,
   });
 

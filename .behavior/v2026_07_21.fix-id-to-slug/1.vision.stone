@@ -1,0 +1,70 @@
+illustrate the vision implied in the wish .behavior/v2026_07_21.fix-id-to-slug/0.wish.md
+
+emit into .behavior/v2026_07_21.fix-id-to-slug/1.vision.yield.md
+
+---
+
+paint a picture of what the world looks like when this wish is fulfilled
+
+testdrive the contract we propose via realworld examples
+
+specifically,
+
+## the outcome world
+
+- what does a day-in-the-life look like with this in place?
+- what's the before/after contrast?
+- what's the "aha" moment where the value clicks?
+
+## user experience
+
+- what usecases do folks fulfill? what goals?
+- what contract inputs & outputs do they leverage?
+- what would it look like to leverage them?
+- what timelines do they go through?
+
+## mental model
+
+- how would users describe this to a friend?
+- what analogies or metaphors fit?
+- what terms would they use vs what terms would we use?
+
+## evaluation
+
+- how well does it solve the goals?
+- what are the pros? the cons?
+- what edgecases exist and how do our contracts keep users in a pit of success?
+
+## open questions & assumptions
+
+- what assumptions have we made?
+- what questions remain unanswered?
+- what must we validate with the wisher before we proceed?
+- what must we research externally?
+
+## groundwork
+
+sanity check the vision against reality. NOT exhaustive research — just enough to know the vision isn't built on false assumptions.
+
+### external research
+
+if the wish references external APIs, services, or docs:
+- did you verify they exist and work the way you assume?
+- cite what you checked (links, key constraints noted)
+- if none referenced, say "none — no external dependencies"
+
+### internal research
+
+if the wish references extant behavior, patterns, or code:
+- did you verify what that behavior actually is?
+- contracts: interfaces, types, signatures to conform to
+- vocab: domain terms, name patterns to reuse
+- stdouts: CLI output patterns, error formats to match
+- cite what you checked (file paths, line numbers)
+- if none referenced, say "none — no extant behavior extended"
+
+## what is awkward?
+
+- what feels off or forced?
+- where does the design fight the user's mental model?
+- what tradeoffs feel uncomfortable?

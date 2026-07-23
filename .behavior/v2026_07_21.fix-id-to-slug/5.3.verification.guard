@@ -1,0 +1,291 @@
+artifacts:
+  # track verification progress
+  - "$route/5.3.verification.yield.md"
+  # track actual implementation in src/
+  - "src/**/*"
+
+reviews:
+  self:
+    - slug: has-behavior-coverage
+      say: |
+        double-check: does the verification checklist show every behavior from wish/vision has a test?
+
+        - is every behavior in 0.wish.md covered?
+        - is every behavior in 1.vision.md covered?
+        - can you point to each test file in the checklist?
+
+        **if any behavior lacks a test, write the test NOW.** do not pass this gate with gaps.
+
+    - slug: has-zero-test-skips
+      say: |
+        double-check: did you verify zero skips — and REMOVE any you found?
+
+        - no .skip() or .only() found?
+        - no silent credential bypasses?
+        - no prior failures carried forward?
+
+        **if you found skips, did you remove them and make those tests pass?**
+
+        this is buttonup. skips are gaps. gaps get fixed, not noted.
+
+    - slug: has-all-tests-passed
+      say: |
+        double-check: did all tests pass? prove it.
+
+        **zero unproven claims.** you must cite the exact command and output.
+
+        for each test suite:
+        - what command did you run?
+        - what was the exit code?
+        - how many tests passed?
+
+        example proof:
+        ```
+        $ npm run test:unit
+        > exit 0
+        > 47 tests passed
+        ```
+
+        if you cannot cite the command and output, you did not prove it.
+
+        zero tolerance for extant failures:
+        - "it was already broken" is not an excuse — fix it
+        - "it's unrelated to my changes" is not an excuse — fix it
+        - flaky tests must be stabilized, not tolerated
+        - every failure is your responsibility now
+
+        zero tolerance for fake tests:
+        - tests that always pass are fraud
+        - tests that mock the system under test prove nothingness
+        - tests must verify real behavior
+
+        zero tolerance for credential excuses:
+        - "i don't have creds" means get them or mock them
+        - silent bypasses are forbidden
+        - if creds block tests, that is a BLOCKER — not a deferral
+
+    - slug: has-preserved-test-intentions
+      say: |
+        double-check: did you preserve test intentions?
+
+        for every test you touched:
+        - what did this test verify before?
+        - does it still verify the same behavior after?
+        - did you change what the test asserts, or fix why it failed?
+
+        forbidden:
+        - weaken assertions to make tests pass
+        - remove test cases that "no longer apply"
+        - change expected values to match broken output
+        - delete tests that fail instead of fix code
+
+        the test knew a truth. if it failed, either:
+        - the code is wrong — fix the code
+        - the test has a bug — fix the bug, keep the intention
+        - requirements changed — document why, get approval
+
+        to "fix tests" via changed intent is not a fix — it is at worst
+        malicious deception, at best reckless negligence. unacceptable.
+
+    - slug: has-journey-tests-from-repros
+      say: |
+        double-check: did you implement each journey sketched in repros?
+
+        look back at the repros artifact:
+        - .behavior/v2026_07_21.fix-id-to-slug/3.2.distill.repros.experience.*.md
+
+        for each journey test sketch in repros:
+        - is there a test file for it?
+        - does the test follow the BDD given/when/then structure?
+        - does each `when([tN])` step exist?
+
+        **if any journey was planned but not implemented, go back and add it NOW.**
+
+        this is buttonup. absent journey tests = incomplete implementation.
+        test coverage proves prod coverage. no test = no proof = not done.
+
+    - slug: has-contract-output-variants-snapped
+      say: |
+        double-check: does each public contract have EXHAUSTIVE snapshots?
+
+        **zero gaps in caller experience.** every contract must snap every output variant.
+
+        for each new or modified public contract:
+
+        | contract type | what to snap | required variants |
+        |---------------|--------------|-------------------|
+        | cli command | stdout + stderr | success, error, --help, edge cases |
+        | api endpoint | response body | 2xx, 4xx, 5xx, edge cases |
+        | sdk method | return value | success, error, edge cases |
+
+        checklist per contract:
+        - [ ] positive path (success) is snapped
+        - [ ] negative path (error) is snapped
+        - [ ] help/usage is snapped (for cli)
+        - [ ] edge cases are snapped (empty, invalid, boundary)
+        - [ ] snapshot shows actual output, not placeholder
+
+        why this matters:
+        - snapshots enable vibecheck in prs — reviewers see actual output without execute
+        - snapshots detect drift over time — output changes surface in diffs
+        - absent variants mean blind spots in review
+        - exhaustive coverage proves the contract works for all callers
+
+        **zero leniency.** if a contract lacks any variant, add the test case NOW.
+
+        if you find yourself about to say "this variant isn't worth a snapshot" — stop.
+        that is the variant that will break in prod. snap it.
+
+        this is buttonup. absent snapshots = absent proof. add them or fail this gate.
+
+    - slug: has-snap-changes-rationalized
+      say: |
+        double-check: is every `.snap` file change intentional and justified?
+
+        for each `.snap` file in git diff:
+        1. what changed? (added, modified, deleted)
+        2. was this change intended or accidental?
+        3. if intended: what is the rationale?
+        4. if accidental: revert it or explain why the new output is an improvement
+
+        common regressions caught here:
+        - output format degraded (lost alignment, lost structure)
+        - error messages became less helpful
+        - timestamps or ids leaked into snapshots (flaky)
+        - extra output added unintentionally
+
+        forbidden:
+        - "updated snapshots" without per-file rationale
+        - bulk snapshot updates without review
+        - regressions accepted without justification
+
+        every snap change tells a story. make sure the story is intentional.
+
+    - slug: has-critical-paths-frictionless
+      say: |
+        double-check: are the critical paths frictionless in practice?
+
+        look back at the repros artifact for critical paths:
+        - .behavior/v2026_07_21.fix-id-to-slug/3.2.distill.repros.experience.*.md
+
+        for each critical path:
+        - run through it manually — is it smooth?
+        - are there unexpected errors?
+        - does it feel effortless to the user?
+
+        critical paths must "just work." if there's friction, fix it now.
+
+    - slug: has-ergonomics-validated
+      say: |
+        double-check: does the actual input/output match what felt right at repros?
+
+        compare the implemented input/output to what was sketched in repros:
+        - does the actual input match the planned input?
+        - does the actual output match the planned output?
+        - did the design change between repros and implementation?
+
+        if the ergonomics drifted, either:
+        - update repros to reflect the better design, or
+        - fix the implementation to match the planned ergonomics
+
+    - slug: has-play-test-convention
+      say: |
+        double-check: are journey test files named correctly?
+
+        journey tests should use `.play.test.ts` suffix:
+        - `feature.play.test.ts` — journey test
+        - `feature.play.integration.test.ts` — if repo requires integration runner
+        - `feature.play.acceptance.test.ts` — if repo requires acceptance runner
+
+        verify:
+        - are journey tests in the right location?
+        - do they have the `.play.` suffix?
+        - if not supported, is the fallback convention used?
+
+    - slug: has-fixed-all-gaps
+      say: |
+        final buttonup check: did you FIX every gap you found, or just detect it?
+
+        **this is the buttonup phase. detection is not enough — you must fix.**
+
+        look back at all the reviews above. for every gap you identified:
+        - absent test coverage → did you WRITE the test?
+        - absent prod coverage → did you IMPLEMENT the behavior?
+        - failed test → did you FIX the code or test?
+        - skipped test → did you REMOVE the skip and make it pass?
+
+        **zero omissions.** if any review above surfaced a gap, that gap must be fixed before you pass this gate.
+
+        ask yourself:
+        - did i just note the gap, or did i actually fix it?
+        - is there any item marked "todo" or "later"? (forbidden)
+        - is there any coverage marked incomplete? (forbidden)
+
+        **if you detected it, you fixed it.** prove it with citations.
+
+        this is the final self-review. you are about to hand off to peer review.
+        prove that all items above were addressed — not deferred.
+
+  peer:
+    # --- level 1: cheap reviewers (run first, in parallel) ---
+
+    - slug: repo-rules
+      run: $rhx review --repo bhrain --mode hard --rules '.agent/repo=.this/**/rule.*.md' --diffs since-main --paths-with '**/*.{ts,sh}' --join intersect --conversation $conversation --output "$output"
+      budget: 3
+      level: 1
+
+    - slug: ergo-contract-snapshots
+      run: $rhx review --repo bhrain --mode hard --rules '.agent/repo=bhuild/role=behaver/briefs/practices/behavior.verification/rule.require.contract-snapshot-exhaustiveness.md' --refs '.agent/repo=ehmpathy/role=ergonomist/briefs/*.md' --refs '.agent/repo=ehmpathy/role=mechanic/briefs/practices/code.test/scope.coverage/*.md' --refs '.agent/repo=bhuild/role=behaver/briefs/practices/behavior.verification/*.md' --diffs since-main --paths-with '**/*.{ts,sh}' --paths-with '**/*.snap' --join intersect --conversation $conversation --output "$output"
+      budget: 3
+      level: 1
+
+    - slug: mech-external-contracts
+      run: $rhx review --repo bhrain --mode hard --rules '.agent/repo=bhuild/role=behaver/briefs/practices/behavior.verification/rule.require.external-contract-integration-tests.md' --refs '.agent/repo=ehmpathy/role=mechanic/briefs/practices/code.test/scope.coverage/*.md' --refs '.agent/repo=ehmpathy/role=mechanic/briefs/practices/code.test/scope.unit/rule.forbid.remote-boundaries.md' --diffs since-main --paths-with '**/*.{ts,sh}' --paths-with '**/*.snap' --join intersect --conversation $conversation --output "$output"
+      budget: 3
+      level: 1
+
+    - slug: ergo-acceptance-journey-coverage
+      run: $rhx review --repo bhrain --mode hard --rules '.agent/repo=bhuild/role=behaver/briefs/practices/behavior.execution/ergonomist/rule.require.acceptance-journey-coverage.md' --refs '.agent/repo=ehmpathy/role=ergonomist/briefs/*.md' --refs '.agent/repo=ehmpathy/role=mechanic/briefs/practices/code.test/frames.behavior/*.md.min' --refs '.agent/repo=ehmpathy/role=mechanic/briefs/practices/code.test/scope.coverage/*.md' --refs '.agent/repo=bhuild/role=behaver/briefs/practices/behavior.verification/*.md' --diffs since-main --paths-with '**/*.{ts,sh}' --paths-with '**/*.snap' --join intersect --conversation $conversation --output "$output"
+      budget: 4
+      level: 1
+
+    - slug: ergo-snapshot-visual-blemishes
+      run: $rhx review --repo bhrain --mode hard --rules '.agent/repo=bhuild/role=behaver/briefs/practices/behavior.execution/ergonomist/rule.forbid.snapshot-visual-blemishes.md' --refs '.agent/repo=ehmpathy/role=ergonomist/briefs/*.md' --refs '.agent/repo=ehmpathy/role=mechanic/briefs/practices/lang.tones/*.md.min' --refs '.agent/repo=bhuild/role=behaver/briefs/practices/behavior.verification/rule.require.contract-snapshot-exhaustiveness.md' --diffs since-main --paths-with '**/*.{ts,sh}' --paths-with '**/*.snap' --join intersect --conversation $conversation --output "$output"
+      budget: 3
+      level: 1
+
+    - slug: mech-given-when-then
+      run: $rhx review --repo bhrain --mode hard --rules '.agent/repo=ehmpathy/role=mechanic/briefs/practices/code.test/frames.behavior/rule.require.given-when-then.md' --refs '.agent/repo=ehmpathy/role=architect/briefs/criteria.given_when_then.[seed].v3.md' --refs '.agent/repo=ehmpathy/role=mechanic/briefs/practices/code.test/frames.behavior/*.md.min' --refs '.agent/repo=ehmpathy/role=mechanic/briefs/practices/code.test/lessons.howto/*.md.min' --diffs since-main --paths-with '**/*.test.ts' --paths-with '**/*.snap' --join intersect --conversation $conversation --output "$output"
+      budget: 3
+      level: 1
+
+    - slug: mech-test-intent
+      run: $rhx review --repo bhrain --mode hard --rules '.agent/repo=bhuild/role=behaver/briefs/practices/behavior.verification/rule.forbid.test-intent-violations.md' --refs '.agent/repo=ehmpathy/role=mechanic/briefs/practices/code.test/scope.coverage/*.md' --refs '.agent/repo=ehmpathy/role=mechanic/briefs/practices/work.flow/refactor/rule.require.review-test-changes.md.min' --diffs since-main --paths-with '**/*.test.ts' --paths-with '**/*.snap' --join intersect --conversation $conversation --output "$output"
+      budget: 3
+      level: 1
+
+    - slug: mech-test-scope-purity
+      run: $rhx review --repo bhrain --mode hard --rules '.agent/repo=ehmpathy/role=mechanic/briefs/practices/code.test/scope.*/rule.*.md' --diffs since-main --paths-with '{src,blackbox}/**/*.test.ts' --join intersect --conversation $conversation --output "$output"
+      budget: 4
+      level: 1
+
+    # --- level 3: expensive reviewers (run after level 1 is terminal) ---
+
+    - slug: enroll-verif-snapshot-coverage
+      run: $rhx enroll claude --model 'claude-sonnet-5[1m]' --roles reviewer,behaver,ergonomist,mechanic -p 'review the diff for snapshot coverage on contract endpoints and acceptance test user journey coverage. read the prior peer-review conversation at $conversation to catch up on context.'
+      budget: 4
+      level: 3
+
+    - slug: enroll-verif-snapshot-blemishes
+      run: $rhx enroll claude --model 'claude-sonnet-5[1m]' --roles reviewer,behaver,ergonomist,mechanic -p 'review the diff for experiential and visual blemishes in snapshotted acceptance test journeys. read the prior peer-review conversation at $conversation to catch up on context.'
+      budget: 3
+      level: 3
+
+    - slug: enroll-verif-test-intent
+      run: $rhx enroll claude --model 'claude-sonnet-5[1m]' --roles reviewer,behaver,architect,mechanic -p 'review the current implementation for test intent violation diffs. if any of the diffs related to tests loosened assertions or changed the criteria, this is a blocker. tests were added for a reason. we have to maintain the behavior they locked in. read the prior peer-review conversation at $conversation to catch up on context.'
+      budget: 3
+      level: 3
+
+judges:
+  # enforce peer reviews pass with zero blockers
+  - $rhachet run --repo bhrain --skill route.stone.judge --mechanism reviewed? --stone $stone --route $route --allow-blockers 0 --allow-nitpicks 0

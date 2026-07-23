@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+import { BadRequestError, UnexpectedCodePathError } from 'helpful-errors';
 
 import { ChangeDefinition } from '@src/domain';
 import { getControlContextFromConfig } from '@src/domain.operations/config/getControlContextFromConfig';
@@ -9,25 +10,29 @@ import { getColoredActionTitle } from './utils/getColoredActionTitle';
 
 export const getAndSyncChangeLogForChangeDefinition = async ({
   configPath,
-  changeId,
+  changeExid,
 }: {
   configPath: string;
-  changeId: string;
+  changeExid: string;
 }) => {
   // 1. get the control context
   const context = await getControlContextFromConfig({ configPath });
 
-  // 2. find the change definition with this id
+  // 2. find the change definition with this exid
   const targetDefinition = context.definitions.find(
     (definition) =>
-      getReferenceIdForDefinition({ definition }) === `change:${changeId}`,
+      getReferenceIdForDefinition({ definition }) === `change:${changeExid}`,
   );
   if (!targetDefinition)
-    throw new Error(
-      `could not find a definition with referenceId 'change:${changeId}'`,
+    throw new BadRequestError(
+      `could not find a definition with referenceId 'change:${changeExid}'`,
+      { changeExid },
     );
   if (!(targetDefinition instanceof ChangeDefinition))
-    throw new Error('can only sync state for change definitions');
+    throw new UnexpectedCodePathError(
+      'referenceId matched a change but the definition is not a ChangeDefinition',
+      { changeExid, targetDefinition },
+    );
 
   // 3. sync change definition state manually
   await syncChangeLogWithChangeDefinition({

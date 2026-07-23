@@ -16,7 +16,7 @@ const validateAndHydrateDefinitionsYmlContentsMock =
   validateAndHydrateDefinitionsYmlContents as jest.Mock;
 validateAndHydrateDefinitionsYmlContentsMock.mockResolvedValue([
   new ChangeDefinition({
-    id: '__DEFINITION_FROM_FILE__',
+    exid: '__DEFINITION_FROM_FILE__',
     path: '__PATH__',
     sql: '__SOME_SQL__',
     hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
@@ -29,19 +29,19 @@ describe('flattenDefinitionsRecursive', () => {
     // i.e., the end case
     const definitions = [
       new ChangeDefinition({
-        id: 'some id',
+        exid: 'some id',
         path: '__PATH__',
         sql: '__SOME_SQL__',
         hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
       }),
       new ChangeDefinition({
-        id: 'some other id',
+        exid: 'some other id',
         path: '__PATH__',
         sql: '__SOME_SQL__',
         hash: '5783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
       }),
       new ChangeDefinition({
-        id: 'another id',
+        exid: 'another id',
         path: '__PATH__',
         sql: '__SOME_SQL__',
         hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
@@ -61,14 +61,14 @@ describe('flattenDefinitionsRecursive', () => {
   it('should should attempt to read the contents of a each yml file, if a file path is defined as a definition', async () => {
     const definitions = [
       new ChangeDefinition({
-        id: 'some id',
+        exid: 'some id',
         path: '__PATH__',
         sql: '__SOME_SQL__',
         hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
       }),
       '../path/to/a/file.yml',
       new ChangeDefinition({
-        id: 'another id',
+        exid: 'another id',
         path: '__PATH__',
         sql: '__SOME_SQL__',
         hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
@@ -99,13 +99,13 @@ describe('flattenDefinitionsRecursive', () => {
     ]);
     validateAndHydrateDefinitionsYmlContentsMock.mockResolvedValueOnce([
       new ChangeDefinition({
-        id: '__DEFINITION_FROM_FILE__',
+        exid: '__DEFINITION_FROM_FILE__',
         path: '__PATH__',
         sql: '__SOME_SQL__',
         hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
       }),
       new ChangeDefinition({
-        id: '__DEFINITION_FROM_FILE_2__',
+        exid: '__DEFINITION_FROM_FILE_2__',
         path: '__PATH__',
         sql: '__SOME_SQL__',
         hash: '5783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
@@ -113,14 +113,14 @@ describe('flattenDefinitionsRecursive', () => {
     ]);
     const definitions = [
       new ChangeDefinition({
-        id: 'some id',
+        exid: 'some id',
         sql: '__SOME_SQL__',
         path: '__PATH__',
         hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
       }),
       '../path/to/a/file.yml',
       new ChangeDefinition({
-        id: 'another id',
+        exid: 'another id',
         sql: '__SOME_SQL__',
         path: '__PATH__',
         hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
@@ -132,25 +132,25 @@ describe('flattenDefinitionsRecursive', () => {
     });
     expect(returnedDefinitions).toEqual([
       new ChangeDefinition({
-        id: 'some id',
+        exid: 'some id',
         path: '__PATH__',
         sql: '__SOME_SQL__',
         hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
       }),
       new ChangeDefinition({
-        id: '__DEFINITION_FROM_FILE__',
+        exid: '__DEFINITION_FROM_FILE__',
         path: '__PATH__',
         sql: '__SOME_SQL__',
         hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
       }),
       new ChangeDefinition({
-        id: '__DEFINITION_FROM_FILE_2__',
+        exid: '__DEFINITION_FROM_FILE_2__',
         path: '__PATH__',
         sql: '__SOME_SQL__',
         hash: '5783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
       }),
       new ChangeDefinition({
-        id: 'another id',
+        exid: 'another id',
         path: '__PATH__',
         sql: '__SOME_SQL__',
         hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',

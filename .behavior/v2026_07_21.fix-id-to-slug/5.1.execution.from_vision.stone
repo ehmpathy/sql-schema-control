@@ -1,0 +1,15 @@
+bootup your mechanic's role via `./node_modules/.bin/rhachet roles boot --repo ehmpathy --role mechanic`
+
+then, execute the vision directly
+- .behavior/v2026_07_21.fix-id-to-slug/1.vision.md
+
+ref:
+- .behavior/v2026_07_21.fix-id-to-slug/0.wish.md
+
+
+---
+
+track your progress
+
+emit todos and check them off into
+- .behavior/v2026_07_21.fix-id-to-slug/5.1.execution.from_vision.yield.md

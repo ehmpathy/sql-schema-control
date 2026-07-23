@@ -7,7 +7,7 @@ import {
 } from '@src/domain.objects/constants';
 
 const schema = z.object({
-  id: z.string(),
+  exid: z.string(),
   path: z.string(),
   sql: z.string(),
   hash: z.string(),
@@ -16,7 +16,7 @@ const schema = z.object({
 });
 
 export interface ChangeDefinition {
-  id: string; // id ensures file moves preserve hash relationship
+  exid: string; // the human-authored natural key; ensures file moves preserve hash relationship
   path: string;
   sql: string;
   hash: string;

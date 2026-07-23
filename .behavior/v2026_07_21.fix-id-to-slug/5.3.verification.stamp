@@ -1,0 +1,82 @@
+🦉 the way speaks for itself
+
+🗿 route.stone.set
+   ├─ stone = 5.3.verification
+   ├─ passage = overruled
+   ├─ guard
+   │  ├─ artifacts
+   │  │   ├─ $route/5.3.verification.yield.md
+   │  │   └─ src/**/*
+   │  ├─ reviews
+   │  │   ├─ r1: repo-rules (l1, 0/3)
+   │  │   │   ├─ constraint 4.9s
+   │  │   │   ├─ 0 blockers ✓
+   │  │   │   ├─ 0 nitpicks ✓
+   │  │   │   ├─ given: .behavior/v2026_07_21.fix-id-to-slug/.reviews/peer/5.3.verification._.review.i010.350f655f6cd967df77.r001._.given.by_peer.repo-rules.md
+   │  │   │   └─ taken: .behavior/v2026_07_21.fix-id-to-slug/.reviews/peer/5.3.verification._.review.i010.350f655f6cd967df77.r001._.taken.by_self.repo-rules.md
+   │  │   ├─ r2: ergo-contract-snapshots (l1, 3/3)
+   │  │   │   ├─ approved, cached
+   │  │   │   ├─ 0 blockers ✓
+   │  │   │   ├─ 0 nitpicks ✓
+   │  │   │   ├─ given: .behavior/v2026_07_21.fix-id-to-slug/.reviews/peer/5.3.verification._.review.i003.2dee632ed18b80e7c3.r002._.given.by_peer.ergo-contract-snapshots.md
+   │  │   │   └─ taken: .behavior/v2026_07_21.fix-id-to-slug/.reviews/peer/5.3.verification._.review.i003.2dee632ed18b80e7c3.r002._.taken.by_self.ergo-contract-snapshots.md
+   │  │   ├─ r3: mech-external-contracts (l1, 3/3)
+   │  │   │   ├─ approved, cached
+   │  │   │   ├─ 0 blockers ✓
+   │  │   │   ├─ 0 nitpicks ✓
+   │  │   │   ├─ given: .behavior/v2026_07_21.fix-id-to-slug/.reviews/peer/5.3.verification._.review.i003.2dee632ed18b80e7c3.r003._.given.by_peer.mech-external-contracts.md
+   │  │   │   └─ taken: .behavior/v2026_07_21.fix-id-to-slug/.reviews/peer/5.3.verification._.review.i003.2dee632ed18b80e7c3.r003._.taken.by_self.mech-external-contracts.md
+   │  │   ├─ r4: ergo-acceptance-journey-coverage (l1, 4/4)
+   │  │   │   ├─ approved, cached
+   │  │   │   ├─ 0 blockers ✓
+   │  │   │   ├─ 0 nitpicks ✓
+   │  │   │   ├─ given: .behavior/v2026_07_21.fix-id-to-slug/.reviews/peer/5.3.verification._.review.i004.bcbb55507fbfd25735.r004._.given.by_peer.ergo-acceptance-journey-coverage.md
+   │  │   │   └─ taken: .behavior/v2026_07_21.fix-id-to-slug/.reviews/peer/5.3.verification._.review.i004.bcbb55507fbfd25735.r004._.taken.by_self.ergo-acceptance-journey-coverage.md
+   │  │   ├─ r5: ergo-snapshot-visual-blemishes (l1, 3/3)
+   │  │   │   ├─ approved, cached
+   │  │   │   ├─ 0 blockers ✓
+   │  │   │   ├─ 0 nitpicks ✓
+   │  │   │   ├─ given: .behavior/v2026_07_21.fix-id-to-slug/.reviews/peer/5.3.verification._.review.i003.2dee632ed18b80e7c3.r005._.given.by_peer.ergo-snapshot-visual-blemishes.md
+   │  │   │   └─ taken: .behavior/v2026_07_21.fix-id-to-slug/.reviews/peer/5.3.verification._.review.i003.2dee632ed18b80e7c3.r005._.taken.by_self.ergo-snapshot-visual-blemishes.md
+   │  │   ├─ r6: mech-given-when-then (l1, 3/3)
+   │  │   │   ├─ approved, cached
+   │  │   │   ├─ 0 blockers ✓
+   │  │   │   ├─ 0 nitpicks ✓
+   │  │   │   ├─ given: .behavior/v2026_07_21.fix-id-to-slug/.reviews/peer/5.3.verification._.review.i003.2dee632ed18b80e7c3.r006._.given.by_peer.mech-given-when-then.md
+   │  │   │   └─ taken: .behavior/v2026_07_21.fix-id-to-slug/.reviews/peer/5.3.verification._.review.i003.2dee632ed18b80e7c3.r006._.taken.by_self.mech-given-when-then.md
+   │  │   ├─ r7: mech-test-intent (l1, 3/3)
+   │  │   │   ├─ approved, cached
+   │  │   │   ├─ 0 blockers ✓
+   │  │   │   ├─ 0 nitpicks ✓
+   │  │   │   ├─ given: .behavior/v2026_07_21.fix-id-to-slug/.reviews/peer/5.3.verification._.review.i003.2dee632ed18b80e7c3.r007._.given.by_peer.mech-test-intent.md
+   │  │   │   └─ taken: .behavior/v2026_07_21.fix-id-to-slug/.reviews/peer/5.3.verification._.review.i003.2dee632ed18b80e7c3.r007._.taken.by_self.mech-test-intent.md
+   │  │   ├─ r8: mech-test-scope-purity (l1, 4/4)
+   │  │   │   ├─ approved, cached
+   │  │   │   ├─ 0 blockers ✓
+   │  │   │   ├─ 0 nitpicks ✓
+   │  │   │   ├─ given: .behavior/v2026_07_21.fix-id-to-slug/.reviews/peer/5.3.verification._.review.i004.bcbb55507fbfd25735.r008._.given.by_peer.mech-test-scope-purity.md
+   │  │   │   └─ taken: .behavior/v2026_07_21.fix-id-to-slug/.reviews/peer/5.3.verification._.review.i004.bcbb55507fbfd25735.r008._.taken.by_self.mech-test-scope-purity.md
+   │  │   ├─ r9: enroll-verif-snapshot-coverage (l3, 4/4)
+   │  │   │   ├─ exhausted, cached
+   │  │   │   ├─ 5 blockers 🔴
+   │  │   │   ├─ 0 nitpicks ✓
+   │  │   │   ├─ given: .behavior/v2026_07_21.fix-id-to-slug/.reviews/peer/5.3.verification._.review.i006.350f655f6cd967df77.r009._.given.by_peer.enroll-verif-snapshot-coverage.md
+   │  │   │   └─ taken: .behavior/v2026_07_21.fix-id-to-slug/.reviews/peer/5.3.verification._.review.i006.350f655f6cd967df77.r009._.taken.by_self.enroll-verif-snapshot-coverage.md
+   │  │   ├─ r10: enroll-verif-snapshot-blemishes (l3, 3/3)
+   │  │   │   ├─ approved, cached
+   │  │   │   ├─ 0 blockers ✓
+   │  │   │   ├─ 0 nitpicks ✓
+   │  │   │   ├─ given: .behavior/v2026_07_21.fix-id-to-slug/.reviews/peer/5.3.verification._.review.i006.350f655f6cd967df77.r010._.given.by_peer.enroll-verif-snapshot-blemishes.md
+   │  │   │   └─ taken: .behavior/v2026_07_21.fix-id-to-slug/.reviews/peer/5.3.verification._.review.i006.350f655f6cd967df77.r010._.taken.by_self.enroll-verif-snapshot-blemishes.md
+   │  │   └─ r11: enroll-verif-test-intent (l3, 3/3)
+   │  │       ├─ approved, cached
+   │  │       ├─ 0 blockers ✓
+   │  │       ├─ 0 nitpicks ✓
+   │  │       ├─ given: .behavior/v2026_07_21.fix-id-to-slug/.reviews/peer/5.3.verification._.review.i006.350f655f6cd967df77.r011._.given.by_peer.enroll-verif-test-intent.md
+   │  │       └─ taken: .behavior/v2026_07_21.fix-id-to-slug/.reviews/peer/5.3.verification._.review.i006.350f655f6cd967df77.r011._.taken.by_self.enroll-verif-test-intent.md
+   │  └─ judges
+   │      └─ j1: $rhachet run --repo bhrain --skill route.stone.judge --mechanism reviewed? --stone $stone --route $route --allow-blockers 0 --allow-nitpicks 0
+   │          └─ finished 1.9s ✓
+   │
+   └─ the way continues, run
+      └─ rhx route.drive

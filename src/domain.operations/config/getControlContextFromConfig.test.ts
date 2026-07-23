@@ -22,13 +22,13 @@ const mockedConfigResponse = {
   definitions: [
     new ChangeDefinition({
       path: '__PATH__',
-      id: '__ID_ONE__',
+      exid: '__ID_ONE__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
     }),
     new ChangeDefinition({
       path: '__PATH__',
-      id: '__ID_TWO__',
+      exid: '__ID_TWO__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
     }),

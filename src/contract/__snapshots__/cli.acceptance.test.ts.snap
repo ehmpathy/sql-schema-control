@@ -73,3 +73,70 @@ Commands:
   help [command]   display help for command
 "
 `;
+
+exports[`cli.acceptance given: [case6] sync with the removed --id flag when: [t0] bin/run sync is called with --id then: it should exit non-zero with a clear rename hint 1`] = `
+"BadRequestError: the '--id' flag was renamed to '--exid'. use: sync --exid <exid>
+
+{
+  "id": "init_service_user"
+}"
+`;
+
+exports[`cli.acceptance given: [case7] sync with no exid when: [t0] bin/run sync is called with no --exid then: it should exit non-zero and require the exid 1`] = `
+"BadRequestError: the '--exid' option is required (the change definition's natural key)
+
+{
+  "hint": "sync --exid <exid>"
+}"
+`;
+
+exports[`cli.acceptance given: [case8] plan with a legacy id change definition when: [t0] bin/run plan is called on a control.yml that uses id: then: it should print the deprecation nudge to stderr 1`] = `"⚠️  change definition uses the legacy \`id\` field; prefer \`exid\` (natural key). found id='legacy_change_1'"`;
+
+exports[`cli.acceptance given: [case9] plan with a change that declares BOTH id and exid when: [t0] bin/run plan is called on a control.yml with both id and exid then: it should exit non-zero with an ambiguous-natural-key error 1`] = `
+"InvalidDefinitionError: a change may declare \`exid\` or the legacy \`id\`, but not both. prefer \`exid\`.
+
+{
+  "type": "change",
+  "path": "./ambiguous_change.sql",
+  "id": "ambiguous_change_1",
+  "exid": "ambiguous_change_1",
+  "reappliable": false
+}"
+`;
+
+exports[`cli.acceptance given: [case10] plan with a change that declares NEITHER id nor exid when: [t0] bin/run plan is called on a control.yml with neither id nor exid then: it should exit non-zero and require the exid 1`] = `
+"InvalidDefinitionError: a change must declare an \`exid\` (its natural key)
+
+{
+  "type": "change",
+  "path": "./keyless_change.sql",
+  "reappliable": false
+}"
+`;
+
+exports[`cli.acceptance given: [case11] sync --help flag when: [t0] bin/run sync is called with --help then: it should show sync help (incl. --exid) and exit 0 1`] = `
+"Usage: sql-schema-control sync [options]
+
+sync the change log for a specific change definition without applying it, for
+cases where a change has been reapplied manually
+
+Options:
+  -c, --config <path>  path to config file (default: "schema/control.yml")
+  --exid <changeExid>  (required) the change definition exid (natural key)
+  --id <deprecated>    [renamed] use --exid instead
+  -h, --help           display help for command
+"
+`;
+
+exports[`cli.acceptance given: [case12] sync --exid on a real change definition (positive path) when: [t0] bin/run sync is called with a valid --exid then: it should record the change and print the sync line 1`] = `
+"
+   [32m✔[39m [1m[32m[SYNC][39m src/contract/.test/assets/mysql/definitions/init/service_user.sql [90m(change:init_service_user)[39m[22m"
+`;
+
+exports[`cli.acceptance given: [case13] sync --exid that matches no change definition (not-found path) when: [t0] bin/run sync is called with an exid no definition declares then: it should exit non-zero with a clear not-found error 1`] = `
+"BadRequestError: could not find a definition with referenceId 'change:__no_such_change__'
+
+{
+  "changeExid": "__no_such_change__"
+}"
+`;

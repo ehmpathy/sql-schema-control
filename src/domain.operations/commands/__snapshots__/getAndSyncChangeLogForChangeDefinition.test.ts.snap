@@ -2,6 +2,14 @@
 
 exports[`getAndDisplayPlans should log that the change log was synced successfully 1`] = `
 "
-   [32m✔[39m [1m[32m[SYNC][39m __PATH__ [90m(change:__ID__)[39m[22m
+   [32m✔[39m [1m[32m[SYNC][39m __PATH__ [90m(change:__EXID__)[39m[22m
 "
+`;
+
+exports[`getAndDisplayPlans should throw an error if no definition with the changeExid is found 1`] = `
+"BadRequestError: could not find a definition with referenceId 'change:__DIFFERENT_EXID__'
+
+{
+  "changeExid": "__DIFFERENT_EXID__"
+}"
 `;

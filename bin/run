@@ -5,6 +5,10 @@ require('tsx/cjs'); // register tsx so that require() method can import typescri
 const { run } = require('sql-schema-control/cli');
 
 run().catch((error) => {
-  console.error(error);
+  // print the error's message (helpful-errors already prefix the class name and
+  // carry their metadata in .message); a print of the whole error re-prefixes the
+  // class name, so a `BadRequestError:` would render twice. fall back to the raw
+  // value for non-Error throws.
+  console.error(error instanceof Error ? error.message : error);
   process.exit(1);
 });

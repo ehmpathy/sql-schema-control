@@ -30,7 +30,7 @@ describe('getStatusForChangeDefinition', () => {
   });
   it('should find that an unapplied change has status of NOT_APPLIED', async () => {
     const definition = new ChangeDefinition({
-      id: uuid(),
+      exid: uuid(),
       path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
@@ -43,7 +43,7 @@ describe('getStatusForChangeDefinition', () => {
   });
   it('should find that an applied change has status of UP_TO_DATE', async () => {
     const definition = new ChangeDefinition({
-      id: uuid(),
+      exid: uuid(),
       path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
@@ -53,9 +53,9 @@ describe('getStatusForChangeDefinition', () => {
     await connection.query({
       sql: `
       INSERT INTO schema_control_change_log
-        (change_id, change_hash, change_content)
+        (change_exid, change_hash, change_content)
       VALUES
-        ('${definition.id}', '${definition.hash}', '${definition.sql}');
+        ('${definition.exid}', '${definition.hash}', '${definition.sql}');
     `,
     });
 
@@ -69,7 +69,7 @@ describe('getStatusForChangeDefinition', () => {
   it('should find that an applied change with a different hash has status of OUT_OF_DATE', async () => {
     // record that the definition was already applied
     const definition = new ChangeDefinition({
-      id: uuid(),
+      exid: uuid(),
       path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
@@ -77,9 +77,9 @@ describe('getStatusForChangeDefinition', () => {
     await connection.query({
       sql: `
       INSERT INTO schema_control_change_log
-        (change_id, change_hash, change_content)
+        (change_exid, change_hash, change_content)
       VALUES
-        ('${definition.id}', '${definition.hash}', '${definition.sql}');
+        ('${definition.exid}', '${definition.hash}', '${definition.sql}');
     `,
     });
 

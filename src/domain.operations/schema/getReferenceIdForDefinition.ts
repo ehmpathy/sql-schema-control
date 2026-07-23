@@ -9,7 +9,7 @@ export const getReferenceIdForDefinition = ({
     definition instanceof ChangeDefinition ? 'change' : 'resource';
   const definitionId =
     definition instanceof ChangeDefinition
-      ? definition.id
+      ? definition.exid
       : `${definition.type.toLowerCase()}:${definition.name}`;
   const referenceId = `${definitionType}:${definitionId}`;
   return referenceId;

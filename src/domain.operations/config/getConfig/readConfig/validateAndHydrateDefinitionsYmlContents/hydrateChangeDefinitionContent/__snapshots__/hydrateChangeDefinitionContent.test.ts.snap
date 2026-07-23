@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`hydrate change definition content should warn with a deprecation nudge when the legacy id field is the source 1`] = `"⚠️  change definition uses the legacy \`id\` field; prefer \`exid\` (natural key). found id='__LEGACY_ID__'"`;

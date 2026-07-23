@@ -37,7 +37,7 @@ describe('getDifferenceForChangeDefinition', () => {
     ) ENGINE = InnoDB;
     `;
     const definition = new ChangeDefinition({
-      id: uuid(),
+      exid: uuid(),
       path: '__PATH__',
       sql,
       hash: sha256.sync(sql),
@@ -47,9 +47,9 @@ describe('getDifferenceForChangeDefinition', () => {
     await connection.query({
       sql: `
       INSERT INTO schema_control_change_log
-        (change_id, change_hash, change_content)
+        (change_exid, change_hash, change_content)
       VALUES
-        ('${definition.id}', '${definition.hash}', '${definition.sql}');
+        ('${definition.exid}', '${definition.hash}', '${definition.sql}');
     `,
     });
 
@@ -63,7 +63,7 @@ describe('getDifferenceForChangeDefinition', () => {
   it('should find that an out of date change has a colored diff of changed lines', async () => {
     // record that the definition was already applied
     const definition = new ChangeDefinition({
-      id: uuid(),
+      exid: uuid(),
       path: '__PATH__',
       sql: `
 CREATE TABLE IF NOT EXISTS some_table (
@@ -76,9 +76,9 @@ CREATE TABLE IF NOT EXISTS some_table (
     await connection.query({
       sql: `
       INSERT INTO schema_control_change_log
-        (change_id, change_hash, change_content)
+        (change_exid, change_hash, change_content)
       VALUES
-        ('${definition.id}', '${definition.hash}', '${definition.sql}');
+        ('${definition.exid}', '${definition.hash}', '${definition.sql}');
     `,
     });
 

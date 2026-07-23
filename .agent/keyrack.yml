@@ -3,6 +3,8 @@ extends:
   - .agent/repo=bhrain/role=reviewer/keyrack.yml
   - .agent/repo=bhuild/role=dispatcher/keyrack.yml
   - .agent/repo=ehmpathy/role=mechanic/keyrack.yml
+  - .agent/repo=ghlitch/role=observer/keyrack.yml
+  - .agent/repo=ghlitch/role=operator/keyrack.yml
 env.prod: null
 env.prep: null
 env.test: null

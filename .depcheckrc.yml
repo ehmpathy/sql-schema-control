@@ -20,9 +20,17 @@ ignores:
   - "@src/.*"
   - rhachet-brains-anthropic
   - rhachet-brains-xai
+  - rhachet-brains-fireworksai # role package (rhx runtime), not imported by src
   - rhachet-roles-bhrain
   - rhachet-roles-bhuild
   - rhachet-roles-ehmpathy
+  - rhachet-roles-bhrowser # role package (rhx runtime), not imported by src
+  - rhachet-roles-ghlitch # role package (rhx runtime), not imported by src
+  - rhachet-roles-rhachet # role package (rhx runtime), not imported by src
   - tsc-alias
   - yalc
   - sql-schema-control # self-link for acceptance tests (bin/run via node_modules)
+# vendored role skills under .agent reference their own runtime deps (playwright,
+# declastruct-*); they are not part of this package's source, so skip them
+ignore-patterns:
+  - .agent

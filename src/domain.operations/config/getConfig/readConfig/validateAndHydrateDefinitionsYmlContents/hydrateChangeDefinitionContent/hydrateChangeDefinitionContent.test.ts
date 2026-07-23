@@ -61,12 +61,95 @@ describe('hydrate change definition content', () => {
       content: exampleContent,
     });
     expect(result.constructor).toEqual(ChangeDefinition);
-    expect(result.id).toEqual(exampleContent.id);
+    expect(result.exid).toEqual(exampleContent.id);
     expect(result.reappliable).toEqual(exampleContent.reappliable);
     expect(result.sql).toEqual('__SQL_CONTENTS__');
     expect(result.path).toEqual(`__READ_ROOT__/${exampleContent.path}`);
     expect(result.hash).toEqual(
       '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
     );
+  });
+  it('should derive the natural key from exid', async () => {
+    const exampleContent = {
+      type: DefinitionType.CHANGE,
+      exid: '__EXID__',
+      path: '__FILE_PATH__.sql',
+      reappliable: false,
+    };
+    const result = await hydrateChangeDefinitionContent({
+      readRoot: '__READ_ROOT__',
+      content: exampleContent,
+    });
+    expect(result.exid).toEqual('__EXID__');
+  });
+  it('should warn with a deprecation nudge when the legacy id field is the source', async () => {
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    try {
+      await hydrateChangeDefinitionContent({
+        readRoot: '__READ_ROOT__',
+        content: {
+          type: DefinitionType.CHANGE,
+          id: '__LEGACY_ID__',
+          path: '__FILE_PATH__.sql',
+          reappliable: false,
+        },
+      });
+      expect(warnSpy).toHaveBeenCalledTimes(1);
+      const [firstCall] = warnSpy.mock.calls;
+      const warnMessage = firstCall ? firstCall[0] : undefined;
+      expect(warnMessage).toContain('legacy `id`');
+      expect(warnMessage).toMatchSnapshot();
+    } finally {
+      warnSpy.mockRestore();
+    }
+  });
+  it('should not warn when the exid field is the source', async () => {
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    try {
+      await hydrateChangeDefinitionContent({
+        readRoot: '__READ_ROOT__',
+        content: {
+          type: DefinitionType.CHANGE,
+          exid: '__EXID__',
+          path: '__FILE_PATH__.sql',
+          reappliable: false,
+        },
+      });
+      expect(warnSpy).toHaveBeenCalledTimes(0);
+    } finally {
+      warnSpy.mockRestore();
+    }
+  });
+  it('should throw an error if both exid and legacy id are declared', async () => {
+    try {
+      await hydrateChangeDefinitionContent({
+        readRoot: '__READ_ROOT__',
+        content: {
+          type: DefinitionType.CHANGE,
+          exid: '__EXID__',
+          id: '__ID__',
+          path: '__FILE_PATH__.sql',
+        },
+      });
+      throw new Error('should not reach here');
+    } catch (error) {
+      expect(error.constructor).toEqual(InvalidDefinitionError);
+      expect(error.explanation).toContain('but not both');
+    }
+  });
+  it('should throw an error if neither exid nor legacy id are declared', async () => {
+    try {
+      await hydrateChangeDefinitionContent({
+        readRoot: '__READ_ROOT__',
+        content: {
+          type: DefinitionType.CHANGE,
+          path: '__FILE_PATH__.sql',
+        },
+      });
+      throw new Error('should not reach here');
+    } catch (error) {
+      expect(error.constructor).toEqual(InvalidDefinitionError);
+      expect(error.explanation).toContain('must declare an `exid`');
+    }
   });
 });

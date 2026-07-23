@@ -1,4 +1,5 @@
 import { Command } from 'commander';
+import { BadRequestError } from 'helpful-errors';
 
 import { getAndApplyPlans } from '@src/domain.operations/commands/getAndApplyPlans';
 import { getAndDisplayPlans } from '@src/domain.operations/commands/getAndDisplayPlans';
@@ -55,12 +56,30 @@ export const createProgram = (): Command => {
       'sync the change log for a specific change definition without applying it, for cases where a change has been reapplied manually',
     )
     .option('-c, --config <path>', 'path to config file', 'schema/control.yml')
-    .requiredOption('--id <changeId>', 'reference id of the change definition')
-    .action(async (options: { config: string; id: string }) => {
+    .option(
+      '--exid <changeExid>',
+      '(required) the change definition exid (natural key)',
+    )
+    .option('--id <deprecated>', '[renamed] use --exid instead') // kept only to give a clear error; --id was hard-cut
+    .action(async (options: { config: string; exid?: string; id?: string }) => {
+      // the --id flag was renamed to --exid; guide users who still pass --id
+      if (options.id !== undefined)
+        throw new BadRequestError(
+          "the '--id' flag was renamed to '--exid'. use: sync --exid <exid>",
+          { id: options.id },
+        );
+
+      // require the exid, now that it is not a commander requiredOption
+      if (options.exid === undefined)
+        throw new BadRequestError(
+          "the '--exid' option is required (the change definition's natural key)",
+          { hint: 'sync --exid <exid>' },
+        );
+
       const configPath = asAbsoluteConfigPath({ config: options.config });
       await getAndSyncChangeLogForChangeDefinition({
         configPath,
-        changeId: options.id,
+        changeExid: options.exid,
       });
     });
 
