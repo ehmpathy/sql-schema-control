@@ -49,7 +49,7 @@ jobs:
           MIN_VERSION="11.5.1"
           if [ "$(printf '%s\n' "$MIN_VERSION" "$NPM_VERSION" | sort -V | head -n1)" != "$MIN_VERSION" ]; then
             echo "npm $NPM_VERSION < $MIN_VERSION, will upgrade npm now to support oidc..."
-            npm install -g npm@latest
+            npm install -g npm@11 # pin to 11.x: oidc-capable (>= 11.5.1) and compatible with the node pinned in .nvmrc; npm@latest (12.x) needs node >= 22.22.2
           else
             echo "npm $NPM_VERSION >= $MIN_VERSION, ready to use!"
           fi
