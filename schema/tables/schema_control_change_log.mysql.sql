@@ -5,10 +5,10 @@ CREATE TABLE IF NOT EXISTS schema_control_change_log ( -- TODO: make this a vers
   updated_at      DATETIME ON UPDATE CURRENT_TIMESTAMP,
 
   -- data
-  change_id             VARCHAR(191) NOT NULL, -- record the human generated id of the content
+  change_exid           VARCHAR(191) NOT NULL, -- record the human authored natural key (exid) of the content
   change_hash           CHAR(64) NOT NULL, -- record a hash of the applied content
   change_content        TEXT, -- record the content that was applied
 
   -- meta meta
-  UNIQUE schema_control_change_log_ux1 (change_id) -- should be max one row per change_id
+  UNIQUE schema_control_change_log_ux1 (change_exid) -- should be max one row per change_exid
 ) ENGINE = InnoDB;

@@ -17,7 +17,7 @@ const exampleContext = {
   },
   definitions: [
     new ChangeDefinition({
-      id: '__ID__',
+      exid: '__EXID__',
       path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
@@ -35,30 +35,31 @@ describe('getAndDisplayPlans', () => {
   it('should get the control context from config', async () => {
     await getAndSyncChangeLogForChangeDefinition({
       configPath: '__CONFIG_PATH__',
-      changeId: '__ID__',
+      changeExid: '__EXID__',
     });
     expect(getControlContextFromConfigMock.mock.calls.length).toEqual(1);
     expect(getControlContextFromConfigMock.mock.calls[0][0]).toEqual({
       configPath: '__CONFIG_PATH__',
     });
   });
-  it('should throw an error if no definition with the changeId is found', async () => {
+  it('should throw an error if no definition with the changeExid is found', async () => {
     try {
       await getAndSyncChangeLogForChangeDefinition({
         configPath: '__CONFIG_PATH__',
-        changeId: 'change:__DIFFERENT_ID__',
+        changeExid: '__DIFFERENT_EXID__',
       });
       throw new Error('should not reach here');
     } catch (error) {
       expect(error.message).toContain(
         'could not find a definition with referenceId',
       );
+      expect(error.message).toMatchSnapshot();
     }
   });
   it('should syncChangeLogWithChangeDefinitionMock', async () => {
     await getAndSyncChangeLogForChangeDefinition({
       configPath: '__CONFIG_PATH__',
-      changeId: '__ID__',
+      changeExid: '__EXID__',
     });
     expect(syncChangeLogWithChangeDefinitionMock).toHaveBeenCalledTimes(1);
     expect(syncChangeLogWithChangeDefinitionMock).toHaveBeenCalledWith(
@@ -70,7 +71,7 @@ describe('getAndDisplayPlans', () => {
   it('should close the connection', async () => {
     await getAndSyncChangeLogForChangeDefinition({
       configPath: '__CONFIG_PATH__',
-      changeId: '__ID__',
+      changeExid: '__EXID__',
     });
     expect(exampleContext.connection.end.mock.calls.length).toEqual(1);
   });
@@ -82,7 +83,7 @@ describe('getAndDisplayPlans', () => {
     // run it
     await getAndSyncChangeLogForChangeDefinition({
       configPath: '__CONFIG_PATH__',
-      changeId: '__ID__',
+      changeExid: '__EXID__',
     });
 
     // check that output was expected

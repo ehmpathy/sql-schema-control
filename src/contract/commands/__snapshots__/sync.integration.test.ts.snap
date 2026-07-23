@@ -1,5 +1,21 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
+exports[`sync cli option guidance should give a clear error when no exid is provided 1`] = `
+"BadRequestError: the '--exid' option is required (the change definition's natural key)
+
+{
+  "hint": "sync --exid <exid>"
+}"
+`;
+
+exports[`sync cli option guidance should give a clear error when the removed --id flag is used 1`] = `
+"BadRequestError: the '--id' flag was renamed to '--exid'. use: sync --exid <exid>
+
+{
+  "id": "init_service_user"
+}"
+`;
+
 exports[`sync mysql should have an expected appearance when syncing change log for a change definition 1`] = `
 "
    [32m✔[39m [1m[32m[SYNC][39m src/contract/.test/assets/mysql/definitions/init/service_user.sql [90m(change:init_service_user)[39m[22m

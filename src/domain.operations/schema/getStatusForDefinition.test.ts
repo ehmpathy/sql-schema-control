@@ -46,7 +46,7 @@ describe('getStatusOfDefinition', () => {
   });
   it('should use the correct adaptor for a ChangeDefinition', async () => {
     const change = new ChangeDefinition({
-      id: uuid(),
+      exid: uuid(),
       path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),

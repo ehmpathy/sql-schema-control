@@ -30,7 +30,7 @@ describe('syncChangeLogWithChangeDefinition', () => {
     });
     it('should be able to sync change log for change def that has not been recorded in log yet', async () => {
       const definition = new ChangeDefinition({
-        id: uuid(),
+        exid: uuid(),
         path: '__PATH__',
         sql: "CREATE USER 'edlrdo'@'%';",
         hash: sha256.sync("CREATE USER 'edlrdo'@'%';"),
@@ -39,7 +39,7 @@ describe('syncChangeLogWithChangeDefinition', () => {
 
       // check that the entry was recorded into the changelog accurately
       const { rows: changeLogRows } = await connection.query({
-        sql: `select * from schema_control_change_log where change_id='${definition.id}'`,
+        sql: `select * from schema_control_change_log where change_exid='${definition.exid}'`,
       });
       expect(changeLogRows.length).toEqual(1);
       expect(changeLogRows[0].change_hash).toEqual(definition.hash);
@@ -48,7 +48,7 @@ describe('syncChangeLogWithChangeDefinition', () => {
     });
     it('should be able to sync change log for change def that was updated', async () => {
       const definition = new ChangeDefinition({
-        id: uuid(),
+        exid: uuid(),
         path: '__PATH__',
         sql: "CREATE USER 'edlrdo'@'%';",
         hash: sha256.sync("CREATE USER 'edlrdo'@'%';"),
@@ -62,7 +62,7 @@ describe('syncChangeLogWithChangeDefinition', () => {
 
       // check that the entry was updated accurately in the changelog
       const { rows: changeLogRows } = await connection.query({
-        sql: `select * from schema_control_change_log where change_id='${definition.id}'`,
+        sql: `select * from schema_control_change_log where change_exid='${definition.exid}'`,
       });
       expect(changeLogRows.length).toEqual(1);
       expect(changeLogRows[0].change_hash).toEqual(definition.hash);
@@ -87,7 +87,7 @@ describe('syncChangeLogWithChangeDefinition', () => {
     });
     it('should be able to sync change log for change def that has not been recorded in log yet', async () => {
       const definition = new ChangeDefinition({
-        id: uuid(),
+        exid: uuid(),
         path: '__PATH__',
         sql: "CREATE USER eldrdo WITH PASSWORD 'test_password';",
         hash: sha256.sync("CREATE USER eldrdo WITH PASSWORD 'test_password';"),
@@ -96,7 +96,7 @@ describe('syncChangeLogWithChangeDefinition', () => {
 
       // check that the entry was recorded into the changelog accurately
       const { rows: changeLogRows } = await connection.query({
-        sql: `select * from schema_control_change_log where change_id='${definition.id}'`,
+        sql: `select * from schema_control_change_log where change_exid='${definition.exid}'`,
       });
       expect(changeLogRows.length).toEqual(1);
       expect(changeLogRows[0].change_hash).toEqual(definition.hash);
@@ -105,7 +105,7 @@ describe('syncChangeLogWithChangeDefinition', () => {
     });
     it('should be able to sync change log for change def that was updated', async () => {
       const definition = new ChangeDefinition({
-        id: uuid(),
+        exid: uuid(),
         path: '__PATH__',
         sql: "CREATE USER eldrdo WITH PASSWORD 'test_password';",
         hash: sha256.sync("CREATE USER eldrdo WITH PASSWORD 'test_password';"),
@@ -119,7 +119,7 @@ describe('syncChangeLogWithChangeDefinition', () => {
 
       // check that the entry was updated accurately in the changelog
       const { rows: changeLogRows } = await connection.query({
-        sql: `select * from schema_control_change_log where change_id='${definition.id}'`,
+        sql: `select * from schema_control_change_log where change_exid='${definition.exid}'`,
       });
       expect(changeLogRows.length).toEqual(1);
       expect(changeLogRows[0].change_hash).toEqual(definition.hash);

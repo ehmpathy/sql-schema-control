@@ -95,7 +95,7 @@ Resources are DDL created "resources" that we can track and "sync" with your che
     definitions:
       - type: change
         path: './init/service_user.sql'
-        id: 'init_20190619_1'
+        exid: 'init_20190619_1'
         reappliable: false
       - type: resource
         path: './definitions/functions/upsert_notification.sql'
@@ -104,6 +104,12 @@ Resources are DDL created "resources" that we can track and "sync" with your che
       - ./definitions/functions.yml
       # ... more definitions or paths to nested definition files
   ```
+
+  > **note on `change` exids.** a `type: change` names its natural key with `exid:` (a stable,
+  > human-authored key, decoupled from the file path). the legacy `id:` field is still accepted
+  > for backcompat — a `change` may declare `exid:` **or** `id:`, but not both — and a definition
+  > that uses `id:` emits a deprecation nudge toward `exid:` when read. prefer `exid:` for new
+  > changes; the `sync` command takes `--exid` (the `--id` flag was removed).
 
 5. Test it out!
 ```
@@ -229,10 +235,10 @@ USAGE
 OPTIONS
   -c, --config=config  [default: schema/control.yml] path to config file
   -h, --help           show CLI help
-  --id=id              (required) reference id of the change definition
+  --exid=exid          (required) the change definition exid (natural key)
 
 EXAMPLE
-  $ sql-schema-control sync -c src/contract/__test_assets__/control.yml --id init_service_user
+  $ sql-schema-control sync -c src/contract/__test_assets__/control.yml --exid init_service_user
      ✔ [SYNC] ./init/service_user.sql (change:init_service_user)
 ```
 

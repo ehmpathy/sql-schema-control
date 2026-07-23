@@ -13,14 +13,14 @@ import { getReferenceIdForDefinition } from './getReferenceIdForDefinition';
 describe('getReferenceIdForDefinition', () => {
   it('should accurately define the plan id for a change definition', async () => {
     const definition = new ChangeDefinition({
-      id: uuid(),
+      exid: uuid(),
       path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
       status: ChangeDefinitionStatus.UP_TO_DATE,
     });
     const referenceId = getReferenceIdForDefinition({ definition });
-    expect(referenceId).toEqual(`change:${definition.id}`);
+    expect(referenceId).toEqual(`change:${definition.exid}`);
   });
   it('should accurately define the plan id for a resource definition', async () => {
     const definition = new ResourceDefinition({

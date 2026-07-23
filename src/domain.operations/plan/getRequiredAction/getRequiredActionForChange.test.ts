@@ -11,7 +11,7 @@ import { getRequiredActionForChange } from './getRequiredActionForChange';
 describe('getRequiredActionForChange', () => {
   it('should find no change required for change definition with status UP_TO_DATE', () => {
     const definition = new ChangeDefinition({
-      id: '__ID__',
+      exid: '__ID__',
       path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
@@ -22,7 +22,7 @@ describe('getRequiredActionForChange', () => {
   });
   it('should find apply required for change with status NOT_APPLIED', () => {
     const definition = new ChangeDefinition({
-      id: '__ID__',
+      exid: '__ID__',
       path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
@@ -33,7 +33,7 @@ describe('getRequiredActionForChange', () => {
   });
   it('should find reapply required for change with status OUT_OF_DATE when reappliable', () => {
     const definition = new ChangeDefinition({
-      id: '__ID__',
+      exid: '__ID__',
       path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),
@@ -45,7 +45,7 @@ describe('getRequiredActionForChange', () => {
   });
   it('should find manual_reapply required for change with status OUT_OF_DATE when not reappliable', () => {
     const definition = new ChangeDefinition({
-      id: '__ID__',
+      exid: '__ID__',
       path: '__PATH__',
       sql: '__SQL__',
       hash: sha256.sync('__SQL__'),

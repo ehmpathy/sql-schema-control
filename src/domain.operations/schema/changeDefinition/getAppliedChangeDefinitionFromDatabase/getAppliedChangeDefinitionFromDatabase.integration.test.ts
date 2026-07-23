@@ -33,7 +33,7 @@ describe('getAppliedChangeDefinitionFromDatabase', () => {
     });
     it('should throw an error if the change has not been applied to the database yet', async () => {
       const definition = new ChangeDefinition({
-        id: uuid(),
+        exid: uuid(),
         path: '__PATH__',
         sql: '__SQL__',
         hash: sha256.sync('__SQL__'),
@@ -41,17 +41,21 @@ describe('getAppliedChangeDefinitionFromDatabase', () => {
       try {
         await getAppliedChangeDefinitionFromDatabase({
           connection,
-          changeId: definition.id,
+          changeExid: definition.exid,
           changePath: definition.path,
         });
         throw new Error('should not reach here');
       } catch (error) {
         expect(error).toBeInstanceOf(ChangeHasNotBeenAppliedError);
+        // assert the static phrase (guards against `change exid:` -> `change id:` drift);
+        // the exid itself is a uuid, so we assert the stable prefix + suffix, not a snapshot
+        expect(error.message).toContain('change exid:');
+        expect(error.message).toContain('has not yet been applied');
       }
     });
     it('should be able to get hash and sql of previously applied change', async () => {
       const definition = new ChangeDefinition({
-        id: uuid(),
+        exid: uuid(),
         path: '__PATH__',
         sql: '__SQL__',
         hash: sha256.sync('__SQL__'),
@@ -61,16 +65,16 @@ describe('getAppliedChangeDefinitionFromDatabase', () => {
       await connection.query({
         sql: `
       INSERT INTO schema_control_change_log
-        (change_id, change_hash, change_content)
+        (change_exid, change_hash, change_content)
       VALUES
-        ('${definition.id}', '${definition.hash}', '${definition.sql}');
+        ('${definition.exid}', '${definition.hash}', '${definition.sql}');
     `,
       });
 
       // get the definition
       const result = await getAppliedChangeDefinitionFromDatabase({
         connection,
-        changeId: definition.id,
+        changeExid: definition.exid,
         changePath: definition.path,
       });
       expect(result.constructor).toEqual(ChangeDefinition);
@@ -95,7 +99,7 @@ describe('getAppliedChangeDefinitionFromDatabase', () => {
     });
     it('should throw an error if the change has not been applied to the database yet', async () => {
       const definition = new ChangeDefinition({
-        id: uuid(),
+        exid: uuid(),
         path: '__PATH__',
         sql: '__SQL__',
         hash: sha256.sync('__SQL__'),
@@ -103,17 +107,21 @@ describe('getAppliedChangeDefinitionFromDatabase', () => {
       try {
         await getAppliedChangeDefinitionFromDatabase({
           connection,
-          changeId: definition.id,
+          changeExid: definition.exid,
           changePath: definition.path,
         });
         throw new Error('should not reach here');
       } catch (error) {
         expect(error).toBeInstanceOf(ChangeHasNotBeenAppliedError);
+        // assert the static phrase (guards against `change exid:` -> `change id:` drift);
+        // the exid itself is a uuid, so we assert the stable prefix + suffix, not a snapshot
+        expect(error.message).toContain('change exid:');
+        expect(error.message).toContain('has not yet been applied');
       }
     });
     it('should be able to get hash and sql of previously applied change', async () => {
       const definition = new ChangeDefinition({
-        id: uuid(),
+        exid: uuid(),
         path: '__PATH__',
         sql: '__SQL__',
         hash: sha256.sync('__SQL__'),
@@ -123,16 +131,16 @@ describe('getAppliedChangeDefinitionFromDatabase', () => {
       await connection.query({
         sql: `
       INSERT INTO schema_control_change_log
-        (change_id, change_hash, change_content)
+        (change_exid, change_hash, change_content)
       VALUES
-        ('${definition.id}', '${definition.hash}', '${definition.sql}');
+        ('${definition.exid}', '${definition.hash}', '${definition.sql}');
     `,
       });
 
       // get the definition
       const result = await getAppliedChangeDefinitionFromDatabase({
         connection,
-        changeId: definition.id,
+        changeExid: definition.exid,
         changePath: definition.path,
       });
       expect(result.constructor).toEqual(ChangeDefinition);

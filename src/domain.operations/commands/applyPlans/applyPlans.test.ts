@@ -12,7 +12,7 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 applyPlanMock.mockImplementation(() => sleep(500));
 
 const exampleDefinition = new ChangeDefinition({
-  id: '__UUID__',
+  exid: '__UUID__',
   path: '__PATH__',
   sql: '__SQL__',
   hash: sha256.sync('__SQL__'),

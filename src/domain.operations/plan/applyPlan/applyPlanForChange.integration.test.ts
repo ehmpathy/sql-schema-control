@@ -34,7 +34,7 @@ describe('applyChange', () => {
     const plan = new DefinitionPlan({
       id: '__ID__',
       definition: new ChangeDefinition({
-        id: uuid(),
+        exid: uuid(),
         path: '__PATH__',
         sql: `CREATE USER '${userName}'@'%';`, // creates a new user
         hash: sha256.sync('__SQL__'),
@@ -54,8 +54,8 @@ describe('applyChange', () => {
 
     // check that the entry was recorded into the changelog accurately
     const { rows: changeLogRows } = await connection.query({
-      sql: `select * from schema_control_change_log where change_id='${
-        (plan.definition as ChangeDefinition).id
+      sql: `select * from schema_control_change_log where change_exid='${
+        (plan.definition as ChangeDefinition).exid
       }'`,
     });
     expect(changeLogRows.length).toEqual(1);
@@ -72,7 +72,7 @@ describe('applyChange', () => {
     const plan = new DefinitionPlan({
       id: '__ID__',
       definition: new ChangeDefinition({
-        id: uuid(),
+        exid: uuid(),
         path: '__PATH__',
         sql: `CREATE USER '${userName}'@'%';`, // creates a new user
         hash: sha256.sync('__SQL__'),
@@ -92,8 +92,8 @@ describe('applyChange', () => {
 
     // check that the entry was updated accurately in the changelog
     const { rows: changeLogRows } = await connection.query({
-      sql: `select * from schema_control_change_log where change_id='${
-        (plan.definition as ChangeDefinition).id
+      sql: `select * from schema_control_change_log where change_exid='${
+        (plan.definition as ChangeDefinition).exid
       }'`,
     });
     expect(changeLogRows.length).toEqual(1);

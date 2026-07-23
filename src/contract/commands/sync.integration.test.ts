@@ -1,4 +1,5 @@
 import { stdout } from 'stdout-stderr';
+import { getError } from 'test-fns';
 
 import { promiseConfig as promiseConfigMysql } from '@src/contract/.test/assets/mysql/connection.config';
 import { promiseConfig as promiseConfigPostgres } from '@src/contract/.test/assets/postgres/connection.config';
@@ -11,6 +12,28 @@ import {
 import { initializeControlEnvironment } from '@src/domain.operations/config/initializeControlEnvironment';
 
 describe('sync', () => {
+  describe('cli option guidance', () => {
+    it('should give a clear error when the removed --id flag is used', async () => {
+      const error = await getError(
+        createProgram().parseAsync([
+          'node',
+          'test',
+          'sync',
+          '--id',
+          'init_service_user',
+        ]),
+      );
+      expect(error.message).toContain("'--id' flag was renamed to '--exid'");
+      expect(error.message).toMatchSnapshot();
+    });
+    it('should give a clear error when no exid is provided', async () => {
+      const error = await getError(
+        createProgram().parseAsync(['node', 'test', 'sync']),
+      );
+      expect(error.message).toContain("'--exid' option is required");
+      expect(error.message).toMatchSnapshot();
+    });
+  });
   describe('mysql', () => {
     let connection: DatabaseConnection;
     beforeAll(async () => {
@@ -37,7 +60,7 @@ describe('sync', () => {
         'sync',
         '-c',
         `${__dirname}/../.test/assets/mysql/control.yml`,
-        '--id',
+        '--exid',
         'init_service_user',
       ]);
       stdout.stop();
@@ -75,7 +98,7 @@ describe('sync', () => {
         'sync',
         '-c',
         `${__dirname}/../.test/assets/postgres/control.yml`,
-        '--id',
+        '--exid',
         'init_service_user',
       ]);
       stdout.stop();

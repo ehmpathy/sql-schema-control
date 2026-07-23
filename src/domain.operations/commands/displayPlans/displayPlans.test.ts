@@ -8,7 +8,7 @@ import { ChangeDefinition, DefinitionPlan, RequiredAction } from '@src/domain';
 import { displayPlans } from './displayPlans';
 
 const exampleDefinition = new ChangeDefinition({
-  id: uuid(),
+  exid: uuid(),
   path: '__PATH__',
   sql: '__SQL__',
   hash: sha256.sync('__SQL__'),

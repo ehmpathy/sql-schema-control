@@ -37,19 +37,19 @@ const flattenDefinitionsRecursiveMock =
   flattenDefinitionsRecursive as jest.Mock;
 const exampleDefinitions = [
   new ChangeDefinition({
-    id: 'some id',
+    exid: 'some id',
     path: '__PATH__',
     sql: '__SOME_SQL__',
     hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
   }),
   new ChangeDefinition({
-    id: 'some other id',
+    exid: 'some other id',
     path: '__PATH__',
     sql: '__SOME_SQL__',
     hash: '5783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
   }),
   new ChangeDefinition({
-    id: 'another id',
+    exid: 'another id',
     path: '__PATH__',
     sql: '__SOME_SQL__',
     hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
